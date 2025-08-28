@@ -1,0 +1,137 @@
+@config "../../../tailwind.config.js";
+@import "tailwindcss";
+
+@theme {
+  /* These values are added in addition to the defaults */
+  /* https://tailwindcss.com/docs/v4-beta#namespace-reference */
+  --font-noto-sans-tc: 'Noto Sans TC', 'sans-serif';
+
+  /* --color-theme-primary: oklch(0.7 0.2 229.08); */
+  /* --color-m3-primary: theme(--color-theme-primary); */
+
+  /* --color-m3-primary-test: var(--color-theme-primary-test); */
+  /* --color-customRedColor: #EE8660; */
+
+  --color-primary: var(--camelot-m3-primary);
+  --color-primary-container: var(--camelot-m3-primary-container);
+  --color-on-primary: var(--camelot-m3-on-primary);
+  --color-on-primary-container: var(--camelot-m3-on-primary-container);
+
+  --color-primary-fixed: var(--camelot-m3-primary-fixed);
+  --color-primary-fixed-dim: var(--camelot-m3-primary-fixed-dim);
+  --color-on-primary-fixed: var(--camelot-m3-on-primary-fixed);
+  --color-on-primary-fixed-variant: var(--camelot-m3-on-primary-fixed-variant);
+
+  --color-secondary: var(--camelot-m3-secondary);
+  --color-secondary-container: var(--camelot-m3-secondary-container);
+  --color-on-secondary: var(--camelot-m3-on-secondary);
+  --color-on-secondary-container: var(--camelot-m3-on-secondary-container);
+
+  --color-secondary-fixed: var(--camelot-m3-secondary-fixed);
+  --color-secondary-fixed-dim: var(--camelot-m3-secondary-fixed-dim);
+  --color-on-secondary-fixed: var(--camelot-m3-on-secondary-fixed);
+  --color-on-secondary-fixed-variant: var(--camelot-m3-on-secondary-fixed-variant);
+
+  --color-tertiary: var(--camelot-m3-tertiary);
+  --color-tertiary-container: var(--camelot-m3-tertiary-container);
+  --color-on-tertiary: var(--camelot-m3-on-tertiary);
+  --color-on-tertiary-container: var(--camelot-m3-on-tertiary-container);
+
+  --color-tertiary-fixed: var(--camelot-m3-tertiary-fixed);
+  --color-tertiary-fixed-dim: var(--camelot-m3-tertiary-fixed-dim);
+  --color-on-tertiary-fixed: var(--camelot-m3-on-tertiary-fixed);
+  --color-on-tertiary-fixed-variant: var(--camelot-m3-on-tertiary-fixed-variant);
+
+  --color-surface-dim: var(--camelot-m3-surface-dim);
+  --color-surface: var(--camelot-m3-surface);
+  --color-surface-bright: var(--camelot-m3-surface-bright);
+
+  --color-surface-container-lowest: var(--camelot-m3-surface-container-lowest);
+  --color-surface-container-low: var(--camelot-m3-surface-container-low);
+  --color-surface-container: var(--camelot-m3-surface-container);
+  --color-surface-container-high: var(--camelot-m3-surface-container-high);
+  --color-surface-container-highest: var(--camelot-m3-surface-container-highest);
+
+  --color-on-surface: var(--camelot-m3-on-surface);
+  --color-on-surface-variant: var(--camelot-m3-on-surface-variant);
+  --color-outline: var(--camelot-m3-outline);
+  --color-outline-variant: var(--camelot-m3-outline-variant);
+
+  --color-error: var(--camelot-m3-error);
+  --color-error-container: var(--camelot-m3-error-container);
+  --color-on-error: var(--camelot-m3-on-error);
+  --color-on-error-container: var(--camelot-m3-on-error-container);
+
+  --color-inverse-surface: var(--camelot-m3-inverse-surface);
+  --color-inverse-on-surface: var(--camelot-m3-inverse-on-surface);
+  --color-inverse-primary: var(--camelot-m3-inverse-primary);
+
+  --color-scrim: var(--camelot-m3-scrim);
+  --color-shadow: var(--camelot-m3-shadow);
+
+  --color-c-test: var(--camelot-c-test);
+
+  --spacing-header: 3rem;
+  --spacing-footer: 30px;
+
+  --ease-overshoot: cubic-bezier(0.2, 0.4, 0.8, 1.3);
+}
+
+@layer base {
+  body,
+  html {
+    margin: 0;
+    padding: 0;
+    height: 100dvh;
+    width: 100dvw;
+    font-family: "Noto Sans TC", sans-serif, system-ui !important;
+    font-optical-sizing: auto;
+    font-style: normal;
+  }
+
+  html img {
+    user-select: none;
+  }
+
+  /* width */
+  ::-webkit-scrollbar {
+    width: 2px;
+    height: 2px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    -webkit-box-shadow: none !important;
+    background: var(--camelot-m3-surface);
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: var(--camelot-m3-on-surface-variant);
+    border-radius: 10px;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--camelot-m3-on-surface);
+  }
+}
+
+@utility clip-rounded-tl-br {
+  clip-path: inset(0px 0px 0px round 20px 0px);
+}
+@utility clip-rounded-tl-br {
+  clip-path: inset(0px 0px 0px round 20px 0px);
+}
+
+@utility clip-rounded-tr-bl {
+  clip-path: inset(0px 0px 0px round 0px 20px);
+}
+@utility clip-rounded-tr-bl {
+  clip-path: inset(0px 0px 0px round 0px 20px);
+}
+
+@utility clip-rounded {
+  clip-path: inset(0px 0px 0px round 20px);
+}
+@custom-variant hover (&:hover);

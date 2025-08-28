@@ -1,0 +1,46 @@
+ARG BUILD_COMMAND=build
+ARG ENV_FILE_PATH=./env/.env.production
+
+# 使用 node 長期支援版
+FROM node:20-slim AS build
+LABEL stage=build
+LABEL project=camelot
+ARG BUILD_COMMAND
+
+# corepack is an experimental feature in Node.js v20 which allows
+# installing and managing versions of pnpm, npm, yarn
+RUN corepack enable
+
+VOLUME [ "/pnpm-store", "/app/node_modules" ]
+RUN pnpm config --global set store-dir /pnpm-store
+
+# 設定工作目錄
+WORKDIR /app
+
+COPY . .
+
+# 如果有複製本機的node_modules會發生錯誤
+# 需配置.dockerignore避免複製node_modules
+RUN pnpm i
+RUN pnpm $BUILD_COMMAND
+
+FROM node:current-alpine
+LABEL project=camelot
+ARG ENV_FILE_PATH
+
+WORKDIR /app
+COPY --from=build /app/.output ./.output
+COPY $ENV_FILE_PATH .env
+
+# port 80
+
+# node --env-file need version 20.6 or higher
+# nuxt --dotenv 並不會在SSR compile後生效，官方建議使用環境變數設定
+# 而node在20.6後有提供--env-file可以讀取dotnev file
+EXPOSE 80
+CMD ["sh", "-c", "NITRO_PORT=80 node --env-file=.env .output/server/index.mjs"]
+
+# default port 3000
+
+# EXPOSE 3000
+# CMD ["node", ".output/server/index.mjs"]

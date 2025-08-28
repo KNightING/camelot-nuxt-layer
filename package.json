@@ -1,0 +1,51 @@
+{
+  "name": "camelot-nuxt3-layer",
+  "type": "module",
+  "version": "4.0.3.0",
+  "main": "./nuxt.config.ts",
+  "types": "./types/index.d.ts",
+  "scripts": {
+    "dev": "nuxi dev .playground",
+    "build": "nuxt build .playground",
+    "generate": "nuxt generate .playground",
+    "preview": "nuxt preview .playground",
+    "lint": "eslint .",
+    "postinstall": "nuxt prepare .playground",
+    "fix": "eslint . --fix --quiet",
+    "fix-dry-run": "eslint . --fix-dry-run --quiet",
+    "generateModelDeclarations": "tsc --declaration --emitDeclarationOnly --outDir types models/**/*.ts"
+  },
+  "devDependencies": {
+    "@iconify-json/ic": "^1.2.4",
+    "@iconify-json/material-symbols": "^1.2.33",
+    "@nuxt/eslint": "^1.9.0",
+    "@nuxtjs/i18n": "10.0.6",
+    "@pinia/nuxt": "0.11.2",
+    "@vueuse/core": "^13.8.0",
+    "@vueuse/nuxt": "^13.8.0",
+    "eslint": "^9.34.0",
+    "nuxt": "4.0.3",
+    "tailwindcss": "4.1.12",
+    "unplugin-icons": "^22.2.0",
+    "unplugin-vue-components": "^29.0.0"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "4.1.12",
+    "@vuepic/vue-datepicker": "^11.0.2",
+    "@vueuse/components": "^13.8.0",
+    "@vueuse/integrations": "^13.8.0",
+    "change-case": "^5.4.4",
+    "pinia": "^3.0.3",
+    "pinia-plugin-persistedstate": "^4.5.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "esbuild",
+      "vue-demi"
+    ],
+    "ignoredBuiltDependencies": [
+      "@tailwindcss/oxide"
+    ]
+  }
+}
