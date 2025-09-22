@@ -2,6 +2,7 @@
   <dialog
     ref="dialog"
     class="bg-transparent max-h-full max-w-full w-screen h-screen "
+    @keydown.escape="onEscapeKeyDown"
   >
     <div
       class="flex items-center justify-center w-full h-full"
@@ -34,6 +35,14 @@ import IMaterialSymbolsClose from '~icons/material-symbols/close'
 const props = defineProps<{
   disableCloseCross?: boolean
   closeOnBackgroundClick?: boolean
+  closeByEscapeKey?: boolean
+}>()
+
+const emits = defineEmits<{
+  beforeOpen: []
+  beforeClose: []
+  opened: []
+  closed: []
 }>()
 
 const open = defineModel<boolean>('open', { default: false })
@@ -44,9 +53,13 @@ watch([open, dialog], ([open, dialog]) => {
   if (!dialog) return
 
   if (open) {
+    emits('beforeOpen')
     dialog.showModal()
+    emits('opened')
   } else {
+    emits('beforeClose')
     dialog.close()
+    emits('closed')
   }
 }, { immediate: true })
 
@@ -54,6 +67,14 @@ const onBackgroundClick = () => {
   if (props.closeOnBackgroundClick) {
     open.value = false
   }
+}
+
+const onEscapeKeyDown = (event: KeyboardEvent) => {
+  if (props.closeByEscapeKey) {
+    open.value = false
+    return
+  }
+  event.preventDefault()
 }
 </script>
 

@@ -65,6 +65,7 @@ export type ApiFetchOptions<
   onResponses?: OnResponse<DataT>[]
   onResponseErrors?: OnResponseError<DataT>[]
   addSecureHeaderRequest?: boolean
+  transDateKeys?: string[]
 }
 
 const useApiFetch = <DataT>(
@@ -78,6 +79,29 @@ const useApiFetch = <DataT>(
   options.cachePolicy = options.cachePolicy ?? 'none'
   options.contentType = options.contentType ?? ContentType.Json
   options.addSecureHeaderRequest = options.addSecureHeaderRequest ?? true
+
+  if (options && options.transDateKeys && options.transDateKeys.length > 0) {
+    const reviveDatesByKeys = (obj: any, keys: string[]) => {
+      if (!obj || typeof obj !== 'object') return obj
+
+      for (const key of keys) {
+        if (key in obj && typeof obj[key] === 'string') {
+          obj[key] = new Date(obj[key])
+        }
+      }
+      return obj
+    }
+
+    options.transform = (response) => {
+      const dateKeys = options?.transDateKeys || []
+      if (Array.isArray(response)) {
+        response.forEach(item => reviveDatesByKeys(item, dateKeys))
+      } else {
+        reviveDatesByKeys(response, dateKeys)
+      }
+      return response
+    }
+  }
 
   const use = (coverOptions: ApiFetchOptions<DataT> = {}) => useFetch(
     url,
@@ -241,6 +265,14 @@ const useApiFetch = <DataT>(
               await onResponseError(context)
             }
           }
+        },
+        parseResponse: (response) => {
+          const json = JSON.parse(response) as DataT
+          const oOptions = toValue(options)
+          if (response && oOptions && oOptions?.transform) {
+            return oOptions.transform(json)
+          }
+          return json
         },
         ...coverOptions,
       })
