@@ -85,7 +85,8 @@ const useApiFetch = <DataT>(
       if (!obj || typeof obj !== 'object') return obj
 
       for (const key of keys) {
-        if (key in obj && typeof obj[key] === 'string') {
+        if (key in obj
+          && (typeof obj[key] === 'string' || typeof obj[key] === 'number' || obj[key] instanceof Date)) {
           obj[key] = new Date(obj[key])
         }
       }
