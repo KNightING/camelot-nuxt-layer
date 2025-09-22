@@ -19,18 +19,18 @@
     "@iconify-json/ic": "^1.2.4",
     "@iconify-json/material-symbols": "^1.2.33",
     "@nuxt/eslint": "^1.9.0",
-    "@nuxtjs/i18n": "10.0.6",
+    "@nuxtjs/i18n": "10.1.0",
     "@pinia/nuxt": "0.11.2",
     "@vueuse/core": "^13.8.0",
     "@vueuse/nuxt": "^13.8.0",
     "eslint": "^9.34.0",
-    "nuxt": "4.0.3",
-    "tailwindcss": "4.1.12",
+    "nuxt": "4.1.2",
+    "tailwindcss": "4.1.13",
     "unplugin-icons": "^22.2.0",
     "unplugin-vue-components": "^29.0.0"
   },
   "dependencies": {
-    "@tailwindcss/vite": "4.1.12",
+    "@tailwindcss/vite": "4.1.13",
     "@vuepic/vue-datepicker": "^11.0.2",
     "@vueuse/components": "^13.8.0",
     "@vueuse/integrations": "^13.8.0",
@@ -47,5 +47,6 @@
     "ignoredBuiltDependencies": [
       "@tailwindcss/oxide"
     ]
-  }
+  },
+  "packageManager": "pnpm@10.14.0+sha512.ad27a79641b49c3e481a16a805baa71817a04bbe06a38d17e60e2eaee83f6a146c6a688125f5792e48dd5ba30e7da52a5cda4c3992b9ccf333f9ce223af84748"
 }
