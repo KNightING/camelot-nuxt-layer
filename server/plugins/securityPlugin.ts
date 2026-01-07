@@ -5,7 +5,9 @@ const SCRIPT_RE = /<script([^>]*?>)/gi
 const STYLE_RE = /<style([^>]*?>)/gi
 
 export default defineNitroPlugin((nitroApp) => {
-  if (!useRuntimeConfig().securityPlugin.enabled) {
+  const runtimeConfig = useRuntimeConfig()
+
+  if (!runtimeConfig.securityPlugin.enabled) {
     return
   }
 
@@ -14,7 +16,8 @@ export default defineNitroPlugin((nitroApp) => {
   }
 
   nitroApp.hooks.hook('request', async (event) => {
-    if (!useRuntimeConfig().securityPlugin.useNonce) return
+    console.log('request hook for security plugin')
+    if (!runtimeConfig.securityPlugin.useNonce) return
     if (event.context.security?.nonce) {
       // When rendering server-only (NuxtIsland) components, each component will trigger a request event.
       // The request context is shared between the event that renders the actual page and the island request events.
@@ -28,7 +31,7 @@ export default defineNitroPlugin((nitroApp) => {
 
   // Set the nonce attribute on all script, style, and link tags.
   nitroApp.hooks.hook('render:html', (html, { event }) => {
-    if (!useRuntimeConfig().securityPlugin.useNonce) return
+    if (!runtimeConfig.securityPlugin.useNonce) return
     const nonce = event.context.security!.nonce!
     // Scan all relevant sections of the NuxtRenderHtmlContext
     type Section = 'body' | 'bodyAppend' | 'bodyPrepend' | 'head'
@@ -60,8 +63,9 @@ export default defineNitroPlugin((nitroApp) => {
   })
 
   nitroApp.hooks.hook('beforeResponse', (event) => {
+    console.log('Applying security headers')
     let nonce: string | undefined = undefined
-    if (useRuntimeConfig().securityPlugin.useNonce) {
+    if (runtimeConfig.securityPlugin.useNonce) {
       nonce = event.context.security!.nonce!
     }
 
@@ -84,64 +88,20 @@ export default defineNitroPlugin((nitroApp) => {
       event.node.res.setHeader(key, value)
     }
   })
-
-  // nitroApp.hooks.hook('render:response', (response, { event }) => {
-  //   let cacheControl = 'max-age=600'
-
-  //   if (response.headers && response.headers['content-type'] === 'text/html;charset=utf-8') {
-  //     cacheControl = 'no-store'
-  //   }
-
-  //   const header = {
-  //     'X-Content-Type-Options': 'nosniff',
-  //     'Referrer-Policy': 'same-origin',
-  //     'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload',
-  //     'Cache-Control': cacheControl,
-  //     'Content-Security-Policy': getCspString(),
-  //   }
-  //   response.headers = { ...(response.headers ?? {}), ...header }
-  // })
 })
-
-const cspImgSrc: string[] = [
-  'data:',
-]
-
-const cspFontSrc: string[] = [
-  'data:',
-  'https://fonts.gstatic.com/',
-  'http://fonts.gstatic.com/',
-]
-
-const cspFrameSrc: string[] = [
-  '\'unsafe-inline\'',
-]
-
-const cspScriptSrc: string[] = [
-  '\'unsafe-inline\'',
-]
-
-const cspStyleSrc: string[] = [
-  'https://fonts.googleapis.com',
-  '\'unsafe-inline\'',
-]
-
-const cspConnectSrc: string[] = [
-]
-
-const cspFrameAncestors: string[] = []
 
 const combineCsp = (origin: string[], add: string[]) => {
   const newCspArray: string[] = [
     ...origin,
   ]
 
-  for (const url of add) {
-    if (url) {
+  for (const source of add) {
+    if (source) {
       try {
-        newCspArray.push(new URL(url).origin)
+        newCspArray.push(new URL(source).origin)
       } catch (e) {
-        //
+        // check is source is 'self' or other keywords
+        newCspArray.push(source)
       }
     }
   }
@@ -154,13 +114,19 @@ const getCspString = (nonce: string | undefined) => {
 
   const config = useRuntimeConfig()
 
-  const font = combineCsp(cspFontSrc, config.securityPlugin.contentSecurityPolicy.font)
+  const font = combineCsp([
+    'data:',
+    'https://fonts.gstatic.com/',
+    'http://fonts.gstatic.com/',
+  ], config.securityPlugin.contentSecurityPolicy.font)
   result += `font-src 'self' ${font.join(' ')}; `
 
-  const frame = combineCsp(cspFrameSrc, config.securityPlugin.contentSecurityPolicy.frame)
+  const frame = combineCsp([
+    '\'unsafe-inline\'',
+  ], config.securityPlugin.contentSecurityPolicy.frame)
   result += `frame-src 'self' ${frame.join(' ')}; `
 
-  const frameAncestors = combineCsp(cspFrameAncestors, config.securityPlugin.contentSecurityPolicy.frameAncestors)
+  const frameAncestors = combineCsp([], config.securityPlugin.contentSecurityPolicy.frameAncestors)
   result += `frame-ancestors 'self' ${frameAncestors.join(' ')}; `
 
   const media = combineCsp([], config.securityPlugin.contentSecurityPolicy.media)
@@ -172,10 +138,10 @@ const getCspString = (nonce: string | undefined) => {
   const manifest = combineCsp([], config.securityPlugin.contentSecurityPolicy.manifest)
   result += `manifest-src 'self' ${manifest.join(' ')}; `
 
-  const worker = combineCsp([], config.securityPlugin.contentSecurityPolicy.worker)
+  const worker = combineCsp(['\'unsafe-inline\'', '\'wasm-unsafe-eval\'', 'blob:'], config.securityPlugin.contentSecurityPolicy.worker)
   result += `worker-src 'self' ${worker.join(' ')}; `
 
-  const script = combineCsp(cspScriptSrc, config.securityPlugin.contentSecurityPolicy.script)
+  const script = combineCsp(['\'unsafe-inline\''], config.securityPlugin.contentSecurityPolicy.script)
 
   if (nonce) {
     result += `script-src 'self' ${script.join(' ')} 'nonce-${nonce}' 'strict-dynamic'; `
@@ -183,13 +149,18 @@ const getCspString = (nonce: string | undefined) => {
     result += `script-src 'self' ${script.join(' ')}; `
   }
 
-  const style = combineCsp(cspStyleSrc, config.securityPlugin.contentSecurityPolicy.style)
+  const style = combineCsp([
+    'https://fonts.googleapis.com',
+    '\'unsafe-inline\'',
+  ], config.securityPlugin.contentSecurityPolicy.style)
   result += `style-src 'self' ${style.join(' ')}; `
 
-  const img = combineCsp(cspImgSrc, config.securityPlugin.contentSecurityPolicy.img)
+  const img = combineCsp([
+    'data:',
+  ], config.securityPlugin.contentSecurityPolicy.img)
   result += `img-src 'self' ${img.join(' ')}; `
 
-  const connect = combineCsp(cspConnectSrc, config.securityPlugin.contentSecurityPolicy.connect)
+  const connect = combineCsp([], config.securityPlugin.contentSecurityPolicy.connect)
   result += `connect-src 'self' ${connect.join(' ')}; `
   return result
 }

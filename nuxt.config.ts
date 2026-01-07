@@ -131,7 +131,9 @@ export default defineNuxtConfig({
   nitro: {
     esbuild: {
       options: {
-        drop: ['console'],
+        drop: dropCode
+          ? ['console']
+          : [],
       },
     },
   },
