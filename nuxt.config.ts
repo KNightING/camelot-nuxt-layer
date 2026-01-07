@@ -122,6 +122,10 @@ export default defineNuxtConfig({
     },
   },
 
+  build: {
+    transpile: ['@vuepic/vue-datepicker'],
+  },
+
   compatibilityDate: '2025-04-09',
 
   nitro: {

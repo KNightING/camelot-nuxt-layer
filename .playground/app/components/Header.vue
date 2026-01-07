@@ -14,7 +14,7 @@
         <div
           class="py-8 transition-all duration-300"
           :class="{
-            '!py-4': smallerHeader,
+            'py-4!': smallerHeader,
           }"
         >
           <div class="flex">

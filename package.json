@@ -17,26 +17,26 @@
   },
   "devDependencies": {
     "@iconify-json/ic": "^1.2.4",
-    "@iconify-json/material-symbols": "^1.2.33",
-    "@nuxt/eslint": "^1.9.0",
-    "@nuxtjs/i18n": "10.1.0",
-    "@pinia/nuxt": "0.11.2",
-    "@vueuse/core": "^13.8.0",
-    "@vueuse/nuxt": "^13.8.0",
-    "eslint": "^9.34.0",
-    "nuxt": "4.1.2",
-    "tailwindcss": "4.1.13",
-    "unplugin-icons": "^22.2.0",
-    "unplugin-vue-components": "^29.0.0"
+    "@iconify-json/material-symbols": "^1.2.50",
+    "@nuxt/eslint": "^1.12.1",
+    "@nuxtjs/i18n": "10.2.1",
+    "@pinia/nuxt": "0.11.3",
+    "@vueuse/core": "^14.1.0",
+    "@vueuse/nuxt": "^14.1.0",
+    "eslint": "^9.39.2",
+    "nuxt": "4.2.2",
+    "tailwindcss": "4.1.18",
+    "unplugin-icons": "^22.5.0",
+    "unplugin-vue-components": "^30.0.0"
   },
   "dependencies": {
-    "@tailwindcss/vite": "4.1.13",
-    "@vuepic/vue-datepicker": "^11.0.2",
-    "@vueuse/components": "^13.8.0",
-    "@vueuse/integrations": "^13.8.0",
+    "@tailwindcss/vite": "4.1.18",
+    "@vuepic/vue-datepicker": "^12.1.0",
+    "@vueuse/components": "^14.1.0",
+    "@vueuse/integrations": "^14.1.0",
     "change-case": "^5.4.4",
-    "pinia": "^3.0.3",
-    "pinia-plugin-persistedstate": "^4.5.0"
+    "pinia": "^3.0.4",
+    "pinia-plugin-persistedstate": "^4.7.1"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
@@ -48,5 +48,5 @@
       "@tailwindcss/oxide"
     ]
   },
-  "packageManager": "pnpm@10.14.0+sha512.ad27a79641b49c3e481a16a805baa71817a04bbe06a38d17e60e2eaee83f6a146c6a688125f5792e48dd5ba30e7da52a5cda4c3992b9ccf333f9ce223af84748"
+  "packageManager": "pnpm@10.27.0"
 }

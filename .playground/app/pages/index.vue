@@ -135,7 +135,9 @@
 
     isOnBottom: {{ isOnBottom }}
 
+    <!-- <ClientOnly> -->
     <CamelotDate />
+    <!-- </ClientOnly> -->
 
     <CamelotSelectV2
       v-model="department"
