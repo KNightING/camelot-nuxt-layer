@@ -30,8 +30,6 @@
 </template>
 
 <script setup lang="ts" generic="T">
-import type { SelectOptions } from '../../types/selectOptions'
-
 const props = withDefaults(
   defineProps<{
     options?: SelectOptions<T>
