@@ -19,7 +19,7 @@
           value: 'test',
         }"
       >
-        <div class="bg-transparent text-on-surface overflow-hidden rounded-lg drop-shadow">
+        <div class="bg-transparent text-on-surface overflow-hidden rounded-lg shadow">
           <div
             class="flex flex-col items-stretch"
           >

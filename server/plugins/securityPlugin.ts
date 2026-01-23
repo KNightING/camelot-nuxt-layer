@@ -16,7 +16,6 @@ export default defineNitroPlugin((nitroApp) => {
   }
 
   nitroApp.hooks.hook('request', async (event) => {
-    console.log('request hook for security plugin')
     if (!runtimeConfig.securityPlugin.useNonce) return
     if (event.context.security?.nonce) {
       // When rendering server-only (NuxtIsland) components, each component will trigger a request event.
@@ -63,7 +62,6 @@ export default defineNitroPlugin((nitroApp) => {
   })
 
   nitroApp.hooks.hook('beforeResponse', (event) => {
-    console.log('Applying security headers')
     let nonce: string | undefined = undefined
     if (runtimeConfig.securityPlugin.useNonce) {
       nonce = event.context.security!.nonce!

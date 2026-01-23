@@ -1,3 +1,4 @@
+import { CamelotGpu } from '../../.nuxt/components'
 <template>
   <div>
     <Header>
@@ -41,12 +42,14 @@
 
     <CamelotTabs
       v-model="tabSelected"
-      class="top-0 sticky bg-surface py-2 px-2 z-10 drop-shadow"
+      class="top-0 sticky bg-surface py-2 px-2 z-10 shadow"
+      :class="{
+        'drop-shadow': expanded,
+      }"
       :options="data"
       display-key="name"
       trigger="hover"
     />
-
     <CamelotInput />
 
     <CamelotSelectV2

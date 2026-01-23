@@ -39,10 +39,10 @@
       <div
         v-if="isReady && showFullImage"
         ref="imgPopupEl"
-        class="bg-black z-30 fixed rounded-lg border-4 border-white overflow-hidden drop-shadow-md pointer-events-none"
+        class="bg-black z-30 fixed rounded-lg border-4 border-white overflow-hidden shadow-md pointer-events-none"
         :class="{
-          'max-w-[500px]': isLandscapeImage,
-          'max-h-[500px]': !isLandscapeImage,
+          'max-w-125': isLandscapeImage,
+          'max-h-125': !isLandscapeImage,
         }"
         :style="{
           top: `${popupTop}px`,

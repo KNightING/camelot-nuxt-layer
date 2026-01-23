@@ -25,9 +25,9 @@
             'mx-1': !disabledAutoSpace && (x === 0 || isRight),
             'right-0': isRight,
             'left-0': !isRight,
-            'bottom-[100%]': isBottom,
-            'top-[100%]': !isBottom,
-            'drop-shadow': !disabledShadow,
+            'bottom-full': isBottom,
+            'top-full': !isBottom,
+            'shadow': !disabledShadow,
             'min-w-full': !disabledSameTargetWidth,
           }"
         >
@@ -201,7 +201,7 @@ watch(targetRef, (targetRef) => {
     const scrollParent = useScrollParent(targetRef)
 
     if (scrollParent.value) {
-      console.log(scrollParent.value)
+      // console.log(scrollParent.value)
       scrollParent.value.addEventListener('scroll', () => {
         // 在dialog中 關閉popup， 目前顯示有問題
         if (!props.disabledCloseWhenScrolling || parentIsDialog.value) {

@@ -33,7 +33,6 @@ export const useInfinitePage = (options: {
   // const { arrivedState } = useScroll(document, { offset: { bottom: 20 } })
 
   watch(isOnBottom, (isOnBottom) => {
-    console.log('test', isOnBottom)
     if (isOnBottom) {
       nextPageThrottleFn()
     }
