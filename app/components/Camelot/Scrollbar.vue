@@ -56,7 +56,8 @@ function updateScrollbar() {
     thumbStyle.left = `${thumbLeft}px`
     thumbStyle.height = '100%'
     thumbStyle.top = '0'
-  } else {
+  }
+  else {
     // 垂直模式
     const { scrollTop, scrollHeight, clientHeight } = el
     const thumbHeight = (clientHeight / scrollHeight) * clientHeight
@@ -105,7 +106,8 @@ function onThumbMove(e: MouseEvent) {
     const deltaX = e.clientX - startPos
     const scrollRatio = deltaX / trackWidth
     el.scrollLeft = startScroll + scrollRatio * (scrollWidth - clientWidth)
-  } else {
+  }
+  else {
     const { scrollHeight, clientHeight } = el
     const thumbHeight = (clientHeight / scrollHeight) * clientHeight
     const trackHeight = clientHeight - thumbHeight

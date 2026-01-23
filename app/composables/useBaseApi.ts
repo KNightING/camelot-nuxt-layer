@@ -97,7 +97,8 @@ const useApiFetch = <DataT>(
       const dateKeys = options?.transDateKeys || []
       if (Array.isArray(response)) {
         response.forEach(item => reviveDatesByKeys(item, dateKeys))
-      } else {
+      }
+      else {
         reviveDatesByKeys(response, dateKeys)
       }
       return response
@@ -207,7 +208,8 @@ const useApiFetch = <DataT>(
 
     if (isRef(options.headers)) {
       header = toValue(options.headers) as HeadersInit
-    } else {
+    }
+    else {
       header = options.headers as HeadersInit
     }
 
@@ -218,7 +220,8 @@ const useApiFetch = <DataT>(
 
     if (realUrl instanceof Request) {
       realUrl = realUrl.url
-    } else if (realUrl instanceof Function) {
+    }
+    else if (realUrl instanceof Function) {
       realUrl = realUrl()
     }
 

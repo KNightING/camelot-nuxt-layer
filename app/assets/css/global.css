@@ -5,278 +5,277 @@
   md.sys.color.primary
   md.ref.palette.primary40
 */
-  --camelot-m3-primary: #6750a4;
+  --cml-c-m3-primary: #6750a4;
 
   /*
   md.sys.color.primary-container
   md.ref.palette.primary90
 */
-  --camelot-m3-primary-container: #eaddff;
+  --cml-c-m3-primary-container: #eaddff;
 
   /*
   md.sys.color.on-primary
   md.ref.palette.primary100
 */
-  --camelot-m3-on-primary: #ffffff;
+  --cml-c-m3-on-primary: #ffffff;
 
   /*
   md.sys.color.on-primary-container
   md.ref.palette.primary10
 */
-  --camelot-m3-on-primary-container: #21005e;
+  --cml-c-m3-on-primary-container: #21005e;
 
   /*
   md.sys.color.inverse-primary
   md.ref.palette.primary80
 */
-  --camelot-m3-inverse-primary: #d0bcff;
+  --cml-c-m3-inverse-primary: #d0bcff;
 
   /*
   md.sys.color.secondary
   md.ref.palette.secondary40
 */
-  --camelot-m3-secondary: #625b71;
+  --cml-c-m3-secondary: #625b71;
 
   /*
   md.sys.color.secondary-container
   md.ref.palette.secondary90
 */
-  --camelot-m3-secondary-container: #e8def8;
+  --cml-c-m3-secondary-container: #e8def8;
 
   /*
   md.sys.color.on-secondary
   md.ref.palette.secondary100
 */
-  --camelot-m3-on-secondary: #ffffff;
+  --cml-c-m3-on-secondary: #ffffff;
 
   /*
   md.sys.color.on-secondary-container
   md.ref.palette.secondary10
 */
-  --camelot-m3-on-secondary-container: #1e192b;
+  --cml-c-m3-on-secondary-container: #1e192b;
 
   /*
   md.sys.color.tertiary
   md.ref.palette.tertiary40
 */
-  --camelot-m3-tertiary: #7d5260;
+  --cml-c-m3-tertiary: #7d5260;
 
   /*
   md.sys.color.tertiary-container
   md.ref.palette.tertiary90
 */
-  --camelot-m3-tertiary-container: #ffd8e4;
+  --cml-c-m3-tertiary-container: #ffd8e4;
 
   /*
   md.sys.color.on-tertiary
   md.ref.palette.tertiary100
 */
-  --camelot-m3-on-tertiary: #ffffff;
+  --cml-c-m3-on-tertiary: #ffffff;
 
   /*
   md.sys.color.on-tertiary-container
   md.ref.palette.tertiary10
 */
-  --camelot-m3-on-tertiary-container: #370b1e;
+  --cml-c-m3-on-tertiary-container: #370b1e;
 
   /*
   md.sys.color.surface
   md.ref.palette.neutral98
 */
-  --camelot-m3-surface: #fef7ff;
+  --cml-c-m3-surface: #fef7ff;
 
   /*
   md.sys.color.surface-dim
   md.ref.palette.neutral87
 */
-  --camelot-m3-surface-dim: #ded8e1;
+  --cml-c-m3-surface-dim: #ded8e1;
 
   /*
   md.sys.color.surface-bright
   md.ref.palette.neutral98
 */
-  --camelot-m3-surface-bright: #fef7ff;
+  --cml-c-m3-surface-bright: #fef7ff;
 
   /*
   md.sys.color.surface-container-lowest
   md.ref.palette.neutral100
 */
-  --camelot-m3-surface-container-lowest: #ffffff;
+  --cml-c-m3-surface-container-lowest: #ffffff;
 
   /*
   md.sys.color.surface-container-low
   md.ref.palette.neutral96
 */
-  --camelot-m3-surface-container-low: #f7f2fa;
+  --cml-c-m3-surface-container-low: #f7f2fa;
 
   /*
   md.sys.color.surface-container
   md.ref.palette.neutral94
 */
-  --camelot-m3-surface-container: #f3edf7;
+  --cml-c-m3-surface-container: #f3edf7;
 
   /*
   md.sys.color.surface-container-high
   md.ref.palette.neutral92
 */
-  --camelot-m3-surface-container-high: #ece6f0;
+  --cml-c-m3-surface-container-high: #ece6f0;
 
   /*
   md.sys.color.surface-container-highest
   md.ref.palette.neutral90
 */
-  --camelot-m3-surface-container-highest: #e6e0e9;
+  --cml-c-m3-surface-container-highest: #e6e0e9;
 
   /*
   md.sys.color.on-surface
   md.ref.palette.neutral10
 */
-  --camelot-m3-on-surface: #1c1b1f;
+  --cml-c-m3-on-surface: #1c1b1f;
 
   /*
   md.sys.color.on-surface-variant
   md.ref.palette.neutral-variant30
 */
-  --camelot-m3-on-surface-variant: #49454e;
+  --cml-c-m3-on-surface-variant: #49454e;
 
   /*
   md.sys.color.inverse-surface
   md.ref.palette.neutral20
 */
-  --camelot-m3-inverse-surface: #313033;
+  --cml-c-m3-inverse-surface: #313033;
 
   /*
   md.sys.color.inverse-on-surface
   md.ref.palette.neutral95
 */
-  --camelot-m3-inverse-on-surface: #f4eff4;
-
+  --cml-c-m3-inverse-on-surface: #f4eff4;
 
   /*
   md.sys.color.error
   md.ref.palette.error40
 */
-  --camelot-m3-error: #b3261e;
+  --cml-c-m3-error: #b3261e;
 
   /*
   md.sys.color.error-container
   md.ref.palette.error90
 */
-  --camelot-m3-error-container: #f9dedc;
+  --cml-c-m3-error-container: #f9dedc;
 
   /*
   md.sys.color.on-error
   md.ref.palette.error100
 */
-  --camelot-m3-on-error: #ffffff;
+  --cml-c-m3-on-error: #ffffff;
 
   /*
   md.sys.color.on-error-container
   md.ref.palette.error10
 */
-  --camelot-m3-on-error-container: #410e0b;
+  --cml-c-m3-on-error-container: #410e0b;
 
   /*
   md.sys.color.outline
   md.ref.palette.neutral-variant50
 */
-  --camelot-m3-outline: #79747e;
+  --cml-c-m3-outline: #79747e;
 
   /*
   md.sys.color.outline-variant
   md.ref.palette.neutral-variant80
 */
-  --camelot-m3-outline-variant: #c4c7c5;
+  --cml-c-m3-outline-variant: #c4c7c5;
 
   /*
   md.sys.color.shadow
   md.ref.palette.neutral0
 */
-  --camelot-m3-shadow: #000000;
+  --cml-c-m3-shadow: #000000;
 
   /*
   md.sys.color.surface-tint-color
   md.sys.color.primary
 */
-  --camelot-m3-surface-tint: #6750a4;
+  --cml-c-m3-surface-tint: #6750a4;
 
   /*
   md.sys.color.scrim
   md.ref.palette.neutral0
 */
-  --camelot-m3-scrim: #000000;
+  --cml-c-m3-scrim: #000000;
 }
 
 /* dark mode */
 /* @media (prefers-color-scheme: dark) {
   :root {
-    --camelot-m3-primary: #d0bcff;
+    --cml-c-m3-primary: #d0bcff;
 
---camelot-m3-primary-container: #4f378b;
+--cml-c-m3-primary-container: #4f378b;
 
---camelot-m3-on-primary: #371e73;
+--cml-c-m3-on-primary: #371e73;
 
---camelot-m3-on-primary-container: #eaddff;
+--cml-c-m3-on-primary-container: #eaddff;
 
---camelot-m3-inverse-primary: #6750a4;
+--cml-c-m3-inverse-primary: #6750a4;
 
---camelot-m3-secondary: #ccc2dc;
+--cml-c-m3-secondary: #ccc2dc;
 
---camelot-m3-secondary-container: #4a4458;
+--cml-c-m3-secondary-container: #4a4458;
 
---camelot-m3-on-secondary: #332d41;
+--cml-c-m3-on-secondary: #332d41;
 
---camelot-m3-on-secondary-container: #e8def8;
+--cml-c-m3-on-secondary-container: #e8def8;
 
---camelot-m3-tertiary: #efb8c8;
+--cml-c-m3-tertiary: #efb8c8;
 
---camelot-m3-tertiary-container: #633b48;
+--cml-c-m3-tertiary-container: #633b48;
 
---camelot-m3-on-tertiary: #492532;
+--cml-c-m3-on-tertiary: #492532;
 
---camelot-m3-on-tertiary-container: #ffd8e4;
+--cml-c-m3-on-tertiary-container: #ffd8e4;
 
---camelot-m3-surface: #141218;
+--cml-c-m3-surface: #141218;
 
---camelot-m3-surface-dim: #141218;
+--cml-c-m3-surface-dim: #141218;
 
---camelot-m3-surface-bright: #3b383e;
+--cml-c-m3-surface-bright: #3b383e;
 
---camelot-m3-surface-container-lowest: #0f0d13;
+--cml-c-m3-surface-container-lowest: #0f0d13;
 
---camelot-m3-surface-container-low: #1d1b20;
+--cml-c-m3-surface-container-low: #1d1b20;
 
---camelot-m3-surface-container: #211f26;
+--cml-c-m3-surface-container: #211f26;
 
---camelot-m3-surface-container-high: #2b2930;
+--cml-c-m3-surface-container-high: #2b2930;
 
---camelot-m3-surface-container-highest: #36343b;
+--cml-c-m3-surface-container-highest: #36343b;
 
---camelot-m3-on-surface: #e6e1e5;
+--cml-c-m3-on-surface: #e6e1e5;
 
---camelot-m3-on-surface-variant: #cac4d0;
+--cml-c-m3-on-surface-variant: #cac4d0;
 
---camelot-m3-inverse-surface: #e6e1e5;
+--cml-c-m3-inverse-surface: #e6e1e5;
 
---camelot-m3-inverse-on-surface: #313033;
+--cml-c-m3-inverse-on-surface: #313033;
 
---camelot-m3-error: #f2b8b5;
+--cml-c-m3-error: #f2b8b5;
 
---camelot-m3-error-container: #8c1d18;
+--cml-c-m3-error-container: #8c1d18;
 
---camelot-m3-on-error: #601410;
+--cml-c-m3-on-error: #601410;
 
---camelot-m3-on-error-container: #f9dedc;
+--cml-c-m3-on-error-container: #f9dedc;
 
---camelot-m3-outline: #938f99;
+--cml-c-m3-outline: #938f99;
 
---camelot-m3-outline-variant: #444746;
+--cml-c-m3-outline-variant: #444746;
 
---camelot-m3-shadow: #000000;
+--cml-c-m3-shadow: #000000;
 
---camelot-m3-surface-tint: #d0bcff;
+--cml-c-m3-surface-tint: #d0bcff;
 
---camelot-m3-scrim: #000000;
+--cml-c-m3-scrim: #000000;
   }
 } */
 
@@ -285,203 +284,203 @@
   md.sys.color.primary
   md.ref.palette.primary80
   */
-  --camelot-m3-primary: #d0bcff;
+  --cml-c-m3-primary: #d0bcff;
 
   /*
   md.sys.color.primary-container
   md.ref.palette.primary30
   */
-  --camelot-m3-primary-container: #4f378b;
+  --cml-c-m3-primary-container: #4f378b;
 
   /*
   md.sys.color.on-primary
   md.ref.palette.primary20
   */
-  --camelot-m3-on-primary: #371e73;
+  --cml-c-m3-on-primary: #371e73;
 
   /*
   md.sys.color.on-primary-container
   md.ref.palette.primary90
   */
-  --camelot-m3-on-primary-container: #eaddff;
+  --cml-c-m3-on-primary-container: #eaddff;
 
   /*
   md.sys.color.inverse-primary
   md.ref.palette.primary40
   */
-  --camelot-m3-inverse-primary: #6750a4;
+  --cml-c-m3-inverse-primary: #6750a4;
 
   /*
   md.sys.color.secondary
   md.ref.palette.secondary80
   */
-  --camelot-m3-secondary: #ccc2dc;
+  --cml-c-m3-secondary: #ccc2dc;
 
   /*
   md.sys.color.secondary-container
   md.ref.palette.secondary30
   */
-  --camelot-m3-secondary-container: #4a4458;
+  --cml-c-m3-secondary-container: #4a4458;
 
   /*
   md.sys.color.on-secondary
   md.ref.palette.secondary20
   */
-  --camelot-m3-on-secondary: #332d41;
+  --cml-c-m3-on-secondary: #332d41;
 
   /*
   md.sys.color.on-secondary-container
   md.ref.palette.secondary90
   */
-  --camelot-m3-on-secondary-container: #e8def8;
+  --cml-c-m3-on-secondary-container: #e8def8;
 
   /*
   md.sys.color.tertiary
   md.ref.palette.tertiary80
   */
-  --camelot-m3-tertiary: #efb8c8;
+  --cml-c-m3-tertiary: #efb8c8;
 
   /*
   md.sys.color.tertiary-container
   md.ref.palette.tertiary30
   */
-  --camelot-m3-tertiary-container: #633b48;
+  --cml-c-m3-tertiary-container: #633b48;
 
   /*
   md.sys.color.on-tertiary
   md.ref.palette.tertiary20
   */
-  --camelot-m3-on-tertiary: #492532;
+  --cml-c-m3-on-tertiary: #492532;
 
   /*
   md.sys.color.on-tertiary-container
   md.ref.palette.tertiary90
   */
-  --camelot-m3-on-tertiary-container: #ffd8e4;
+  --cml-c-m3-on-tertiary-container: #ffd8e4;
 
   /*
   md.sys.color.surface
   md.ref.palette.neutral6
   */
-  --camelot-m3-surface: #141218;
+  --cml-c-m3-surface: #141218;
 
   /*
   md.sys.color.surface-dim
   md.ref.palette.neutral6
   */
-  --camelot-m3-surface-dim: #141218;
+  --cml-c-m3-surface-dim: #141218;
 
   /*
   md.sys.color.surface-bright
   md.ref.palette.neutral24
   */
-  --camelot-m3-surface-bright: #3b383e;
+  --cml-c-m3-surface-bright: #3b383e;
 
   /*
   md.sys.color.surface-container-lowest
   md.ref.palette.neutral4
   */
-  --camelot-m3-surface-container-lowest: #0f0d13;
+  --cml-c-m3-surface-container-lowest: #0f0d13;
 
   /*
   md.sys.color.surface-container-low
   md.ref.palette.neutral10
   */
-  --camelot-m3-surface-container-low: #1d1b20;
+  --cml-c-m3-surface-container-low: #1d1b20;
 
   /*
   md.sys.color.surface-container
   md.ref.palette.neutral12
   */
-  --camelot-m3-surface-container: #211f26;
+  --cml-c-m3-surface-container: #211f26;
 
   /*
   md.sys.color.surface-container-high
   md.ref.palette.neutral17
   */
-  --camelot-m3-surface-container-high: #2b2930;
+  --cml-c-m3-surface-container-high: #2b2930;
 
   /*
   md.sys.color.surface-container-highest
   md.ref.palette.neutral22
   */
-  --camelot-m3-surface-container-highest: #36343b;
+  --cml-c-m3-surface-container-highest: #36343b;
 
   /*
   md.sys.color.on-surface
   md.ref.palette.neutral90
   */
-  --camelot-m3-on-surface: #e6e1e5;
+  --cml-c-m3-on-surface: #e6e1e5;
 
   /*
   md.sys.color.on-surface-variant
   md.ref.palette.neutral-variant80
   */
-  --camelot-m3-on-surface-variant: #cac4d0;
+  --cml-c-m3-on-surface-variant: #cac4d0;
 
   /*
   md.sys.color.inverse-surface
   md.ref.palette.neutral90
   */
-  --camelot-m3-inverse-surface: #e6e1e5;
+  --cml-c-m3-inverse-surface: #e6e1e5;
 
   /*
   md.sys.color.inverse-on-surface
   md.ref.palette.neutral20
   */
-  --camelot-m3-inverse-on-surface: #313033;
+  --cml-c-m3-inverse-on-surface: #313033;
 
   /*
   md.sys.color.error
   md.ref.palette.error80
   */
-  --camelot-m3-error: #f2b8b5;
+  --cml-c-m3-error: #f2b8b5;
 
   /*
   md.sys.color.error-container
   md.ref.palette.error30
   */
-  --camelot-m3-error-container: #8c1d18;
+  --cml-c-m3-error-container: #8c1d18;
 
   /*
   md.sys.color.on-error
   md.ref.palette.error20
   */
-  --camelot-m3-on-error: #601410;
+  --cml-c-m3-on-error: #601410;
 
   /*
   md.sys.color.on-error-container
   md.ref.palette.error90
   */
-  --camelot-m3-on-error-container: #f9dedc;
+  --cml-c-m3-on-error-container: #f9dedc;
 
   /*
   md.sys.color.outline
   md.ref.palette.neutral-variant60
   */
-  --camelot-m3-outline: #938f99;
+  --cml-c-m3-outline: #938f99;
 
   /*
   md.sys.color.outline-variant
   md.ref.palette.neutral-variant30
   */
-  --camelot-m3-outline-variant: #444746;
+  --cml-c-m3-outline-variant: #444746;
 
   /*
   md.sys.color.shadow
   md.ref.palette.neutral0
   */
-  --camelot-m3-shadow: #000000;
+  --cml-c-m3-shadow: #000000;
 
   /*
   md.sys.color.surface-tint-color
   md.sys.color.primary
   */
-  --camelot-m3-surface-tint: #d0bcff;
+  --cml-c-m3-surface-tint: #d0bcff;
 
   /*
   md.sys.color.scrim
   md.ref.palette.neutral0
   */
-  --camelot-m3-scrim: #000000;
+  --cml-c-m3-scrim: #000000;
 }

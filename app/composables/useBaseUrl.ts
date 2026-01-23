@@ -4,7 +4,8 @@ export const useBaseUrl = (): string => {
   if (isClient) {
     const config = useRuntimeConfig()
     return `${window.location.origin}${config.app.baseURL}`
-  } else {
+  }
+  else {
     return ''
   }
 }

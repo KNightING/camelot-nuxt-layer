@@ -30,7 +30,8 @@ export const useLoading = () => {
         ...state.value,
         tags: state.value.tags.filter(value => value !== tag),
       }
-    } else {
+    }
+    else {
       state.value = {
         ...state.value,
         tags: [],
@@ -88,7 +89,8 @@ export const useLoading = () => {
       refs.forEach((ref, index) => {
         watchToggle(`tag:${index}`, ref, options)
       })
-    } else {
+    }
+    else {
       watchToggle(tag, refs, options)
     }
   }
@@ -161,11 +163,13 @@ export const running = async <R = void>(
   pendingRef.value = true
   try {
     return await fn()
-  } catch (ex) {
+  }
+  catch (ex) {
     if (errorFn) {
       await errorFn(ex)
     }
-  } finally {
+  }
+  finally {
     if (finallyFn) {
       finallyFn()
     }

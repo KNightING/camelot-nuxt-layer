@@ -55,14 +55,16 @@ export const useInputValidationController = () => {
         if (!result) {
           hasError = true
         }
-      } else if (!result.valid) {
+      }
+      else if (!result.valid) {
         hasError = true
         if (scrollToFirstElement && result.element) {
           const elementValue = toValue(result.element)
           let element: Element | undefined
           if (elementValue instanceof Element) {
             element = elementValue
-          } else {
+          }
+          else {
             // VueInstance
             element = elementValue?.$el
           }

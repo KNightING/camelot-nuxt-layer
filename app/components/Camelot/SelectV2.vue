@@ -141,7 +141,8 @@ onUpdated(() => {
   if (props.default && typeof model.value === 'undefined') {
     if (props.options.length > 0 && props.options[0]) {
       model.value = props.options[0].value
-    } else {
+    }
+    else {
       model.value = undefined
     }
   }
@@ -150,7 +151,7 @@ onUpdated(() => {
 
 <style scoped>
 .options-container {
-  --c-select-background: var(--camelot-m3-surface);
+  --c-select-background: var(--cml-c-m3-surface);
   background: rgba(var(--c-select-background), 1);
   background: white;
   display: flex;

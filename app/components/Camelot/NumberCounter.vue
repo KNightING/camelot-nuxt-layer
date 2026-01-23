@@ -101,10 +101,12 @@ watch(props, (props) => {
       const calcStep = 1 / Math.pow(10, stepString.length - dotIndex - 1)
       if (props.usedMinStepByValue && usedStep && calcStep > usedStep) {
         absStep.value = usedStep
-      } else {
+      }
+      else {
         absStep.value = calcStep
       }
-    } else if (props.usedMinStepByValue && usedStep) {
+    }
+    else if (props.usedMinStepByValue && usedStep) {
       absStep.value = usedStep
     }
   }
@@ -152,11 +154,11 @@ const onPlusClick = () => {
 }
 
 .container:active {
-  border-color: rgba(from var(--camelot-m3-primary) r g b / 1);
+  border-color: rgba(from var(--cml-c-m3-primary) r g b / 1);
 }
 
 .container-focus {
-  border-color: rgba(from var(--camelot-m3-primary) r g b / 1);
+  border-color: rgba(from var(--cml-c-m3-primary) r g b / 1);
 }
 
 input {

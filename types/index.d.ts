@@ -4,7 +4,7 @@
  *
  * nuxt config imports.dirs 加入路徑即可
  */
-declare global{
+declare global {
   export * from './selectOptions'
 }
 

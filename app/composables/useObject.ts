@@ -52,7 +52,8 @@ const diff = <T>(oldObj: T, newObj: T): PartialRecursive<T> => {
     if (diffResult) {
       if (diffResult === true) {
         result[key] = newValue as any
-      } else {
+      }
+      else {
         result[key] = diffResult as any
       }
     }
@@ -69,7 +70,8 @@ const isObjectDiff = (
     if (isDate(oldValue) && isDate(newValue)) {
       if (oldValue.getTime() !== newValue.getTime()) {
         return true
-      } else {
+      }
+      else {
         return false
       }
     }

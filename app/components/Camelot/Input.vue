@@ -2,11 +2,16 @@
   <label class="flex items-center w-full min-w-10">
     <slot name="label">
       <template v-if="label">
-        <span class="textarea-md text-app-secondary-gray w-[14ch]">{{ label }}<span v-if="required"
-            class="text-app-error ml-0.5">*</span></span>
+        <span class="textarea-md text-app-secondary-gray w-[14ch]">{{ label }}<span
+          v-if="required"
+          class="text-app-error ml-0.5"
+        >*</span></span>
       </template>
     </slot>
-    <div ref="target" class="relative flex-1">
+    <div
+      ref="target"
+      class="relative flex-1"
+    >
       <div
         class="w-full flex bg-white text-app-text font-normal justify-start items-center outline-none caret-primary accent-app-primary"
         :class="{
@@ -15,37 +20,65 @@
           'h-11 px-4 text-base': size === 'basic',
           'h-9 px-2 text-sm': size === 'small',
           '!bg-app-disabled-bg !border-app-disabled-border !text-app-disabled-text': disabled,
-        }" @click="toggle">
+        }"
+        @click="toggle"
+      >
         <slot name="before">
           <template v-if="mark === 'money'">
             <span class="text-app-secondary-gray mr-1.5">$</span>
           </template>
         </slot>
-        <input ref="input" v-model="model" class="flex-1 outline-none border-none min-w-0 w-full" :class="{
-          'select-none pointer-events-none': mode === 'only-select',
-        }" :disabled="disabled || mode === 'only-select'" :placeholder="placeholder" @focus="onFocus" @blur="onBlur"
-          @input="onInput">
+        <input
+          ref="input"
+          v-model="model"
+          class="flex-1 outline-none border-none min-w-0 w-full"
+          :class="{
+            'select-none pointer-events-none': mode === 'only-select',
+          }"
+          :disabled="disabled || mode === 'only-select'"
+          :placeholder="placeholder"
+          @focus="onFocus"
+          @blur="onBlur"
+          @input="onInput"
+        >
         <slot name="after" />
       </div>
       <template v-if="isSelectMode">
-        <div class="absolute left-0 min-w-full w-fit z-10" :class="{
-          'bottom-[110%]': isBottom,
-          'top-[110%]': !isBottom,
-        }">
-          <div :class="{
-            close: !isOpen,
-          }" class="expanded-container">
+        <div
+          class="absolute left-0 min-w-full w-fit z-10"
+          :class="{
+            'bottom-[110%]': isBottom,
+            'top-[110%]': !isBottom,
+          }"
+        >
+          <div
+            :class="{
+              close: !isOpen,
+            }"
+            class="expanded-container"
+          >
             <div class="min-h-0">
               <div
-                class="flex overflow-x-hidden overscroll-contain overflow-y-auto max-h-[250px] bg-white rounded-lg border border-app-border flex-col justify-start items-start">
+                class="flex overflow-x-hidden overscroll-contain overflow-y-auto max-h-[250px] bg-white rounded-lg border border-app-border flex-col justify-start items-start"
+              >
                 <template v-if="options && options.length > 0">
-                  <slot name="options" :options="options">
-                    <button v-for="(option) in options" :key="option.value"
+                  <slot
+                    name="options"
+                    :options="options"
+                  >
+                    <button
+                      v-for="(option) in options"
+                      :key="option.value"
                       class="cursor-pointer flex justify-start px-4 items-center py-4 min-w-full border-b border-app-divider h-12 text-app-text bg-white hover:bg-primary/5"
                       :class="{
                         '!text-primary !bg-primary/10': option.value === selectedValue,
-                      }" @click="() => onOptionSelected(option)">
-                      <slot name="option" :option="option">
+                      }"
+                      @click="() => onOptionSelected(option)"
+                    >
+                      <slot
+                        name="option"
+                        :option="option"
+                      >
                         <span class="text-nowrap text-base font-normal">
                           {{ option.label }}
                         </span>
@@ -56,7 +89,8 @@
                 <template v-else>
                   <slot name="empty-options">
                     <div
-                      class="flex flex-col w-full justify-center items-center py-2 gap-1 text-app-secondary-gray select-none">
+                      class="flex flex-col w-full justify-center items-center py-2 gap-1 text-app-secondary-gray select-none"
+                    >
                       <i-material-symbols-error-circle-rounded class="text-2xl" />
                       無選項
                     </div>

@@ -79,7 +79,7 @@ onUpdated(() => {
 
 :deep(.ripple) {
   position: absolute;
-  background: radial-gradient(#0000, rgba(from var(--camelot-ripple-color) r g b / 1));
+  background: radial-gradient(#0000, rgba(from var(--cml-c-ripple-color) r g b / 1));
   transform: translate(-50%, -50%);
   pointer-events: none;
   border-radius: 50%;

@@ -50,7 +50,6 @@ export const useCustomColorScheme = <T>(
   config?: {
     lightColorScheme?: CustomColorScheme<T>
     darkColorScheme?: CustomColorScheme<T>
-    cssVarKeyPrefix?: string
     editable?: boolean
   },
 ) => {
@@ -102,7 +101,8 @@ export const useCustomColorScheme = <T>(
     let isDark = true
     if (store.value === 'auto') {
       isDark = system.value === 'dark'
-    } else {
+    }
+    else {
       isDark = store.value === 'dark'
     }
 
@@ -132,16 +132,15 @@ export const useCustomColorScheme = <T>(
         let cssVarOverrideTailwindKey = changeCase.value
         if (Material3ColorSchemeKeys.includes(key)) {
           cssVarOverrideTailwindKey = `--color-${cssVarOverrideTailwindKey}`
-          cssVarKey = `--camelot-m3-${cssVarKey}`
-        } else if (CamelotColorSchemeKeys.includes(key)) {
+          cssVarKey = `--cml-c-m3-${cssVarKey}`
+        }
+        // else if (CamelotColorSchemeKeys.includes(key)) {
+        //   cssVarOverrideTailwindKey = `--color-${cssVarOverrideTailwindKey}`
+        //   cssVarKey = `--cml-c-${cssVarKey}`
+        // }
+        else {
           cssVarOverrideTailwindKey = `--color-${cssVarOverrideTailwindKey}`
-          cssVarKey = `--camelot-${cssVarKey}`
-        } else if (config?.cssVarKeyPrefix) {
-          cssVarOverrideTailwindKey = `--color-${config.cssVarKeyPrefix}-${cssVarOverrideTailwindKey}`
-          cssVarKey = `--${config.cssVarKeyPrefix}-${cssVarKey}`
-        } else {
-          cssVarOverrideTailwindKey = `--color-c-${cssVarOverrideTailwindKey}`
-          cssVarKey = `--camelot-c-${cssVarKey}`
+          cssVarKey = `--cml-c-${cssVarKey}`
         }
         const cssVar = getCssVar(cssVarKey, targetRef)
         const cssVarOverrideTailwind = getCssVar(cssVarOverrideTailwindKey, target)

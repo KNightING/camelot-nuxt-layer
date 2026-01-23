@@ -53,7 +53,8 @@ const isValidKey = (
 const getDisplayLabel = (data?: T) => {
   if (data && props.displayKey && typeof data === 'object' && isValidKey(props.displayKey, data as object)) {
     return data[props.displayKey]
-  } else {
+  }
+  else {
     return data
   }
 }
@@ -86,7 +87,7 @@ watch(selectedIndex, (nV) => {
     return
   }
   const tabEl = tabsElRefs.value[nV]
-  const parentEl = tabEl.parentElement
+  const parentEl = tabEl?.parentElement
   if (!parentEl) {
     return
   }
@@ -99,7 +100,8 @@ watch(selectedIndex, (nV) => {
 
   if (scrollLeft < 0) {
     scrollLeft = 0
-  } else if (scrollLeft > parentEl.scrollWidth) {
+  }
+  else if (scrollLeft > parentEl.scrollWidth) {
     scrollLeft = parentEl.scrollWidth
   }
 
@@ -148,13 +150,13 @@ ul {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 300ms;
   user-select: none;
-  background-color: rgba(from var(--camelot-m3-surface) r g b / 1);
-  color: rgba(from var(--camelot-m3-on-surface) r g b / 1);
+  background-color: rgba(from var(--cml-c-m3-surface) r g b / 1);
+  color: rgba(from var(--cml-c-m3-on-surface) r g b / 1);
 }
 
 .tab-selected {
-  background-color: rgba(from var(--camelot-m3-primary-container) r g b / 1) !important;
-  color: rgba(from var(--camelot-m3-on-primary-container) r g b / 1) !important;
-  border-color: rgba(from var(--camelot-m3-primary-container) r g b / 1) !important;
+  background-color: rgba(from var(--cml-c-m3-primary-container) r g b / 1) !important;
+  color: rgba(from var(--cml-c-m3-on-primary-container) r g b / 1) !important;
+  border-color: rgba(from var(--cml-c-m3-primary-container) r g b / 1) !important;
 }
 </style>

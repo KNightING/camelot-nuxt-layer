@@ -87,7 +87,8 @@ watch(open, (isOpen) => {
   if (route.query[queryOptions.key] === queryOptions.value) {
     if (useRouterHistory()) {
       router.back()
-    } else {
+    }
+    else {
       const newQuery = {
         ...route.query,
       }
@@ -106,7 +107,8 @@ watch([() => route.path, () => route.query], ([path, query]) => {
   }
   if (query[queryOptions.key] === queryOptions.value) {
     open.value = true
-  } else {
+  }
+  else {
     open.value = false
   }
 }, { immediate: true })
@@ -167,7 +169,7 @@ watch([() => route.path, () => route.query], ([path, query]) => {
 }
 
 .mask {
-  background-color: rgba(from var(--camelot-mask-color) r g b / .8);
+  background-color: rgba(from var(--cml-c-mask-color) r g b / .8);
   width: 100dvw;
   height: 100dvh;
   pointer-events: painted;

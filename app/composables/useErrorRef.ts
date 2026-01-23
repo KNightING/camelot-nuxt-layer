@@ -12,7 +12,8 @@ export const useErrorRef = () => {
   const watcher = (errors: Ref<ErrorRefType> | Ref<ErrorRefType>[]) => {
     if (Array.isArray(errors)) {
       errors.forEach(error => watchToggle(error))
-    } else {
+    }
+    else {
       watchToggle(errors)
     }
   }

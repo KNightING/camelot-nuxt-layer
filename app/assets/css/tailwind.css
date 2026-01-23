@@ -4,7 +4,7 @@
 @theme {
   /* These values are added in addition to the defaults */
   /* https://tailwindcss.com/docs/v4-beta#namespace-reference */
-  --font-noto-sans-tc: 'Noto Sans TC', 'sans-serif';
+  --font-noto-sans-tc: "Noto Sans TC", "sans-serif";
 
   /* --color-theme-primary: oklch(0.7 0.2 229.08); */
   /* --color-m3-primary: theme(--color-theme-primary); */
@@ -12,64 +12,67 @@
   /* --color-m3-primary-test: var(--color-theme-primary-test); */
   /* --color-customRedColor: #EE8660; */
 
-  --color-primary: var(--camelot-m3-primary);
-  --color-primary-container: var(--camelot-m3-primary-container);
-  --color-on-primary: var(--camelot-m3-on-primary);
-  --color-on-primary-container: var(--camelot-m3-on-primary-container);
+  --color-primary: var(--cml-c-m3-primary);
+  --color-primary-container: var(--cml-c-m3-primary-container);
+  --color-on-primary: var(--cml-c-m3-on-primary);
+  --color-on-primary-container: var(--cml-c-m3-on-primary-container);
 
-  --color-primary-fixed: var(--camelot-m3-primary-fixed);
-  --color-primary-fixed-dim: var(--camelot-m3-primary-fixed-dim);
-  --color-on-primary-fixed: var(--camelot-m3-on-primary-fixed);
-  --color-on-primary-fixed-variant: var(--camelot-m3-on-primary-fixed-variant);
+  --color-primary-fixed: var(--cml-c-m3-primary-fixed);
+  --color-primary-fixed-dim: var(--cml-c-m3-primary-fixed-dim);
+  --color-on-primary-fixed: var(--cml-c-m3-on-primary-fixed);
+  --color-on-primary-fixed-variant: var(--cml-c-m3-on-primary-fixed-variant);
 
-  --color-secondary: var(--camelot-m3-secondary);
-  --color-secondary-container: var(--camelot-m3-secondary-container);
-  --color-on-secondary: var(--camelot-m3-on-secondary);
-  --color-on-secondary-container: var(--camelot-m3-on-secondary-container);
+  --color-secondary: var(--cml-c-m3-secondary);
+  --color-secondary-container: var(--cml-c-m3-secondary-container);
+  --color-on-secondary: var(--cml-c-m3-on-secondary);
+  --color-on-secondary-container: var(--cml-c-m3-on-secondary-container);
 
-  --color-secondary-fixed: var(--camelot-m3-secondary-fixed);
-  --color-secondary-fixed-dim: var(--camelot-m3-secondary-fixed-dim);
-  --color-on-secondary-fixed: var(--camelot-m3-on-secondary-fixed);
-  --color-on-secondary-fixed-variant: var(--camelot-m3-on-secondary-fixed-variant);
+  --color-secondary-fixed: var(--cml-c-m3-secondary-fixed);
+  --color-secondary-fixed-dim: var(--cml-c-m3-secondary-fixed-dim);
+  --color-on-secondary-fixed: var(--cml-c-m3-on-secondary-fixed);
+  --color-on-secondary-fixed-variant: var(
+    --cml-c-m3-on-secondary-fixed-variant
+  );
 
-  --color-tertiary: var(--camelot-m3-tertiary);
-  --color-tertiary-container: var(--camelot-m3-tertiary-container);
-  --color-on-tertiary: var(--camelot-m3-on-tertiary);
-  --color-on-tertiary-container: var(--camelot-m3-on-tertiary-container);
+  --color-tertiary: var(--cml-c-m3-tertiary);
+  --color-tertiary-container: var(--cml-c-m3-tertiary-container);
+  --color-on-tertiary: var(--cml-c-m3-on-tertiary);
+  --color-on-tertiary-container: var(--cml-c-m3-on-tertiary-container);
 
-  --color-tertiary-fixed: var(--camelot-m3-tertiary-fixed);
-  --color-tertiary-fixed-dim: var(--camelot-m3-tertiary-fixed-dim);
-  --color-on-tertiary-fixed: var(--camelot-m3-on-tertiary-fixed);
-  --color-on-tertiary-fixed-variant: var(--camelot-m3-on-tertiary-fixed-variant);
+  --color-tertiary-fixed: var(--cml-c-m3-tertiary-fixed);
+  --color-tertiary-fixed-dim: var(--cml-c-m3-tertiary-fixed-dim);
+  --color-on-tertiary-fixed: var(--cml-c-m3-on-tertiary-fixed);
+  --color-on-tertiary-fixed-variant: var(--cml-c-m3-on-tertiary-fixed-variant);
 
-  --color-surface-dim: var(--camelot-m3-surface-dim);
-  --color-surface: var(--camelot-m3-surface);
-  --color-surface-bright: var(--camelot-m3-surface-bright);
+  --color-surface-dim: var(--cml-c-m3-surface-dim);
+  --color-surface: var(--cml-c-m3-surface);
+  --color-surface-bright: var(--cml-c-m3-surface-bright);
 
-  --color-surface-container-lowest: var(--camelot-m3-surface-container-lowest);
-  --color-surface-container-low: var(--camelot-m3-surface-container-low);
-  --color-surface-container: var(--camelot-m3-surface-container);
-  --color-surface-container-high: var(--camelot-m3-surface-container-high);
-  --color-surface-container-highest: var(--camelot-m3-surface-container-highest);
+  --color-surface-container-lowest: var(--cml-c-m3-surface-container-lowest);
+  --color-surface-container-low: var(--cml-c-m3-surface-container-low);
+  --color-surface-container: var(--cml-c-m3-surface-container);
+  --color-surface-container-high: var(--cml-c-m3-surface-container-high);
+  --color-surface-container-highest: var(--cml-c-m3-surface-container-highest);
 
-  --color-on-surface: var(--camelot-m3-on-surface);
-  --color-on-surface-variant: var(--camelot-m3-on-surface-variant);
-  --color-outline: var(--camelot-m3-outline);
-  --color-outline-variant: var(--camelot-m3-outline-variant);
+  --color-on-surface: var(--cml-c-m3-on-surface);
+  --color-on-surface-variant: var(--cml-c-m3-on-surface-variant);
+  --color-outline: var(--cml-c-m3-outline);
+  --color-outline-variant: var(--cml-c-m3-outline-variant);
 
-  --color-error: var(--camelot-m3-error);
-  --color-error-container: var(--camelot-m3-error-container);
-  --color-on-error: var(--camelot-m3-on-error);
-  --color-on-error-container: var(--camelot-m3-on-error-container);
+  --color-error: var(--cml-c-m3-error);
+  --color-error-container: var(--cml-c-m3-error-container);
+  --color-on-error: var(--cml-c-m3-on-error);
+  --color-on-error-container: var(--cml-c-m3-on-error-container);
 
-  --color-inverse-surface: var(--camelot-m3-inverse-surface);
-  --color-inverse-on-surface: var(--camelot-m3-inverse-on-surface);
-  --color-inverse-primary: var(--camelot-m3-inverse-primary);
+  --color-inverse-surface: var(--cml-c-m3-inverse-surface);
+  --color-inverse-on-surface: var(--cml-c-m3-inverse-on-surface);
+  --color-inverse-primary: var(--cml-c-m3-inverse-primary);
 
-  --color-scrim: var(--camelot-m3-scrim);
-  --color-shadow: var(--camelot-m3-shadow);
+  --color-scrim: var(--cml-c-m3-scrim);
+  --color-shadow: var(--cml-c-m3-shadow);
 
-  --color-c-test: var(--camelot-c-test);
+  /* 用於camelot custom scheme的規則 --cml-c-* */
+  --color-test: var(--cml-c-test);
 
   --spacing-header: 3rem;
   --spacing-footer: 30px;
@@ -102,18 +105,18 @@
   /* Track */
   ::-webkit-scrollbar-track {
     -webkit-box-shadow: none !important;
-    background: var(--camelot-m3-surface);
+    background: var(--cml-c-m3-surface);
   }
 
   /* Handle */
   ::-webkit-scrollbar-thumb {
-    background: var(--camelot-m3-on-surface-variant);
+    background: var(--cml-c-m3-on-surface-variant);
     border-radius: 10px;
   }
 
   /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
-    background: var(--camelot-m3-on-surface);
+    background: var(--cml-c-m3-on-surface);
   }
 }
 

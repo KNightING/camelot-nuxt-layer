@@ -38,7 +38,8 @@ export const useScrollOnBottom = (options?: {
         scrollTop = target.value.scrollY ?? 0
         viewportHeight = window.visualViewport?.height ?? window.innerHeight
         totalHeight = document.documentElement.scrollHeight
-      } else {
+      }
+      else {
         scrollTop = target.value?.scrollTop ?? 0
         viewportHeight = target.value?.clientHeight ?? window.visualViewport?.height ?? window.innerHeight
         totalHeight = target.value?.scrollHeight ?? 0
@@ -46,7 +47,8 @@ export const useScrollOnBottom = (options?: {
 
       if (scrollTop + viewportHeight >= totalHeight - offset.value) {
         isOnBottom.value = true
-      } else {
+      }
+      else {
         isOnBottom.value = false
       }
     }
@@ -55,7 +57,8 @@ export const useScrollOnBottom = (options?: {
 
     if (target.value instanceof Window) {
       useEventListener(window, 'scroll', nextFrame, { passive: true })
-    } else {
+    }
+    else {
       useEventListener(target, 'scroll', nextFrame, { passive: true })
     }
     useEventListener(window, 'resize', nextFrame, { passive: true })

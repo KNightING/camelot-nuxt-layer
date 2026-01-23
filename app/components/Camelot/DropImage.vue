@@ -49,7 +49,6 @@
 
 <script setup lang="ts">
 import { useImage } from '@vueuse/core'
-import { CamelotSkeleton } from '../../.playground/.nuxt/components'
 
 const props = defineProps<{
   label?: string
@@ -83,7 +82,8 @@ const image = computed({
           }
         })
         reader.readAsDataURL(image)
-      } else if (typeof image === 'string') {
+      }
+      else if (typeof image === 'string') {
         imageElement.src = image
         const { isLoading } = useImage({ src: image })
       }
@@ -145,13 +145,13 @@ const setImageRef = (file: File) => {
 function onImageChange(event: Event) {
   const target = event.target as HTMLInputElement
   if (itemImageRef.value && target.files && target.files.length > 0) {
-    setImageRef(target.files[0])
+    setImageRef(target.files[0]!)
   }
 }
 
 const onDrop = (files: File[] | null) => {
   if (itemImageRef.value && files && files.length > 0) {
-    setImageRef(files[0])
+    setImageRef(files[0]!)
   }
 }
 

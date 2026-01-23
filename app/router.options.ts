@@ -12,13 +12,15 @@ export default <RouterConfig>{
       setTimeout(() => {
         if (savedPosition) {
           resolve(savedPosition)
-        } else if (to.hash) {
+        }
+        else if (to.hash) {
           resolve({
             el: to.hash,
             behavior: 'smooth',
             top: 80,
           })
-        } else {
+        }
+        else {
           resolve({ behavior: 'auto', top: -1 })
         }
       }, 100)

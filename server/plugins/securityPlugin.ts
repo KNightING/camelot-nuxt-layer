@@ -99,7 +99,8 @@ const combineCsp = (origin: string[], add: string[]) => {
     if (source) {
       try {
         newCspArray.push(new URL(source).origin)
-      } catch (e) {
+      }
+      catch (e) {
         // check is source is 'self' or other keywords
         newCspArray.push(source)
       }
@@ -145,7 +146,8 @@ const getCspString = (nonce: string | undefined) => {
 
   if (nonce) {
     result += `script-src 'self' ${script.join(' ')} 'nonce-${nonce}' 'strict-dynamic'; `
-  } else {
+  }
+  else {
     result += `script-src 'self' ${script.join(' ')}; `
   }
 

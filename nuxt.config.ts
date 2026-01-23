@@ -15,9 +15,11 @@ let isLinux = false
 
 if (osPlatform === 'darwin') {
   isMac = true
-} else if (osPlatform === 'win32') {
+}
+else if (osPlatform === 'win32') {
   isWindows = true
-} else if (osPlatform === 'linux') {
+}
+else if (osPlatform === 'linux') {
   isLinux = true
 }
 
@@ -33,7 +35,8 @@ function getArgvBoolean(key: string, defaultValue = false): boolean {
     const [key, value] = arg.split('=')
     if (value === 'true' || value === '1') {
       return true
-    } else {
+    }
+    else {
       return false
     }
   }

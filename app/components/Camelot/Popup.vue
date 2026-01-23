@@ -49,10 +49,10 @@ onClickOutside(popupEl, () => {
 })
 
 const { x, y, top, right, bottom, left, width, height }
-       = useElementBounding(el)
+  = useElementBounding(el)
 
 const { top: popupElTop, left: popupElLeft, width: popupElWidth, height: popupElHeight }
-        = useElementBounding(popupEl)
+  = useElementBounding(popupEl)
 
 const { height: windowHeight, width: windowWidth } = useWindowSize()
 
@@ -74,14 +74,16 @@ watch([
     const popupContainerClientWidth = popupElWidth ?? 0
     if (left + popupContainerClientWidth > windowWidth) {
       popupContainerX.value = windowWidth - popupContainerClientWidth
-    } else {
+    }
+    else {
       popupContainerX.value = left
     }
 
     const popupContainerClientHeight = popupElHeight ?? 0
     if (bottom + popupContainerClientHeight > windowHeight) {
       popupContainerY.value = y - popupContainerClientHeight
-    } else {
+    }
+    else {
       popupContainerY.value = bottom
     }
   }
@@ -122,7 +124,7 @@ onUpdated(() => {
 }
 
 .popup {
-  --c-popup-background: var(--camelot-m3-surface);
+  --c-popup-background: var(--cml-c-m3-surface);
   background: transparent;
   flex-direction: column;
   overflow: auto;

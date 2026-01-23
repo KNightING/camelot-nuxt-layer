@@ -195,7 +195,7 @@ type Material3ColorSchemeConfig = {
 const { system, store } = useColorMode()
 
 const getCssVar = (key: string, target?: MaybeElementRef) =>
-  useElCssVar(`--camelot-m3-${key}`, target, { inherit: false })
+  useElCssVar(`--cml-c-m3-${key}`, target, { inherit: false })
 
 const globalLightColorScheme
   = ref<Material3ColorSchemePartial>(defaultColorScheme)
@@ -208,7 +208,8 @@ const globalUsedColorScheme = computed(() => {
   let isDark = true
   if (store.value === 'auto') {
     isDark = system.value === 'dark'
-  } else {
+  }
+  else {
     isDark = store.value === 'dark'
   }
   return {
@@ -254,7 +255,8 @@ export const useMaterial3ColorScheme = (
     let isDark = true
     if (store.value === 'auto') {
       isDark = system.value === 'dark'
-    } else {
+    }
+    else {
       isDark = store.value === 'dark'
     }
     return { ...(isDark ? darkColorScheme.value : lightColorScheme.value) }
@@ -274,7 +276,8 @@ export const useMaterial3ColorScheme = (
         const rbga = useColor().hexToRgbaArray(nV[key])
         if (!rbga) {
           cssVar.value = nV[key]
-        } else {
+        }
+        else {
           cssVar.value = `${rbga[0]},${rbga[1]},${rbga[2]}`
         }
       }

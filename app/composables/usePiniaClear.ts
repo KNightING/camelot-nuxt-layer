@@ -16,7 +16,8 @@ export const usePiniaReset = (): Record<string | 'all', () => void> => {
   pinia._s.forEach((store, name) => {
     try {
       resetStores[name] = () => store.$reset()
-    } catch (e) {
+    }
+    catch (e) {
     }
   })
 
@@ -24,7 +25,8 @@ export const usePiniaReset = (): Record<string | 'all', () => void> => {
     pinia._s.forEach((store) => {
       try {
         store.$reset()
-      } catch (e) {
+      }
+      catch (e) {
       }
     })
   }
@@ -43,7 +45,8 @@ export const usePiniaDispose = (): Record<string | 'all', () => void> => {
   pinia._s.forEach((store, name) => {
     try {
       disposeStores[name] = () => store.$dispose()
-    } catch (e) {
+    }
+    catch (e) {
     }
   })
 
@@ -51,7 +54,8 @@ export const usePiniaDispose = (): Record<string | 'all', () => void> => {
     pinia._s.forEach((store) => {
       try {
         store.$dispose()
-      } catch (e) {
+      }
+      catch (e) {
       }
     })
   }

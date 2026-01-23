@@ -100,7 +100,8 @@ watch(model, (nV) => {
   if (nV instanceof Date || typeof nV === 'number') {
     try {
       inputModel.value = format(nV, 'yyyy-MM-dd')
-    } catch (e) {
+    }
+    catch (e) {
       inputModel.value = ''
     }
   }
@@ -137,7 +138,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 :deep(.dp__theme_light),
 :deep(.dp__theme_dark) {
-  --dp-primary-color: rgb(var(--camelot-m3-primary));
+  --dp-primary-color: rgb(var(--cml-c-m3-primary));
   --dp-background-color: #fff;
   --dp-text-color: #212121;
   --dp-hover-color: #f3f3f3;

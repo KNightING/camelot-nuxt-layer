@@ -75,7 +75,8 @@ watch([dialogRef, open], ([dialogEl, open]) => {
   if (open) {
     // showModal才會有背景遮罩
     dialogEl.showModal()
-  } else {
+  }
+  else {
     setTimeout(() => {
       dialogEl.close()
     }, 400)
@@ -103,7 +104,8 @@ watch(open, (isOpen) => {
   if (route.query[queryOptions.key] === queryOptions.value) {
     if (useRouterHistory()) {
       router.back()
-    } else {
+    }
+    else {
       const newQuery = {
         ...route.query,
       }
@@ -122,7 +124,8 @@ watch([() => route.path, () => route.query], ([path, query]) => {
   }
   if (query[queryOptions.key] === queryOptions.value) {
     open.value = true
-  } else {
+  }
+  else {
     open.value = false
   }
 }, { immediate: true })
@@ -175,6 +178,6 @@ dialog {
 
 /* 全屏背景遮罩 */
 dialog::backdrop {
-  background-color: rgba(from var(--camelot-mask-color) r g b / .5); /* 深一点的背景，可调整透明度 */
+  background-color: rgba(from var(--cml-c-mask-color) r g b / .5); /* 深一点的背景，可调整透明度 */
 }
 </style>

@@ -140,7 +140,7 @@ const isComplete = (index: number) => {
   position: absolute;
   width: 100%;
   height: 0.125rem;
-  background-color: rgba(from var(--camelot-m3-outline) r g b / 1);
+  background-color: rgba(from var(--cml-c-m3-outline) r g b / 1);
   transition-property: color, background-color, border-color,
     text-decoration-color, fill, stroke;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -151,7 +151,7 @@ const isComplete = (index: number) => {
 }
 
 .step-line-complete {
-  background-color: rgba(from var(--camelot-m3-primary) r g b / 1) !important;
+  background-color: rgba(from var(--cml-c-m3-primary) r g b / 1) !important;
 }
 
 .step-dot-container {
@@ -174,16 +174,16 @@ const isComplete = (index: number) => {
     text-decoration-color, fill, stroke;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 300ms;
-  background-color: rgba(from var(--camelot-m3-surface) r g b / 1);
+  background-color: rgba(from var(--cml-c-m3-surface) r g b / 1);
 }
 
 .step-dot-doing {
-  border-color: rgba(from var(--camelot-m3-primary) r g b / 1) !important;
+  border-color: rgba(from var(--cml-c-m3-primary) r g b / 1) !important;
 }
 
 .step-dot-complete {
-  border-color: rgba(from var(--camelot-m3-primary) r g b / 1) !important;
-  background-color: rgba(from var(--camelot-m3-primary) r g b / 1) !important;
+  border-color: rgba(from var(--cml-c-m3-primary) r g b / 1) !important;
+  background-color: rgba(from var(--cml-c-m3-primary) r g b / 1) !important;
 }
 
 .step-dot-text {
@@ -192,12 +192,12 @@ const isComplete = (index: number) => {
 }
 
 .step-dot-text-doing {
-  color: rgba(from var(--camelot-m3-primary) r g b / 1) !important;
+  color: rgba(from var(--cml-c-m3-primary) r g b / 1) !important;
 }
 
 .step-dot-text-complete {
   user-select: none;
-  color: rgba(from var(--camelot-m3-on-primary) r g b / 1);
+  color: rgba(from var(--cml-c-m3-on-primary) r g b / 1);
 }
 
 .step-content {
@@ -209,6 +209,6 @@ const isComplete = (index: number) => {
 }
 
 .step-content-complete {
-  color: rgba(from var(--camelot-m3-primary) r g b / 1) !important;
+  color: rgba(from var(--cml-c-m3-primary) r g b / 1) !important;
 }
 </style>

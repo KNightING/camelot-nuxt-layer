@@ -8,7 +8,8 @@ export function useScrollParent(target?: MaybeElementRef) {
 
     if (node.scrollHeight > node.clientHeight) {
       return node as HTMLElement
-    } else {
+    }
+    else {
       return getScrollParent(node.parentElement)
     }
   }

@@ -56,7 +56,8 @@ watch([open, dialog], ([open, dialog]) => {
     emits('beforeOpen')
     dialog.showModal()
     emits('opened')
-  } else {
+  }
+  else {
     emits('beforeClose')
     dialog.close()
     emits('closed')
