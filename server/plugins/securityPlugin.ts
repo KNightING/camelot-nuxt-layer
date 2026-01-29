@@ -95,13 +95,7 @@ const combineCsp = (origin: string[], add: string[]) => {
 
   for (const source of add) {
     if (source) {
-      try {
-        newCspArray.push(new URL(source).origin)
-      }
-      catch (e) {
-        // check is source is 'self' or other keywords
-        newCspArray.push(source)
-      }
+      newCspArray.push(source)
     }
   }
   return newCspArray
