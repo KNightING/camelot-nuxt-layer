@@ -28,7 +28,10 @@
             'bottom-full': isBottom,
             'top-full': !isBottom,
             'shadow': !disabledShadow,
-            'min-w-full': !disabledSameTargetWidth,
+          }"
+          :style="{
+            width: props.popupWidthMode === 'same-target' ? `${width}px` : 'fit-content',
+            minWidth: props.popupWidthMode === 'min-target' ? `${width}px` : 'fit-content',
           }"
         >
           <CamelotExpanded
@@ -91,6 +94,8 @@ const props = defineProps<{
    * popup是否需要跟隨目標寬度
    */
   disabledSameTargetWidth?: boolean
+
+  popupWidthMode?: 'fit-content' | 'min-target' | 'same-target'
 
   teleport?: string | MaybeElementRef<MaybeElement>
 }>()

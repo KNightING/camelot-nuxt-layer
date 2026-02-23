@@ -69,11 +69,11 @@ import { CamelotGpu } from '../../.nuxt/components'
       <template #dot="{ index, isComplete }">
         <div
           class="w-7 aspect-square bg-white rounded-full flex justify-center items-center"
-          :class="{ '!bg-yellow-500': isComplete }"
+          :class="{ 'bg-yellow-500!': isComplete }"
         >
           <span
             class=" text-red-500 "
-            :class="{ '!text-blue-500': isComplete }"
+            :class="{ 'text-blue-500!': isComplete }"
           >{{ index }}</span>
         </div>
       </template>
@@ -154,7 +154,9 @@ import { CamelotGpu } from '../../.nuxt/components'
       </div>
     </CamelotSelectV2>
 
-    <CamelotPopupV2 class="ml-10">
+    <CamelotPopupV2
+      class="ml-10"
+    >
       <div class="text-primary">
         Open PopupV2
       </div>

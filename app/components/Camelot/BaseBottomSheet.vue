@@ -82,7 +82,7 @@ watch(open, (isOpen) => {
   }
 
   if (route.query[queryOptions.key] === queryOptions.value) {
-    if (useRouterHistory()) {
+    if (useCamelotRouter().canBack()) {
       router.back()
     }
     else {

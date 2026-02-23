@@ -2,7 +2,7 @@
   <CamelotPopupV2
     v-model:open="open"
     :z-index="zIndex"
-    width-with-target
+    popup-width-mode="min-target"
     :disabled-close-when-scrolling="disabledCloseWhenScrolling"
     disabled-auto-space
   >

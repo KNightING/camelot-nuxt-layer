@@ -1,17 +1,17 @@
 <template>
   <CamelotPopupV2
     v-model:open="open"
-    disable-width-with-target
-    class="!w-full"
+    disabled-same-target-width
     :disabled="disabled"
+    disabled-shadow
     :z-index="selectZIndex"
   >
     <label
       class="min-w-[16ch] w-full border bg-surface-container-lowest border-outline has-[:focus]:border-primary rounded-lg px-4 py-2 flex gap-2"
       :class="{
         'border-input-focus': isFocus,
-        '!border-error': isError,
-        '!bg-gray-200': disabled,
+        'border-error!': isError,
+        'bg-gray-200!': disabled,
       }"
     >
       <input
