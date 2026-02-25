@@ -44,6 +44,11 @@ export class CamelotPath {
     )
   }
 
+  public async single(queryAndHash?: RouteQueryAndHash) {
+    const { single } = useCamelotRouter()
+    return await single({ path: this._path, ...queryAndHash })
+  }
+
   public append(path: string) {
     path = `${this._path}/${path}`.replace(/\/\//g, '/')
     return new CamelotPath(path)
@@ -62,7 +67,9 @@ export const useCamelotRouter = () => {
     })
   }
 
-  const single = async (to: RouteLocationRaw) => {
+  const single = async (to: RouteLocationRaw, options?: {
+    replace?: boolean
+  }) => {
     const currentPos = window.history.state?.position || 0
 
     const target = findHistory(to)
@@ -74,8 +81,19 @@ export const useCamelotRouter = () => {
       await router.replace(to)
     }
     else {
+      const { replace = true } = options || {}
+
+      if (replace) {
+        await router.replace(to)
+        return
+      }
+
       await router.push(to)
     }
+  }
+
+  const toPath = (path: string) => {
+    return new CamelotPath(path)
   }
 
   const syncHistory = (to: RouteLocationNormalized) => {
@@ -114,5 +132,6 @@ export const useCamelotRouter = () => {
     go: router.go,
     single,
     canBack,
+    toPath,
   }
 }
