@@ -14,8 +14,8 @@
     <template #popup>
       <div
         ref="optionsContainerEl"
-        class="options-container flex flex-col rounded-md overflow-hidden relative bg-surface"
-        :class="optionsContainerClass"
+        class="options-container flex flex-col rounded-md overflow-hidden relative"
+        :class="optionsContainerClass || 'bg-surface'"
         :style="[`max-height: ${optionsContainerMaxHeight}px;`]"
       >
         <div
