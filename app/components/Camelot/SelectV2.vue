@@ -17,7 +17,10 @@
         class="options-container flex flex-col rounded-2xl overflow-hidden relative"
         :style="[`max-height: ${optionsContainerMaxHeight}px;`]"
       >
-        <div class="options-header shrink-0 p-2 relative z-10">
+        <div
+          v-if="searchable || $slots.header"
+          class="options-header shrink-0 p-2 relative z-10"
+        >
           <slot
             name="header"
             :search-value="searchValue"
@@ -226,10 +229,5 @@ onUpdated(() => {
 .option {
   display: flex;
   align-items: center;
-}
-
-.options-header {
-  background: inherit;
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05); /* Optional subtle shadow separating head from items */
 }
 </style>
