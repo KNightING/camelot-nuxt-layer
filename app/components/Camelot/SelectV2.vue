@@ -11,13 +11,13 @@
       <span class="flex-1">{{ selectedData?.value }}</span>
     </slot>
     <template #popup>
-      <div class="p-4 -m-4">
+      <div class="p-3">
         <div
           ref="optionsContainerEl"
           class="options-container flex flex-col rounded-2xl overflow-hidden shadow-lg ring-1 ring-black/5 relative"
           :style="[`max-height: ${optionsContainerMaxHeight}px;`]"
         >
-          <div class="options-header shrink-0 p-2 z-10">
+          <div class="options-header shrink-0 p-2 ">
             <slot
               name="header"
               :search-value="searchValue"
