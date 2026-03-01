@@ -11,81 +11,86 @@
       <span class="flex-1">{{ selectedData?.value }}</span>
     </slot>
     <template #popup>
-      <CamelotContainer
-        ref="optionsContainerEl"
-        class="options-container rounded-xl shadow"
-        :style="[`max-height:${optionsContainerMaxHeight}px;`]"
+      <div
+        class="flex flex-col rounded-xl overflow-hidden shadow-lg ring-1 ring-black/5 options-container-wrapper"
+        :style="[`max-height: ${optionsContainerMaxHeight}px;`]"
       >
-        <div class="flex flex-col p-2">
-          <div class="options-header">
-            <slot
-              name="header"
-              :search-value="searchValue"
-              :set-search-value="(val:string) => searchValue = val"
-            >
-              <div
-                v-if="searchable"
-                class="px-1 pb-2"
+        <CamelotContainer
+          ref="optionsContainerEl"
+          class="options-container flex-1 min-h-0 relative bg-white"
+          :style="[`max-height: ${optionsContainerMaxHeight}px;`]"
+        >
+          <div class="flex flex-col p-2 min-h-max">
+            <div class="options-header">
+              <slot
+                name="header"
+                :search-value="searchValue"
+                :set-search-value="(val:string) => searchValue = val"
               >
-                <div class="relative">
-                  <span class="absolute left-3 top-1/2 -translate-y-1/2 text-xl text-secondary-text">🔍</span>
-                  <input
-                    ref="searchInput"
-                    v-model="searchValue"
-                    type="text"
-                    :placeholder="searchPlaceholder"
-                    class="w-full h-[44px] pl-10 pr-4 bg-light-bg/30 border border-stroke rounded-lg outline-none focus:border-primary transition-colors text-body2"
-                    @click.stop
-                  >
+                <div
+                  v-if="searchable"
+                  class="px-1 pb-2"
+                >
+                  <div class="relative">
+                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-xl text-secondary-text">🔍</span>
+                    <input
+                      ref="searchInput"
+                      v-model="searchValue"
+                      type="text"
+                      :placeholder="searchPlaceholder"
+                      class="w-full h-[44px] pl-10 pr-4 bg-light-bg/30 border border-stroke rounded-lg outline-none focus:border-primary transition-colors text-body2"
+                      @click.stop
+                    >
+                  </div>
                 </div>
-              </div>
-            </slot>
-          </div>
-          <template v-if="filteredOptions && filteredOptions.length > 0">
-            <template
-              v-for="(option, index) in filteredOptions"
-              :key="index"
-            >
-              <button
-                type="button"
-                @click="(e) => onItemClick(e, option.value)"
+              </slot>
+            </div>
+            <template v-if="filteredOptions && filteredOptions.length > 0">
+              <template
+                v-for="(option, index) in filteredOptions"
+                :key="index"
               >
-                <slot
-                  :name="`option-${option.value}`"
-                  :index="index"
-                  :data="option"
-                  :is-selected="model === option.value"
+                <button
+                  type="button"
+                  @click="(e) => onItemClick(e, option.value)"
                 >
                   <slot
-                    name="option"
+                    :name="`option-${option.value}`"
                     :index="index"
                     :data="option"
                     :is-selected="model === option.value"
                   >
-                    <CamelotGpu class="option">
-                      <span class="w-5 text-primary">{{ model === option.value ? '✓' : '' }} </span>
-                      <span
-                        :class="{
-                          'text-primary': model === option.value,
-                        }"
-                        class="select-none font-normal my-0.5 leading-normal"
-                      >{{ option.label ?? option.name }}</span>
-                    </CamelotGpu>
+                    <slot
+                      name="option"
+                      :index="index"
+                      :data="option"
+                      :is-selected="model === option.value"
+                    >
+                      <CamelotGpu class="option">
+                        <span class="w-5 text-primary">{{ model === option.value ? '✓' : '' }} </span>
+                        <span
+                          :class="{
+                            'text-primary': model === option.value,
+                          }"
+                          class="select-none font-normal my-0.5 leading-normal"
+                        >{{ option.label ?? option.name }}</span>
+                      </CamelotGpu>
+                    </slot>
                   </slot>
-                </slot>
-              </button>
+                </button>
+              </template>
             </template>
-          </template>
-          <template v-else>
-            <slot name="empty-options">
-              <div class="flex flex-col items-center justify-center text-gray-400 gap-2 py-2">
-                <!-- <i-material-symbols-cancel-outline-rounded class="text-4xl" /> -->
-                <span>沒有可選選項</span>
-              </div>
-            </slot>
-          </template>
-        </div>
-      </CamelotContainer>
+            <template v-else>
+              <slot name="empty-options">
+                <div class="flex flex-col items-center justify-center text-gray-400 gap-2 py-2">
+                  <!-- <i-material-symbols-cancel-outline-rounded class="text-4xl" /> -->
+                  <span>沒有可選選項</span>
+                </div>
+              </slot>
+            </template>
+          </div>
+        </CamelotContainer>
+      </div>
     </template>
   </CamelotPopupV2>
 </template>
@@ -210,6 +215,12 @@ onUpdated(() => {
   background: rgba(var(--cml-c-select-background), 1);
   background: white;
   position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.options-container :deep(.scroll-container) {
+  height: 100%;
 }
 
 .option {
