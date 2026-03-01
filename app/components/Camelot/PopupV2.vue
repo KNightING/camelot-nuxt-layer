@@ -21,14 +21,17 @@
       >
         <div
           class="absolute pointer-events-auto"
-          :class="{
-            'mx-1': !disabledAutoSpace && (x === 0 || isRight),
-            'right-0': isRight,
-            'left-0': !isRight,
-            'bottom-full': isBottom,
-            'top-full': !isBottom,
-            'shadow': !disabledShadow,
-          }"
+          :class="[
+            {
+              'mx-1': !disabledAutoSpace && (x === 0 || isRight),
+              'right-0': isRight,
+              'left-0': !isRight,
+              'bottom-full': isBottom,
+              'top-full': !isBottom,
+              'shadow': !disabledShadow,
+            },
+            popupClass,
+          ]"
           :style="{
             width: props.popupWidthMode === 'same-target' ? `${width}px` : 'max-content',
             minWidth: props.popupWidthMode === 'min-target' ? `${width}px` : undefined,
@@ -93,6 +96,8 @@ const props = defineProps<{
   popupWidthMode?: 'fit-content' | 'min-target' | 'same-target'
 
   teleport?: string | MaybeElementRef<MaybeElement>
+
+  popupClass?: string | string[] | Record<string, boolean>
 }>()
 
 const open = defineModel<boolean>('open', { default: false })
