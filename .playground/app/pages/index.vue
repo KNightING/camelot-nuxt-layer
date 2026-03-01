@@ -179,7 +179,6 @@
     <CamelotSelectV2
       v-model="department"
       :options="options"
-      class="w-fit"
     >
       <!-- <div
         class="w-full border bg-background text-black-700 border-black-300 focus:border-primary-500 outline-none rounded-lg px-4 py-2 text-base caret-primary-500 flex"
@@ -199,7 +198,9 @@
     <CamelotSelectV2
       v-model="department"
       :options="options"
+      :searchable="false"
       class="w-fit"
+      popup-width-mode="same-target"
     >
       <div
         class="w-[200px] border bg-background text-black-700 border-black-300 focus:border-primary-500 outline-none rounded-lg px-4 py-2 text-base caret-primary-500 flex"

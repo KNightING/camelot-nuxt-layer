@@ -6,7 +6,7 @@
     :disabled-close-when-scrolling="disabledCloseWhenScrolling"
     disabled-auto-space
     disabled-shadow
-    popup-class="shadow-lg rounded-2xl ring-1 ring-black/5"
+    popup-class="shadow-lg rounded-2xl"
   >
     <slot :selected-data="selectedData">
       <span class="flex-1">{{ selectedData?.value }}</span>
@@ -37,7 +37,7 @@
                   v-model="searchValue"
                   type="text"
                   :placeholder="searchPlaceholder"
-                  class="w-full h-[44px] pl-10 pr-4 bg-light-bg/30 border border-stroke rounded-lg outline-none focus:border-primary transition-colors text-body2"
+                  class="w-full py-1 pl-10 pr-4 bg-light-bg/30 border border-stroke rounded-lg outline-none focus:border-primary transition-colors text-body2"
                   @click.stop
                 >
               </div>
