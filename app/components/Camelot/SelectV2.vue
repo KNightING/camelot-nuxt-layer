@@ -13,7 +13,7 @@
     <template #popup>
       <CamelotContainer
         ref="optionsContainerEl"
-        class="options-container rounded-2xl overflow-hidden shadow-lg"
+        class="options-container rounded-xl shadow"
         :style="[`max-height:${optionsContainerMaxHeight}px;`]"
       >
         <div class="flex flex-col p-2">
