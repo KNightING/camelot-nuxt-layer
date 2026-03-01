@@ -14,7 +14,7 @@
     <template #popup>
       <div
         ref="optionsContainerEl"
-        class="options-container flex flex-col rounded-md overflow-hidden relative"
+        class="options-container flex flex-col rounded-md overflow-hidden relative bg-surface"
         :class="optionsContainerClass"
         :style="[`max-height: ${optionsContainerMaxHeight}px;`]"
       >
@@ -103,7 +103,6 @@
 const props = withDefaults(defineProps<{
   options?: SelectOptions<T>
   optionsContainerMaxHeight?: number
-  optionsContainerBackgroundColor?: string
   zIndex?: number
   disableCloseWhenSelected?: boolean
   default?: boolean
@@ -175,21 +174,6 @@ watch(selectedData, (selectedData) => {
 
 const optionsContainerEl = ref<HTMLElement | any>(null)
 
-const containerRefForCssVar = computed(() => optionsContainerEl.value?.$el ?? optionsContainerEl.value)
-const optionsContainerBackgroundColorVar = useElCssVar('--cml-c-select-background', containerRefForCssVar as any, { inherit: false })
-
-watch([optionsContainerEl, props], ([el, props]) => {
-  if (el && props) {
-    const optionsContainerBackgroundColor = props.optionsContainerBackgroundColor
-    if (optionsContainerBackgroundColor) {
-      const rgba = useColor().hexToRgbaArray(optionsContainerBackgroundColor)
-      if (rgba) {
-        optionsContainerBackgroundColorVar.value = `${rgba[0]},${rgba[1]},${rgba[2]}`
-      }
-    }
-  }
-})
-
 const onItemClick = (e: Event, value: string | number) => {
   model.value = value
   if (!props.disableCloseWhenSelected) {
@@ -215,15 +199,6 @@ onUpdated(() => {
 </script>
 
 <style scoped>
-.options-container {
-  --cml-c-select-background: var(--cml-c-m3-surface);
-  background: rgba(var(--cml-c-select-background), 1);
-  background: white;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-}
-
 .options-container :deep(.scroll-container) {
   height: 100%;
 }
