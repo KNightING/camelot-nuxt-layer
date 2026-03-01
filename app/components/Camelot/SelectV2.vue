@@ -17,7 +17,7 @@
           class="options-container flex flex-col rounded-2xl overflow-hidden shadow-lg ring-1 ring-black/5 relative"
           :style="[`max-height: ${optionsContainerMaxHeight}px;`]"
         >
-          <div class="options-header shrink-0 p-2 ">
+          <div class="options-header shrink-0 p-2 relative z-10">
             <slot
               name="header"
               :search-value="searchValue"
