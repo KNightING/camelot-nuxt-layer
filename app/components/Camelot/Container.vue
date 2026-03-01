@@ -1,8 +1,8 @@
 <template>
   <div class="relative flex-1 min-w-0 min-h-0 grid w-full h-full">
-    <AppBaseScrollbar :horizontal="horizontal">
+    <CamelotScrollbar :horizontal="horizontal">
       <slot />
-    </AppBaseScrollbar>
+    </CamelotScrollbar>
   </div>
 </template>
 

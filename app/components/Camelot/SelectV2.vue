@@ -2,89 +2,90 @@
   <CamelotPopupV2
     v-model:open="open"
     :z-index="zIndex"
-    popup-width-mode="min-target"
+    :popup-width-mode="popupWidthMode"
     :disabled-close-when-scrolling="disabledCloseWhenScrolling"
     disabled-auto-space
+    disabled-shadow
   >
     <slot :selected-data="selectedData">
       <span class="flex-1">{{ selectedData?.value }}</span>
     </slot>
     <template #popup>
-      <div
+      <CamelotContainer
         ref="optionsContainerEl"
-        class="options-container"
+        class="options-container rounded-2xl overflow-hidden shadow-lg"
         :style="[`max-height:${optionsContainerMaxHeight}px;`]"
       >
-        <div class="options-header">
-          <slot
-            name="header"
-            :search-value="searchValue"
-            :set-search-value="(val:string) => searchValue = val"
-          >
-            <div
-              v-if="searchable"
-              class="px-1 pb-2"
+        <div class="flex flex-col p-2">
+          <div class="options-header">
+            <slot
+              name="header"
+              :search-value="searchValue"
+              :set-search-value="(val:string) => searchValue = val"
             >
-              <div class="relative">
-                <IMaterialSymbolsSearchRounded class="absolute left-3 top-1/2 -translate-y-1/2 text-xl text-secondary-text" />
-                <input
-                  ref="searchInput"
-                  v-model="searchValue"
-                  type="text"
-                  :placeholder="searchPlaceholder"
-                  class="w-full h-[44px] pl-10 pr-4 bg-light-bg/30 border border-stroke rounded-lg outline-none focus:border-primary transition-colors text-body2"
-                  @click.stop
-                >
+              <div
+                v-if="searchable"
+                class="px-1 pb-2"
+              >
+                <div class="relative">
+                  <span class="absolute left-3 top-1/2 -translate-y-1/2 text-xl text-secondary-text">🔍</span>
+                  <input
+                    ref="searchInput"
+                    v-model="searchValue"
+                    type="text"
+                    :placeholder="searchPlaceholder"
+                    class="w-full h-[44px] pl-10 pr-4 bg-light-bg/30 border border-stroke rounded-lg outline-none focus:border-primary transition-colors text-body2"
+                    @click.stop
+                  >
+                </div>
               </div>
-            </div>
-          </slot>
-        </div>
-        <template v-if="filteredOptions && filteredOptions.length > 0">
-          <template
-            v-for="(option, index) in filteredOptions"
-            :key="index"
-          >
-            <button
-              type="button"
-              @click="(e) => onItemClick(e, option.value)"
+            </slot>
+          </div>
+          <template v-if="filteredOptions && filteredOptions.length > 0">
+            <template
+              v-for="(option, index) in filteredOptions"
+              :key="index"
             >
-              <slot
-                :name="`option-${option.value}`"
-                :index="index"
-                :data="option"
-                :is-selected="model === option.value"
+              <button
+                type="button"
+                @click="(e) => onItemClick(e, option.value)"
               >
                 <slot
-                  name="option"
+                  :name="`option-${option.value}`"
                   :index="index"
                   :data="option"
                   :is-selected="model === option.value"
                 >
-                  <CamelotGpu class="option">
-                    <span class="w-5 text-primary">{{ model === option.value ? '✓' : '' }} </span>
-                    <span
-                      :class="{
-                        'text-primary': model === option.value,
-                      }"
-                      :style="[
-                        'margin-top: 0.25rem;margin-bottom: 0.25rem;font-size: 1rem;line-height: 1.5rem; user-select:none;',
-                      ]"
-                    >{{ option.label ?? option.name }}</span>
-                  </CamelotGpu>
+                  <slot
+                    name="option"
+                    :index="index"
+                    :data="option"
+                    :is-selected="model === option.value"
+                  >
+                    <CamelotGpu class="option">
+                      <span class="w-5 text-primary">{{ model === option.value ? '✓' : '' }} </span>
+                      <span
+                        :class="{
+                          'text-primary': model === option.value,
+                        }"
+                        class="select-none font-normal my-0.5 leading-normal"
+                      >{{ option.label ?? option.name }}</span>
+                    </CamelotGpu>
+                  </slot>
                 </slot>
-              </slot>
-            </button>
+              </button>
+            </template>
           </template>
-        </template>
-        <template v-else>
-          <slot name="empty-options">
-            <div class="flex flex-col items-center justify-center text-gray-400 gap-2 py-2">
-              <!-- <i-material-symbols-cancel-outline-rounded class="text-4xl" /> -->
-              <span>沒有可選選項</span>
-            </div>
-          </slot>
-        </template>
-      </div>
+          <template v-else>
+            <slot name="empty-options">
+              <div class="flex flex-col items-center justify-center text-gray-400 gap-2 py-2">
+                <!-- <i-material-symbols-cancel-outline-rounded class="text-4xl" /> -->
+                <span>沒有可選選項</span>
+              </div>
+            </slot>
+          </template>
+        </div>
+      </CamelotContainer>
     </template>
   </CamelotPopupV2>
 </template>
@@ -101,12 +102,14 @@ const props = withDefaults(defineProps<{
   searchable?: boolean
   searchPlaceholder?: string
   filterFunction?: (option: SelectOption<T>, query: string) => boolean
+  popupWidthMode?: 'fit-content' | 'min-target' | 'same-target'
 }>(), {
   optionsContainerMaxHeight: 160,
   disabledCloseWhenScrolling: true,
   default: true,
   searchable: true,
   searchPlaceholder: '搜尋...',
+  popupWidthMode: 'fit-content',
 })
 
 const open = defineModel<boolean>('open', { default: false })
@@ -160,9 +163,10 @@ watch(selectedData, (selectedData) => {
   }
 })
 
-const optionsContainerEl = ref<HTMLElement | null>(null)
+const optionsContainerEl = ref<HTMLElement | any>(null)
 
-const optionsContainerBackgroundColorVar = useElCssVar('--c-select-background', optionsContainerEl, { inherit: false })
+const containerRefForCssVar = computed(() => optionsContainerEl.value?.$el ?? optionsContainerEl.value)
+const optionsContainerBackgroundColorVar = useElCssVar('--cml-c-select-background', containerRefForCssVar as any, { inherit: false })
 
 watch([optionsContainerEl, props], ([el, props]) => {
   if (el && props) {
@@ -202,17 +206,10 @@ onUpdated(() => {
 
 <style scoped>
 .options-container {
-  --c-select-background: var(--cml-c-m3-surface);
-  background: rgba(var(--c-select-background), 1);
+  --cml-c-select-background: var(--cml-c-m3-surface);
+  background: rgba(var(--cml-c-select-background), 1);
   background: white;
-  display: flex;
-  overflow: auto;
   position: relative;
-  top: 0;
-  left: 0;
-  padding: 0.5rem;
-  flex-direction: column;
-  border-radius: 0.5rem;
 }
 
 .option {

@@ -1,4 +1,3 @@
-import { CamelotGpu } from '../../.nuxt/components'
 <template>
   <div>
     <Header>
@@ -179,8 +178,8 @@ import { CamelotGpu } from '../../.nuxt/components'
 
     <CamelotSelectV2
       v-model="department"
-      class="w-full"
       :options="options"
+      class="w-fit"
     >
       <!-- <div
         class="w-full border bg-background text-black-700 border-black-300 focus:border-primary-500 outline-none rounded-lg px-4 py-2 text-base caret-primary-500 flex"
@@ -200,10 +199,10 @@ import { CamelotGpu } from '../../.nuxt/components'
     <CamelotSelectV2
       v-model="department"
       :options="options"
-      class="w-full"
+      class="w-fit"
     >
       <div
-        class="w-full border bg-background text-black-700 border-black-300 focus:border-primary-500 outline-none rounded-lg px-4 py-2 text-base caret-primary-500 flex"
+        class="w-[200px] border bg-background text-black-700 border-black-300 focus:border-primary-500 outline-none rounded-lg px-4 py-2 text-base caret-primary-500 flex"
       >
         <span class="flex-1">{{ department }}</span>
       </div>
