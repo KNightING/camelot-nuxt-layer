@@ -6,7 +6,7 @@
     :disabled-close-when-scrolling="disabledCloseWhenScrolling"
     disabled-auto-space
     disabled-shadow
-    popup-class="shadow-lg rounded-2xl"
+    popup-class="shadow-lg rounded-md"
   >
     <slot :selected-data="selectedData">
       <span class="flex-1">{{ selectedData?.value }}</span>
@@ -14,7 +14,8 @@
     <template #popup>
       <div
         ref="optionsContainerEl"
-        class="options-container flex flex-col rounded-2xl overflow-hidden relative"
+        class="options-container flex flex-col rounded-md overflow-hidden relative"
+        :class="optionsContainerClass"
         :style="[`max-height: ${optionsContainerMaxHeight}px;`]"
       >
         <div
@@ -111,8 +112,9 @@ const props = withDefaults(defineProps<{
   searchPlaceholder?: string
   filterFunction?: (option: SelectOption<T>, query: string) => boolean
   popupWidthMode?: 'fit-content' | 'min-target' | 'same-target'
+  optionsContainerClass?: string | string[] | Record<string, boolean>
 }>(), {
-  optionsContainerMaxHeight: 160,
+  optionsContainerMaxHeight: 200,
   disabledCloseWhenScrolling: true,
   default: true,
   searchable: true,
