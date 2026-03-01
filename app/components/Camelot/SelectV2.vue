@@ -19,7 +19,7 @@
       >
         <div
           v-if="searchable || $slots.header"
-          class="options-header shrink-0 p-2 relative z-10"
+          class="options-header shrink-0 relative z-10"
         >
           <slot
             name="header"
@@ -28,7 +28,7 @@
           >
             <div
               v-if="searchable"
-              class="px-1"
+              class="p-2"
             >
               <div class="relative">
                 <span class="absolute left-3 top-1/2 -translate-y-1/2 text-xl text-secondary-text">🔍</span>
