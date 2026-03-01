@@ -60,7 +60,7 @@
       v-model="department"
       :options="options"
       :options-container-max-height="250"
-      options-container-class="bg-slate-50 shadow-inner"
+      options-container-class="bg-gray-100 shadow-inner"
       class="w-fit ml-4"
     >
       <!-- 自定義 Header -->
