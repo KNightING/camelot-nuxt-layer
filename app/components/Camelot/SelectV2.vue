@@ -15,9 +15,33 @@
         class="options-container"
         :style="[`max-height:${optionsContainerMaxHeight}px;`]"
       >
-        <template v-if="options && options.length > 0">
+        <div class="options-header">
+          <slot
+            name="header"
+            :search-value="searchValue"
+            :set-search-value="(val:string) => searchValue = val"
+          >
+            <div
+              v-if="searchable"
+              class="px-1 pb-2"
+            >
+              <div class="relative">
+                <IMaterialSymbolsSearchRounded class="absolute left-3 top-1/2 -translate-y-1/2 text-xl text-secondary-text" />
+                <input
+                  ref="searchInput"
+                  v-model="searchValue"
+                  type="text"
+                  :placeholder="searchPlaceholder"
+                  class="w-full h-[44px] pl-10 pr-4 bg-light-bg/30 border border-stroke rounded-lg outline-none focus:border-primary transition-colors text-body2"
+                  @click.stop
+                >
+              </div>
+            </div>
+          </slot>
+        </div>
+        <template v-if="filteredOptions && filteredOptions.length > 0">
           <template
-            v-for="(option, index) in options"
+            v-for="(option, index) in filteredOptions"
             :key="index"
           >
             <button
@@ -74,13 +98,40 @@ const props = withDefaults(defineProps<{
   disableCloseWhenSelected?: boolean
   default?: boolean
   disabledCloseWhenScrolling?: boolean
+  searchable?: boolean
+  searchPlaceholder?: string
+  filterFunction?: (option: SelectOption<T>, query: string) => boolean
 }>(), {
   optionsContainerMaxHeight: 160,
   disabledCloseWhenScrolling: true,
   default: true,
+  searchable: true,
+  searchPlaceholder: '搜尋...',
 })
 
 const open = defineModel<boolean>('open', { default: false })
+
+const searchValue = ref('')
+
+const filteredOptions = computed(() => {
+  if (!props.options) return []
+  if (!searchValue.value) {
+    return props.options
+  }
+
+  if (props.filterFunction) {
+    return props.options.filter(option => props.filterFunction!(option, searchValue.value))
+  }
+
+  const lowerSearch = searchValue.value.toLowerCase()
+  return props.options.filter((opt: SelectOption<T>) => {
+    if (!opt) return false
+    if (opt.value && opt.value.toString().toLowerCase().includes(lowerSearch)) return true
+    if (opt.label && opt.label.toString().toLowerCase().includes(lowerSearch)) return true
+    if (opt.name && opt.name.toString().toLowerCase().includes(lowerSearch)) return true
+    return false
+  })
+})
 
 const model = defineModel<string | number>()
 
@@ -167,5 +218,14 @@ onUpdated(() => {
 .option {
   display: flex;
   align-items: center;
+}
+
+.options-header {
+  position: sticky;
+  top: -0.5rem;
+  z-index: 10;
+  margin: -0.5rem -0.5rem 0.5rem -0.5rem;
+  padding: 0.5rem 0.5rem 0 0.5rem;
+  background: inherit;
 }
 </style>

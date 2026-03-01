@@ -10,6 +10,9 @@ export default defineNuxtConfig({
     googlePay: {
       addScript: false,
     },
+    securityPlugin: {
+      enabled: false,
+    },
   },
 
   compatibilityDate: '2024-11-16',

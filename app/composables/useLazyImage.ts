@@ -1,9 +1,11 @@
 export interface LazyImageOptions {
-  src?: string
   immediate?: boolean
 }
 
-export const useLazyImage = (options: LazyImageOptions) => {
+export const useLazyImage = (
+  src: MaybeRefOrGetter<string | undefined>,
+  options?: LazyImageOptions,
+) => {
   const isLoading = ref(true)
   const isPending = ref(false)
   const isError = ref(false)
@@ -26,7 +28,12 @@ export const useLazyImage = (options: LazyImageOptions) => {
     isError.value = false
     isReady.value = false
 
-    if (options.src) {
+    const srcValue = toValue(src)
+    if (!srcValue) {
+      return
+    }
+
+    if (srcValue) {
       image.value = null
       const img = new Image()
       img.onerror = () => {
@@ -40,11 +47,11 @@ export const useLazyImage = (options: LazyImageOptions) => {
         isPending.value = false
         image.value = img
       }
-      img.src = options.src
+      img.src = srcValue
     }
   }
 
-  if (options.immediate) {
+  if (options?.immediate) {
     load()
   }
 

@@ -103,7 +103,7 @@ import { CamelotGpu } from '../../.nuxt/components'
 
     <div class="w-40 h-40">
       <CamelotImage
-        src="https://cataas.com/cat?v=1"
+        :src="url"
         class="w-full h-full object-scale-down"
       >
         <template #error>
@@ -114,7 +114,7 @@ import { CamelotGpu } from '../../.nuxt/components'
 
     <div class="w-40 h-40">
       <CamelotImageV2
-        src="https://cataas.com/cat?v=2"
+        :src="url"
         class="w-full h-full"
         hover-show-full-image
       >
@@ -126,7 +126,7 @@ import { CamelotGpu } from '../../.nuxt/components'
 
     <div class="w-40 h-40">
       <CamelotImageV2
-        src="https://cataas.com/cat?v=3"
+        :src="url"
         class="w-full h-full"
         hover-show-full-image
       >
@@ -141,18 +141,6 @@ import { CamelotGpu } from '../../.nuxt/components'
     <!-- <ClientOnly> -->
     <CamelotDate />
     <!-- </ClientOnly> -->
-
-    <CamelotSelectV2
-      v-model="department"
-      class="w-full"
-      options-container-background-color="#F35F6F"
-    >
-      <div
-        class="w-full border bg-background text-black-700 border-black-300 focus:border-primary-500 outline-none rounded-lg px-4 py-2 text-base caret-primary-500 flex"
-      >
-        <span class="flex-1">{{ department }}</span>
-      </div>
-    </CamelotSelectV2>
 
     <CamelotPopupV2
       class="ml-10"
@@ -319,6 +307,8 @@ const data
 const tabSelected = ref(0)
 
 const department = ref('韓式餐廳')
+
+const { url } = useRandomCatImg()
 
 const options = ref([
   {

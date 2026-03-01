@@ -86,8 +86,7 @@ const emit = defineEmits<{
 
 const containerRef = useTemplateRef('containerRef')
 
-const { isLoading, isError, isPending, isReady, load, image, isLandscapeImage } = useLazyImage({
-  src: props.src,
+const { isLoading, isError, isPending, isReady, load, image, isLandscapeImage } = useLazyImage(props.src, {
   immediate: props.immediate,
 })
 
