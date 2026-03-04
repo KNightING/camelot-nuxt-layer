@@ -63,6 +63,13 @@
     />
 
     <CamelotSelectV2
+      v-model="virtualValue"
+      :options="largeOptionsForVirtual"
+      virtual-scroll
+      class="w-full"
+    />
+
+    <CamelotSelectV2
       v-model="department"
       :options="options"
       :options-container-max-height="250"
@@ -396,6 +403,15 @@ const options = ref([
     value: '中式餐廳',
   },
 ])
+
+const virtualValue = ref('')
+
+const largeOptionsForVirtual = ref(
+  Array.from({ length: 500 }).map((_, i) => ({
+    name: `選項 ${i + 1}`,
+    value: `option-${i + 1}`,
+  })),
+)
 </script>
 
 <style scoped></style>

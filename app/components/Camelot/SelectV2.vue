@@ -9,7 +9,19 @@
     popup-class="shadow-lg rounded-md"
   >
     <slot :selected-data="selectedData">
-      <span class="flex-1">{{ selectedData?.value }}</span>
+      <div
+        class="w-full border bg-background border-stroke outline-none rounded-lg px-4 py-2 text-base flex items-center gap-2 transition-colors"
+        :class="open ? 'border-primary' : 'border-stroke'"
+      >
+        <span
+          class="flex-1 truncate"
+          :class="selectedData ? 'text-on-surface' : 'text-secondary-text'"
+        >{{ selectedData?.label ?? selectedData?.name ?? selectedData?.value ?? placeholder }}</span>
+        <span
+          class="text-secondary-text text-xs transition-transform duration-200"
+          :class="{ 'rotate-180': open }"
+        >▼</span>
+      </div>
     </slot>
     <template #popup>
       <div
@@ -45,7 +57,67 @@
             </div>
           </slot>
         </div>
+        <!-- 虛擬滾動模式 -->
+        <template v-if="virtualScroll">
+          <div
+            v-if="filteredOptions && filteredOptions.length > 0"
+            v-bind="virtualContainerProps"
+            class="flex-1 min-h-0 relative bg-inherit overflow-auto"
+          >
+            <div
+              v-bind="virtualWrapperProps"
+              class="flex flex-col px-2 pb-2"
+            >
+              <template
+                v-for="{ data: option, index } in virtualList"
+                :key="index"
+              >
+                <button
+                  type="button"
+                  @click="(e) => onItemClick(e, option.value)"
+                >
+                  <slot
+                    :name="`option-${option.value}`"
+                    :index="index"
+                    :data="option"
+                    :is-selected="model === option.value"
+                  >
+                    <slot
+                      name="option"
+                      :index="index"
+                      :data="option"
+                      :is-selected="model === option.value"
+                    >
+                      <CamelotGpu class="option">
+                        <span class="w-5 text-primary">{{ model === option.value ? '✓' : '' }} </span>
+                        <span
+                          :class="{
+                            'text-primary': model === option.value,
+                          }"
+                          class="select-none font-normal my-0.5 leading-normal"
+                        >{{ option.label ?? option.name }}</span>
+                      </CamelotGpu>
+                    </slot>
+                  </slot>
+                </button>
+              </template>
+            </div>
+          </div>
+          <div
+            v-else
+            class="flex-1 min-h-0 relative bg-inherit px-2 pb-2"
+          >
+            <slot name="empty-options">
+              <div class="flex flex-col items-center justify-center text-gray-400 gap-2 py-2">
+                <span>沒有可選選項</span>
+              </div>
+            </slot>
+          </div>
+        </template>
+
+        <!-- 一般模式 (原有行為) -->
         <CamelotContainer
+          v-else
           class="flex-1 min-h-0 relative bg-inherit"
         >
           <div class="flex flex-col px-2 pb-2">
@@ -100,6 +172,8 @@
 </template>
 
 <script setup lang="ts" generic="T">
+import { useVirtualList } from '@vueuse/core'
+
 const props = withDefaults(defineProps<{
   options?: SelectOptions<T>
   optionsContainerMaxHeight?: number
@@ -112,6 +186,14 @@ const props = withDefaults(defineProps<{
   filterFunction?: (option: SelectOption<T>, query: string) => boolean
   popupWidthMode?: 'fit-content' | 'min-target' | 'same-target'
   optionsContainerClass?: string | string[] | Record<string, boolean>
+  /** 未選取時的提示文字 */
+  placeholder?: string
+  /** 是否啟用虛擬滾動，大量選項時建議開啟 */
+  virtualScroll?: boolean
+  /** 虛擬滾動時每個選項的高度 (px)，需與實際渲染高度一致 */
+  itemHeight?: number
+  /** 虛擬滾動時可視區域外預渲染的項目數量 */
+  overscan?: number
 }>(), {
   optionsContainerMaxHeight: 200,
   disabledCloseWhenScrolling: true,
@@ -119,6 +201,10 @@ const props = withDefaults(defineProps<{
   searchable: true,
   searchPlaceholder: '搜尋...',
   popupWidthMode: 'fit-content',
+  placeholder: '請選擇...',
+  virtualScroll: false,
+  itemHeight: 36,
+  overscan: 5,
 })
 
 const open = defineModel<boolean>('open', { default: false })
@@ -144,6 +230,15 @@ const filteredOptions = computed(() => {
     return false
   })
 })
+
+// 虛擬滾動
+const { list: virtualList, containerProps: virtualContainerProps, wrapperProps: virtualWrapperProps } = useVirtualList(
+  filteredOptions,
+  {
+    itemHeight: () => props.itemHeight,
+    overscan: props.overscan,
+  },
+)
 
 const model = defineModel<string | number>()
 
