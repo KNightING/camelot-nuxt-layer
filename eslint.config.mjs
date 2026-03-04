@@ -20,6 +20,7 @@ export default withNuxt(
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-empty-object-type': 'off',
       'no-empty': 'off',
+      'object-curly-newline': ['error', { multiline: true, consistent: true }],
     },
   },
 )

@@ -8,7 +8,18 @@ export interface NavigateToOptions {
 
 export type CamelotHistory = {
   path: string
+  name?: string | symbol | null
   pos: number
+}
+
+export type SingleOptions = {
+  replace?: boolean
+  checkName?: boolean
+  /**
+   * task 是 會從HistoryStack中找到，如果有重複的，會直接跳轉到該頁面
+   * only 是 清除HistoryStack中所有頁面的紀錄，然後再跳轉到該頁面
+   */
+  mode?: 'task' | 'only'
 }
 
 export class CamelotPath {
@@ -33,6 +44,10 @@ export class CamelotPath {
     return `${window.location.origin}${useRuntimeConfig().app.baseURL}${path}`
   }
 
+  public get name() {
+    return useRouter().resolve(this._path).name
+  }
+
   public async to(queryAndHash?: RouteQueryAndHash) {
     return await navigateTo({ path: this._path, ...queryAndHash })
   }
@@ -44,9 +59,11 @@ export class CamelotPath {
     )
   }
 
-  public async single(queryAndHash?: RouteQueryAndHash) {
+  public async single(options?: SingleOptions & {
+    queryAndHash?: RouteQueryAndHash
+  }) {
     const { single } = useCamelotRouter()
-    return await single({ path: this._path, ...queryAndHash })
+    return await single({ path: this._path, ...options?.queryAndHash }, { ...options })
   }
 
   public append(path: string) {
@@ -60,29 +77,63 @@ const historyStack = ref<CamelotHistory[]>([])
 export const useCamelotRouter = () => {
   const router = useRouter()
 
-  const findHistory = (to: RouteLocationRaw) => {
+  const findHistory = (to: RouteLocationRaw, options?: {
+    checkName?: boolean
+  }) => {
+    const { checkName = true } = options || {}
+
+    // 透過 router.resolve 解析出完整的路由資訊，藉此取得 route name
+    const resolved = router.resolve(to)
+
     return historyStack.value.find((item) => {
-      if (typeof to === 'string') return item.path === to
-      return item.path === to.path
+      // 1. 如果有 name，代表是具名路由，只要 name 相同就被視為是「同一頁」 (忽略 Params 差異)
+      if (checkName && resolved.name && item.name === resolved.name) return true
+
+      // 2. 退回使用 path 進行基礎比對
+      if (typeof to === 'string') return item.path === to || item.path === resolved.path
+      return item.path === to.path || item.path === resolved.path
     })
   }
 
-  const single = async (to: RouteLocationRaw, options?: {
-    replace?: boolean
-  }) => {
+  const single = async (to: RouteLocationRaw, options?: SingleOptions) => {
+    const {
+      checkName = true,
+      replace = true,
+      mode = 'task',
+    } = options || {}
+
     const currentPos = window.history.state?.position || 0
 
-    const target = findHistory(to)
+    if (mode === 'only') {
+      if (historyStack.value.length > 0) {
+        const firstHistory = historyStack.value[0]
+        if (firstHistory && currentPos > firstHistory.pos) {
+          const delta = firstHistory.pos - currentPos
+          // 退回我們有紀錄的最深處 (Hard Reset)
+          router.go(delta)
+        }
+      }
+      // 將我們自己的歷史紀錄清空
+      historyStack.value = []
+
+      // 替換成目標頁面，作為新的起點
+      // delay
+      await new Promise(resolve => setTimeout(resolve, 100))
+      await router.replace(to)
+      return
+    }
+
+    const target = findHistory(to, { checkName })
 
     if (target && target.pos < currentPos) {
       const delta = target.pos - currentPos
       // 如果需要更新 Query，可以在 go 之後處理，或者搭配 replace
       router.go(delta)
+      await new Promise(resolve => setTimeout(resolve, 100))
       await router.replace(to)
     }
     else {
-      const { replace = true } = options || {}
-
+      // 如果不存在歷史紀錄，就直接導向
       if (replace) {
         await router.replace(to)
         return
@@ -108,11 +159,13 @@ export const useCamelotRouter = () => {
       // 回歸或替換：更新最新的路徑細節 (包含新的 Query/Params)
       historyStack.value = historyStack.value.slice(0, existingIndex + 1)
       existingHistory.path = to.fullPath // 使用 fullPath 紀錄完整的 query/params
+      existingHistory.name = to.name
     }
     else {
       // 新增
       historyStack.value.push({
         path: to.path,
+        name: to.name,
         pos: currentPos,
       })
     }
