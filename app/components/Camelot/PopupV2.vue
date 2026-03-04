@@ -20,18 +20,21 @@
         }"
       >
         <div
-          class="absolute w-fit pointer-events-auto"
-          :class="{
-            'mx-1': !disabledAutoSpace && (x === 0 || isRight),
-            'right-0': isRight,
-            'left-0': !isRight,
-            'bottom-full': isBottom,
-            'top-full': !isBottom,
-            'shadow': !disabledShadow,
-          }"
+          class="absolute pointer-events-auto"
+          :class="[
+            {
+              'mx-1': !disabledAutoSpace && (x === 0 || isRight),
+              'right-0': isRight,
+              'left-0': !isRight,
+              'bottom-full': isBottom,
+              'top-full': !isBottom,
+              'shadow': !disabledShadow,
+            },
+            popupClass,
+          ]"
           :style="{
-            width: props.popupWidthMode === 'same-target' ? `${width}px` : 'fit-content',
-            minWidth: props.popupWidthMode === 'min-target' ? `${width}px` : 'fit-content',
+            width: props.popupWidthMode === 'same-target' ? `${width}px` : 'max-content',
+            minWidth: props.popupWidthMode === 'min-target' ? `${width}px` : undefined,
           }"
         >
           <CamelotExpanded
@@ -90,14 +93,11 @@ const props = defineProps<{
 
   disabledClickOutside?: boolean
 
-  /**
-   * popup是否需要跟隨目標寬度
-   */
-  disabledSameTargetWidth?: boolean
-
   popupWidthMode?: 'fit-content' | 'min-target' | 'same-target'
 
   teleport?: string | MaybeElementRef<MaybeElement>
+
+  popupClass?: string | string[] | Record<string, boolean>
 }>()
 
 const open = defineModel<boolean>('open', { default: false })

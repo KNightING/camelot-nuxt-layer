@@ -25,9 +25,7 @@ const props = withDefaults(
     immediate: false,
   })
 
-const { isLoading, isError, isPending, isReady, load } = useLazyImage({
-  src: props.src,
-})
+const { isLoading, isError, isPending, isReady, load } = useLazyImage(props.src)
 
 const target = ref(null)
 

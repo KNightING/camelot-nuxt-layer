@@ -62,6 +62,67 @@
       class="w-full"
     />
 
+    <CamelotSelectV2
+      v-model="department"
+      :options="options"
+      :options-container-max-height="250"
+      options-container-class="bg-gray-100 shadow-inner"
+      class="w-fit ml-4"
+    >
+      <!-- 自定義 Header -->
+      <template #header="{ searchValue, setSearchValue }">
+        <div class="bg-blue-50/50 p-3 flex flex-col gap-2 border-b border-blue-100">
+          <span class="text-blue-800 font-bold text-sm flex items-center gap-1">
+            <span>✨</span> 客製化專屬標題區塊
+          </span>
+          <div class="relative">
+            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-blue-500 text-sm">🔍</span>
+            <input
+              :value="searchValue"
+              type="text"
+              placeholder="試著在這裡輸入條件..."
+              class="w-full py-2 pl-9 pr-3 bg-white border border-blue-200 rounded outline-none focus:border-blue-500 text-sm shadow-sm transition-colors"
+              @input="(e) => setSearchValue((e.target as HTMLInputElement).value)"
+              @click.stop
+            >
+          </div>
+        </div>
+      </template>
+
+      <!-- 自定義 Option -->
+      <template #option="{ data: itemData, isSelected }">
+        <div
+          class="flex items-center gap-3 p-2 my-1 rounded-lg cursor-pointer transition-all w-full"
+          :class="[
+            isSelected ? 'bg-blue-100/50 border border-blue-200' : 'hover:bg-slate-100 border border-transparent',
+          ]"
+        >
+          <div
+            class="w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition-colors"
+            :class="isSelected ? 'bg-blue-500 text-white shadow-md' : 'bg-slate-200 text-slate-500'"
+          >
+            {{ itemData.name ? itemData.name.charAt(0) : '?' }}
+          </div>
+          <div class="flex flex-col">
+            <span
+              class="text-sm font-medium transition-colors"
+              :class="isSelected ? 'text-blue-700' : 'text-slate-700'"
+            >
+              {{ itemData.name || itemData.label }}
+            </span>
+            <span class="text-xs text-slate-400">部門代號: {{ itemData.value }}</span>
+          </div>
+          <!-- 勾選圖標 (右靠) -->
+          <div
+            v-if="isSelected"
+            class="ml-auto text-blue-500 px-2 shrink-0"
+          >
+            ✓
+          </div>
+        </div>
+      </template>
+    </CamelotSelectV2>
+
     <CamelotSteps
       v-model="step"
       :steps="[
@@ -108,7 +169,7 @@
 
     <div class="w-40 h-40">
       <CamelotImage
-        src="https://cataas.com/cat?v=1"
+        :src="url"
         class="w-full h-full object-scale-down"
       >
         <template #error>
@@ -119,7 +180,7 @@
 
     <div class="w-40 h-40">
       <CamelotImageV2
-        src="https://cataas.com/cat?v=2"
+        :src="url"
         class="w-full h-full"
         hover-show-full-image
       >
@@ -131,7 +192,7 @@
 
     <div class="w-40 h-40">
       <CamelotImageV2
-        src="https://cataas.com/cat?v=3"
+        :src="url"
         class="w-full h-full"
         hover-show-full-image
       >
@@ -146,18 +207,6 @@
     <!-- <ClientOnly> -->
     <CamelotDate />
     <!-- </ClientOnly> -->
-
-    <CamelotSelectV2
-      v-model="department"
-      class="w-full"
-      options-container-background-color="#F35F6F"
-    >
-      <div
-        class="w-full border bg-background text-black-700 border-black-300 focus:border-primary-500 outline-none rounded-lg px-4 py-2 text-base caret-primary-500 flex"
-      >
-        <span class="flex-1">{{ department }}</span>
-      </div>
-    </CamelotSelectV2>
 
     <CamelotPopupV2
       class="ml-10"
@@ -196,7 +245,6 @@
 
     <CamelotSelectV2
       v-model="department"
-      class="w-full"
       :options="options"
     >
       <!-- <div
@@ -217,10 +265,12 @@
     <CamelotSelectV2
       v-model="department"
       :options="options"
-      class="w-full"
+      :searchable="false"
+      class="w-fit"
+      popup-width-mode="same-target"
     >
       <div
-        class="w-full border bg-background text-black-700 border-black-300 focus:border-primary-500 outline-none rounded-lg px-4 py-2 text-base caret-primary-500 flex"
+        class="w-[200px] border bg-background text-black-700 border-black-300 focus:border-primary-500 outline-none rounded-lg px-4 py-2 text-base caret-primary-500 flex"
       >
         <span class="flex-1">{{ department }}</span>
       </div>
@@ -325,6 +375,8 @@ const data
 const tabSelected = ref(0)
 
 const department = ref('韓式餐廳')
+
+const { url } = useRandomCatImg()
 
 const options = ref([
   {

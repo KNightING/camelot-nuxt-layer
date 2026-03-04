@@ -1,8 +1,8 @@
 <template>
-  <div class="relative h-full w-full overflow-hidden">
+  <div class="relative h-full w-full overflow-hidden grid">
     <div
       ref="scrollContainer"
-      class="scroll-container"
+      class="scroll-container min-h-0 min-w-0"
       :class="{ horizontal }"
       @scroll="onScroll"
     >
@@ -17,20 +17,18 @@
       <div
         class="custom-scrollbar-thumb"
         :style="thumbStyle"
-        @mousedown="onThumbDown"
+        @pointerdown="onThumbDown"
       />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted, onBeforeUnmount } from 'vue'
-
 const props = defineProps<{
   horizontal?: boolean
 }>()
 
-const scrollContainer = ref<HTMLDivElement | null>(null)
+const scrollContainer = useTemplateRef<HTMLDivElement>('scrollContainer')
 const visible = ref(false)
 
 // 動態 thumb style：垂直時用 height/top，水平時用 width/left
@@ -155,7 +153,7 @@ defineExpose({
 <style scoped>
 .scroll-container {
   position: relative;
-  height: 100%;
+  height: auto;
   overflow-y: auto;
   overflow-x: hidden;
   scrollbar-width: none; /* Firefox */

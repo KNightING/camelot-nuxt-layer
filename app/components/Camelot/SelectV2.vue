@@ -2,9 +2,11 @@
   <CamelotPopupV2
     v-model:open="open"
     :z-index="zIndex"
-    popup-width-mode="min-target"
+    :popup-width-mode="popupWidthMode"
     :disabled-close-when-scrolling="disabledCloseWhenScrolling"
     disabled-auto-space
+    disabled-shadow
+    popup-class="shadow-lg rounded-md"
   >
     <slot :selected-data="selectedData">
       <span class="flex-1">{{ selectedData?.value }}</span>
@@ -12,54 +14,86 @@
     <template #popup>
       <div
         ref="optionsContainerEl"
-        class="options-container"
-        :style="[`max-height:${optionsContainerMaxHeight}px;`]"
+        class="options-container flex flex-col rounded-md overflow-hidden relative"
+        :class="optionsContainerClass || 'bg-surface'"
+        :style="[`max-height: ${optionsContainerMaxHeight}px;`]"
       >
-        <template v-if="options && options.length > 0">
-          <template
-            v-for="(option, index) in options"
-            :key="index"
+        <div
+          v-if="searchable || $slots.header"
+          class="options-header shrink-0 relative z-10"
+        >
+          <slot
+            name="header"
+            :search-value="searchValue"
+            :set-search-value="(val:string) => searchValue = val"
           >
-            <button
-              type="button"
-              @click="(e) => onItemClick(e, option.value)"
+            <div
+              v-if="searchable"
+              class="p-2"
             >
-              <slot
-                :name="`option-${option.value}`"
-                :index="index"
-                :data="option"
-                :is-selected="model === option.value"
-              >
-                <slot
-                  name="option"
-                  :index="index"
-                  :data="option"
-                  :is-selected="model === option.value"
+              <div class="relative">
+                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-xl text-secondary-text">🔍</span>
+                <input
+                  ref="searchInput"
+                  v-model="searchValue"
+                  type="text"
+                  :placeholder="searchPlaceholder"
+                  class="w-full py-1 pl-10 pr-4 bg-light-bg/30 border border-stroke rounded-lg outline-none focus:border-primary transition-colors text-body2"
+                  @click.stop
                 >
-                  <CamelotGpu class="option">
-                    <span class="w-5 text-primary">{{ model === option.value ? '✓' : '' }} </span>
-                    <span
-                      :class="{
-                        'text-primary': model === option.value,
-                      }"
-                      :style="[
-                        'margin-top: 0.25rem;margin-bottom: 0.25rem;font-size: 1rem;line-height: 1.5rem; user-select:none;',
-                      ]"
-                    >{{ option.label ?? option.name }}</span>
-                  </CamelotGpu>
-                </slot>
-              </slot>
-            </button>
-          </template>
-        </template>
-        <template v-else>
-          <slot name="empty-options">
-            <div class="flex flex-col items-center justify-center text-gray-400 gap-2 py-2">
-              <!-- <i-material-symbols-cancel-outline-rounded class="text-4xl" /> -->
-              <span>沒有可選選項</span>
+              </div>
             </div>
           </slot>
-        </template>
+        </div>
+        <CamelotContainer
+          class="flex-1 min-h-0 relative bg-inherit"
+        >
+          <div class="flex flex-col px-2 pb-2">
+            <template v-if="filteredOptions && filteredOptions.length > 0">
+              <template
+                v-for="(option, index) in filteredOptions"
+                :key="index"
+              >
+                <button
+                  type="button"
+                  @click="(e) => onItemClick(e, option.value)"
+                >
+                  <slot
+                    :name="`option-${option.value}`"
+                    :index="index"
+                    :data="option"
+                    :is-selected="model === option.value"
+                  >
+                    <slot
+                      name="option"
+                      :index="index"
+                      :data="option"
+                      :is-selected="model === option.value"
+                    >
+                      <CamelotGpu class="option">
+                        <span class="w-5 text-primary">{{ model === option.value ? '✓' : '' }} </span>
+                        <span
+                          :class="{
+                            'text-primary': model === option.value,
+                          }"
+                          class="select-none font-normal my-0.5 leading-normal"
+                        >{{ option.label ?? option.name }}</span>
+                      </CamelotGpu>
+                    </slot>
+                  </slot>
+                </button>
+              </template>
+            </template>
+            <template v-else>
+              <slot name="empty-options">
+                <div class="flex flex-col items-center justify-center text-gray-400 gap-2 py-2">
+                  <!-- <i-material-symbols-cancel-outline-rounded class="text-4xl" /> -->
+                  <span>沒有可選選項</span>
+                </div>
+              </slot>
+            </template>
+          </div>
+        </CamelotContainer>
       </div>
     </template>
   </CamelotPopupV2>
@@ -69,18 +103,47 @@
 const props = withDefaults(defineProps<{
   options?: SelectOptions<T>
   optionsContainerMaxHeight?: number
-  optionsContainerBackgroundColor?: string
   zIndex?: number
   disableCloseWhenSelected?: boolean
   default?: boolean
   disabledCloseWhenScrolling?: boolean
+  searchable?: boolean
+  searchPlaceholder?: string
+  filterFunction?: (option: SelectOption<T>, query: string) => boolean
+  popupWidthMode?: 'fit-content' | 'min-target' | 'same-target'
+  optionsContainerClass?: string | string[] | Record<string, boolean>
 }>(), {
-  optionsContainerMaxHeight: 160,
+  optionsContainerMaxHeight: 200,
   disabledCloseWhenScrolling: true,
   default: true,
+  searchable: true,
+  searchPlaceholder: '搜尋...',
+  popupWidthMode: 'fit-content',
 })
 
 const open = defineModel<boolean>('open', { default: false })
+
+const searchValue = ref('')
+
+const filteredOptions = computed(() => {
+  if (!props.options) return []
+  if (!searchValue.value) {
+    return props.options
+  }
+
+  if (props.filterFunction) {
+    return props.options.filter(option => props.filterFunction!(option, searchValue.value))
+  }
+
+  const lowerSearch = searchValue.value.toLowerCase()
+  return props.options.filter((opt: SelectOption<T>) => {
+    if (!opt) return false
+    if (opt.value && opt.value.toString().toLowerCase().includes(lowerSearch)) return true
+    if (opt.label && opt.label.toString().toLowerCase().includes(lowerSearch)) return true
+    if (opt.name && opt.name.toString().toLowerCase().includes(lowerSearch)) return true
+    return false
+  })
+})
 
 const model = defineModel<string | number>()
 
@@ -109,21 +172,7 @@ watch(selectedData, (selectedData) => {
   }
 })
 
-const optionsContainerEl = ref<HTMLElement | null>(null)
-
-const optionsContainerBackgroundColorVar = useElCssVar('--c-select-background', optionsContainerEl, { inherit: false })
-
-watch([optionsContainerEl, props], ([el, props]) => {
-  if (el && props) {
-    const optionsContainerBackgroundColor = props.optionsContainerBackgroundColor
-    if (optionsContainerBackgroundColor) {
-      const rgba = useColor().hexToRgbaArray(optionsContainerBackgroundColor)
-      if (rgba) {
-        optionsContainerBackgroundColorVar.value = `${rgba[0]},${rgba[1]},${rgba[2]}`
-      }
-    }
-  }
-})
+const optionsContainerEl = ref<HTMLElement | any>(null)
 
 const onItemClick = (e: Event, value: string | number) => {
   model.value = value
@@ -150,18 +199,8 @@ onUpdated(() => {
 </script>
 
 <style scoped>
-.options-container {
-  --c-select-background: var(--cml-c-m3-surface);
-  background: rgba(var(--c-select-background), 1);
-  background: white;
-  display: flex;
-  overflow: auto;
-  position: relative;
-  top: 0;
-  left: 0;
-  padding: 0.5rem;
-  flex-direction: column;
-  border-radius: 0.5rem;
+.options-container :deep(.scroll-container) {
+  height: 100%;
 }
 
 .option {

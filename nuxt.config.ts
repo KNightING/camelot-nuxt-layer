@@ -175,26 +175,26 @@ export default defineNuxtConfig({
     locales: [
       {
         name: 'English',
-        code: 'en-us',
-        file: 'en-us.json',
+        code: 'en-US',
+        file: 'en-US.json',
       },
       {
         name: '正體中文',
-        code: 'zh-tw',
-        file: 'zh-tw.json',
+        code: 'zh-TW',
+        file: 'zh-TW.json',
       },
-      {
-        name: '日本語',
-        code: 'ja-jp',
-        file: 'ja-jp.json',
-      },
-      {
-        name: '한국어',
-        code: 'ko',
-        file: 'ko.json',
-      },
+      // {
+      //   name: '日本語',
+      //   code: 'ja-JP',
+      //   file: 'ja-JP.json',
+      // },
+      // {
+      //   name: '한국어',
+      //   code: 'ko-KR',
+      //   file: 'ko-KR.json',
+      // },
     ],
-    defaultLocale: 'zh-tw',
+    defaultLocale: 'zh-TW',
     restructureDir: 'i18n',
     langDir: 'locales',
 
@@ -210,4 +210,5 @@ export default defineNuxtConfig({
     },
     vueI18n: './i18n.config.ts',
   },
+
 })

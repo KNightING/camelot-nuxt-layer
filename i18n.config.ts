@@ -1,9 +1,9 @@
 export default defineI18nConfig(() => ({
   fallbackLocale: {
-    'en': ['en-us'],
-    'zh-tw': ['en-us'],
-    'zh-hans': ['zh-tw'],
-    'default': ['zh-tw'],
+    'en': ['en-US'],
+    'zh': ['zh-TW'],
+    'zh-hans': ['zh-TW'],
+    'default': ['zh-TW'],
   },
   globalInjection: true,
   legacy: false,
