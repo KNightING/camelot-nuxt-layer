@@ -1,4 +1,3 @@
-import { CamelotGpu } from '../../.nuxt/components'
 <template>
   <div>
     <Header>
@@ -6,7 +5,13 @@ import { CamelotGpu } from '../../.nuxt/components'
         <div class="w-full bg-primary h-10 z-10" />
       </template>
     </Header>
-
+    {{ canBack() }}
+    <button
+      class="text-blue-700 bg-blue-200 border border-blue-700 rounded-2xl p-2"
+      @click="toPath('/page1').to()"
+    >
+      to page1
+    </button>
     <div class="text-primary">
       {{ useBaseUrl() }}
     </div>
@@ -277,6 +282,7 @@ import { CamelotGpu } from '../../.nuxt/components'
 </template>
 
 <script setup lang="ts">
+const { toPath, canBack } = useCamelotRouter()
 const loading = useLoading()
 
 const { isOnBottom } = useScrollOnBottom()

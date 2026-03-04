@@ -122,10 +122,19 @@ export const useCamelotRouter = () => {
     return !!useRouter().options.history.state.back
   }
 
+  /**
+   * @description 導向上一頁
+   * @param inApp 是否檢查 App 內歷史堆疊
+   */
+  const back = (inApp: boolean = true) => {
+    if (inApp && !canBack()) return
+    router.back()
+  }
+
   return {
     findHistory,
     syncHistory,
-    back: router.back,
+    back,
     forward: router.forward,
     push: router.push,
     replace: router.replace,
