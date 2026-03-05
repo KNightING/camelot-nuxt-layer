@@ -24,21 +24,24 @@ export type ShouldRefreshTokenFn = (response: FetchResponse<any>) => boolean
 const defaultShouldRefreshToken: ShouldRefreshTokenFn = response => response.status === 401
 
 // ---- Token Refresh Lock ----
-// 確保同一時間多個 API 同時收到 401 時，只會觸發一次 refresh token
-let _refreshPromise: Promise<boolean> | null = null
+// 以 handler 函式參考作為 key，確保同一個 handler（同一個伺服器）的多個 API 同時收到需要 refresh 時，只觸發一次
+// 不同 handler（不同伺服器）之間互不影響
+const _refreshPromiseMap = new Map<RefreshTokenHandler, Promise<boolean>>()
 
 const executeRefreshWithLock = async (handler: RefreshTokenHandler): Promise<boolean> => {
-  if (_refreshPromise) {
-    // 已經有一個 refresh 正在進行，等待它的結果
-    return _refreshPromise
+  const existing = _refreshPromiseMap.get(handler)
+  if (existing) {
+    // 同一個 handler 已經有 refresh 正在進行，等待它的結果
+    return existing
   }
 
-  _refreshPromise = handler()
+  const promise = handler()
     .finally(() => {
-      _refreshPromise = null
+      _refreshPromiseMap.delete(handler)
     })
 
-  return _refreshPromise
+  _refreshPromiseMap.set(handler, promise)
+  return promise
 }
 
 export type Url = string | Request | Ref<string | Request> | (() => string | Request)
