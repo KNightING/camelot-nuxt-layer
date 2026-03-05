@@ -2,6 +2,45 @@ import type { UseFetchOptions } from 'nuxt/app'
 import type { FetchContext, FetchResponse, FetchError, ResponseType } from 'ofetch'
 import type { NitroFetchOptions } from 'nitropack/types'
 
+/**
+ * refresh token handler 回傳 true 代表刷新成功，false 代表刷新失敗（例如 refresh token 也過期了）
+ */
+export type RefreshTokenHandler = () => Promise<boolean>
+
+/**
+ * 判斷是否需要 refresh token 的自訂函式
+ * 接收 response 物件，回傳 true 代表需要觸發 refresh token
+ * 預設行為：判斷 response.status === 401
+ *
+ * @example
+ * // 依據 response body 判斷
+ * shouldRefreshToken: (response) => {
+ *   return response.status === 401
+ *     || response._data?.code === 'TOKEN_EXPIRED'
+ * }
+ */
+export type ShouldRefreshTokenFn = (response: FetchResponse<any>) => boolean
+
+const defaultShouldRefreshToken: ShouldRefreshTokenFn = response => response.status === 401
+
+// ---- Token Refresh Lock ----
+// 確保同一時間多個 API 同時收到 401 時，只會觸發一次 refresh token
+let _refreshPromise: Promise<boolean> | null = null
+
+const executeRefreshWithLock = async (handler: RefreshTokenHandler): Promise<boolean> => {
+  if (_refreshPromise) {
+    // 已經有一個 refresh 正在進行，等待它的結果
+    return _refreshPromise
+  }
+
+  _refreshPromise = handler()
+    .finally(() => {
+      _refreshPromise = null
+    })
+
+  return _refreshPromise
+}
+
 export type Url = string | Request | Ref<string | Request> | (() => string | Request)
 
 export enum ContentType {
@@ -66,6 +105,28 @@ export type ApiFetchOptions<
   onResponseErrors?: OnResponseError<DataT>[]
   addSecureHeaderRequest?: boolean
   transDateKeys?: string[]
+  /**
+   * 啟用自動 refresh token 機制
+   * 當 shouldRefreshToken 條件成立時，會自動呼叫 refreshTokenHandler 刷新 token，
+   * 並自動重新發送原始請求
+   */
+  autoRefreshToken?: boolean
+  /**
+   * refresh token 的實際處理函式
+   * 回傳 true 代表刷新成功（token 已更新），false 代表刷新失敗
+   * 需搭配 autoRefreshToken: true 使用
+   */
+  refreshTokenHandler?: RefreshTokenHandler
+  /**
+   * 自訂判斷是否需要 refresh token 的函式
+   * 可依據 status code、response body 等任意條件判斷
+   * 不設定則預設為 response.status === 401
+   */
+  shouldRefreshToken?: ShouldRefreshTokenFn
+  /**
+   * refresh retry 的最大次數，預設為 1
+   */
+  maxRefreshRetry?: number
 }
 
 const useApiFetch = <DataT>(
@@ -105,56 +166,82 @@ const useApiFetch = <DataT>(
     }
   }
 
-  const use = (coverOptions: ApiFetchOptions<DataT> = {}) => useFetch(
-    url,
-    {
-      ...options,
+  // 用來追蹤 useFetch 的 auto-retry 狀態
+  let _useFetchRetryCount = 0
+  const _maxRetry = options.maxRefreshRetry ?? 1
+  const _shouldRefresh = options.shouldRefreshToken ?? defaultShouldRefreshToken
 
-      method,
-      getCachedData(key: string) {
-        if (options.cachePolicy === 'cache') {
-          const data = useNuxtData<DataT>(key).data.value
-          if (data) {
-            return data
-          }
-        }
-      },
-      async onRequest(context: FetchContext<any, ResponseType>) {
-        switch (options.contentType) {
-          case ContentType.Json: {
-            context.options.headers.set('Content-Type', 'application/json')
-          }
-        }
+  const use = (coverOptions: ApiFetchOptions<DataT> = {}) => {
+    const result = useFetch(
+      url,
+      {
+        ...options,
 
-        if (options.addSecureHeaderRequest) {
-          secureHeaderRequest(context)
-        }
+        method,
+        getCachedData(key: string) {
+          if (options.cachePolicy === 'cache') {
+            const data = useNuxtData<DataT>(key).data.value
+            if (data) {
+              return data
+            }
+          }
+        },
+        async onRequest(context: FetchContext<any, ResponseType>) {
+          switch (options.contentType) {
+            case ContentType.Json: {
+              context.options.headers.set('Content-Type', 'application/json')
+            }
+          }
 
-        if (options.onRequests) {
-          for (const request of options.onRequests) {
-            await request(context)
+          if (options.addSecureHeaderRequest) {
+            secureHeaderRequest(context)
           }
-        }
-      },
-      async onResponse(context: FetchContext<any, ResponseType> & { response: FetchResponse<DataT> }) {
-        // statusCode.value = context.response.status
-        if (options.onResponses) {
-          for (const onResponse of options.onResponses) {
-            await onResponse(context)
+
+          if (options.onRequests) {
+            for (const request of options.onRequests) {
+              await request(context)
+            }
           }
-        }
-      },
-      async onResponseError(context: FetchContext<any, ResponseType> & { response: FetchResponse<DataT> }) {
-        // statusCode.value = context.response.status
-        if (options.onResponseErrors) {
-          for (const onResponseError of options.onResponseErrors) {
-            await onResponseError(context)
+        },
+        async onResponse(context: FetchContext<any, ResponseType> & { response: FetchResponse<DataT> }) {
+          // refresh 成功後重新請求回來，重置 retry count
+          _useFetchRetryCount = 0
+
+          if (options.onResponses) {
+            for (const onResponse of options.onResponses) {
+              await onResponse(context)
+            }
           }
-        }
+        },
+        async onResponseError(context: FetchContext<any, ResponseType> & { response: FetchResponse<DataT> }) {
+          // 自動 refresh token 機制 for useFetch
+          if (
+            options.autoRefreshToken
+            && options.refreshTokenHandler
+            && _shouldRefresh(context.response)
+            && _useFetchRetryCount < _maxRetry
+          ) {
+            _useFetchRetryCount++
+            const refreshed = await executeRefreshWithLock(options.refreshTokenHandler)
+            if (refreshed) {
+              // token 已刷新，在 nextTick 後自動 refresh useFetch
+              await nextTick()
+              result.refresh()
+              return
+            }
+          }
+
+          if (options.onResponseErrors) {
+            for (const onResponseError of options.onResponseErrors) {
+              await onResponseError(context)
+            }
+          }
+        },
+        ...coverOptions,
       },
-      ...coverOptions,
-    },
-  )
+    )
+    return result
+  }
 
   const useFetchBetter = (coverOptions: ApiFetchOptions<DataT> = {}) => {
     const {
@@ -203,7 +290,10 @@ const useApiFetch = <DataT>(
     ...coverOptions,
   })
 
-  const fetch = (coverOptions: NitroFetchOptions<any> = {}) => {
+  const _doFetch = (
+    coverOptions: NitroFetchOptions<any> = {},
+    _refreshSignal?: { needed: boolean },
+  ): Promise<DataT> => {
     let header: HeadersInit | undefined
 
     if (isRef(options.headers)) {
@@ -255,7 +345,6 @@ const useApiFetch = <DataT>(
           }
         },
         async onResponse(context: FetchContext<any, ResponseType> & { response: FetchResponse<DataT> }) {
-          // statusCode.value = context.response.status
           if (options.onResponses) {
             for (const onResponse of options.onResponses) {
               await onResponse(context)
@@ -263,7 +352,16 @@ const useApiFetch = <DataT>(
           }
         },
         async onResponseError(context: FetchContext<any, ResponseType> & { response: FetchResponse<DataT> }) {
-          // statusCode.value = context.response.status
+          // 標記是否需要 refresh token（支援 ignoreResponseError 模式）
+          if (
+            _refreshSignal
+            && options.autoRefreshToken
+            && options.refreshTokenHandler
+            && _shouldRefresh(context.response)
+          ) {
+            _refreshSignal.needed = true
+          }
+
           if (options.onResponseErrors) {
             for (const onResponseError of options.onResponseErrors) {
               await onResponseError(context)
@@ -280,6 +378,37 @@ const useApiFetch = <DataT>(
         },
         ...coverOptions,
       }) as Promise<DataT>
+  }
+
+  const fetch = async (coverOptions: NitroFetchOptions<any> = {}, _retryCount = 0): Promise<DataT> => {
+    const maxRetry = options.maxRefreshRetry ?? 1
+    const refreshSignal = { needed: false }
+
+    let result: DataT | undefined
+    let caughtError: any = null
+
+    try {
+      result = await _doFetch(coverOptions, refreshSignal)
+    }
+    catch (error: any) {
+      caughtError = error
+    }
+
+    // 自動 refresh token 機制 for $fetch
+    // 透過 signal 模式，同時支援 ignoreResponseError（不拋異常）和一般模式（拋異常）
+    if (refreshSignal.needed && _retryCount < maxRetry) {
+      const refreshed = await executeRefreshWithLock(options.refreshTokenHandler!)
+      if (refreshed) {
+        // token 已刷新，重新呼叫原始 API
+        return fetch(coverOptions, _retryCount + 1)
+      }
+    }
+
+    if (caughtError) {
+      throw caughtError
+    }
+
+    return result!
   }
 
   return {
