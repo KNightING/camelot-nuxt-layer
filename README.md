@@ -1,8 +1,5 @@
 # use this theme
 
-> [!WARNING]  
-> Tailwind CSS V4 在使用playground專案展示時，會有屬性不會被掃瞄到，導致不會寫到tailwind.css中
-
 ## Basic
 
 in `package.json`

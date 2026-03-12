@@ -168,6 +168,7 @@ const onEsc = (event: KeyboardEvent) => {
 
 dialog {
   max-width: 100dvw;
+  max-height: 100vh;
   max-height: 100dvh;
   display: flex;
   align-items: center;
