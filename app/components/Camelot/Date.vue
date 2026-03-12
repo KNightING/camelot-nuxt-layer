@@ -4,6 +4,7 @@
     disabled-same-target-width
     :disabled="disabled"
     disabled-shadow
+    disabled-click-outside
     :z-index="selectZIndex"
   >
     <label
@@ -20,7 +21,7 @@
         type="text"
         class="min-w-0 w-0 flex-1 bg-transparent placeholder:text-gray-700 outline-none text-base caret-primary-focus appearance-none"
         :class="{
-          '!text-black': disabled,
+          'text-black!': disabled,
         }"
         :maxlength="10"
         :placeholder="placeholder"
@@ -43,7 +44,7 @@
         v-model="model"
         inline
         auto-apply
-        :enable-time-picker="false"
+        :time-config="{ enableTimePicker: false }"
         :min-date="minDate"
         :max-date="maxDate"
         :week-start="0"
@@ -60,7 +61,7 @@
         v-model="model"
         inline
         auto-apply
-        :enable-time-picker="false"
+        :time-config="{ enableTimePicker: false }"
         :min-date="minDate"
         :max-date="maxDate"
         :week-start="0"

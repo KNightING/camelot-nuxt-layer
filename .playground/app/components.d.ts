@@ -12,8 +12,12 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    IMaterialSymbolsCalendarMonthRounded: typeof import('~icons/material-symbols/calendar-month-rounded')['default']
+    IMaterialSymbolsChevronLeftRounded: typeof import('~icons/material-symbols/chevron-left-rounded')['default']
+    IMaterialSymbolsChevronRightRounded: typeof import('~icons/material-symbols/chevron-right-rounded')['default']
     IMaterialSymbolsClose: typeof import('~icons/material-symbols/close')['default']
     IMaterialSymbolsErrorCircleRounded: typeof import('~icons/material-symbols/error-circle-rounded')['default']
+    IMaterialSymbolsScheduleRounded: typeof import('~icons/material-symbols/schedule-rounded')['default']
     IMaterialSymbolsSearchRounded: typeof import('~icons/material-symbols/search-rounded')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
@@ -22,8 +26,12 @@ declare module 'vue' {
 
 // For TSX support
 declare global {
+  const IMaterialSymbolsCalendarMonthRounded: typeof import('~icons/material-symbols/calendar-month-rounded')['default']
+  const IMaterialSymbolsChevronLeftRounded: typeof import('~icons/material-symbols/chevron-left-rounded')['default']
+  const IMaterialSymbolsChevronRightRounded: typeof import('~icons/material-symbols/chevron-right-rounded')['default']
   const IMaterialSymbolsClose: typeof import('~icons/material-symbols/close')['default']
   const IMaterialSymbolsErrorCircleRounded: typeof import('~icons/material-symbols/error-circle-rounded')['default']
+  const IMaterialSymbolsScheduleRounded: typeof import('~icons/material-symbols/schedule-rounded')['default']
   const IMaterialSymbolsSearchRounded: typeof import('~icons/material-symbols/search-rounded')['default']
   const RouterLink: typeof import('vue-router')['RouterLink']
   const RouterView: typeof import('vue-router')['RouterView']

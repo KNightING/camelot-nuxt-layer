@@ -137,6 +137,10 @@ ul {
   transition-duration: 300ms;
 }
 
+li {
+  flex-shrink: 0;
+}
+
 .tab {
   padding-top: 0.375rem;
   padding-bottom: 0.375rem;

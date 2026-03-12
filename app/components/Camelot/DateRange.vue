@@ -43,7 +43,7 @@
           inline
           :multi-calendars="multiCalendars"
           :auto-apply="autoApply"
-          :enable-time-picker="false"
+          :time-config="{ enableTimePicker: false }"
           :week-start="0"
           :min-date="minDate"
           :max-date="maxDate"
@@ -63,7 +63,7 @@
         inline
         :multi-calendars="multiCalendars"
         :auto-apply="autoApply"
-        :enable-time-picker="false"
+        :time-config="{ enableTimePicker: false }"
         :week-start="0"
         :min-date="minDate"
         :max-date="maxDate"

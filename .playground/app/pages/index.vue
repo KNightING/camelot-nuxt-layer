@@ -213,6 +213,11 @@
 
     <!-- <ClientOnly> -->
     <CamelotDate />
+
+    <CamelotDateV2 placeholder="請選擇日期" />
+    <CamelotDateRangeV2
+      :multi-calendars="true"
+    />
     <!-- </ClientOnly> -->
 
     <CamelotPopupV2
