@@ -232,13 +232,42 @@ const filteredOptions = computed(() => {
 })
 
 // 虛擬滾動
-const { list: virtualList, containerProps: virtualContainerProps, wrapperProps: virtualWrapperProps } = useVirtualList(
+const { list: virtualList, containerProps: virtualContainerProps, wrapperProps: virtualWrapperProps, scrollTo } = useVirtualList(
   filteredOptions,
   {
     itemHeight: () => props.itemHeight,
     overscan: props.overscan,
   },
 )
+
+// FIX: iOS 17 以下版本的虛擬滾動顯示問題
+// 當 open 改變時，手動觸發 resize 事件及滾動位置更新，確保虛擬滾動計算正確
+watch(open, (isOpen) => {
+  if (isOpen && props.virtualScroll) {
+    nextTick(() => {
+      if (typeof window !== 'undefined') {
+        // 模擬 resize 觸發 useVirtualList 重新計算大小
+        window.dispatchEvent(new Event('resize'))
+      }
+
+      // 在動畫過程中與結束後再次觸發，確保在 iOS 上能正確渲染
+      const timer = setInterval(() => {
+        if (typeof window !== 'undefined') {
+          window.dispatchEvent(new Event('resize'))
+          scrollTo(0)
+        }
+      }, 100)
+
+      // 500ms 動畫結束後停止，多給 100ms 緩衝
+      setTimeout(() => {
+        clearInterval(timer)
+        if (typeof window !== 'undefined') {
+          window.dispatchEvent(new Event('resize'))
+        }
+      }, 600)
+    })
+  }
+})
 
 const model = defineModel<string | number>()
 
@@ -276,21 +305,12 @@ const onItemClick = (e: Event, value: string | number) => {
   }
 }
 
-onUpdated(() => {
-  if (!props.options || props.options.length < 0) {
-    return
+// 處理預設值初始化
+watch([() => props.options, () => props.default], ([options, isDefault]) => {
+  if (isDefault && typeof model.value === 'undefined' && options && options.length > 0 && options[0]) {
+    model.value = options[0].value
   }
-
-  // 如果model為空值, 則預設為第一個option
-  if (props.default && typeof model.value === 'undefined') {
-    if (props.options.length > 0 && props.options[0]) {
-      model.value = props.options[0].value
-    }
-    else {
-      model.value = undefined
-    }
-  }
-})
+}, { immediate: true })
 </script>
 
 <style scoped>

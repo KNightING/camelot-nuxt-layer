@@ -126,8 +126,7 @@ onMounted(() => {
 
 <style scoped>
 .options-container {
-  --c-select-background: var(--cml-c-m3-background);
-  background: rgba(from var(--cml-c-select-background) r g b / 1);
+  background: var(--c-select-background, var(--cml-c-m3-background));
   display: flex;
   overflow: auto;
   position: relative;

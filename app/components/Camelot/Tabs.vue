@@ -183,13 +183,13 @@ ul {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 300ms;
   user-select: none;
-  background-color: rgba(from var(--cml-c-m3-surface) r g b / 1);
-  color: rgba(from var(--cml-c-m3-on-surface) r g b / 1);
+  background-color: var(--cml-c-m3-surface);
+  color: var(--cml-c-m3-on-surface);
 }
 
 .tab-selected {
-  background-color: rgba(from var(--cml-c-m3-primary-container) r g b / 1) !important;
-  color: rgba(from var(--cml-c-m3-on-primary-container) r g b / 1) !important;
-  border-color: rgba(from var(--cml-c-m3-primary-container) r g b / 1) !important;
+  background-color: var(--cml-c-m3-primary-container) !important;
+  color: var(--cml-c-m3-on-primary-container) !important;
+  border-color: var(--cml-c-m3-primary-container) !important;
 }
 </style>
