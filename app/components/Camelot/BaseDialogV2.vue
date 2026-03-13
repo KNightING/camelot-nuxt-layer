@@ -168,6 +168,7 @@ const onEsc = (event: KeyboardEvent) => {
 
 dialog {
   max-width: 100dvw;
+  max-height: 100vh;
   max-height: 100dvh;
   display: flex;
   align-items: center;
@@ -178,6 +179,8 @@ dialog {
 
 /* 全屏背景遮罩 */
 dialog::backdrop {
-  background-color: rgba(from var(--cml-c-mask-color) r g b / .5); /* 深一点的背景，可调整透明度 */
+  background-color: rgba(0, 0, 0, 0.5); /* 兜底：在不支援 color-mix 的極舊版本顯示純黑半透 */
+  background-color: color-mix(in srgb, var(--cml-c-mask-color, #000) 50%, transparent); /* 較佳相容性的做法 */
+  /* background-color: rgba(from var(--cml-c-mask-color) r g b / .5); */ /* 這語法較不相容 iOS 17含以下的版本 */
 }
 </style>

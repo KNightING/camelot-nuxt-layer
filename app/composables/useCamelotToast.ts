@@ -35,7 +35,7 @@ const CreateCamelotToast = () => {
 
   const addToast = (toast: CamelotToast, options?: CamelotToastOptions) => {
     const clone = useObject().deepClone({
-      id: crypto.randomUUID(),
+      id: Math.random().toString(36).substring(2, 11),
       duration: 2000,
       type: 'info',
       ...toast,

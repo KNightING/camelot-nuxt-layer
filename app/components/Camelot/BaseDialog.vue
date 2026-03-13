@@ -164,13 +164,16 @@ watch([() => route.path, () => route.query], ([path, query]) => {
   justify-content: center;
   align-items: center;
   width: 100dvw;
+  height: 100vh;
   height: 100dvh;
   pointer-events: none;
 }
 
 .mask {
-  background-color: rgba(from var(--cml-c-mask-color) r g b / .8);
+  background-color: rgba(0, 0, 0, 0.8); /* 兜底 */
+  background-color: color-mix(in srgb, var(--cml-c-mask-color, #000) 80%, transparent);
   width: 100dvw;
+  height: 100vh;
   height: 100dvh;
   pointer-events: painted;
 }

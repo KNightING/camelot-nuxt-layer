@@ -30,9 +30,7 @@
   --color-secondary-fixed: var(--cml-c-m3-secondary-fixed);
   --color-secondary-fixed-dim: var(--cml-c-m3-secondary-fixed-dim);
   --color-on-secondary-fixed: var(--cml-c-m3-on-secondary-fixed);
-  --color-on-secondary-fixed-variant: var(
-    --cml-c-m3-on-secondary-fixed-variant
-  );
+  --color-on-secondary-fixed-variant: var(--cml-c-m3-on-secondary-fixed-variant);
 
   --color-tertiary: var(--cml-c-m3-tertiary);
   --color-tertiary-container: var(--cml-c-m3-tertiary-container);
@@ -81,19 +79,36 @@
 }
 
 @layer base {
+
+  * {
+    box-sizing: border-box;
+    /* position: relative; */
+    min-width: 0;
+  }
+
   body,
   html {
     margin: 0;
     padding: 0;
-    height: 100dvh;
-    width: 100dvw;
-    font-family: "Noto Sans TC", sans-serif, system-ui !important;
+    min-height: 100dvh;
+    font-family: "Noto Sans CJK TC", "Noto Sans", "Noto Color Emoji", sans-serif, system-ui !important;
     font-optical-sizing: auto;
     font-style: normal;
   }
 
   html img {
     user-select: none;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
   }
 
   /* width */
@@ -123,6 +138,7 @@
 @utility clip-rounded-tl-br {
   clip-path: inset(0px 0px 0px round 20px 0px);
 }
+
 @utility clip-rounded-tl-br {
   clip-path: inset(0px 0px 0px round 20px 0px);
 }
@@ -130,6 +146,7 @@
 @utility clip-rounded-tr-bl {
   clip-path: inset(0px 0px 0px round 0px 20px);
 }
+
 @utility clip-rounded-tr-bl {
   clip-path: inset(0px 0px 0px round 0px 20px);
 }
@@ -137,4 +154,5 @@
 @utility clip-rounded {
   clip-path: inset(0px 0px 0px round 20px);
 }
+
 @custom-variant hover (&:hover);
