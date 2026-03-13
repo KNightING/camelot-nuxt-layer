@@ -3,6 +3,9 @@
 import withNuxt from './.playground/.nuxt/eslint.config.mjs'
 
 export default withNuxt(
+  {
+    ignores: ['**/electron/release/**', '**/electron/build/**', '**/android/**', '**/ios/**'],
+  },
   // Your custom configs here
   {
     rules: {
@@ -11,7 +14,11 @@ export default withNuxt(
       // Note: you must disable the base rule as it can report incorrect errors
       'no-unused-vars': 'off',
       '@typescript-eslint/no-unused-vars': 'off',
-      'space-before-function-paren': ['error', { anonymous: 'always', named: 'never', asyncArrow: 'always' }],
+      'space-before-function-paren': ['error', {
+        anonymous: 'always',
+        named: 'never',
+        asyncArrow: 'always',
+      }],
       'func-call-spacing': 'off',
       'require-await': 'off',
       'no-use-before-define': 'off',
@@ -20,7 +27,15 @@ export default withNuxt(
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-empty-object-type': 'off',
       'no-empty': 'off',
-      'object-curly-newline': ['error', { multiline: true, consistent: true }],
+      // 強迫所有花括號換行
+      'object-curly-newline': ['error', {
+        multiline: true,
+        consistent: true,
+      }],
+      // 強迫所有屬性換行
+      'object-property-newline': ['error', {
+        allowAllPropertiesOnSameLine: false, // 禁止所有屬性寫在同一行
+      }],
     },
   },
 )
