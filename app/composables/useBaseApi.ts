@@ -207,6 +207,23 @@ const useApiFetch = <DataT>(
           }
         },
         async onResponse(context: FetchContext<any, ResponseType> & { response: FetchResponse<DataT> }) {
+          // 自動 refresh token 機制 for useFetch (支援 ignoreResponseError 模式)
+          if (
+            options.autoRefreshToken
+            && options.refreshTokenHandler
+            && _shouldRefresh(context.response)
+            && _useFetchRetryCount < _maxRetry
+          ) {
+            _useFetchRetryCount++
+            const refreshed = await executeRefreshWithLock(options.refreshTokenHandler)
+            if (refreshed) {
+              // token 已刷新，在 nextTick 後自動 refresh useFetch
+              await nextTick()
+              result.refresh()
+              return
+            }
+          }
+
           // refresh 成功後重新請求回來，重置 retry count
           _useFetchRetryCount = 0
 
@@ -362,6 +379,16 @@ const useApiFetch = <DataT>(
           }
         },
         async onResponse(context: FetchContext<any, ResponseType> & { response: FetchResponse<DataT> }) {
+          // 標記是否需要 refresh token（支援 ignoreResponseError 模式）
+          if (
+            _refreshSignal
+            && options.autoRefreshToken
+            && options.refreshTokenHandler
+            && _shouldRefresh(context.response)
+          ) {
+            _refreshSignal.needed = true
+          }
+
           if (options.onResponses) {
             for (const onResponse of options.onResponses) {
               await onResponse(context)
@@ -369,7 +396,7 @@ const useApiFetch = <DataT>(
           }
         },
         async onResponseError(context: FetchContext<any, ResponseType> & { response: FetchResponse<DataT> }) {
-          // 標記是否需要 refresh token（支援 ignoreResponseError 模式）
+          // 標記是否需要 refresh token（非 ignoreResponseError 模式）
           if (
             _refreshSignal
             && options.autoRefreshToken

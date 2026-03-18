@@ -7,12 +7,15 @@ description: "Vue, Nuxt 4, & UI Code Style Guide"
 
 ## 🚀 框架與核心架構 (Vue & Nuxt 4)
 - **依賴自動注入 (Auto-Imports)**：本專案基於 Nuxt 4，已提供完善的自動注入功能。**絕對不要**手動 `import` 以下內容：
-  - 各類 Vue 原生功能（如：`ref`, `computed`, `watch`, 等）
+  - 各類 Vue 原生功能（如：`ref`, `computed`, `watch`,`MaybeRefOrGetter`,`MaybeRef`, `toRefs` 等）
   - 專案定義的組合式函式 (`app/composables/` 目錄下)
-  - 狀態管理模組 (`app/stores/` 目錄下) 與 Pinia 相關功能
+  - 狀態管理模組 (`app/stores/` 目錄下) 與 Pinia 相關功能（如：`storeToRefs`, `defineStore` 等）
   - 各類標示 Icon（包含 `iconv-lite` 等圖示庫）
+  - `@vueuse`package提供的功能
 - **狀態管理**：本專案使用 **Pinia** 進行全域狀態 (Store) 管理。
 - **型別與模型層 (Models)**：所有的 `interface`、`type` 等資料模型，請統一分類收納至 `app/models/` 目錄當中，並確保結構清晰。
+- **持久化狀態與 Hydration (Persistence Layer)**：使用 `useLocalStorage`、`useSessionStorage`
+ 管理 Store 狀態時，若涉及客戶端持久化資料，必須加上 `{ initOnMounted: true }` 配置。這能確保在 Nuxt 的 Hydration 過程中，客戶端能正確從 `localStorage` 讀取資料並同步，避免渲染不一致 (Hydration Mismatch)。
 
 ## ⚡ Vue 元件開發規範
 - **開發風格 (Composition API)**：請堅持使用 **Composition API** 寫法（如 `<script setup>`），嚴禁使用 Options API（如 `data()`, `methods`）。 Store 的撰寫也請同樣採用 Composition API (Setup Store) 模式，且**一律加上並暴露 `$reset` 方法**。
@@ -73,3 +76,13 @@ description: "Vue, Nuxt 4, & UI Code Style Guide"
 - **路徑別名規範**：
   - 為了簡潔性與一致性，在引用專案內部模組時，請優先使用 `@/`、`@@/` 別名。
   - **技術註記**：在 Nuxt 專案中，`@/` 會被指向 `app/` 目錄，`@@/` 會被指向 NUXT專案目錄，使用別名能確保在目錄重構時具備更好的移植性。
+- **提前回傳原則 (Guard Clauses / Early Return)**：
+  - **減少巢狀結構**：專注於邏輯的「快樂路徑」(Happy Path)，並透過「衛句」(Guard Clauses) 優先處理並回傳錯誤或邊緣情況。
+  - **提升可讀性**：避免深層的 `if-else` 巢狀結構，讓程式碼邏輯更加扁平且易於理解。
+  - **範例**：
+    ```ts
+    if (r.isFail()) {
+      return
+    }
+    // 成功後的邏輯...
+    ```
