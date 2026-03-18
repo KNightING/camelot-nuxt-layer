@@ -290,12 +290,14 @@ const useApiFetch = <DataT>(
     dedupe: 'defer',
     immediate: false,
     watch: false,
+    server: false,
     ...coverOptions,
   })
 
   const _doFetch = (
     coverOptions: NitroFetchOptions<any> = {},
     _refreshSignal?: { needed: boolean },
+    abortSignal?: AbortSignal,
   ): Promise<DataT> => {
     let header: HeadersInit | undefined
 
@@ -330,6 +332,18 @@ const useApiFetch = <DataT>(
         redirect: toValue(options.redirect),
         referrer: toValue(options.referrer),
         referrerPolicy: toValue(options.referrerPolicy),
+        agent: toValue(options.agent),
+        cache: toValue(options.cache),
+        keepalive: toValue(options.keepalive),
+        signal: abortSignal,
+        retry: toValue(options.retry),
+        retryStatusCodes: isRef(options.retryStatusCodes) ? toValue(options.retryStatusCodes) : options.retryStatusCodes as number[],
+        timeout: toValue(options.timeout),
+        ignoreResponseError: toValue(options.ignoreResponseError),
+        duplex: toValue(options.duplex),
+        dispatcher: toValue(options.dispatcher),
+        integrity: toValue(options.integrity),
+        priority: toValue(options.priority),
         async onRequest(context: FetchContext<any, ResponseType>) {
           switch (options.contentType) {
             case ContentType.Json: {
@@ -383,7 +397,7 @@ const useApiFetch = <DataT>(
       }) as Promise<DataT>
   }
 
-  const fetch = async (coverOptions: NitroFetchOptions<any> = {}, _retryCount = 0): Promise<DataT> => {
+  const fetch = async (coverOptions: NitroFetchOptions<any> = {}, _retryCount = 0, abortSignal?: AbortSignal): Promise<DataT> => {
     const maxRetry = options.maxRefreshRetry ?? 1
     const refreshSignal = { needed: false }
 
@@ -391,7 +405,7 @@ const useApiFetch = <DataT>(
     let caughtError: any = null
 
     try {
-      result = await _doFetch(coverOptions, refreshSignal)
+      result = await _doFetch(coverOptions, refreshSignal, abortSignal)
     }
     catch (error: any) {
       caughtError = error
@@ -417,7 +431,9 @@ const useApiFetch = <DataT>(
   return {
     useFetch: use,
     useFetchBetter,
+    useBFetch: useFetchBetter,
     useLazyFetch,
+    useLFetch: useLazyFetch,
     fetch,
   }
 }
