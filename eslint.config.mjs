@@ -11,6 +11,9 @@ export default withNuxt(
     rules: {
       'vue/multi-word-component-names': 'off',
       'vue/require-default-prop': 'off',
+      'vue/block-order': ['error', {
+        order: ['template', 'script', 'style'],
+      }],
       // Note: you must disable the base rule as it can report incorrect errors
       'no-unused-vars': 'off',
       '@typescript-eslint/no-unused-vars': 'off',
@@ -29,8 +32,22 @@ export default withNuxt(
       'no-empty': 'off',
       // 強迫所有花括號換行
       'object-curly-newline': ['error', {
-        multiline: true,
-        consistent: true,
+        ObjectExpression: {
+          multiline: true,
+          consistent: true,
+        },
+        ObjectPattern: {
+          multiline: true,
+          minProperties: 2,
+        }, // 當解構屬性 >= 2 個時強迫換行
+        ImportDeclaration: {
+          multiline: true,
+          consistent: true,
+        },
+        ExportDeclaration: {
+          multiline: true,
+          consistent: true,
+        },
       }],
       // 強迫所有屬性換行
       'object-property-newline': ['error', {
