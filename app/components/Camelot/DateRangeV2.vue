@@ -16,9 +16,9 @@
       :disabled="disabled"
       :toggle="togglePopup"
     >
-      <div
+      <label
         ref="triggerRef"
-        class="min-w-[16ch] border border-outline bg-surface-container-lowest has-focus:border-primary rounded-lg px-4 py-2 flex items-center gap-2 group cursor-pointer transition-colors"
+        class="w-fit border border-outline bg-surface-container-lowest has-focus:border-primary rounded-lg px-4 flex items-center gap-2 group cursor-pointer transition-colors hover:border-primary"
         :class="{
           'border-primary': open,
           'border-error!': isError,
@@ -27,10 +27,30 @@
         @click="togglePopup"
       >
         <IMaterialSymbolsCalendarMonthRounded class="w-5 h-5 text-outline group-hover:text-primary transition-colors shrink-0" />
-        <span class="flex-1 text-on-surface text-base truncate">
-          {{ displayValue }}
-        </span>
-      </div>
+        <div class="flex-1 flex items-center gap-1 overflow-hidden ">
+          <input
+            v-bind="$attrs"
+            :value="startDisplay"
+            type="text"
+            class=" min-w-0 w-[14ch] flex-1 text-on-surface bg-transparent placeholder:text-on-surface/50 outline-none text-base caret-primary appearance-none cursor-pointer"
+            :class="{ 'text-black!': disabled }"
+            placeholder="請選擇開始日期"
+            readonly
+          >
+          <div class="py-2 px-1  text-outline group-hover:text-primary">
+            <span>~</span>
+          </div>
+          <input
+            v-bind="$attrs"
+            :value="endDisplay"
+            type="text"
+            class=" min-w-0 w-[14ch] flex-1 text-on-surface bg-transparent placeholder:text-on-surface/50 outline-none text-base caret-primary appearance-none cursor-pointer"
+            :class="{ 'text-black!': disabled }"
+            placeholder="請選擇結束日期"
+            readonly
+          >
+        </div>
+      </label>
     </slot>
 
     <template #popup>
@@ -179,6 +199,16 @@ watch(open, (isOpen) => {
   }
 })
 
+const startDisplay = computed(() => {
+  if (!model.value || !model.value[0]) return ''
+  return formatDate(new Date(model.value[0]), props.format)
+})
+
+const endDisplay = computed(() => {
+  if (!model.value || !model.value[1]) return ''
+  return formatDate(new Date(model.value[1]), props.format)
+})
+
 const displayValue = computed(() => {
   if (!model.value || !model.value[0] || !model.value[1]) {
     return props.placeholder
@@ -188,14 +218,7 @@ const displayValue = computed(() => {
     return props.displayFormat(model.value as [Date, Date])
   }
 
-  try {
-    const start = formatDate(new Date(model.value[0]), props.format)
-    const end = formatDate(new Date(model.value[1]), props.format)
-    return `${start} - ${end}`
-  }
-  catch (e) {
-    return props.placeholder
-  }
+  return `${startDisplay.value} ~ ${endDisplay.value}`
 })
 
 const onViewDateUpdate = (date: Date) => {
