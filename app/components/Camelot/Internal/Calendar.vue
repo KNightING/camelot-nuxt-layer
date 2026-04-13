@@ -8,7 +8,7 @@
       >
         <button
           type="button"
-          class="p-1.5 rounded-full hover:bg-surface-container transition-colors disabled:opacity-30"
+          class="p-1.5 rounded-full hover:bg-surface-container transition-colors disabled:opacity-30 text-on-surface"
           @click="prevMonth"
         >
           <IMaterialSymbolsChevronLeftRounded class="w-6 h-6" />
@@ -22,14 +22,14 @@
       <div class="flex items-center gap-1">
         <button
           type="button"
-          class="px-2 py-1 rounded-md hover:bg-surface-container font-medium text-lg transition-colors"
+          class="px-2 py-1 rounded-md hover:bg-surface-container font-medium text-lg transition-colors text-on-surface"
           @click="toggleYearPicker"
         >
           {{ format(viewDate, 'yyyy') }}年
         </button>
         <button
           type="button"
-          class="px-2 py-1 rounded-md hover:bg-surface-container font-medium text-lg transition-colors"
+          class="px-2 py-1 rounded-md hover:bg-surface-container font-medium text-lg transition-colors text-on-surface"
           @click="toggleMonthPicker"
         >
           {{ format(viewDate, 'MM') }}月
@@ -42,7 +42,7 @@
       >
         <button
           type="button"
-          class="p-1.5 rounded-full hover:bg-surface-container transition-colors disabled:opacity-30"
+          class="p-1.5 rounded-full hover:bg-surface-container transition-colors disabled:opacity-30 text-on-surface"
           @click="nextMonth"
         >
           <IMaterialSymbolsChevronRightRounded class="w-6 h-6" />
@@ -59,42 +59,55 @@
       v-if="pickerMode === 'calendar'"
       class="calendar-view animate-in fade-in duration-200"
     >
-      <div class="grid grid-cols-7 gap-y-1 text-center">
+      <div class="grid grid-cols-7 gap-1 text-center">
         <!-- Weekday Headers -->
         <div
           v-for="day in weekDays"
           :key="day"
-          class="h-9 flex items-center justify-center text-sm font-medium text-outline"
+          class="w-10 aspect-square flex items-center justify-center text-sm font-medium text-outline"
         >
           {{ day }}
         </div>
 
         <!-- Days -->
         <div
-          v-for="{ date, isCurrentMonth, isVisible, isSelected, isInRange, isToday, isDisabled, isRangeStart, isRangeEnd } in calendarDays"
+          v-for="{ date, isVisible, isSelected, isInRange, isToday, isDisabled, isRangeStart, isRangeEnd, dayLabel, dayLabelClass, isDot, dotColor, customClass, dayColorClass } in calendarDays"
           :key="date.toISOString()"
-          class="relative h-9 w-9 flex items-center justify-center cursor-pointer group"
+          class="relative h-[52px] w-10 p-0.5 flex flex-col items-center justify-start cursor-pointer group rounded-lg"
           :class="[
-            (!isDisabled && isVisible) && 'hover:bg-surface-container rounded-full',
+            (!isDisabled && isVisible) && 'hover:bg-surface-container',
             (isDisabled && isVisible) && 'cursor-not-allowed opacity-30',
-            (isInRange && !isSelected && isVisible) && 'bg-primary/10 rounded-none!',
-            (isRangeStart && isVisible) && 'bg-primary/10 rounded-l-full!',
-            (isRangeEnd && isVisible) && 'bg-primary/10 rounded-r-full!',
+            (isInRange && !isSelected && isVisible) && 'bg-primary/10',
+            (isRangeStart && isVisible) && 'bg-primary/10',
+            (isRangeEnd && isVisible) && 'bg-primary/10',
+            dayColorClass,
+            customClass,
           ]"
           @click="(!isDisabled && isVisible) && selectDate(date)"
         >
           <span
             v-if="isVisible"
-            class="z-10 w-8 h-8 flex items-center justify-center text-sm transition-all rounded-full"
+            class="h-6 aspect-square flex items-center justify-center text-sm transition-all rounded-full shrink-0"
             :class="{
-              'text-primary font-bold': isToday && !isSelected,
-              'bg-primary text-on-primary font-bold shadow-sm': isSelected,
-              'text-on-surface': !isSelected && !isToday && isCurrentMonth,
-              'text-outline opacity-50': !isSelected && !isToday && !isCurrentMonth,
+              'font-bold': (isToday && !isSelected) || isSelected,
+              'bg-primary shadow-sm text-on-primary': isSelected,
             }"
           >
             {{ format(date, 'd') }}
           </span>
+          <span
+            v-if="isVisible && dayLabel"
+            class="text-[10px] items-center justify-center leading-[1.1] line-clamp-2 break-all text-center shrink-0"
+            :class="dayLabelClass"
+          >
+            {{ dayLabel }}
+          </span>
+          <div
+            v-if="isVisible && isDot"
+            class="absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full"
+            :class="{ 'bg-on-primary': isSelected, 'bg-primary': !isSelected && !dotColor }"
+            :style="dotColor ? { backgroundColor: dotColor } : {}"
+          />
         </div>
       </div>
 
@@ -207,20 +220,29 @@ import {
   setMinutes,
   getHours,
   getMinutes,
+  getDay,
 } from 'date-fns'
 
+export interface CalendarDayAttributes {
+  isHoliday?: boolean
+  label?: string | null
+  labelClass?: string
+  disabled?: boolean
+  dot?: boolean
+  dotColor?: string
+  class?: string
+}
+
 const props = withDefaults(defineProps<{
-  modelValue?: Date | number | null
-  rangeValue?: (Date | number | null)[] | null
   isRange?: boolean
   minDate?: Date | number
   maxDate?: Date | number
-  viewDate: Date
   hidePrevMonth?: boolean
   hideNextMonth?: boolean
   enableTime?: boolean
   hidePrevArrow?: boolean
   hideNextArrow?: boolean
+  getDayAttributes?: (date: Date, dayOfWeek: number) => CalendarDayAttributes | undefined | null
 }>(), {
   hidePrevMonth: false,
   hideNextMonth: false,
@@ -229,11 +251,9 @@ const props = withDefaults(defineProps<{
   hideNextArrow: false,
 })
 
-const emit = defineEmits<{
-  'update:modelValue': [date: Date]
-  'update:rangeValue': [range: [Date, Date | null]]
-  'update:viewDate': [date: Date]
-}>()
+const modelValue = defineModel<Date | number | null>('modelValue')
+const rangeValue = defineModel<(Date | number | null)[] | null>('rangeValue')
+const viewDate = defineModel<Date>('viewDate', { required: true })
 
 const pickerMode = ref<'calendar' | 'month' | 'year'>('calendar')
 const yearPage = ref(0)
@@ -244,7 +264,7 @@ const hours = ref(0)
 const minutes = ref(0)
 
 // Sync time from modelValue
-watch(() => props.modelValue, (val) => {
+watch(modelValue, (val) => {
   if (val) {
     const d = new Date(val)
     hours.value = getHours(d)
@@ -258,17 +278,17 @@ const yearsRange = computed(() => {
 })
 
 const calendarDays = computed(() => {
-  const monthStart = startOfMonth(props.viewDate)
-  const monthEnd = endOfMonth(props.viewDate)
+  const monthStart = startOfMonth(viewDate.value)
+  const monthEnd = endOfMonth(viewDate.value)
   const start = startOfWeek(monthStart)
   const days = Array.from({ length: 42 }).map((_, i) => addDays(start, i))
 
-  const rangeStart = props.rangeValue?.[0] ? startOfDay(new Date(props.rangeValue[0])) : null
-  const rangeEnd = props.rangeValue?.[1] ? startOfDay(new Date(props.rangeValue[1])) : null
+  const rangeStart = rangeValue.value?.[0] ? startOfDay(new Date(rangeValue.value[0])) : null
+  const rangeEnd = rangeValue.value?.[1] ? startOfDay(new Date(rangeValue.value[1])) : null
 
   return days.map((day) => {
     const d = startOfDay(day)
-    const isCurrentMonth = isSameMonth(d, props.viewDate)
+    const isCurrentMonth = isSameMonth(d, viewDate.value)
     const isPrevMonth = isBefore(d, monthStart)
     const isNextMonth = isAfter(d, monthEnd)
 
@@ -276,6 +296,17 @@ const calendarDays = computed(() => {
     let isVisible = isCurrentMonth
     if (isPrevMonth) isVisible = !props.hidePrevMonth
     if (isNextMonth) isVisible = !props.hideNextMonth
+
+    const dayOfWeek = getDay(d)
+    const isWeekend = dayOfWeek === 0 || dayOfWeek === 6
+    const attrs = props.getDayAttributes?.(d, dayOfWeek)
+
+    const isHoliday = attrs?.isHoliday ?? false
+    const dayLabel = attrs?.label ?? null
+    const dayLabelClass = attrs?.labelClass ?? ''
+    const isDot = attrs?.dot ?? false
+    const dotColor = attrs?.dotColor ?? ''
+    const customClass = attrs?.class ?? ''
 
     let isSelected = false
     let isInRange = false
@@ -288,15 +319,40 @@ const calendarDays = computed(() => {
       isSelected = isRangeStart || isRangeEnd
 
       if (rangeStart && rangeEnd) {
-        isInRange = isWithinInterval(d, { start: rangeStart, end: rangeEnd })
+        isInRange = isWithinInterval(d, {
+          start: rangeStart,
+          end: rangeEnd,
+        })
       }
     }
-    else if (!props.isRange && props.modelValue) {
-      isSelected = isSameDay(d, new Date(props.modelValue))
+    else if (!props.isRange && modelValue.value) {
+      isSelected = isSameDay(d, new Date(modelValue.value))
     }
 
-    const isDisabled = (props.minDate && isBefore(d, startOfDay(new Date(props.minDate))))
+    const isDisabled = attrs?.disabled
+      || (props.minDate && isBefore(d, startOfDay(new Date(props.minDate))))
       || (props.maxDate && isAfter(d, startOfDay(new Date(props.maxDate))))
+
+    const isToday = isDateToday(d)
+
+    // Color logic unification
+    let dayColorClass = ''
+
+    if (isWeekend || isHoliday) {
+      dayColorClass = 'text-error'
+    }
+    else if (isSelected) {
+      dayColorClass = 'text-primary'
+    }
+    else if (isToday) {
+      dayColorClass = 'text-primary'
+    }
+    else if (isCurrentMonth) {
+      dayColorClass = 'text-on-surface'
+    }
+    else {
+      dayColorClass = 'text-outline opacity-50'
+    }
 
     return {
       date: d,
@@ -306,8 +362,16 @@ const calendarDays = computed(() => {
       isInRange,
       isRangeStart,
       isRangeEnd,
-      isToday: isDateToday(d),
+      isToday,
       isDisabled,
+      isWeekend,
+      isDayHoliday: isHoliday,
+      dayLabel,
+      dayLabelClass,
+      dayColorClass,
+      isDot,
+      dotColor,
+      customClass,
     }
   })
 })
@@ -319,14 +383,14 @@ const selectDate = (date: Date) => {
   }
 
   // If selecting a date from adjacent month, we might want to switch the view
-  if (!isSameMonth(date, props.viewDate)) {
-    emit('update:viewDate', startOfMonth(date))
+  if (!isSameMonth(date, viewDate.value)) {
+    viewDate.value = startOfMonth(date)
   }
 
   if (props.isRange) {
     let newRange: [Date, Date | null]
-    const rangeStart = props.rangeValue?.[0] ? new Date(props.rangeValue[0]) : null
-    const rangeEnd = props.rangeValue?.[1] ? new Date(props.rangeValue[1]) : null
+    const rangeStart = rangeValue.value?.[0] ? new Date(rangeValue.value[0]) : null
+    const rangeEnd = rangeValue.value?.[1] ? new Date(rangeValue.value[1]) : null
 
     if (!rangeStart || rangeEnd) {
       newRange = [finalDate, null]
@@ -339,17 +403,17 @@ const selectDate = (date: Date) => {
         newRange = [rangeStart, finalDate]
       }
     }
-    emit('update:rangeValue', newRange)
+    rangeValue.value = newRange
   }
   else {
-    emit('update:modelValue', finalDate)
+    modelValue.value = finalDate
   }
 }
 
 const onTimeChange = () => {
-  if (!props.isRange && props.modelValue) {
-    const date = setHours(setMinutes(new Date(props.modelValue), minutes.value), hours.value)
-    emit('update:modelValue', date)
+  if (!props.isRange && modelValue.value) {
+    const date = setHours(setMinutes(new Date(modelValue.value), minutes.value), hours.value)
+    modelValue.value = date
   }
 }
 
@@ -362,17 +426,17 @@ const toggleMonthPicker = () => {
 }
 
 const selectYear = (year: number) => {
-  emit('update:viewDate', setYear(props.viewDate, year))
+  viewDate.value = setYear(viewDate.value, year)
   pickerMode.value = 'calendar'
 }
 
 const selectMonth = (month: number) => {
-  emit('update:viewDate', setMonth(props.viewDate, month))
+  viewDate.value = setMonth(viewDate.value, month)
   pickerMode.value = 'calendar'
 }
 
-const nextMonth = () => emit('update:viewDate', addMonths(props.viewDate, 1))
-const prevMonth = () => emit('update:viewDate', subMonths(props.viewDate, 1))
+const nextMonth = () => viewDate.value = addMonths(viewDate.value, 1)
+const prevMonth = () => viewDate.value = subMonths(viewDate.value, 1)
 </script>
 
 <style scoped>

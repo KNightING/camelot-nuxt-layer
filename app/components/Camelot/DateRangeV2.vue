@@ -41,26 +41,27 @@
       >
         <div class="flex flex-col sm:flex-row">
           <CamelotInternalCalendar
+            v-model:range-value="internalValue"
+            v-model:view-date="viewDate"
             is-range
             hide-next-arrow
             hide-next-month
-            :range-value="internalValue"
-            :view-date="viewDate"
             :min-date="minDate"
             :max-date="maxDate"
-            @update:view-date="onViewDateUpdate"
+            :get-day-attributes="getDayAttributes"
             @update:range-value="onRangeSelect"
           />
           <CamelotInternalCalendar
             v-if="multiCalendars"
+            v-model:range-value="internalValue"
             is-range
             hide-prev-arrow
             hide-prev-month
             class="hidden sm:block"
-            :range-value="internalValue"
             :view-date="nextMonthViewDate"
             :min-date="minDate"
             :max-date="maxDate"
+            :get-day-attributes="getDayAttributes"
             @update:view-date="onNextMonthViewDateUpdate"
             @update:range-value="onRangeSelect"
           />
@@ -94,12 +95,12 @@
     >
       <div class="bg-surface rounded-xl overflow-hidden">
         <CamelotInternalCalendar
+          v-model:range-value="internalValue"
+          v-model:view-date="viewDate"
           is-range
-          :range-value="internalValue"
-          :view-date="viewDate"
           :min-date="minDate"
           :max-date="maxDate"
-          @update:view-date="onViewDateUpdate"
+          :get-day-attributes="getDayAttributes"
           @update:range-value="onRangeSelect"
         />
       </div>
@@ -109,6 +110,7 @@
 
 <script setup lang="ts">
 import { format as formatDate, addMonths, subMonths, isSameDay } from 'date-fns'
+import type { CalendarDayAttributes } from './Internal/Calendar.vue'
 
 const props = withDefaults(defineProps<{
   minDate?: Date | number
@@ -122,6 +124,7 @@ const props = withDefaults(defineProps<{
   autoApply?: boolean
   displayFormat?: (dates: [Date, Date]) => string
   format?: string
+  getDayAttributes?: (date: Date, dayOfWeek: number) => CalendarDayAttributes | undefined | null
 }>(), {
   showType: 'auto',
   placeholder: 'Select Date Range',
@@ -203,8 +206,9 @@ const onNextMonthViewDateUpdate = (date: Date) => {
   viewDate.value = subMonths(date, 1)
 }
 
-const onRangeSelect = (range: [Date, Date | null]) => {
-  internalValue.value = [range[0], range[1]]
+const onRangeSelect = (range: (Date | number | null)[] | null | undefined) => {
+  if (!range || !Array.isArray(range)) return
+  internalValue.value = [range[0] as Date | null, range[1] as Date | null]
 
   if (range[0] && range[1]) {
     if (props.autoApply) {

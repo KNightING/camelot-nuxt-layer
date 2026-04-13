@@ -167,7 +167,7 @@
           Expanded
         </div>
       </template>
-      <div class="bg-gradient-to-b from-red-500 to-blue-500 h-28" />
+      <div class="bg-linear-to-b from-red-500 to-blue-500 h-28" />
     </CamelotExpanded>
 
     <div class="w-40 h-60 rounded-2xl overflow-hidden ">
@@ -214,9 +214,13 @@
     <!-- <ClientOnly> -->
     <CamelotDate />
 
-    <CamelotDateV2 placeholder="請選擇日期" />
+    <CamelotDateV2
+      placeholder="請選擇日期"
+      :get-day-attributes="getDayAttributes"
+    />
     <CamelotDateRangeV2
       :multi-calendars="true"
+      :get-day-attributes="getDayAttributes"
     />
     <!-- </ClientOnly> -->
 
@@ -344,7 +348,17 @@
 </template>
 
 <script setup lang="ts">
-const { toPath, canBack } = useCamelotRouter()
+import { isToday } from 'date-fns'
+
+const getDayAttributes = (date: Date) => {
+  if (isToday(date)) {
+    return { label: '行憲紀念日' }
+  }
+}
+
+const {
+  toPath, canBack,
+} = useCamelotRouter()
 const loading = useLoading()
 
 const { isOnBottom } = useScrollOnBottom()

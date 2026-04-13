@@ -27,7 +27,7 @@
         v-bind="$attrs"
         v-model="inputModel"
         type="text"
-        class="min-w-0 w-0 flex-1 bg-transparent placeholder:text-gray-700 outline-none text-base caret-primary appearance-none cursor-pointer"
+        class="min-w-0 w-0 flex-1 text-on-surface bg-transparent placeholder:text-on-surface outline-none text-base caret-primary appearance-none cursor-pointer"
         :class="{
           'text-black!': disabled,
         }"
@@ -45,11 +45,11 @@
       <div class="bg-surface rounded-xl overflow-hidden shadow-sm">
         <CamelotInternalCalendar
           v-model="model"
-          :view-date="viewDate"
+          v-model:view-date="viewDate"
           :min-date="minDate"
           :max-date="maxDate"
           :enable-time="enableTime"
-          @update:view-date="viewDate = $event"
+          :get-day-attributes="getDayAttributes"
           @update:model-value="onDateSelect"
         />
       </div>
@@ -65,11 +65,11 @@
       >
         <CamelotInternalCalendar
           v-model="model"
-          :view-date="viewDate"
+          v-model:view-date="viewDate"
           :min-date="minDate"
           :max-date="maxDate"
           :enable-time="enableTime"
-          @update:view-date="viewDate = $event"
+          :get-day-attributes="getDayAttributes"
           @update:model-value="onDateSelect"
         />
       </div>
@@ -79,6 +79,7 @@
 
 <script setup lang="ts">
 import { format } from 'date-fns'
+import type { CalendarDayAttributes } from './Internal/Calendar.vue'
 
 const props = withDefaults(defineProps<{
   minDate?: Date | number
@@ -91,6 +92,7 @@ const props = withDefaults(defineProps<{
   showType?: 'auto' | 'popup' | 'dialog'
   selectZIndex?: number
   enableTime?: boolean
+  getDayAttributes?: (date: Date, dayOfWeek: number) => CalendarDayAttributes | undefined | null
 }>(), {
   showType: 'auto',
   placeholder: 'YYYY-MM-DD',
@@ -138,7 +140,8 @@ const togglePopup = () => {
   }
 }
 
-const onDateSelect = (date: Date) => {
+const onDateSelect = (date: Date | number | null | undefined) => {
+  if (!date) return
   model.value = date
   if (!props.enableTime) {
     open.value = false
