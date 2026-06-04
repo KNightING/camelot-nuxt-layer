@@ -87,12 +87,12 @@
               </span>
 
               <CamelotPopupV2
-                :open="open"
+                v-model:open="open"
                 disabled-shadow
                 :z-index="70"
-                manual
+                trigger-mode="hover"
               >
-                <span ref="hoverMemberRef">Hover開啟會員</span>
+                <span>Hover開啟會員</span>
 
                 <template #popup>
                   <div class="flex flex-col border border-outline-variant min-w-[205px] rounded-lg bg-surface gap-6 py-3 px-4">
@@ -133,14 +133,6 @@ const { y } = windowScroll
 const smallerHeader = computed(() => y.value >= 100)
 
 const open = ref(false)
-
-const hoverMemberRef = useTemplateRef('hoverMemberRef')
-
-const isHover = useElementHover(hoverMemberRef)
-
-watch(isHover, (isHover) => {
-  open.value = isHover
-})
 </script>
 
 <style scoped>

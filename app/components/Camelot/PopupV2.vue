@@ -17,6 +17,7 @@
           height: `${height}px`,
           top: `${y}px`,
           left: `${x}px`,
+          transform: `translate3d(${vvOffsetX}px, ${vvOffsetY}px, 0px)`,
         }"
       >
         <div
@@ -98,6 +99,16 @@ const props = defineProps<{
   teleport?: string | MaybeElementRef<MaybeElement>
 
   popupClass?: string | string[] | Record<string, boolean>
+
+  /**
+   * 觸發模式：'click' | 'hover'
+   */
+  triggerMode?: 'click' | 'hover'
+
+  /**
+   * Hover 模式下，滑鼠移開後的延遲關閉時間 (ms)
+   */
+  hoverDelay?: number
 }>()
 
 const open = defineModel<boolean>('open', { default: false })
@@ -160,6 +171,10 @@ const onTargetClick = () => {
     return
   }
 
+  if (props.triggerMode === 'hover') {
+    return
+  }
+
   if (!props.disabled) {
     open.value = !open.value
   }
@@ -201,6 +216,11 @@ const teleportTo = computed(() => {
   return parentIsDialog.value ? parentIsDialog.value : document.body
 })
 
+const vvOffsetX = ref(0)
+const vvOffsetY = ref(0)
+
+let updateViewportOffset: (() => void) | null = null
+
 watch(targetRef, (targetRef) => {
   if (targetRef && targetRef instanceof HTMLElement) {
     const scrollParent = useScrollParent(targetRef)
@@ -219,6 +239,120 @@ watch(targetRef, (targetRef) => {
 
 onMounted(() => {
   updateOnRequestAnimationFrame()
+
+  if (typeof window !== 'undefined' && window.visualViewport) {
+    updateViewportOffset = () => {
+      const offset = window.visualViewport
+      if (offset) {
+        const newX = offset.offsetLeft
+        const newY = offset.offsetTop
+
+        // Check if a search input or textarea is currently focused.
+        const activeEl = document.activeElement
+        const isInputFocused = activeEl && (
+          activeEl.tagName === 'INPUT'
+          || activeEl.tagName === 'TEXTAREA'
+        )
+
+        // Freeze position during input blur and keyboard close transitions
+        // to prevent click/touch shifts if dropdown is still open.
+        if (open.value && !isInputFocused) {
+          return
+        }
+
+        vvOffsetX.value = newX
+        vvOffsetY.value = newY
+      }
+    }
+
+    window.visualViewport.addEventListener('scroll', updateViewportOffset)
+    window.visualViewport.addEventListener('resize', updateViewportOffset)
+  }
+})
+
+watch(open, (isOpen) => {
+  if (!isOpen) {
+    vvOffsetX.value = 0
+    vvOffsetY.value = 0
+  }
+})
+
+// Native Hover Trigger Mode Implementation
+const isTargetHovered = ref(false)
+const isPopupHovered = ref(false)
+let hoverTimeout: ReturnType<typeof setTimeout> | null = null
+
+const targetListeners: { event: string; handler: any }[] = []
+const popupListeners: { event: string; handler: any }[] = []
+
+const startHoverOpen = () => {
+  if (props.disabled || props.triggerMode !== 'hover') return
+  if (hoverTimeout) {
+    clearTimeout(hoverTimeout)
+    hoverTimeout = null
+  }
+  open.value = true
+}
+
+const startHoverClose = () => {
+  if (props.triggerMode !== 'hover') return
+  if (hoverTimeout) clearTimeout(hoverTimeout)
+  hoverTimeout = setTimeout(() => {
+    open.value = false
+    hoverTimeout = null
+  }, props.hoverDelay ?? 200)
+}
+
+watch(targetRef, (el) => {
+  if (el && el instanceof HTMLElement) {
+    const enter = () => {
+      isTargetHovered.value = true
+      startHoverOpen()
+    }
+    const leave = () => {
+      isTargetHovered.value = false
+      startHoverClose()
+    }
+    el.addEventListener('mouseenter', enter)
+    el.addEventListener('mouseleave', leave)
+    targetListeners.push({ event: 'mouseenter', handler: enter }, { event: 'mouseleave', handler: leave })
+  }
+})
+
+watch(popupRef, (component) => {
+  const el = component?.$el
+  if (el && el instanceof HTMLElement) {
+    const enter = () => {
+      isPopupHovered.value = true
+      startHoverOpen()
+    }
+    const leave = () => {
+      isPopupHovered.value = false
+      startHoverClose()
+    }
+    el.addEventListener('mouseenter', enter)
+    el.addEventListener('mouseleave', leave)
+    popupListeners.push({ event: 'mouseenter', handler: enter }, { event: 'mouseleave', handler: leave })
+  }
+})
+
+onBeforeUnmount(() => {
+  if (typeof window !== 'undefined' && window.visualViewport && updateViewportOffset) {
+    window.visualViewport.removeEventListener('scroll', updateViewportOffset)
+    window.visualViewport.removeEventListener('resize', updateViewportOffset)
+  }
+
+  // Cleanup hover event listeners
+  if (targetRef.value instanceof HTMLElement) {
+    targetListeners.forEach(l => targetRef.value?.removeEventListener(l.event, l.handler))
+  }
+  const popupEl = popupRef.value?.$el
+  if (popupEl instanceof HTMLElement) {
+    popupListeners.forEach(l => popupEl.removeEventListener(l.event, l.handler))
+  }
+  if (hoverTimeout) {
+    clearTimeout(hoverTimeout)
+  }
 })
 </script>
 
