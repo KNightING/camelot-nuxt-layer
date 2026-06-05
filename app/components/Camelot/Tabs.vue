@@ -1,5 +1,12 @@
 <template>
-  <ul :class="[themeMode]" class="tabs-container">
+  <ul ref="tabsContainerRef" :class="[themeMode]" class="tabs-container">
+    <!-- Aqua: Sliding pill indicator -->
+    <div
+      v-if="themeMode === 'aqua'"
+      class="aqua-pill-indicator"
+      :style="aquaPillStyle"
+      aria-hidden="true"
+    />
     <li
       v-for="(option, index) in options"
       ref="tabsElRefs"
@@ -15,9 +22,18 @@
         :index="index"
         :is-selected="isSelected(option.value)"
       >
+        <!-- Aqua Pill Theme Tab -->
+        <div
+          v-if="themeMode === 'aqua'"
+          class="tab aqua-tab"
+          :class="{ 'tab-selected': isSelected(option.value) }"
+        >
+          {{ getText(option) }}
+        </div>
+
         <!-- Sci-fi Theme Tab -->
         <div
-          v-if="themeMode === 'scifi'"
+          v-else-if="themeMode === 'scifi'"
           class="tab scifi-tab"
           :class="{ 'tab-selected': isSelected(option.value) }"
         >
@@ -109,6 +125,28 @@ const selectedIndex = defineModel<number | undefined>('selectedIndex', {
 })
 
 const tabsElRefs = ref<HTMLElement[]>([])
+const tabsContainerRef = useTemplateRef<HTMLElement>('tabsContainerRef')
+
+// Aqua: pill indicator 位置計算
+const aquaPillStyle = computed(() => {
+  const index = toValue(selectedIndex)
+  if (index === undefined || !tabsElRefs.value[index]) {
+    return { opacity: '0', width: '0px', transform: 'translateX(0px)' }
+  }
+  const tabEl = tabsElRefs.value[index]
+  const containerEl = tabsContainerRef.value
+  if (!containerEl) return { opacity: '0' }
+
+  const containerRect = containerEl.getBoundingClientRect()
+  const tabRect = tabEl.getBoundingClientRect()
+  const left = tabRect.left - containerRect.left
+
+  return {
+    width: `${tabRect.width}px`,
+    transform: `translateX(${left}px)`,
+    opacity: '1',
+  }
+})
 
 const onClick = (index: number, option: SelectOption<T>) => {
   emit('click', index, option)
@@ -187,6 +225,49 @@ onMounted(() => {
   user-select: none;
 }
 
+/* Aqua Pill: 外殼改為 fit-content，不撐滿整行 */
+.tabs-container.aqua {
+  display: inline-flex;
+  width: auto;
+  position: relative;
+  padding: 5px;
+  gap: 0;
+  border-radius: 9999px;
+  background: color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 16%, transparent);
+  overflow: visible;
+}
+
+/* 滑動 pill 指示器 */
+.aqua-pill-indicator {
+  position: absolute;
+  top: 5px;
+  left: 0;
+  height: calc(100% - 10px);
+  border-radius: 9999px;
+  background: linear-gradient(
+    135deg,
+    var(--cml-color-current-color, var(--color-primary)),
+    color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 75%, white)
+  );
+  box-shadow:
+    0 6px 16px -4px color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 45%, transparent),
+    0 2px 6px -2px color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 25%, transparent);
+  pointer-events: none;
+  z-index: 0;
+  /* Spring 物理感動畫 */
+  transition:
+    transform 0.34s cubic-bezier(0.34, 1.2, 0.64, 1),
+    width 0.34s cubic-bezier(0.34, 1.2, 0.64, 1),
+    opacity 0.2s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aqua-pill-indicator {
+    transition: none;
+  }
+}
+
 li {
   flex-shrink: 0;
   list-style: none;
@@ -252,5 +333,35 @@ li {
   border-color: var(--cml-color-current-color, var(--color-primary));
   background-color: color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 20%, transparent);
   box-shadow: 0 0 10px color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 50%, transparent);
+}
+/* Aqua Pill Tab Item */
+.aqua-tab {
+  position: relative;
+  padding: 9px 24px;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--cml-c-m3-on-surface-variant, #49454f);
+  cursor: pointer;
+  transition: color 0.25s ease, transform 0.18s ease;
+  white-space: nowrap;
+  z-index: 1;
+}
+
+.aqua-tab:hover:not(.tab-selected) {
+  color: var(--cml-color-current-color, var(--color-primary));
+}
+
+.aqua-tab:active {
+  transform: scale(0.96);
+}
+
+.aqua-tab.tab-selected {
+  color: var(--cml-c-m3-on-primary, #ffffff);
+}
+
+/* Sliding pill indicator (JS-driven via inline style on li) */
+.tabs-container.aqua li {
+  list-style: none;
 }
 </style>

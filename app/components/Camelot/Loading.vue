@@ -7,8 +7,16 @@
           class="fixed inset-0 z-[1100] flex items-center justify-center bg-black/35 backdrop-blur-xs select-none pointer-events-auto"
         >
           <div class="flex items-center justify-center" :class="[themeMode]">
+            <!-- Cyber Loading Radar -->
+            <div v-if="themeMode === 'cyber'" class="cyber-loader">
+              <div class="cyber-loader-ring">
+                <div class="ring-core" />
+                <div class="tech-text">LOADING...</div>
+              </div>
+            </div>
+
             <!-- Sci-fi Loading Radar -->
-            <div v-if="themeMode === 'scifi'" class="scifi-radar">
+            <div v-else-if="themeMode === 'scifi'" class="scifi-radar">
               <CamelotScifiReticle active />
               <div class="radar-circle" />
               <div class="radar-scanner" />
@@ -147,5 +155,50 @@ const { themeMode } = useCamelotTheme()
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+/* Cyber Loading */
+.cyber-loader {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cyber-loader-ring {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border: 2px dashed #ff0055;
+  border-radius: 50%;
+  animation: rotate-ring 4s linear infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ring-core {
+  position: absolute;
+  inset: 6px;
+  border: 2px solid #00f0ff;
+  border-right-color: transparent;
+  border-left-color: transparent;
+  border-radius: 50%;
+  animation: rotate-ring-reverse 1.5s ease-in-out infinite;
+  filter: drop-shadow(0 0 4px #00f0ff);
+}
+.tech-text {
+  font-family: monospace;
+  font-size: 0.65rem;
+  color: #00f0ff;
+  text-shadow: 0 0 5px #00f0ff;
+  animation: blink 1s linear infinite;
+}
+@keyframes rotate-ring {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes rotate-ring-reverse {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
 }
 </style>

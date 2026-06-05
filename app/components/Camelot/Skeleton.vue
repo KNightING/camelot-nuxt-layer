@@ -1,8 +1,18 @@
 <template>
   <template v-if="isLoading">
+    <!-- Cyber Layout -->
+    <div
+      v-if="themeMode === 'cyber'"
+      class="overflow-hidden relative w-full h-full skeleton cyber-skeleton"
+      v-bind="$attrs"
+    >
+      <div class="cyber-flash-bar" />
+      <div class="cyber-matrix-overlay" />
+    </div>
+
     <!-- Sci-fi Layout (using CamelotScifiFrame without borders and cut corners) -->
     <CamelotScifiFrame
-      v-if="themeMode === 'scifi'"
+      v-else-if="themeMode === 'scifi'"
       :show-borders="false"
       :clip-corners="false"
       :show-pulse="true"
@@ -107,5 +117,38 @@ const { themeMode } = useCamelotTheme()
   100% {
     transform: translateX(250%) rotate(315deg) scale(1.25);
   }
+}
+.skeleton.cyber-skeleton {
+  background-color: rgba(255, 0, 85, 0.12);
+  border: 1px solid rgba(255, 0, 85, 0.3);
+  animation: none;
+}
+.cyber-matrix-overlay {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(#ff0055 1.2px, transparent 1.2px);
+  background-size: 6px 6px;
+  opacity: 0.2;
+  pointer-events: none;
+}
+.cyber-flash-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(0, 240, 255, 0.5) 50%,
+    transparent
+  );
+  animation: cyber-sweep 2s linear infinite;
+  pointer-events: none;
+  filter: drop-shadow(0 0 6px #00f0ff);
+}
+@keyframes cyber-sweep {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
 }
 </style>

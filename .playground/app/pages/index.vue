@@ -41,6 +41,14 @@
             >
               Sci-Fi HUD
             </button>
+            <button 
+              type="button" 
+              class="px-4 py-1.5 rounded-md text-sm font-medium transition-colors cursor-pointer"
+              :class="themeMode === 'aqua' ? 'bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm' : 'text-slate-500 hover:text-slate-800 dark:hover:text-white'"
+              @click="themeMode = 'aqua'"
+            >
+              Aqua Pill
+            </button>
           </div>
         </div>
         

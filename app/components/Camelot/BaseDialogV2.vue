@@ -14,6 +14,7 @@
     >
       <slot name="wrapper">
         <div class="w-screen min-h-screen flex items-center justify-center p-4">
+
           <!-- Sci-fi Layout -->
           <CamelotScifiFrame
             v-if="themeMode === 'scifi'"
@@ -222,6 +223,7 @@ dialog::backdrop {
   background-color: color-mix(in srgb, var(--cml-color-current-color, var(--color-primary, #00ffff)) 8%, rgba(0, 0, 0, 0.75));
   backdrop-filter: blur(3px);
 }
+
 
 .dialog-content-box {
   transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);

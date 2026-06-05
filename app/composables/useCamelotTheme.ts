@@ -1,4 +1,4 @@
-export type CamelotThemeMode = 'material' | 'cupertino' | 'scifi'
+export type CamelotThemeMode = 'material' | 'cupertino' | 'scifi' | 'aqua'
 
 export const useCamelotTheme = () => {
   const themeMode = useLocalStorage<CamelotThemeMode>('cml-theme-mode', 'material', {

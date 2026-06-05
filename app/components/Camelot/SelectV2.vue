@@ -9,9 +9,68 @@
     popup-class="shadow-lg rounded-md"
   >
     <slot :selected-data="selectedData">
+      <!-- Cyber Trigger Wrapper -->
+      <div
+        v-if="themeMode === 'cyber'"
+        class="cyber-select-trigger-wrapper w-full"
+        :class="{ focused: open, 'is-disabled': disabled }"
+      >
+        <div class="cyber-brackets top-left-bracket">[</div>
+        <div class="cyber-brackets bottom-right-bracket">]</div>
+        <!-- Searchable Trigger (Input-based) -->
+        <div
+          v-if="searchable"
+          class="relative w-full"
+          @click="handleTriggerClick"
+        >
+          <input
+            ref="triggerInput"
+            :value="open ? searchValue : (selectedData?.label ?? selectedData?.name ?? selectedData?.value ?? '')"
+            type="text"
+            :placeholder="placeholder"
+            :disabled="disabled"
+            class="w-full bg-transparent outline-none border-none pl-4 pr-10 py-2.5 text-base font-mono text-white"
+            @input="(e: any) => handleSearchInput(e.target.value)"
+          >
+          <div class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center justify-center">
+            <button
+              v-if="open && searchValue"
+              type="button"
+              class="text-gray-400 hover:text-white outline-none focus:outline-none transition-colors"
+              @click.stop="searchValue = ''"
+            >
+              ✕
+            </button>
+            <span
+              v-else
+              class="text-xs transition-transform duration-200"
+              :class="{ 'rotate-180': open, 'text-[#00f0ff]': open, 'text-gray-400': !open }"
+            >
+              ▼
+            </span>
+          </div>
+        </div>
+
+        <!-- Static Trigger -->
+        <div
+          v-else
+          class="w-full outline-none px-4 py-2.5 text-base flex items-center gap-2 font-mono text-white"
+        >
+          <span
+            class="flex-1 truncate"
+            :class="selectedData ? 'text-white' : 'text-gray-400'"
+          >{{ selectedData?.label ?? selectedData?.name ?? selectedData?.value ?? placeholder }}</span>
+          <span
+            class="text-xs transition-transform duration-200"
+            :class="{ 'rotate-180': open, 'text-[#00f0ff]': open, 'text-gray-400': !open }"
+          >▼</span>
+        </div>
+        <div class="cyber-accent-line" />
+      </div>
+
       <!-- Sci-fi Trigger Wrapper -->
       <CamelotScifiFrame
-        v-if="themeMode === 'scifi'"
+        v-else-if="themeMode === 'scifi'"
         :focused="open"
         :active-reticle="open"
         class="w-full"
@@ -143,7 +202,8 @@
         :class="[
           optionsContainerClass || 'bg-surface',
           themeMode === 'cupertino' ? 'rounded-[12px] shadow-2xl backdrop-blur-md' : '',
-          themeMode === 'scifi' ? 'scifi-options-panel bg-transparent border-none shadow-none!' : ''
+          themeMode === 'scifi' ? 'scifi-options-panel bg-transparent border-none shadow-none!' : '',
+          themeMode === 'cyber' ? 'cyber-options-panel bg-black border border-[#00f0ff] shadow-none! rounded' : ''
         ]"
         :style="[`max-height: ${optionsContainerMaxHeight}px;`]"
       >
@@ -158,8 +218,39 @@
           />
         </div>
 
+        <!-- Cyber Options View -->
+        <template v-if="themeMode === 'cyber'">
+          <div class="options-list-inner max-h-[200px] overflow-y-auto px-1 py-1 font-mono">
+            <template v-if="filteredOptions && filteredOptions.length > 0">
+              <button
+                v-for="(option, index) in filteredOptions"
+                :key="index"
+                type="button"
+                class="option-btn cyber-option"
+                :class="{ selected: model === option.value }"
+                @click="(e) => onItemClick(e, option.value)"
+              >
+                <slot
+                  name="option"
+                  :index="index"
+                  :data="option"
+                  :is-selected="model === option.value"
+                >
+                  <span class="flex items-center w-full justify-between">
+                    <span>{{ option.label ?? option.name }}</span>
+                    <span v-if="model === option.value" class="text-xs">✔</span>
+                  </span>
+                </slot>
+              </button>
+            </template>
+            <template v-else>
+              <div class="text-center py-4 text-xs text-[#00f0ff] opacity-60">沒有可選選項</div>
+            </template>
+          </div>
+        </template>
+
         <!-- Sci-fi Options View -->
-        <template v-if="themeMode === 'scifi'">
+        <template v-else-if="themeMode === 'scifi'">
           <CamelotScifiFrame variant="2-corner" :show-grid="false" :show-borders="true">
             <div class="options-list-inner max-h-[200px] overflow-y-auto px-1 py-1">
               <template v-if="filteredOptions && filteredOptions.length > 0">
@@ -492,6 +583,95 @@ watch([() => props.options, () => props.default], ([options, isDefault]) => {
   border-left-color: var(--color-primary);
   color: var(--color-on-primary);
 }
+/* Cyber styles */
+.cyber-select-trigger-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  --cml-cyber-neon: var(--cml-color-current-color, var(--color-primary, #00f0ff));
+  background-color: rgba(0, 0, 0, 0.7);
+  border: 1px solid color-mix(in srgb, var(--cml-cyber-neon) 25%, transparent);
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.cyber-select-trigger-wrapper.focused {
+  border-color: var(--cml-cyber-neon);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--cml-cyber-neon) 30%, transparent);
+  background-color: rgba(0, 0, 0, 0.85);
+}
+
+.cyber-select-trigger-wrapper .cyber-brackets {
+  position: absolute;
+  color: var(--cml-cyber-neon);
+  font-family: monospace;
+  font-size: 1.5rem;
+  font-weight: 800;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  line-height: 1;
+  opacity: 0.5;
+}
+
+.cyber-select-trigger-wrapper .top-left-bracket {
+  top: -4px;
+  left: -6px;
+}
+
+.cyber-select-trigger-wrapper .bottom-right-bracket {
+  bottom: -4px;
+  right: -6px;
+}
+
+.cyber-select-trigger-wrapper.focused .top-left-bracket {
+  transform: translate(-2px, -2px);
+  opacity: 1;
+}
+
+.cyber-select-trigger-wrapper.focused .bottom-right-bracket {
+  transform: translate(2px, 2px);
+  opacity: 1;
+}
+
+.cyber-select-trigger-wrapper .cyber-accent-line {
+  position: absolute;
+  bottom: -1px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--cml-cyber-neon);
+  box-shadow: 0 0 8px var(--cml-cyber-neon);
+  transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+  z-index: 15;
+}
+
+.cyber-select-trigger-wrapper.focused .cyber-accent-line {
+  left: 0;
+  width: 100%;
+}
+
+.cyber-option {
+  padding: 10px 14px;
+  cursor: pointer;
+  font-family: monospace;
+  font-size: 0.85rem;
+  color: color-mix(in srgb, var(--cml-cyber-neon, #00f0ff) 70%, white);
+  border-left: 2px solid transparent;
+  transition: all 0.2s ease;
+  background: transparent;
+}
+.cyber-option:hover {
+  background: var(--cml-cyber-neon, #00f0ff);
+  border-left-color: var(--cml-cyber-on-neon, #000);
+  color: var(--cml-cyber-on-neon, #000);
+}
+.cyber-option.selected {
+  background: color-mix(in srgb, var(--cml-cyber-neon, #00f0ff) 40%, transparent);
+  border-left-color: var(--cml-cyber-neon, #00f0ff);
+  color: #fff;
+}
+
 .options-list-inner {
   display: flex;
   flex-direction: column;

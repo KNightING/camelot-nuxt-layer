@@ -41,7 +41,7 @@
                   :class="{
                     'step-dot-text-doing': isDoing(index),
                   }"
-                >{{ index + 1 }}</span>
+                >{{ themeMode === 'cyber' ? `0${index + 1}` : index + 1 }}</span>
               </div>
             </slot>
           </div>
@@ -257,5 +257,60 @@ const isComplete = (index: number) => {
 .container.scifi .step-content {
   font-family: monospace;
   letter-spacing: 1px;
+}
+/* Cyber style overrides */
+.container.cyber .step-line {
+  height: 4px;
+  background-color: rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(255, 0, 85, 0.4);
+}
+.container.cyber .step-line-complete {
+  border-color: #00f0ff !important;
+  background-color: #00f0ff !important;
+  box-shadow: 0 0 10px #00f0ff;
+}
+.container.cyber .step-dot {
+  clip-path: polygon(6px 0%, 100% 0%, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0% 100%, 0% 6px);
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0;
+  border-width: 1px;
+  background-color: #000;
+  border-color: #ff0055;
+  color: #ff0055;
+  font-family: monospace;
+  font-weight: 700;
+  font-size: 0.75rem;
+}
+.container.cyber .step-dot-doing {
+  border-color: #00f0ff !important;
+  color: #00f0ff !important;
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.6);
+}
+.container.cyber .step-dot-doing .step-dot-text {
+  color: #00f0ff !important;
+  text-shadow: 0 0 5px #00f0ff;
+}
+.container.cyber .step-dot-complete {
+  background-color: #00f0ff !important;
+  border-color: #00f0ff !important;
+  color: #000 !important;
+  box-shadow: 0 0 10px #00f0ff;
+}
+.container.cyber .step-dot-text-complete {
+  color: #000 !important;
+  font-weight: 900;
+}
+.container.cyber .step-content {
+  font-family: monospace;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  color: #ff0055;
+  opacity: 0.7;
+}
+.container.cyber .step-content-complete {
+  color: #00f0ff !important;
+  opacity: 1;
+  text-shadow: 0 0 4px #00f0ff;
 }
 </style>
