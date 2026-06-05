@@ -5,7 +5,7 @@
         <template v-if="currentToast">
           <div
             :key="currentToast.id"
-            class="fixed  translate-x-[-50%] translate-y-[-50%] left-[50%]"
+            class="fixed translate-x-[-50%] translate-y-[-50%] left-[50%]"
             :class="{
               'top-[50%] ': direction === 'center',
               'bottom-[10%]': direction === 'bottom',
@@ -13,9 +13,35 @@
             }"
             :style="{ zIndex: props.zIndex }"
           >
-            <div class="container">
+            <div class="container" :class="[themeMode]">
               <slot :toast="currentToast">
-                <div class="bg-gray-300/70 text-gray-800 text-lg rounded-md py-2 px-4">
+                <!-- Sci-fi Layout -->
+                <CamelotScifiFrame
+                  v-if="themeMode === 'scifi'"
+                  variant="2-corner"
+                  focused
+                  :show-grid="false"
+                  :show-scanline="false"
+                  class="toast-box scifi text-primary"
+                >
+                  <div class="py-2.5 px-5 bg-slate-950/95 font-mono text-xs tracking-wider">
+                    <span>[STATUS_MSG]: {{ currentToast?.message }}</span>
+                  </div>
+                </CamelotScifiFrame>
+
+                <!-- Cupertino Layout -->
+                <div
+                  v-else-if="themeMode === 'cupertino'"
+                  class="toast-box cupertino bg-slate-100/90 dark:bg-slate-900/90 backdrop-blur-xl border border-white/20 dark:border-black/20 text-slate-800 dark:text-slate-100 text-sm rounded-[12px] py-3 px-5 shadow-xl font-medium min-w-[200px] text-center"
+                >
+                  {{ currentToast?.message }}
+                </div>
+
+                <!-- Material Layout (Default) -->
+                <div
+                  v-else
+                  class="toast-box material bg-slate-800 dark:bg-slate-200 text-slate-100 dark:text-slate-900 text-sm rounded-[4px] py-3.5 px-6 shadow-lg min-w-[288px] max-w-[568px] flex items-center justify-between"
+                >
                   {{ currentToast?.message }}
                 </div>
               </slot>
@@ -38,6 +64,8 @@ const props = withDefaults(defineProps<{
 
 const toast = useCamelotToast()
 const { currentToast } = toast
+
+const { themeMode } = useCamelotTheme()
 </script>
 
 <style scoped>

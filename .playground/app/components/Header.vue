@@ -1,16 +1,15 @@
 <template>
-  <header class="relative">
+  <header class="relative min-h-[96px]">
     <div
       :style="[
-        `height:${height}px`,
+        `height:${height || 96}px`,
       ]"
     />
 
     <CamelotGpu
-      ref="realHeaderEl"
       class="z-50 bg-white fixed top-0 left-0 right-0 w-screen min-h-header flex flex-col justify-center"
     >
-      <div class="w-full">
+      <div ref="realHeaderEl" class="w-full">
         <div
           class="py-8 transition-all duration-300"
           :class="{

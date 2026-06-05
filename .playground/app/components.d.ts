@@ -18,7 +18,6 @@ declare module 'vue' {
     IMaterialSymbolsClose: typeof import('~icons/material-symbols/close')['default']
     IMaterialSymbolsErrorCircleRounded: typeof import('~icons/material-symbols/error-circle-rounded')['default']
     IMaterialSymbolsScheduleRounded: typeof import('~icons/material-symbols/schedule-rounded')['default']
-    IMaterialSymbolsSearchRounded: typeof import('~icons/material-symbols/search-rounded')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }
@@ -32,7 +31,6 @@ declare global {
   const IMaterialSymbolsClose: typeof import('~icons/material-symbols/close')['default']
   const IMaterialSymbolsErrorCircleRounded: typeof import('~icons/material-symbols/error-circle-rounded')['default']
   const IMaterialSymbolsScheduleRounded: typeof import('~icons/material-symbols/schedule-rounded')['default']
-  const IMaterialSymbolsSearchRounded: typeof import('~icons/material-symbols/search-rounded')['default']
   const RouterLink: typeof import('vue-router')['RouterLink']
   const RouterView: typeof import('vue-router')['RouterView']
 }

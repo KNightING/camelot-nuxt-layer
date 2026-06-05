@@ -8,12 +8,40 @@
         `z-index:${zIndex};`,
       ]"
       class="camelot-dialog outline-none overflow-hidden transform-gpu bg-transparent"
+      :class="[themeMode]"
       @pointerup="onDialogClick"
       @keydown.esc="onEsc"
     >
       <slot name="wrapper">
-        <div class="w-screen min-h-screen flex items-center justify-center">
-          <slot />
+        <div class="w-screen min-h-screen flex items-center justify-center p-4">
+          <!-- Sci-fi Layout -->
+          <CamelotScifiFrame
+            v-if="themeMode === 'scifi'"
+            variant="4-corner"
+            focused
+            show-pulse
+            class="dialog-content-box max-w-[95vw] max-h-[90vh] text-primary"
+          >
+            <div class="p-6 bg-slate-950/90 min-w-[280px] overflow-auto max-h-[85vh]">
+              <slot />
+            </div>
+          </CamelotScifiFrame>
+
+          <!-- Cupertino Layout -->
+          <div
+            v-else-if="themeMode === 'cupertino'"
+            class="dialog-content-box cupertino-dialog min-w-[270px] max-w-[340px] rounded-[14px] bg-slate-100/90 dark:bg-slate-900/90 backdrop-blur-xl border border-white/20 dark:border-black/20 p-5 shadow-2xl text-center flex flex-col"
+          >
+            <slot />
+          </div>
+
+          <!-- Material Layout (Default) -->
+          <div
+            v-else
+            class="dialog-content-box material-dialog min-w-[280px] max-w-[560px] rounded-[28px] bg-surface-container-high p-6 shadow-2xl flex flex-col border border-outline-variant/10"
+          >
+            <slot />
+          </div>
         </div>
       </slot>
     </dialog>
@@ -21,6 +49,7 @@
 </template>
 
 <script setup lang="ts">
+const { themeMode } = useCamelotTheme()
 const props = withDefaults(
   defineProps<{
     closeByMask?: boolean
@@ -181,6 +210,32 @@ dialog {
 dialog::backdrop {
   background-color: rgba(0, 0, 0, 0.5); /* 兜底：在不支援 color-mix 的極舊版本顯示純黑半透 */
   background-color: color-mix(in srgb, var(--cml-c-mask-color, #000) 50%, transparent); /* 較佳相容性的做法 */
-  /* background-color: rgba(from var(--cml-c-mask-color) r g b / .5); */ /* 這語法較不相容 iOS 17含以下的版本 */
+  transition: all 0.4s ease;
+}
+
+.camelot-dialog.cupertino::backdrop {
+  backdrop-filter: blur(12px);
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.camelot-dialog.scifi::backdrop {
+  background-color: color-mix(in srgb, var(--cml-color-current-color, var(--color-primary, #00ffff)) 8%, rgba(0, 0, 0, 0.75));
+  backdrop-filter: blur(3px);
+}
+
+.dialog-content-box {
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation: zoom-in 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes zoom-in {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 </style>

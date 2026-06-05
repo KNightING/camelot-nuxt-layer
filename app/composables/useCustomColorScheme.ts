@@ -147,9 +147,7 @@ export const useCustomColorScheme = <T>(
 
         cssVar.value = colorScheme[key]
 
-        if (!isGlobal) {
-          cssVarOverrideTailwind.value = `var(${cssVarKey})`
-        }
+        cssVarOverrideTailwind.value = `var(${cssVarKey})`
       }
     }
   })

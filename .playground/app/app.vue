@@ -8,6 +8,8 @@
         <NuxtLayout>
           <NuxtPage />
         </NuxtLayout>
+        <CamelotToast />
+        <CamelotLoading />
       </div>
     </CamelotColorSchemeProvider>
   </ClientOnly>

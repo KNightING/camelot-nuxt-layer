@@ -9,69 +9,142 @@
     popup-class="shadow-lg rounded-md"
   >
     <slot :selected-data="selectedData">
-      <!-- Searchable Trigger (Input-based) -->
-      <div
-        v-if="searchable"
-        class="relative w-full"
-        @click="handleTriggerClick"
+      <!-- Sci-fi Trigger Wrapper -->
+      <CamelotScifiFrame
+        v-if="themeMode === 'scifi'"
+        :focused="open"
+        :active-reticle="open"
+        class="w-full"
       >
-        <input
-          ref="triggerInput"
-          :value="open ? searchValue : (selectedData?.label ?? selectedData?.name ?? selectedData?.value ?? '')"
-          type="text"
-          :placeholder="placeholder"
-          :disabled="disabled"
-          class="w-full border bg-background border-stroke outline-none rounded-lg pl-4 pr-10 py-2 text-base transition-colors focus:border-primary"
-          :class="[
-            open ? 'pointer-events-auto border-primary' : 'pointer-events-none border-stroke',
-            disabled ? 'bg-gray-100! cursor-not-allowed text-secondary-text' : 'bg-background text-primary-text',
-          ]"
-          @input="(e: any) => handleSearchInput(e.target.value)"
+        <!-- Searchable Trigger (Input-based) -->
+        <div
+          v-if="searchable"
+          class="relative w-full"
+          @click="handleTriggerClick"
         >
-        <!-- Suffix: Clear search button or Arrow -->
-        <div class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center justify-center">
-          <button
-            v-if="open && searchValue"
-            type="button"
-            class="text-secondary-text hover:text-primary-text outline-none focus:outline-none transition-colors"
-            @click.stop="searchValue = ''"
+          <input
+            ref="triggerInput"
+            :value="open ? searchValue : (selectedData?.label ?? selectedData?.name ?? selectedData?.value ?? '')"
+            type="text"
+            :placeholder="placeholder"
+            :disabled="disabled"
+            class="w-full bg-transparent outline-none border-none pl-4 pr-10 py-2 text-base text-on-surface"
+            @input="(e: any) => handleSearchInput(e.target.value)"
           >
-            ✕
-          </button>
+          <div class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center justify-center">
+            <button
+              v-if="open && searchValue"
+              type="button"
+              class="text-secondary-text hover:text-primary-text outline-none focus:outline-none transition-colors"
+              @click.stop="searchValue = ''"
+            >
+              ✕
+            </button>
+            <span
+              v-else
+              class="text-primary text-xs transition-transform duration-200"
+              :class="{ 'rotate-180': open }"
+            >
+              ▼
+            </span>
+          </div>
+        </div>
+
+        <!-- Static Trigger -->
+        <div
+          v-else
+          class="w-full outline-none px-4 py-2 text-base flex items-center gap-2 text-on-surface"
+        >
           <span
-            v-else
+            class="flex-1 truncate"
+            :class="selectedData ? 'text-on-surface' : 'text-secondary-text'"
+          >{{ selectedData?.label ?? selectedData?.name ?? selectedData?.value ?? placeholder }}</span>
+          <span
+            class="text-primary text-xs transition-transform duration-200"
+            :class="{ 'rotate-180': open }"
+          >▼</span>
+        </div>
+      </CamelotScifiFrame>
+
+      <!-- Cupertino / Material / Default Trigger -->
+      <template v-else>
+        <!-- Searchable Trigger -->
+        <div
+          v-if="searchable"
+          class="relative w-full"
+          @click="handleTriggerClick"
+        >
+          <input
+            ref="triggerInput"
+            :value="open ? searchValue : (selectedData?.label ?? selectedData?.name ?? selectedData?.value ?? '')"
+            type="text"
+            :placeholder="placeholder"
+            :disabled="disabled"
+            class="w-full outline-none text-base transition-colors"
+            :class="[
+              themeMode === 'cupertino' 
+                ? 'rounded-[10px] bg-surface-container-highest border border-outline-variant px-4 py-2 focus:border-primary' 
+                : themeMode === 'material' 
+                  ? 'h-[56px] rounded-t-[4px] rounded-b-none bg-surface-container-highest border-b border-t-0 border-x-0 border-outline px-4 pt-4 pb-1 focus:border-b-2 focus:border-primary'
+                  : 'border border-stroke rounded-lg px-4 py-2 focus:border-primary',
+              open ? 'pointer-events-auto border-primary' : 'pointer-events-none',
+              disabled ? 'bg-gray-100! cursor-not-allowed text-secondary-text' : 'text-primary-text',
+            ]"
+            @input="(e: any) => handleSearchInput(e.target.value)"
+          >
+          <div class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center justify-center">
+            <button
+              v-if="open && searchValue"
+              type="button"
+              class="text-secondary-text hover:text-primary-text outline-none focus:outline-none transition-colors"
+              @click.stop="searchValue = ''"
+            >
+              ✕
+            </button>
+            <span
+              v-else
+              class="text-secondary-text text-xs transition-transform duration-200"
+              :class="{ 'rotate-180': open }"
+            >
+              ▼
+            </span>
+          </div>
+        </div>
+
+        <!-- Static Trigger -->
+        <div
+          v-else
+          class="w-full outline-none text-base flex items-center gap-2 transition-colors"
+          :class="[
+            themeMode === 'cupertino' 
+              ? 'rounded-[10px] bg-surface-container-highest border border-outline-variant px-4 py-2' 
+              : themeMode === 'material' 
+                ? 'h-[56px] rounded-t-[4px] rounded-b-none bg-surface-container-highest border-b border-t-0 border-x-0 border-outline px-4'
+                : 'border border-stroke rounded-lg px-4 py-2',
+            open ? 'border-primary' : '',
+            disabled ? 'bg-gray-100! cursor-not-allowed text-secondary-text' : 'text-primary-text',
+          ]"
+        >
+          <span
+            class="flex-1 truncate"
+            :class="selectedData ? 'text-on-surface' : 'text-secondary-text'"
+          >{{ selectedData?.label ?? selectedData?.name ?? selectedData?.value ?? placeholder }}</span>
+          <span
             class="text-secondary-text text-xs transition-transform duration-200"
             :class="{ 'rotate-180': open }"
-          >
-            ▼
-          </span>
+          >▼</span>
         </div>
-      </div>
-
-      <!-- Static Trigger -->
-      <div
-        v-else
-        class="w-full border outline-none rounded-lg px-4 py-2 text-base flex items-center gap-2 transition-colors"
-        :class="[
-          open ? 'border-primary' : 'border-stroke',
-          disabled ? 'bg-gray-100! cursor-not-allowed text-secondary-text' : 'bg-background text-primary-text',
-        ]"
-      >
-        <span
-          class="flex-1 truncate"
-          :class="selectedData ? 'text-on-surface' : 'text-secondary-text'"
-        >{{ selectedData?.label ?? selectedData?.name ?? selectedData?.value ?? placeholder }}</span>
-        <span
-          class="text-secondary-text text-xs transition-transform duration-200"
-          :class="{ 'rotate-180': open }"
-        >▼</span>
-      </div>
+      </template>
     </slot>
     <template #popup>
       <div
         ref="optionsContainerEl"
         class="options-container flex flex-col rounded-md overflow-hidden relative"
-        :class="optionsContainerClass || 'bg-surface'"
+        :class="[
+          optionsContainerClass || 'bg-surface',
+          themeMode === 'cupertino' ? 'rounded-[12px] shadow-2xl backdrop-blur-md' : '',
+          themeMode === 'scifi' ? 'scifi-options-panel bg-transparent border-none shadow-none!' : ''
+        ]"
         :style="[`max-height: ${optionsContainerMaxHeight}px;`]"
       >
         <div
@@ -84,115 +157,149 @@
             :set-search-value="(val: string) => searchValue = val"
           />
         </div>
-        <!-- 虛擬滾動模式 -->
-        <template v-if="virtualScroll">
-          <div
-            v-if="filteredOptions && filteredOptions.length > 0"
-            v-bind="virtualContainerProps"
-            class="flex-1 min-h-0 relative bg-inherit overflow-auto"
-          >
-            <div
-              v-bind="virtualWrapperProps"
-              class="flex flex-col px-2 pb-2"
-            >
-              <template
-                v-for="{ data: option, index } in virtualList"
-                :key="index"
-              >
+
+        <!-- Sci-fi Options View -->
+        <template v-if="themeMode === 'scifi'">
+          <CamelotScifiFrame variant="2-corner" :show-grid="false" :show-borders="true">
+            <div class="options-list-inner max-h-[200px] overflow-y-auto px-1 py-1">
+              <template v-if="filteredOptions && filteredOptions.length > 0">
                 <button
+                  v-for="(option, index) in filteredOptions"
+                  :key="index"
                   type="button"
+                  class="option-btn scifi-option"
+                  :class="{ selected: model === option.value }"
                   @click="(e) => onItemClick(e, option.value)"
                 >
                   <slot
-                    :name="`option-${option.value}`"
+                    name="option"
                     :index="index"
                     :data="option"
                     :is-selected="model === option.value"
                   >
-                    <slot
-                      name="option"
-                      :index="index"
-                      :data="option"
-                      :is-selected="model === option.value"
-                    >
-                      <CamelotGpu class="option">
-                        <span class="w-5 text-primary">{{ model === option.value ? '✓' : '' }} </span>
-                        <span
-                          :class="{
-                            'text-primary': model === option.value,
-                          }"
-                          class="select-none font-normal my-0.5 leading-normal"
-                        >{{ option.label ?? option.name }}</span>
-                      </CamelotGpu>
-                    </slot>
+                    <span>{{ option.label ?? option.name }}</span>
                   </slot>
                 </button>
+              </template>
+              <template v-else>
+                <div class="text-center py-4 text-xs text-primary opacity-60">沒有可選選項</div>
               </template>
             </div>
-          </div>
-          <div
-            v-else
-            class="flex-1 min-h-0 relative bg-inherit px-2 pb-2"
-          >
-            <slot name="empty-options">
-              <div class="flex flex-col items-center justify-center text-gray-400 gap-2 py-2">
-                <span>沒有可選選項</span>
-              </div>
-            </slot>
-          </div>
+          </CamelotScifiFrame>
         </template>
 
-        <!-- 一般模式 (原有行為) -->
-        <CamelotContainer
-          v-else
-          class="flex-1 min-h-0 relative bg-inherit"
-        >
-          <div class="flex flex-col px-2 pb-2">
-            <template v-if="filteredOptions && filteredOptions.length > 0">
-              <template
-                v-for="(option, index) in filteredOptions"
-                :key="index"
+        <template v-else>
+          <!-- 虛擬滾動模式 -->
+          <template v-if="virtualScroll">
+            <div
+              v-if="filteredOptions && filteredOptions.length > 0"
+              v-bind="virtualContainerProps"
+              class="flex-1 min-h-0 relative bg-inherit overflow-auto"
+            >
+              <div
+                v-bind="virtualWrapperProps"
+                class="flex flex-col px-2 pb-2"
               >
-                <button
-                  type="button"
-                  @click="(e) => onItemClick(e, option.value)"
+                <template
+                  v-for="{ data: option, index } in virtualList"
+                  :key="index"
                 >
-                  <slot
-                    :name="`option-${option.value}`"
-                    :index="index"
-                    :data="option"
-                    :is-selected="model === option.value"
+                  <button
+                    type="button"
+                    class="option-btn"
+                    @click="(e) => onItemClick(e, option.value)"
                   >
                     <slot
-                      name="option"
+                      :name="`option-${option.value}`"
                       :index="index"
                       :data="option"
                       :is-selected="model === option.value"
                     >
-                      <CamelotGpu class="option">
-                        <span class="w-5 text-primary">{{ model === option.value ? '✓' : '' }} </span>
-                        <span
-                          :class="{
-                            'text-primary': model === option.value,
-                          }"
-                          class="select-none font-normal my-0.5 leading-normal"
-                        >{{ option.label ?? option.name }}</span>
-                      </CamelotGpu>
+                      <slot
+                        name="option"
+                        :index="index"
+                        :data="option"
+                        :is-selected="model === option.value"
+                      >
+                        <CamelotGpu class="option">
+                          <span class="w-5 text-primary">{{ model === option.value ? '✓' : '' }} </span>
+                          <span
+                            :class="{
+                              'text-primary': model === option.value,
+                            }"
+                            class="select-none font-normal my-0.5 leading-normal"
+                          >{{ option.label ?? option.name }}</span>
+                        </CamelotGpu>
+                      </slot>
                     </slot>
-                  </slot>
-                </button>
-              </template>
-            </template>
-            <template v-else>
+                  </button>
+                </template>
+              </div>
+            </div>
+            <div
+              v-else
+              class="flex-1 min-h-0 relative bg-inherit px-2 pb-2"
+            >
               <slot name="empty-options">
                 <div class="flex flex-col items-center justify-center text-gray-400 gap-2 py-2">
-                  <!-- <i-material-symbols-cancel-outline-rounded class="text-4xl" /> -->
                   <span>沒有可選選項</span>
                 </div>
               </slot>
-            </template>
-          </div>
-        </CamelotContainer>
+            </div>
+          </template>
+
+          <!-- 一般模式 (原有行為) -->
+          <CamelotContainer
+            v-else
+            class="flex-1 min-h-0 relative bg-inherit"
+          >
+            <div class="flex flex-col px-2 pb-2">
+              <template v-if="filteredOptions && filteredOptions.length > 0">
+                <template
+                  v-for="(option, index) in filteredOptions"
+                  :key="index"
+                >
+                  <button
+                    type="button"
+                    class="option-btn"
+                    @click="(e) => onItemClick(e, option.value)"
+                  >
+                    <slot
+                      :name="`option-${option.value}`"
+                      :index="index"
+                      :data="option"
+                      :is-selected="model === option.value"
+                    >
+                      <slot
+                        name="option"
+                        :index="index"
+                        :data="option"
+                        :is-selected="model === option.value"
+                      >
+                        <CamelotGpu class="option">
+                          <span class="w-5 text-primary">{{ model === option.value ? '✓' : '' }} </span>
+                          <span
+                            :class="{
+                              'text-primary': model === option.value,
+                            }"
+                            class="select-none font-normal my-0.5 leading-normal"
+                          >{{ option.label ?? option.name }}</span>
+                        </CamelotGpu>
+                      </slot>
+                    </slot>
+                  </button>
+                </template>
+              </template>
+              <template v-else>
+                <slot name="empty-options">
+                  <div class="flex flex-col items-center justify-center text-gray-400 gap-2 py-2">
+                    <span>沒有可選選項</span>
+                  </div>
+                </slot>
+              </template>
+            </div>
+          </CamelotContainer>
+        </template>
       </div>
     </template>
   </CamelotPopupV2>
@@ -213,15 +320,10 @@ const props = withDefaults(defineProps<{
   filterFunction?: (option: SelectOption<T>, query: string) => boolean
   popupWidthMode?: 'fit-content' | 'min-target' | 'same-target'
   optionsContainerClass?: string | string[] | Record<string, boolean>
-  /** 未選取時的提示文字 */
   placeholder?: string
-  /** 是否啟用虛擬滾動，大量選項時建議開啟 */
   virtualScroll?: boolean
-  /** 虛擬滾動時每個選項的高度 (px)，需與實際渲染高度一致 */
   itemHeight?: number
-  /** 虛擬滾動時可視區域外預渲染的項目數量 */
   overscan?: number
-  /** 是否禁用 */
   disabled?: boolean
 }>(), {
   optionsContainerMaxHeight: 200,
@@ -261,7 +363,6 @@ const filteredOptions = computed(() => {
   })
 })
 
-// 虛擬滾動
 const { list: virtualList, containerProps: virtualContainerProps, wrapperProps: virtualWrapperProps, scrollTo } = useVirtualList(
   filteredOptions,
   {
@@ -270,18 +371,16 @@ const { list: virtualList, containerProps: virtualContainerProps, wrapperProps: 
   },
 )
 
-// FIX: iOS 17 以下版本的虛擬滾動顯示問題
-// 當 open 改變時，手動觸發 resize 事件及滾動位置更新，確保虛擬滾動計算正確
+const { themeMode } = useCamelotTheme()
+
 watch(open, (isOpen) => {
   if (isOpen) {
     if (props.virtualScroll) {
       nextTick(() => {
         if (typeof window !== 'undefined') {
-          // 模擬 resize 觸發 useVirtualList 重新計算大小
           window.dispatchEvent(new Event('resize'))
         }
 
-        // 在動畫過程中與結束後再次觸發，確保在 iOS 上能正確渲染
         const timer = setInterval(() => {
           if (typeof window !== 'undefined') {
             window.dispatchEvent(new Event('resize'))
@@ -289,7 +388,6 @@ watch(open, (isOpen) => {
           }
         }, 100)
 
-        // 500ms 動畫結束後停止，多給 100ms 緩衝
         setTimeout(() => {
           clearInterval(timer)
           if (typeof window !== 'undefined') {
@@ -309,14 +407,6 @@ const model = defineModel<string | number>()
 const emit = defineEmits<{
   changed: [SelectOption<T>]
 }>()
-
-// 檢查model目前的值是否存在options,不存在則設為空值
-// if (model.value) {
-//   const defaultModel = props.options.find(o => o.value === model.value)
-//   if (!defaultModel) {
-//     model.value = null
-//   }
-// }
 
 const selectedData = computed(() => {
   if (!props.options || props.options.length < 0) {
@@ -357,7 +447,6 @@ const onItemClick = (e: Event, value: string | number) => {
   })
 }
 
-// 處理預設值初始化
 watch([() => props.options, () => props.default], ([options, isDefault]) => {
   if (isDefault && typeof model.value === 'undefined' && options && options.length > 0 && options[0]) {
     model.value = options[0].value
@@ -373,5 +462,38 @@ watch([() => props.options, () => props.default], ([options, isDefault]) => {
 .option {
   display: flex;
   align-items: center;
+}
+
+.option-btn {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+}
+
+.scifi-option {
+  padding: 10px 14px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.85rem;
+  color: color-mix(in srgb, var(--color-primary) 70%, white);
+  border-left: 2px solid transparent;
+  transition: all 0.2s ease;
+}
+.scifi-option:hover {
+  background: var(--color-primary);
+  border-left-color: var(--color-on-primary);
+  color: var(--color-on-primary);
+}
+.scifi-option.selected {
+  background: color-mix(in srgb, var(--color-primary) 40%, transparent);
+  border-left-color: var(--color-primary);
+  color: var(--color-on-primary);
+}
+.options-list-inner {
+  display: flex;
+  flex-direction: column;
 }
 </style>

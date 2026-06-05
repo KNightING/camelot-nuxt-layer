@@ -1,7 +1,23 @@
 <template>
   <template v-if="isLoading">
+    <!-- Sci-fi Layout (using CamelotScifiFrame without borders and cut corners) -->
+    <CamelotScifiFrame
+      v-if="themeMode === 'scifi'"
+      :show-borders="false"
+      :clip-corners="false"
+      :show-pulse="true"
+      :show-grid="true"
+      :show-scanline="true"
+      focused
+      v-bind="$attrs"
+      class="w-full h-full min-h-[24px]"
+    />
+
+    <!-- Cupertino & Material (Default) Layout -->
     <div
+      v-else
       class="overflow-hidden relative w-full h-full skeleton"
+      :class="[themeMode]"
       v-bind="$attrs"
     >
       <div class="flash" />
@@ -12,25 +28,34 @@
   </template>
 </template>
 
-<script>
-</script>
-
 <script setup lang="ts">
 defineOptions({
   inheritAttrs: false,
 })
 
-const props = withDefaults(defineProps<{
+withDefaults(defineProps<{
   isLoading?: boolean
 }>(), {
   isLoading: true,
 })
+
+const { themeMode } = useCamelotTheme()
 </script>
 
 <style scoped>
 .skeleton {
   --background-color: 145, 145, 145;
   animation: skeleton-animate 4s ease-out infinite;
+}
+
+.skeleton.cupertino {
+  --background-color: 220, 220, 220;
+  background-color: rgba(var(--background-color), 0.4);
+  animation: skeleton-animate-cupertino 1.5s ease-in-out infinite alternate;
+}
+
+.skeleton.cupertino .flash {
+  display: none;
 }
 
 @keyframes skeleton-animate {
@@ -45,6 +70,15 @@ const props = withDefaults(defineProps<{
 
   100% {
     background-color: rgba(var(--background-color), .8);
+  }
+}
+
+@keyframes skeleton-animate-cupertino {
+  0% {
+    background-color: rgba(var(--background-color), 0.3);
+  }
+  100% {
+    background-color: rgba(var(--background-color), 0.75);
   }
 }
 

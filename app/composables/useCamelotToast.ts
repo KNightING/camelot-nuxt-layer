@@ -66,10 +66,16 @@ const CreateCamelotToast = () => {
     toastState.value = []
   }
 
+  const open = (messageOrToast: string | CamelotToast, options?: CamelotToastOptions) => {
+    const toastObj = typeof messageOrToast === 'string' ? { message: messageOrToast } : messageOrToast
+    return addToast(toastObj, options)
+  }
+
   return {
     currentToast,
     addToast,
     removeToast,
+    open,
     clear,
   }
 }

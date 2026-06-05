@@ -1,108 +1,151 @@
 <template>
-  <CamelotBaseDialogV2 :open="isOpening">
-    <div class="w-36 aspect-square flex items-center justify-center">
-      <span class="loader" />
-    </div>
-  </CamelotBaseDialogV2>
+  <ClientOnly>
+    <Teleport to="body">
+      <Transition name="fade">
+        <div
+          v-if="isOpening"
+          class="fixed inset-0 z-[1100] flex items-center justify-center bg-black/35 backdrop-blur-xs select-none pointer-events-auto"
+        >
+          <div class="flex items-center justify-center" :class="[themeMode]">
+            <!-- Sci-fi Loading Radar -->
+            <div v-if="themeMode === 'scifi'" class="scifi-radar">
+              <CamelotScifiReticle active />
+              <div class="radar-circle" />
+              <div class="radar-scanner" />
+              <span class="radar-text">SYS_LOAD...</span>
+            </div>
+
+            <!-- Cupertino iOS Spinner -->
+            <div v-else-if="themeMode === 'cupertino'" class="ios-spinner">
+              <div v-for="i in 8" :key="i" class="ios-blade" />
+            </div>
+
+            <!-- Material Spinner -->
+            <div v-else class="material-spinner">
+              <svg viewBox="25 25 50 50">
+                <circle cx="50" cy="50" r="20" fill="none" class="path" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </Transition>
+    </Teleport>
+  </ClientOnly>
 </template>
 
 <script setup lang="ts">
 const { isOpening } = useLoading()
+const { themeMode } = useCamelotTheme()
 </script>
 
 <style scoped>
-.loader {
-  display: block;
-  font-size: 10px;
-  width: 1em;
-  height: 1em;
-  border-radius: 50%;
-  position: relative;
-  text-indent: -9999em;
-  animation: mulShdSpin 1.1s infinite ease;
-  transform: translateZ(0);
+/* Material spinner */
+.material-spinner {
+  width: 50px;
+  height: 50px;
+  animation: rotate-spinner 2s linear infinite;
 }
-@keyframes mulShdSpin {
-  0%,
-  100% {
-    box-shadow: 0em -2.6em 0em 0em #ffffff,
-      1.8em -1.8em 0 0em rgba(255, 255, 255, 0.2),
-      2.5em 0em 0 0em rgba(255, 255, 255, 0.2),
-      1.75em 1.75em 0 0em rgba(255, 255, 255, 0.2),
-      0em 2.5em 0 0em rgba(255, 255, 255, 0.2),
-      -1.8em 1.8em 0 0em rgba(255, 255, 255, 0.2),
-      -2.6em 0em 0 0em rgba(255, 255, 255, 0.5),
-      -1.8em -1.8em 0 0em rgba(255, 255, 255, 0.7);
-  }
-  12.5% {
-    box-shadow: 0em -2.6em 0em 0em rgba(255, 255, 255, 0.7),
-      1.8em -1.8em 0 0em #ffffff,
-      2.5em 0em 0 0em rgba(255, 255, 255, 0.2),
-      1.75em 1.75em 0 0em rgba(255, 255, 255, 0.2),
-      0em 2.5em 0 0em rgba(255, 255, 255, 0.2),
-      -1.8em 1.8em 0 0em rgba(255, 255, 255, 0.2),
-      -2.6em 0em 0 0em rgba(255, 255, 255, 0.2),
-      -1.8em -1.8em 0 0em rgba(255, 255, 255, 0.5);
-  }
-  25% {
-    box-shadow: 0em -2.6em 0em 0em rgba(255, 255, 255, 0.5),
-      1.8em -1.8em 0 0em rgba(255, 255, 255, 0.7),
-      2.5em 0em 0 0em #ffffff,
-      1.75em 1.75em 0 0em rgba(255, 255, 255, 0.2),
-      0em 2.5em 0 0em rgba(255, 255, 255, 0.2),
-      -1.8em 1.8em 0 0em rgba(255, 255, 255, 0.2),
-      -2.6em 0em 0 0em rgba(255, 255, 255, 0.2),
-      -1.8em -1.8em 0 0em rgba(255, 255, 255, 0.2);
-  }
-  37.5% {
-    box-shadow: 0em -2.6em 0em 0em rgba(255, 255, 255, 0.2),
-      1.8em -1.8em 0 0em rgba(255, 255, 255, 0.5),
-      2.5em 0em 0 0em rgba(255, 255, 255, 0.7),
-      1.75em 1.75em 0 0em #ffffff,
-      0em 2.5em 0 0em rgba(255, 255, 255, 0.2),
-      -1.8em 1.8em 0 0em rgba(255, 255, 255, 0.2),
-      -2.6em 0em 0 0em rgba(255, 255, 255, 0.2),
-      -1.8em -1.8em 0 0em rgba(255, 255, 255, 0.2);
+.material-spinner .path {
+  stroke: var(--cml-color-current-color, var(--color-primary));
+  stroke-width: 4;
+  stroke-linecap: round;
+  animation: dash 1.5s ease-in-out infinite;
+}
+@keyframes rotate-spinner {
+  100% { transform: rotate(360deg); }
+}
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 150;
+    stroke-dashoffset: 0;
   }
   50% {
-    box-shadow: 0em -2.6em 0em 0em rgba(255, 255, 255, 0.2),
-      1.8em -1.8em 0 0em rgba(255, 255, 255, 0.2),
-      2.5em 0em 0 0em rgba(255, 255, 255, 0.5),
-      1.75em 1.75em 0 0em rgba(255, 255, 255, 0.7),
-      0em 2.5em 0 0em #ffffff,
-      -1.8em 1.8em 0 0em rgba(255, 255, 255, 0.2),
-      -2.6em 0em 0 0em rgba(255, 255, 255, 0.2),
-      -1.8em -1.8em 0 0em rgba(255, 255, 255, 0.2);
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -35;
   }
-  62.5% {
-    box-shadow: 0em -2.6em 0em 0em rgba(255, 255, 255, 0.2),
-      1.8em -1.8em 0 0em rgba(255, 255, 255, 0.2),
-      2.5em 0em 0 0em rgba(255, 255, 255, 0.2),
-      1.75em 1.75em 0 0em rgba(255, 255, 255, 0.5),
-      0em 2.5em 0 0em rgba(255, 255, 255, 0.7),
-      -1.8em 1.8em 0 0em #ffffff,
-      -2.6em 0em 0 0em rgba(255, 255, 255, 0.2),
-      -1.8em -1.8em 0 0em rgba(255, 255, 255, 0.2);
+  100% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -124;
   }
-  75% {
-    box-shadow: 0em -2.6em 0em 0em rgba(255, 255, 255, 0.2),
-      1.8em -1.8em 0 0em rgba(255, 255, 255, 0.2),
-      2.5em 0em 0 0em rgba(255, 255, 255, 0.2),
-      1.75em 1.75em 0 0em rgba(255, 255, 255, 0.2),
-      0em 2.5em 0 0em rgba(255, 255, 255, 0.5),
-      -1.8em 1.8em 0 0em rgba(255, 255, 255, 0.7),
-      -2.6em 0em 0 0em #ffffff,
-      -1.8em -1.8em 0 0em rgba(255, 255, 255, 0.2);
-  }
-  87.5% {
-    box-shadow: 0em -2.6em 0em 0em rgba(255, 255, 255, 0.2),
-      1.8em -1.8em 0 0em rgba(255, 255, 255, 0.2),
-      2.5em 0em 0 0em rgba(255, 255, 255, 0.2),
-      1.75em 1.75em 0 0em rgba(255, 255, 255, 0.2),
-      0em 2.5em 0 0em rgba(255, 255, 255, 0.2),
-      -1.8em 1.8em 0 0em rgba(255, 255, 255, 0.5),
-      -2.6em 0em 0 0em rgba(255, 255, 255, 0.7),
-      -1.8em -1.8em 0 0em #ffffff;
-  }
+}
+
+/* Cupertino (iOS) spinner */
+.ios-spinner {
+  position: relative;
+  width: 40px;
+  height: 40px;
+}
+.ios-blade {
+  position: absolute;
+  top: 0;
+  left: 18px;
+  width: 4px;
+  height: 12px;
+  background-color: var(--cml-c-m3-on-surface, #8e8e93);
+  border-radius: 2px;
+  transform-origin: 2px 20px;
+  animation: ios-fade 1s linear infinite;
+}
+.ios-blade:nth-child(1) { transform: rotate(0deg); animation-delay: -0.875s; }
+.ios-blade:nth-child(2) { transform: rotate(45deg); animation-delay: -0.75s; }
+.ios-blade:nth-child(3) { transform: rotate(90deg); animation-delay: -0.625s; }
+.ios-blade:nth-child(4) { transform: rotate(135deg); animation-delay: -0.5s; }
+.ios-blade:nth-child(5) { transform: rotate(180deg); animation-delay: -0.375s; }
+.ios-blade:nth-child(6) { transform: rotate(225deg); animation-delay: -0.25s; }
+.ios-blade:nth-child(7) { transform: rotate(270deg); animation-delay: -0.125s; }
+.ios-blade:nth-child(8) { transform: rotate(315deg); animation-delay: 0s; }
+
+@keyframes ios-fade {
+  from { opacity: 1; background-color: var(--cml-color-current-color, var(--cml-c-m3-on-surface, #000)); }
+  to { opacity: 0.2; }
+}
+
+/* Sci-Fi Loading Radar */
+.scifi-radar {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.radar-circle {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 1px solid color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 20%, transparent);
+  border-radius: 50%;
+}
+.radar-scanner {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-top: 2px solid var(--cml-color-current-color, var(--color-primary));
+  border-radius: 50%;
+  animation: radar-rotate 2s linear infinite;
+}
+.radar-text {
+  font-family: monospace;
+  font-size: 0.65rem;
+  color: var(--cml-color-current-color, var(--color-primary));
+  text-shadow: 0 0 5px var(--cml-color-current-color, var(--color-primary));
+  animation: blink 1s linear infinite;
+}
+@keyframes radar-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

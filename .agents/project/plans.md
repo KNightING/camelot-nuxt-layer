@@ -4,3 +4,5 @@
 - [ ] [2604131437-fix-calendar-type-errors](./plans/2604131437-fix-calendar-type-errors/plan.md): [DateV2, DateRangeV2] 修理 `defineModel` 導入後產生的 TypeScript 型別不相容問題。
 - [ ] [2604131441-unify-calendar-colors-and-2-line-label](./plans/2604131441-unify-calendar-colors-and-2-line-label/plan.md): [Calendar] 統一顏色控制邏輯，並支援 Label 換行。
 - [ ] [2604131510-refactor-daterange-separate-inputs](./plans/2604131510-refactor-daterange-separate-inputs/plan.md): [DateRangeV2] 將原本的單一顯示區改為兩個獨立 Input 顯示。
+- [ ] [2606051505-implement-camelotui-styles](./plans/2606051505-implement-camelotui-styles/plan.md): [Theme, Core Elements] 原生實作 CamelotUI 的風格系統（Material、Cupertino、Scifi）與基礎元件（Button、Input、Select、Switch、Checkbox）
+

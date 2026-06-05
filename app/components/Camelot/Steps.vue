@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" :class="[themeMode]">
     <template
       v-for="(value, index) in steps"
       :key="index"
@@ -36,10 +36,6 @@
                   class="step-dot-text-complete"
                 >✓</span>
                 <span
-                  v-if="isComplete(index)"
-                  class="step-dot-text-complete"
-                >✓</span>
-                <span
                   v-else
                   class="step-dot-text"
                   :class="{
@@ -70,6 +66,7 @@
 </template>
 
 <script setup lang="ts">
+const { themeMode } = useCamelotTheme()
 const props = defineProps<{
   steps: string[]
 
@@ -210,5 +207,55 @@ const isComplete = (index: number) => {
 
 .step-content-complete {
   color: var(--cml-c-m3-primary) !important;
+}
+
+/* Cupertino style overrides */
+.container.cupertino .step-line {
+  height: 2px;
+  background-color: var(--cml-c-m3-outline-variant, #e0e0e0);
+}
+.container.cupertino .step-line-complete {
+  background-color: var(--cml-color-current-color, var(--color-primary)) !important;
+}
+.container.cupertino .step-dot {
+  width: 1.25rem;
+  border-width: 1px;
+}
+.container.cupertino .step-dot-doing {
+  background-color: var(--cml-color-current-color, var(--color-primary)) !important;
+  border-color: var(--cml-color-current-color, var(--color-primary)) !important;
+}
+.container.cupertino .step-dot-doing .step-dot-text {
+  color: #ffffff !important;
+}
+
+/* Sci-fi style overrides */
+.container.scifi .step-line {
+  height: 2px;
+  border-bottom: 1px dashed var(--cml-color-current-color, var(--color-primary));
+  background-color: transparent;
+  box-shadow: 0 0 5px var(--cml-color-current-color, var(--color-primary));
+}
+.container.scifi .step-line-complete {
+  border-bottom-style: solid;
+}
+.container.scifi .step-dot {
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  width: 1.75rem;
+  border-radius: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-color: color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 40%, transparent);
+}
+.container.scifi .step-dot-doing {
+  border-color: var(--cml-color-current-color, var(--color-primary)) !important;
+  box-shadow: 0 0 8px var(--cml-color-current-color, var(--color-primary));
+}
+.container.scifi .step-dot-complete {
+  background-color: var(--cml-color-current-color, var(--color-primary)) !important;
+  border-color: var(--cml-color-current-color, var(--color-primary)) !important;
+}
+.container.scifi .step-content {
+  font-family: monospace;
+  letter-spacing: 1px;
 }
 </style>
