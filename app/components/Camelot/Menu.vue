@@ -30,6 +30,16 @@ const expanded = defineModel<(string | number)[]>('expanded', { default: () => [
 const expandedSet = computed(() => new Set(expanded.value))
 
 const isActive = (value: string | number) => active.value === value
+
+const collectValues = (item: CamelotMenuItem): (string | number)[] =>
+  [item.value, ...(item.children?.flatMap(collectValues) ?? [])]
+
+// 子孫中含有選中項（且自己不是選中項）→ 父節點用於僅變色不上底色
+const isActiveAncestor = (item: CamelotMenuItem) => {
+  if (!item.children?.length || active.value === undefined) return false
+  return item.children.flatMap(collectValues).includes(active.value)
+}
+
 const isExpanded = (item: CamelotMenuItem) => expandedSet.value.has(item.value)
 
 const toggleExpand = (item: CamelotMenuItem) => {
@@ -55,6 +65,7 @@ onMounted(() => {
 
 provide<CamelotMenuContext>(CAMELOT_MENU_KEY, {
   isActive,
+  isActiveAncestor,
   isExpanded,
   toggleExpand,
   select,

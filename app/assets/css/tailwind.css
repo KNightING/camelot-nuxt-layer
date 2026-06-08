@@ -194,7 +194,7 @@
     color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 78%, white)
   );
   box-shadow:
-    0 6px 16px -4px color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 42%, transparent),
+    0 2px 8px -3px color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 45%, transparent),
     inset 0 1px 0 0 color-mix(in srgb, white 35%, transparent);
 }
 

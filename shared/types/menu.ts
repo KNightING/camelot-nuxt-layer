@@ -10,6 +10,8 @@ export interface CamelotMenuItem<T = unknown> {
 /** Menu 透過 provide/inject 傳給遞迴 MenuItem 的上下文 */
 export interface CamelotMenuContext {
   isActive: (value: string | number) => boolean
+  /** 該節點的子孫中是否含有目前選中項（用於父節點僅變色、不上選中底色） */
+  isActiveAncestor: (item: CamelotMenuItem) => boolean
   isExpanded: (item: CamelotMenuItem) => boolean
   toggleExpand: (item: CamelotMenuItem) => void
   select: (item: CamelotMenuItem) => void

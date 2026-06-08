@@ -25,6 +25,27 @@
 - [x] 四風格樣式（表頭/容器/分隔線/斑馬/hover/固定欄陰影）
 - [x] lint / build
 
+## 設計修正 Round 13（使用者回饋）
+- [x] Aqua 選中柔光太遠：`aqua-fill` box-shadow 由 `0 6px 16px -4px/42%` 收緊為 `0 2px 8px -3px/45%`，glow 更貼合元件（共用 utility，套用於 button/switch/checkbox/tabs/menu 等所有 aqua 填滿元件）。
+
+## 設計修正 Round 12（使用者回饋）
+- [x] Menu 選中陰影太靠外：縮小 nested ul 內距（pr-1.5 pb-2 pt-1.5），pill 更貼齊、陰影不外擴。
+- [x] Menu 導引線在最後子項加 L 形轉角：新增 `after:` 水平 pseudo（bottom-[27px]、w-2.5）與垂直線交會成 └，指向最後一個子項中線（實測對齊 27px）。
+
+## 設計修正 Round 11（使用者回饋）
+- [x] Menu 導引線改為「止於最後一個子項中線」：border-l 改為 `before:` 絕對定位 pseudo line（top-2 → bottom-[31px]，實測最後子項中心距 ul 底 31px 對齊）。更易辨識層級、不再有跨層連接感。
+- [x] Menu 選中項陰影被裁切：nested `<ul>` 加內距（pt-2 pr-3 pb-3 pl-3），讓選中 pill 的陰影不被 CamelotExpanded 的 overflow-hidden 切掉。
+
+## 設計修正 Round 9（使用者回饋）
+- [x] Menu 階層導引線更明顯：由 faint 實線改為虛線（後續因「連接感」再調整，見 Round 10）。
+- [x] Round 10：取消虛線（改回實線 `border-outline-variant`），並加大層級縮排（ml-[22px] pl-3）讓各層導引線分得更開、不再有「連接到別層」的擁擠感。
+
+## 設計修正 Round 8（使用者回饋）
+- [x] Menu：選中子項時，父（祖先）節點文字也變主色（text-primary）但「不上選中底色」。新增 context `isActiveAncestor`（Menu 端遞迴判斷選中值是否在該節點子孫內），MenuItem 分三態：選中=activeClass（含底色）、祖先=text-primary 無底色、其餘=一般。實測：今日選中→待處理/訂單管理 變主色且 bg 透明。
+
+## 設計修正 Round 7（使用者回饋）
+- [x] Menu 視覺層級區隔：巢狀層級加左側導引線（border-l 縮排 rail）；頂層 font-medium 滿色、深層淡化（text-on-surface/75）；確認支援無限階層（遞迴）、選取以 defineModel 雙向綁定。
+
 ## 設計修正 Round 6（使用者回饋）
 - [x] Aqua Select 選單有黑色不透明底（DatePicker 為透明模糊）：根因為選項捲動容器的 `bg-inherit` 把面板的半透明深色「再畫一層」疊在模糊背景之上 → 兩層半透明深色疊成近乎全黑、且蓋住 backdrop blur。修法：內層 `bg-inherit` → `bg-transparent`，只保留面板單層 aqua-glass。實測：面板 0.72 半透明 + blur(20px)、內層透明 → 與 DatePicker 一致。
 
