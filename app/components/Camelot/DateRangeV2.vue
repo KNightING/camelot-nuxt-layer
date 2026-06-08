@@ -6,8 +6,8 @@
     disabled-close-when-scrolling
     :disabled="disabled"
     disabled-shadow
+    :popup-class="popupShadowClass"
     :z-index="selectZIndex"
-    popup-class="shadow-xl rounded-xl"
   >
     <slot
       name="default"
@@ -61,7 +61,7 @@
       <div
         ref="popupRef"
         class="flex flex-col sm:flex-row"
-        :class="panelClass"
+        :class="[panelClass, popupPanelShadowFix]"
         @click.stop
       >
         <div class="flex flex-col sm:flex-row">
@@ -167,6 +167,32 @@ const open = ref(false)
 const {
   themeMode, triggerClass, panelClass,
 } = useCamelotPickerTheme()
+
+// 落影改畫在 popup 外層容器（Expanded overflow-hidden 之外，不被方形裁切），圓角對齊面板；
+// 面板自身落影移除以免裁切露出方形邊。
+const popupShadowClass = computed(() => {
+  switch (themeMode.value) {
+    case 'aqua':
+      return 'shadow-[0_12px_44px_-8px_rgba(0,0,0,0.30)] rounded-3xl'
+    case 'cupertino':
+      return 'shadow-2xl rounded-2xl'
+    case 'scifi':
+      return 'shadow-[0_0_24px_color-mix(in_srgb,var(--color-primary)_18%,transparent)] rounded-none'
+    default:
+      return 'shadow-lg rounded-xl'
+  }
+})
+
+const popupPanelShadowFix = computed(() => {
+  switch (themeMode.value) {
+    case 'aqua':
+      return 'shadow-[inset_0_1px_0_0_rgba(255,255,255,0.5)]!'
+    case 'scifi':
+      return 'shadow-none!'
+    default:
+      return ''
+  }
+})
 
 const triggerRef = useTemplateRef('triggerRef')
 const popupRef = useTemplateRef('popupRef')

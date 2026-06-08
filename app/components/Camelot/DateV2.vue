@@ -6,7 +6,7 @@
     disabled-close-when-scrolling
     :disabled="disabled"
     disabled-shadow
-    popup-class="shadow-xl rounded-xl"
+    :popup-class="popupShadowClass"
     :z-index="selectZIndex"
   >
     <label
@@ -68,7 +68,7 @@
     >
       <div
         ref="popupRef"
-        :class="panelClass"
+        :class="[panelClass, popupPanelShadowFix]"
       >
         <CamelotInternalCalendar
           v-model="model"
@@ -115,6 +115,32 @@ const viewDate = ref(new Date())
 const {
   themeMode, triggerClass, panelClass,
 } = useCamelotPickerTheme()
+
+// 落影改畫在 popup 外層容器（位於 Expanded 的 overflow-hidden 之外，不會被方形裁切），
+// 圓角需與面板一致；面板自身的落影則移除，避免被裁切後露出方形邊。
+const popupShadowClass = computed(() => {
+  switch (themeMode.value) {
+    case 'aqua':
+      return 'shadow-[0_12px_44px_-8px_rgba(0,0,0,0.30)] rounded-3xl'
+    case 'cupertino':
+      return 'shadow-2xl rounded-2xl'
+    case 'scifi':
+      return 'shadow-[0_0_24px_color-mix(in_srgb,var(--color-primary)_18%,transparent)] rounded-none'
+    default:
+      return 'shadow-lg rounded-xl'
+  }
+})
+
+const popupPanelShadowFix = computed(() => {
+  switch (themeMode.value) {
+    case 'aqua':
+      return 'shadow-[inset_0_1px_0_0_rgba(255,255,255,0.5)]!'
+    case 'scifi':
+      return 'shadow-none!'
+    default:
+      return ''
+  }
+})
 
 const triggerRef = useTemplateRef('triggerRef')
 const popupRef = useTemplateRef('popupRef')
