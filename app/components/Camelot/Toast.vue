@@ -13,7 +13,7 @@
             v-for="t in toastsByPosition(pos)"
             :key="t.id"
             class="pointer-events-auto"
-            :class="roleClass(t.type)"
+            :class="roleClass(t)"
           >
             <slot :toast="t">
               <div
@@ -31,14 +31,21 @@
                     {{ t.message }}
                   </div>
                 </div>
-                <button
-                  v-if="t.action"
-                  type="button"
-                  class="shrink-0 text-sm font-semibold text-[var(--cml-color-current-color)] hover:opacity-80"
-                  @click="onAction(t)"
+                <slot
+                  name="action"
+                  :toast="t"
+                  :run="() => onAction(t)"
+                  :close="() => removeToast(t.id)"
                 >
-                  {{ t.action.label }}
-                </button>
+                  <button
+                    v-if="t.action"
+                    type="button"
+                    class="shrink-0 text-sm font-semibold text-[var(--cml-color-current-color)] hover:opacity-80"
+                    @click="onAction(t)"
+                  >
+                    {{ t.action.label }}
+                  </button>
+                </slot>
                 <button
                   type="button"
                   class="shrink-0 text-on-surface-variant hover:text-on-surface"
@@ -72,14 +79,21 @@ const positions: CamelotToastPosition[] = [
 const toastsByPosition = (pos: CamelotToastPosition) =>
   toasts.value.filter(t => (t.position ?? 'bottom') === pos)
 
-// 顏色角色：依 type 對應
-const roleClass = (type?: CamelotToastType) => {
-  const role = type === 'success'
-    ? 'success'
-    : type === 'error'
-      ? 'error'
-      : type === 'warning' ? 'warning' : 'info'
-  return `[--cml-color-current-color:var(--color-${role})] [--cml-color-current-on-color:var(--color-on-${role})]`
+// 顏色角色：優先用 toast.color；否則由 type 對應狀態色（info / 未設 → primary，避免未定義色）
+const roleClass = (t: CamelotToast) => {
+  const role: CamelotColorRole = t.color
+    ?? (t.type === 'success' ? 'success' : t.type === 'error' ? 'error' : t.type === 'warning' ? 'warning' : 'primary')
+  return ROLE_COLOR_MAP[role]
+}
+
+const ROLE_COLOR_MAP: Record<CamelotColorRole, string> = {
+  primary: '[--cml-color-current-color:var(--color-primary)] [--cml-color-current-on-color:var(--color-on-primary)]',
+  secondary: '[--cml-color-current-color:var(--color-secondary)] [--cml-color-current-on-color:var(--color-on-secondary)]',
+  tertiary: '[--cml-color-current-color:var(--color-tertiary)] [--cml-color-current-on-color:var(--color-on-tertiary)]',
+  error: '[--cml-color-current-color:var(--color-error)] [--cml-color-current-on-color:var(--color-on-error)]',
+  info: '[--cml-color-current-color:var(--color-info)] [--cml-color-current-on-color:var(--color-on-info)]',
+  warning: '[--cml-color-current-color:var(--color-warning)] [--cml-color-current-on-color:var(--color-on-warning)]',
+  success: '[--cml-color-current-color:var(--color-success)] [--cml-color-current-on-color:var(--color-on-success)]',
 }
 
 const boxClass = computed(() => {

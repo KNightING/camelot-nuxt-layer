@@ -492,6 +492,19 @@
               {{ p }}
             </button>
           </div>
+          <div class="mt-2 flex flex-wrap gap-2">
+            <span class="text-xs text-slate-400 self-center">狀態系列：</span>
+            <CamelotTag
+              v-for="ty in toastTypes"
+              :key="ty"
+              :color="ty === 'info' ? 'primary' : ty"
+              variant="soft"
+              class="cursor-pointer"
+              @click="notify('top-right', ty)"
+            >
+              {{ ty }}
+            </CamelotTag>
+          </div>
         </div>
 
         <!-- Timeline Card -->
@@ -1134,16 +1147,21 @@ const toastPositions = [
   'left', 'center', 'right',
   'bottom-left', 'bottom', 'bottom-right',
 ] as const
-const notify = (position: typeof toastPositions[number]) => {
+const toastTypes = ['info', 'success', 'warning', 'error'] as const
+const notify = (position: typeof toastPositions[number], type: typeof toastTypes[number] = 'info') => {
   useCamelotToast().open({
-    title: '通知',
+    title: type === 'info' ? '通知' : type,
     message: `顯示於 ${position}`,
     position,
-    type: 'info',
+    type,
     duration: 3000,
     action: {
       label: '查看',
-      handler: () => useCamelotToast().open('已查看'),
+      handler: () => useCamelotToast().open({
+        message: '已查看',
+        type: 'success',
+        position: 'top',
+      }),
     },
   })
 }

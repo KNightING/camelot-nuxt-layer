@@ -71,12 +71,14 @@
   --color-scrim: var(--cml-c-m3-scrim);
   --color-shadow: var(--cml-c-m3-shadow);
 
-  /* 用於camelot custom scheme的規則 --cml-c-* */
+  /* 用於camelot custom scheme的規則 --cml-c-*（含預設值，未由色系設定時仍有狀態色，不致黑色） */
   --color-test: var(--cml-c-test);
-  --color-warning: var(--cml-c-warning);
-  --color-on-warning: var(--cml-c-on-warning);
-  --color-success: var(--cml-c-success);
-  --color-on-success: var(--cml-c-on-success);
+  --color-info: var(--cml-c-info, #2563eb);
+  --color-on-info: var(--cml-c-on-info, #ffffff);
+  --color-warning: var(--cml-c-warning, #d97706);
+  --color-on-warning: var(--cml-c-on-warning, #ffffff);
+  --color-success: var(--cml-c-success, #16a34a);
+  --color-on-success: var(--cml-c-on-success, #ffffff);
 
   --spacing-header: 3rem;
   --spacing-footer: 30px;

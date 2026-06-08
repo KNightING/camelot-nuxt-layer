@@ -82,6 +82,8 @@ export interface CamelotToast {
   message: string
   title?: string
   type?: CamelotToastType
+  /** 直接指定色彩角色（優先於 type 對應的狀態色） */
+  color?: CamelotColorRole
   duration?: number
   position?: CamelotToastPosition
   action?: CamelotToastAction
