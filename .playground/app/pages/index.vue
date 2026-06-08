@@ -260,6 +260,7 @@
             <CamelotTabs
               v-model="demoActiveTab"
               :options="demoTabsOptions"
+              :color="currentColorRole"
             />
           </div>
 
@@ -269,6 +270,7 @@
               v-model="demoActiveStep"
               :steps="demoStepsList"
               enable-change-by-click
+              :color="currentColorRole"
             />
           </div>
         </div>

@@ -1,7 +1,7 @@
 <template>
   <div
     class="container"
-    :class="[themeMode]"
+    :class="[themeMode, roleColorClass]"
   >
     <template
       v-for="(value, index) in steps"
@@ -70,24 +70,36 @@
 
 <script setup lang="ts">
 const { themeMode } = useCamelotTheme()
-const props = defineProps<{
-  steps: string[]
+const props = withDefaults(
+  defineProps<{
+    steps: string[]
 
-  /**
-   * 啟動點擊可以切換step
-   */
-  enableChangeByClick?: boolean
+    /**
+     * 啟動點擊可以切換step
+     */
+    enableChangeByClick?: boolean
 
-  /**
-   * 禁止點擊切換到下一頁
-   */
-  disableClickToNext?: boolean
+    /**
+     * 禁止點擊切換到下一頁
+     */
+    disableClickToNext?: boolean
 
-  /**
-   * 禁止點擊切換到上一頁
-   */
-  disableClickToPrevision?: boolean
-}>()
+    /**
+     * 禁止點擊切換到上一頁
+     */
+    disableClickToPrevision?: boolean
+
+    /**
+     * 色彩角色（primary / secondary / ... ）
+     */
+    color?: CamelotColorRole
+  }>(),
+  {
+    color: 'primary',
+  },
+)
+
+const roleColorClass = useCamelotRoleColorClass(() => props.color)
 
 const step = defineModel<number>({ default: 0 })
 
@@ -151,7 +163,7 @@ const isComplete = (index: number) => {
 }
 
 .step-line-complete {
-  background-color: var(--cml-c-m3-primary) !important;
+  background-color: var(--cml-color-current-color, var(--color-primary)) !important;
 }
 
 .step-dot-container {
@@ -179,12 +191,12 @@ const isComplete = (index: number) => {
 }
 
 .step-dot-doing {
-  border-color: var(--cml-c-m3-primary) !important;
+  border-color: var(--cml-color-current-color, var(--color-primary)) !important;
 }
 
 .step-dot-complete {
-  border-color: var(--cml-c-m3-primary) !important;
-  background-color: var(--cml-c-m3-primary) !important;
+  border-color: var(--cml-color-current-color, var(--color-primary)) !important;
+  background-color: var(--cml-color-current-color, var(--color-primary)) !important;
 }
 
 .step-dot-text {
@@ -193,12 +205,12 @@ const isComplete = (index: number) => {
 }
 
 .step-dot-text-doing {
-  color: var(--cml-c-m3-primary) !important;
+  color: var(--cml-color-current-color, var(--color-primary)) !important;
 }
 
 .step-dot-text-complete {
   user-select: none;
-  color: var(--cml-c-m3-on-primary);
+  color: var(--cml-color-current-on-color, var(--color-on-primary));
 }
 
 .step-content {
@@ -210,7 +222,7 @@ const isComplete = (index: number) => {
 }
 
 .step-content-complete {
-  color: var(--cml-c-m3-primary) !important;
+  color: var(--cml-color-current-color, var(--color-primary)) !important;
 }
 
 /* Cupertino style overrides */
