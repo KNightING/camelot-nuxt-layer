@@ -79,12 +79,19 @@
           :class="[roleColorClass, panelClass, popupPanelShadowFix]"
           @click.stop
         >
-          <div class="flex flex-col sm:flex-row">
+          <div
+            ref="calRowRef"
+            class="flex flex-col sm:flex-row"
+            :style="anyPicking && pinnedRowWidth ? { width: pinnedRowWidth + 'px' } : undefined"
+          >
             <CamelotInternalCalendar
+              v-show="picker2 === 'calendar'"
               v-model:range-value="internalValue"
               v-model:view-date="viewDate"
+              v-model:picker-mode="picker1"
               is-range
               hide-time
+              :picker-expand="showSecondCalendar"
               :enable-time="enableTime"
               :time-precision="timePrecision"
               :hour-format="hourFormat"
@@ -107,8 +114,11 @@
             </CamelotInternalCalendar>
             <CamelotInternalCalendar
               v-if="showSecondCalendar"
+              v-show="picker1 === 'calendar'"
               v-model:range-value="internalValue"
+              v-model:picker-mode="picker2"
               is-range
+              :picker-expand="showSecondCalendar"
               :enable-time="enableTime"
               :time-precision="timePrecision"
               :hour-format="hourFormat"
@@ -320,6 +330,19 @@ const popupRef = useTemplateRef('popupRef')
 // Use internal value for the picker state
 const internalValue = ref<(Date | null)[]>(model.value ? [model.value[0], model.value[1]] : [null, null])
 const viewDate = ref(new Date())
+
+// 月/年選擇模式：任一月曆進入選擇時，隱藏另一個，讓選擇器橫跨兩個月曆並置中
+const picker1 = ref<'calendar' | 'month' | 'year'>('calendar')
+const picker2 = ref<'calendar' | 'month' | 'year'>('calendar')
+const anyPicking = computed(() => picker1.value !== 'calendar' || picker2.value !== 'calendar')
+
+// 選擇器要橫跨兩個月曆：隱藏另一個月曆後版面會收縮，故記住雙月曆時的列寬並在選擇期間釘住
+const calRowRef = useTemplateRef('calRowRef')
+const { width: calRowWidth } = useElementSize(calRowRef)
+const pinnedRowWidth = ref(0)
+watch(calRowWidth, (w) => {
+  if (!anyPicking.value && w) pinnedRowWidth.value = Math.round(w)
+})
 const nextMonthViewDate = computed(() => addMonths(viewDate.value, 1))
 
 // 起/迄時間狀態（綁定到 internalValue 端點），時間區塊渲染於兩個月曆之下而非月曆內
@@ -381,6 +404,9 @@ watch(model, (newVal) => {
 // Sync viewDate when popup opens
 watch(open, (isOpen) => {
   if (isOpen) {
+    // 每次開啟回到月曆視圖，避免殘留在月/年選擇
+    picker1.value = 'calendar'
+    picker2.value = 'calendar'
     if (model.value && model.value[0]) {
       viewDate.value = new Date(model.value[0])
     }
