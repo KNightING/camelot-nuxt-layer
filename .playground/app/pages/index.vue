@@ -418,6 +418,104 @@
             </template>
           </CamelotTable>
         </div>
+
+        <!-- Progress Card -->
+        <div :class="[cardClass, 'col-span-1 md:col-span-2 lg:col-span-3']">
+          <h2 :class="cardTitleClass">
+            Progress (Bar &amp; Circle)
+          </h2>
+          <div class="flex items-center gap-3">
+            <input
+              v-model.number="progressVal"
+              type="range"
+              min="0"
+              max="100"
+              class="w-48 accent-primary"
+            >
+            <span class="text-xs text-slate-400">value = {{ progressVal }}</span>
+          </div>
+
+          <div class="flex flex-col gap-3">
+            <CamelotProgressBar
+              :value="progressVal"
+              :color="currentColorRole"
+              show-label
+            />
+            <CamelotProgressBar
+              :value="progressStep"
+              :max="4"
+              :color="currentColorRole"
+              show-label
+              label-mode="fraction"
+            />
+            <CamelotProgressBar
+              indeterminate
+              :color="currentColorRole"
+            />
+          </div>
+
+          <div class="flex flex-wrap items-center gap-8 pt-2">
+            <CamelotProgressCircle
+              :value="progressVal"
+              :color="currentColorRole"
+              show-label
+              :size="76"
+            />
+            <CamelotProgressCircle
+              :value="progressStep"
+              :max="4"
+              :color="currentColorRole"
+              show-label
+              label-mode="fraction"
+              :size="76"
+            />
+            <CamelotProgressCircle
+              indeterminate
+              :color="currentColorRole"
+              :size="76"
+            />
+          </div>
+
+          <div class="flex flex-wrap items-center gap-12 pt-4">
+            <CamelotProgressStage
+              :current="progressStep"
+              :total="4"
+              :color="currentColorRole"
+              :size="110"
+            />
+
+            <!-- 可手動調整的測試用 ProgressStage -->
+            <div class="flex items-center gap-5">
+              <CamelotProgressStage
+                :current="stageCurrent"
+                :total="stageTotal"
+                :color="currentColorRole"
+                :size="110"
+              />
+              <div class="flex flex-col gap-2">
+                <label class="flex items-center gap-2 text-xs text-slate-400">
+                  <span class="w-12">目前</span>
+                  <input
+                    v-model.number="stageCurrent"
+                    type="number"
+                    min="0"
+                    :max="stageTotal"
+                    class="w-20 rounded-md border border-slate-300 bg-transparent px-2 py-1 text-sm text-slate-700 outline-none focus:border-primary dark:border-slate-600 dark:text-slate-200"
+                  >
+                </label>
+                <label class="flex items-center gap-2 text-xs text-slate-400">
+                  <span class="w-12">最大</span>
+                  <input
+                    v-model.number="stageTotal"
+                    type="number"
+                    min="1"
+                    class="w-20 rounded-md border border-slate-300 bg-transparent px-2 py-1 text-sm text-slate-700 outline-none focus:border-primary dark:border-slate-600 dark:text-slate-200"
+                  >
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- Demo dialog overlays -->
@@ -1050,6 +1148,12 @@ const menuItems = ref<CamelotMenuItem[]>([
     value: 'settings',
   },
 ])
+
+// Progress demo state
+const progressVal = ref(65)
+const progressStep = ref(1)
+const stageCurrent = ref(3)
+const stageTotal = ref(8)
 
 // Table demo state
 const tableColumns = ref<CamelotTableColumn[]>([
