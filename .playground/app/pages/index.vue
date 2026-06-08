@@ -656,6 +656,16 @@
               :get-day-attributes="getDayAttributes"
             />
 
+            <span class="text-xs text-slate-400">區間含時間（24H・到分・起迄各自設定）</span>
+            <CamelotDateRangeV2
+              v-model="dateRangeTimeVal"
+              :color="currentColorRole"
+              label="會議時段"
+              enable-time
+              time-precision="minute"
+              :multi-calendars="true"
+            />
+
             <span class="text-xs text-slate-400">含時間（24H・到秒）</span>
             <CamelotDateV2
               v-model="dateTimeSec"
@@ -1217,6 +1227,7 @@ const textareaVal = ref('')
 const dateTimeSec = ref(new Date())
 const dateTime12 = ref(new Date())
 const dateTimeHour = ref(new Date())
+const dateRangeTimeVal = ref<[Date, Date] | null>(null)
 
 // Slider demo
 const sliderVal = ref(40)

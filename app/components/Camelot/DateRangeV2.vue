@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex w-fit flex-col gap-1.5"
+    class="flex w-full flex-col gap-1.5"
     :class="roleColorClass"
   >
     <span
@@ -30,7 +30,7 @@
       >
         <label
           ref="triggerRef"
-          class="group flex w-fit cursor-pointer items-center gap-2 px-4 py-2 transition-colors"
+          class="group flex w-full cursor-pointer items-center gap-2 px-4 py-2 transition-colors"
           :class="[
             triggerClass,
             {
@@ -50,7 +50,7 @@
               type="text"
               class="min-w-0 text-on-surface bg-transparent placeholder:text-on-surface/50 outline-none text-base caret-[var(--cml-color-current-color)] appearance-none cursor-pointer"
               :class="[{ 'text-black!': disabled }, startDisplay ? 'w-[10.5ch]' : 'w-[14ch]']"
-              placeholder="請選擇開始日期"
+              placeholder="請選擇起日"
               readonly
             >
             <div class="px-1 text-outline group-hover:text-[var(--cml-color-current-color)]">
@@ -62,7 +62,7 @@
               type="text"
               class="min-w-0 text-on-surface bg-transparent placeholder:text-on-surface/50 outline-none text-base caret-[var(--cml-color-current-color)] appearance-none cursor-pointer"
               :class="[{ 'text-black!': disabled }, endDisplay ? 'w-[10.5ch]' : 'w-[14ch]']"
-              placeholder="請選擇結束日期"
+              placeholder="請選擇迄日"
               readonly
             >
           </div>
@@ -84,17 +84,33 @@
               v-model:range-value="internalValue"
               v-model:view-date="viewDate"
               is-range
+              :enable-time="enableTime"
+              :time-precision="timePrecision"
+              :hour-format="hourFormat"
               :hide-next-arrow="showSecondCalendar"
               :hide-next-month="showSecondCalendar"
               :min-date="minDate"
               :max-date="maxDate"
               :get-day-attributes="getDayAttributes"
               @update:range-value="onRangeSelect"
-            />
+            >
+              <template
+                v-for="(_, name) in $slots"
+                #[name]="slotProps"
+              >
+                <slot
+                  :name="name"
+                  v-bind="slotProps"
+                />
+              </template>
+            </CamelotInternalCalendar>
             <CamelotInternalCalendar
               v-if="showSecondCalendar"
               v-model:range-value="internalValue"
               is-range
+              :enable-time="enableTime"
+              :time-precision="timePrecision"
+              :hour-format="hourFormat"
               hide-prev-arrow
               hide-prev-month
               :view-date="nextMonthViewDate"
@@ -103,11 +119,21 @@
               :get-day-attributes="getDayAttributes"
               @update:view-date="onNextMonthViewDateUpdate"
               @update:range-value="onRangeSelect"
-            />
+            >
+              <template
+                v-for="(_, name) in $slots"
+                #[name]="slotProps"
+              >
+                <slot
+                  :name="name"
+                  v-bind="slotProps"
+                />
+              </template>
+            </CamelotInternalCalendar>
           </div>
 
           <div
-            v-if="!autoApply"
+            v-if="!autoApply || enableTime"
             class="p-3 border-t border-outline flex justify-end gap-2 bg-surface-container-lowest"
           >
             <button
@@ -138,11 +164,24 @@
           v-model:view-date="viewDate"
           :class="roleColorClass"
           is-range
+          :enable-time="enableTime"
+          :time-precision="timePrecision"
+          :hour-format="hourFormat"
           :min-date="minDate"
           :max-date="maxDate"
           :get-day-attributes="getDayAttributes"
           @update:range-value="onRangeSelect"
-        />
+        >
+          <template
+            v-for="(_, name) in $slots"
+            #[name]="slotProps"
+          >
+            <slot
+              :name="name"
+              v-bind="slotProps"
+            />
+          </template>
+        </CamelotInternalCalendar>
       </CamelotBaseDialogV2>
     </CamelotPopupV2>
   </div>
@@ -164,6 +203,9 @@ const props = withDefaults(defineProps<{
   autoApply?: boolean
   displayFormat?: (dates: [Date, Date]) => string
   format?: string
+  enableTime?: boolean
+  timePrecision?: 'hour' | 'minute' | 'second'
+  hourFormat?: '12' | '24'
   color?: CamelotColorRole
   label?: string
   required?: boolean
@@ -174,7 +216,20 @@ const props = withDefaults(defineProps<{
   multiCalendars: true,
   autoApply: true,
   format: 'yyyy-MM-dd',
+  enableTime: false,
+  timePrecision: 'second',
+  hourFormat: '24',
   color: 'primary',
+})
+
+// 含時間時自動延伸顯示格式
+const effectiveFormat = computed(() => {
+  if (!props.enableTime) return props.format
+  let t = props.hourFormat === '12' ? 'hh' : 'HH'
+  if (props.timePrecision !== 'hour') t += ':mm'
+  if (props.timePrecision === 'second') t += ':ss'
+  if (props.hourFormat === '12') t += ' a'
+  return `${props.format} ${t}`
 })
 
 const roleColorClass = useCamelotRoleColorClass(() => props.color)
@@ -259,12 +314,12 @@ watch(open, (isOpen) => {
 
 const startDisplay = computed(() => {
   if (!model.value || !model.value[0]) return ''
-  return formatDate(new Date(model.value[0]), props.format)
+  return formatDate(new Date(model.value[0]), effectiveFormat.value)
 })
 
 const endDisplay = computed(() => {
   if (!model.value || !model.value[1]) return ''
-  return formatDate(new Date(model.value[1]), props.format)
+  return formatDate(new Date(model.value[1]), effectiveFormat.value)
 })
 
 const displayValue = computed(() => {
@@ -292,7 +347,8 @@ const onRangeSelect = (range: (Date | number | null)[] | null | undefined) => {
   internalValue.value = [range[0] as Date | null, range[1] as Date | null]
 
   if (range[0] && range[1]) {
-    if (props.autoApply) {
+    // 含時間時不自動套用，讓使用者調整起/迄時間後再確定
+    if (props.autoApply && !props.enableTime) {
       applyRange()
     }
   }

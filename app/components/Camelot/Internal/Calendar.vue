@@ -25,14 +25,26 @@
           class="px-2 py-1 rounded-md hover:bg-surface-container font-medium text-lg transition-colors text-on-surface"
           @click="toggleYearPicker"
         >
-          {{ format(viewDate, 'yyyy') }}年
+          <slot
+            name="year-label"
+            :view-date="viewDate"
+            :year="viewDate.getFullYear()"
+          >
+            {{ format(viewDate, 'yyyy') }}年
+          </slot>
         </button>
         <button
           type="button"
           class="px-2 py-1 rounded-md hover:bg-surface-container font-medium text-lg transition-colors text-on-surface"
           @click="toggleMonthPicker"
         >
-          {{ format(viewDate, 'MM') }}月
+          <slot
+            name="month-label"
+            :view-date="viewDate"
+            :month="viewDate.getMonth()"
+          >
+            {{ format(viewDate, 'MM') }}月
+          </slot>
         </button>
       </div>
 
@@ -62,11 +74,17 @@
       <div class="grid grid-cols-7 gap-1 text-center">
         <!-- Weekday Headers -->
         <div
-          v-for="day in weekDays"
+          v-for="(day, wi) in weekDays"
           :key="day"
           class="w-10 aspect-square flex items-center justify-center text-sm font-medium text-outline"
         >
-          {{ day }}
+          <slot
+            name="weekday"
+            :day="day"
+            :index="wi"
+          >
+            {{ day }}
+          </slot>
         </div>
 
         <!-- Days -->
@@ -93,7 +111,13 @@
               isSelected ? selectedSurfaceClass : '',
             ]"
           >
-            {{ format(date, 'd') }}
+            <slot
+              name="day"
+              :date="date"
+              :day="Number(format(date, 'd'))"
+              :is-selected="isSelected"
+              :is-today="isToday"
+            >{{ format(date, 'd') }}</slot>
           </span>
           <span
             v-if="isVisible && dayLabel"
@@ -111,54 +135,46 @@
         </div>
       </div>
 
-      <!-- Time Picker Section（時 / 分 / 秒，由下往上關閉；支援 12/24 小時制） -->
+      <!-- Time Picker Section（可輸入亦可下拉選擇；時/分/秒由下往上關閉；12/24 小時制；數字跟隨 current-color） -->
       <div
         v-if="enableTime"
-        class="border-t border-outline mt-4 pt-4 flex items-center justify-center gap-3"
+        class="border-t border-outline mt-4 pt-4 flex flex-col items-center gap-2"
       >
-        <label class="flex items-center gap-2">
-          <IMaterialSymbolsScheduleRounded class="w-5 h-5 text-outline shrink-0" />
-          <div class="flex items-center bg-surface-container rounded-lg p-1">
-            <input
-              :value="displayHour"
-              type="number"
-              :min="hourFormat === '12' ? 1 : 0"
-              :max="hourFormat === '12' ? 12 : 23"
-              class="w-10 bg-transparent text-center outline-none font-medium tabular-nums"
-              @change="onHourInput"
-            >
-            <template v-if="timePrecision !== 'hour'">
-              <span class="text-outline">:</span>
-              <input
-                :value="String(minutes).padStart(2, '0')"
-                type="number"
-                min="0"
-                max="59"
-                class="w-10 bg-transparent text-center outline-none font-medium tabular-nums"
-                @change="onMinuteInput"
-              >
-            </template>
-            <template v-if="timePrecision === 'second'">
-              <span class="text-outline">:</span>
-              <input
-                :value="String(seconds).padStart(2, '0')"
-                type="number"
-                min="0"
-                max="59"
-                class="w-10 bg-transparent text-center outline-none font-medium tabular-nums"
-                @change="onSecondInput"
-              >
-            </template>
+        <!-- 單選 -->
+        <CamelotInternalTimeRow
+          v-if="!isRange"
+          v-model:hours="singleTime.t.h"
+          v-model:minutes="singleTime.t.m"
+          v-model:seconds="singleTime.t.s"
+          :precision="timePrecision"
+          :hour-format="hourFormat"
+          @change="singleTime.apply"
+        />
+        <!-- 區間：起 / 迄 -->
+        <template v-else>
+          <div class="flex items-center gap-2">
+            <span class="w-6 text-xs text-outline">起</span>
+            <CamelotInternalTimeRow
+              v-model:hours="startTime.t.h"
+              v-model:minutes="startTime.t.m"
+              v-model:seconds="startTime.t.s"
+              :precision="timePrecision"
+              :hour-format="hourFormat"
+              @change="startTime.apply"
+            />
           </div>
-        </label>
-        <button
-          v-if="hourFormat === '12'"
-          type="button"
-          class="rounded-lg bg-surface-container px-3 py-1.5 text-sm font-semibold text-[var(--cml-color-current-color)] transition-colors hover:bg-surface-container-high"
-          @click="toggleMeridiem"
-        >
-          {{ isPM ? 'PM' : 'AM' }}
-        </button>
+          <div class="flex items-center gap-2">
+            <span class="w-6 text-xs text-outline">迄</span>
+            <CamelotInternalTimeRow
+              v-model:hours="endTime.t.h"
+              v-model:minutes="endTime.t.m"
+              v-model:seconds="endTime.t.s"
+              :precision="timePrecision"
+              :hour-format="hourFormat"
+              @change="endTime.apply"
+            />
+          </div>
+        </template>
       </div>
     </div>
 
@@ -175,7 +191,13 @@
         :class="index === viewDate.getMonth() ? selectedSurfaceClass : 'text-on-surface'"
         @click="selectMonth(index)"
       >
-        {{ month }}
+        <slot
+          name="month-name"
+          :month="month"
+          :index="index"
+        >
+          {{ month }}
+        </slot>
       </button>
     </div>
 
@@ -187,18 +209,18 @@
       <div class="flex items-center justify-between mb-2">
         <button
           type="button"
-          class="p-1 hover:bg-surface-container rounded-full"
+          class="p-1.5 rounded-full hover:bg-surface-container transition-colors disabled:opacity-30 text-on-surface"
           @click="yearPage--"
         >
-          <IMaterialSymbolsChevronLeftRounded class="w-5 h-5" />
+          <IMaterialSymbolsChevronLeftRounded class="w-6 h-6" />
         </button>
         <span class="text-sm text-outline">{{ yearsRange[0] }} - {{ yearsRange[yearsRange.length - 1] }}</span>
         <button
           type="button"
-          class="p-1 hover:bg-surface-container rounded-full"
+          class="p-1.5 rounded-full hover:bg-surface-container transition-colors disabled:opacity-30 text-on-surface"
           @click="yearPage++"
         >
-          <IMaterialSymbolsChevronRightRounded class="w-5 h-5" />
+          <IMaterialSymbolsChevronRightRounded class="w-6 h-6" />
         </button>
       </div>
       <div class="grid grid-cols-3 gap-2">
@@ -292,56 +314,45 @@ const monthNames = ['一月', '二月', '三月', '四月', '五月', '六月', 
 // 各風格的「選中態」表面樣式（日期、月份、年份共用）
 const { selectedSurfaceClass } = useCamelotPickerTheme()
 
-const hours = ref(0) // 內部一律 24 小時制
-const minutes = ref(0)
-const seconds = ref(0)
-
-// Sync time from modelValue
-watch(modelValue, (val) => {
-  if (val) {
-    const d = new Date(val)
-    hours.value = getHours(d)
-    minutes.value = getMinutes(d)
-    seconds.value = getSeconds(d)
+// 時間狀態工廠：綁定到某個日期（單選或區間端點），回傳可雙向綁定的 h/m/s 與套用函式
+const useTimeState = (
+  getDate: () => Date | number | null | undefined,
+  setDate: (d: Date) => void,
+) => {
+  const t = reactive({
+    h: 0,
+    m: 0,
+    s: 0,
+  })
+  watch(getDate, (val) => {
+    if (val) {
+      const d = new Date(val)
+      t.h = getHours(d)
+      t.m = getMinutes(d)
+      t.s = getSeconds(d)
+    }
+  }, { immediate: true })
+  const apply = () => {
+    const val = getDate()
+    if (val) setDate(setSeconds(setMinutes(setHours(new Date(val), t.h), t.m), t.s))
   }
-}, { immediate: true })
+  return {
+    t,
+    apply,
+  }
+}
 
-const clampNum = (v: number, lo: number, hi: number) => Math.min(Math.max(Number.isFinite(v) ? v : lo, lo), hi)
-
-const isPM = computed(() => hours.value >= 12)
-// 12 小時制顯示用時（1–12）
-const displayHour = computed(() => {
-  if (props.hourFormat !== '12') return hours.value
-  const h = hours.value % 12
-  return h === 0 ? 12 : h
+const singleTime = useTimeState(() => modelValue.value, (d) => {
+  modelValue.value = d
+})
+const startTime = useTimeState(() => rangeValue.value?.[0], (d) => {
+  rangeValue.value = [d, rangeValue.value?.[1] ?? null]
+})
+const endTime = useTimeState(() => rangeValue.value?.[1], (d) => {
+  rangeValue.value = [rangeValue.value?.[0] ?? null, d]
 })
 
-const onHourInput = (e: Event) => {
-  const raw = Number((e.target as HTMLInputElement).value)
-  if (props.hourFormat === '12') {
-    const v = clampNum(raw, 1, 12)
-    const base = v % 12 // 12 → 0
-    hours.value = isPM.value ? base + 12 : base
-  }
-  else {
-    hours.value = clampNum(raw, 0, 23)
-  }
-  onTimeChange()
-}
-const onMinuteInput = (e: Event) => {
-  minutes.value = clampNum(Number((e.target as HTMLInputElement).value), 0, 59)
-  onTimeChange()
-}
-const onSecondInput = (e: Event) => {
-  seconds.value = clampNum(Number((e.target as HTMLInputElement).value), 0, 59)
-  onTimeChange()
-}
-const toggleMeridiem = () => {
-  hours.value = (hours.value + 12) % 24
-  onTimeChange()
-}
-
-const applyTime = (date: Date) => setSeconds(setMinutes(setHours(date, hours.value), minutes.value), seconds.value)
+const applyTime = (date: Date) => setSeconds(setMinutes(setHours(date, singleTime.t.h), singleTime.t.m), singleTime.t.s)
 
 const yearsRange = computed(() => {
   const currentYear = new Date().getFullYear() + (yearPage.value * 12)
@@ -449,7 +460,8 @@ const calendarDays = computed(() => {
 
 const selectDate = (date: Date) => {
   let finalDate = date
-  if (props.enableTime) {
+  // 單選含時間：套用 time row 的時間；區間則由起/迄 time row 各自處理
+  if (props.enableTime && !props.isRange) {
     finalDate = applyTime(date)
   }
 
@@ -478,12 +490,6 @@ const selectDate = (date: Date) => {
   }
   else {
     modelValue.value = finalDate
-  }
-}
-
-const onTimeChange = () => {
-  if (!props.isRange && modelValue.value) {
-    modelValue.value = applyTime(new Date(modelValue.value))
   }
 }
 

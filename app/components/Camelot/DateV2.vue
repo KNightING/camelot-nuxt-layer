@@ -70,7 +70,17 @@
           :hour-format="hourFormat"
           :get-day-attributes="getDayAttributes"
           @update:model-value="onDateSelect"
-        />
+        >
+          <template
+            v-for="(_, name) in $slots"
+            #[name]="slotProps"
+          >
+            <slot
+              :name="name"
+              v-bind="slotProps"
+            />
+          </template>
+        </CamelotInternalCalendar>
       </CamelotBaseDialogV2>
 
       <template
@@ -91,7 +101,17 @@
             :hour-format="hourFormat"
             :get-day-attributes="getDayAttributes"
             @update:model-value="onDateSelect"
-          />
+          >
+            <template
+              v-for="(_, name) in $slots"
+              #[name]="slotProps"
+            >
+              <slot
+                :name="name"
+                v-bind="slotProps"
+              />
+            </template>
+          </CamelotInternalCalendar>
         </div>
       </template>
     </CamelotPopupV2>
