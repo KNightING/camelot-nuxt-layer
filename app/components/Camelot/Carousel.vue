@@ -65,7 +65,7 @@
       :total="items.length"
       :direction="direction"
       :color="color"
-      class="absolute"
+      class="absolute z-[150]"
       :class="direction === 'vertical' ? 'top-1/2 right-3 -translate-y-1/2' : 'bottom-3 left-1/2 -translate-x-1/2'"
       @update:model-value="go"
     >

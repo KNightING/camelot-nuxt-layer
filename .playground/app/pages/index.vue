@@ -503,6 +503,16 @@
               </div>
             </template>
           </CamelotCarousel>
+
+          <!-- 外部連動的獨立指標（與上方 carousel 共用 v-model） -->
+          <div class="mt-3 flex items-center justify-center gap-3">
+            <span class="text-xs text-slate-400">外部指標：</span>
+            <CamelotCarouselIndicator
+              v-model="carouselIndex"
+              :total="carouselItems.length"
+              :color="currentColorRole"
+            />
+          </div>
         </div>
 
         <!-- Table Card -->
