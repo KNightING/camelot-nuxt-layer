@@ -31,25 +31,25 @@
         @click="togglePopup"
       >
         <IMaterialSymbolsCalendarMonthRounded class="w-5 h-5 text-outline group-hover:text-primary transition-colors shrink-0" />
-        <div class="flex-1 flex items-center gap-1 overflow-hidden ">
+        <div class="flex items-center gap-1 overflow-hidden">
           <input
             v-bind="$attrs"
             :value="startDisplay"
             type="text"
-            class=" min-w-0 w-[14ch] flex-1 text-on-surface bg-transparent placeholder:text-on-surface/50 outline-none text-base caret-primary appearance-none cursor-pointer"
-            :class="{ 'text-black!': disabled }"
+            class="min-w-0 text-on-surface bg-transparent placeholder:text-on-surface/50 outline-none text-base caret-primary appearance-none cursor-pointer"
+            :class="[{ 'text-black!': disabled }, startDisplay ? 'w-[10.5ch]' : 'w-[14ch]']"
             placeholder="請選擇開始日期"
             readonly
           >
-          <div class="py-2 px-1  text-outline group-hover:text-primary">
+          <div class="px-1 text-outline group-hover:text-primary">
             <span>~</span>
           </div>
           <input
             v-bind="$attrs"
             :value="endDisplay"
             type="text"
-            class=" min-w-0 w-[14ch] flex-1 text-on-surface bg-transparent placeholder:text-on-surface/50 outline-none text-base caret-primary appearance-none cursor-pointer"
-            :class="{ 'text-black!': disabled }"
+            class="min-w-0 text-on-surface bg-transparent placeholder:text-on-surface/50 outline-none text-base caret-primary appearance-none cursor-pointer"
+            :class="[{ 'text-black!': disabled }, endDisplay ? 'w-[10.5ch]' : 'w-[14ch]']"
             placeholder="請選擇結束日期"
             readonly
           >
