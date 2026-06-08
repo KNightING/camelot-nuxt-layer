@@ -15,15 +15,28 @@
             class="pointer-events-auto"
             :class="roleClass(t)"
           >
-            <slot :toast="t">
+            <slot
+              :toast="t"
+              :type="t.type ?? 'info'"
+              :color="t.color ?? (t.type === 'success' ? 'success' : t.type === 'error' ? 'error' : t.type === 'warning' ? 'warning' : 'primary')"
+            >
               <div
-                class="cml-toast-box flex items-start gap-3 min-w-[240px] max-w-[400px] px-4 py-3 text-sm"
+                class="cml-toast-box relative isolate flex items-start gap-3 min-w-[240px] max-w-[400px] overflow-hidden px-4 py-3 text-sm"
                 :class="boxClass"
               >
+                <!-- 狀態色底色（玻璃上疊一層 current-color，讓狀態更明顯） -->
+                <span
+                  class="pointer-events-none absolute inset-0 -z-[1] bg-[color-mix(in_srgb,var(--cml-color-current-color)_16%,transparent)]"
+                />
+                <!-- 狀態圓點 -->
+                <span
+                  class="mt-1 h-2.5 w-2.5 shrink-0 rounded-full bg-[var(--cml-color-current-color)]"
+                  :class="themeMode === 'scifi' ? 'shadow-[0_0_6px_var(--cml-color-current-color)]' : ''"
+                />
                 <div class="flex-1">
                   <div
                     v-if="t.title"
-                    class="font-semibold text-on-surface"
+                    class="font-semibold text-[var(--cml-color-current-color)]"
                   >
                     {{ t.title }}
                   </div>
