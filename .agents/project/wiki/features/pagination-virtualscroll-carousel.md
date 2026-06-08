@@ -39,6 +39,10 @@
 - **Carousel 觸控/箭頭**：依方向設 `touch-action`（pan-y / pan-x）支援觸控換頁；`showArrows` 關閉左右按鈕。
 - **CamelotSlider（新元件）**：單值或雙滑桿 `range`；`min`/`max`/`step`（間隔停頓吸附）/`height`/`marks`（true 或 `{value,label}[]` 間隔文字）/`showTooltip`/`color`；pointer 拖曳 + 點軌道移最近 thumb + 方向鍵 a11y；四主題。
 - **DatePicker 修正**：手機 dialog 移除內層 `panelClass`（BaseDialogV2 已有外框）避免雙層框；DateRange trigger 依值寬度（避免多餘空白）並保留高度。
+- **DatePicker 時間 / i18n**：Calendar 抽出 `useTimeState` 工廠（singleTime/start/end），新增 `hideTime` prop；TimeRow/TimeField 可打字或下拉（下拉向上開避免被裁切）；年份選擇箭頭與月份導覽一致；新增 `#year-label`/`#month-label`/`#weekday`/`#day`/`#month-name` i18n slot。手機 dialog 月曆包 `max-h-[82dvh] overflow-y-auto` 避免極小/橫向螢幕無法完整顯示。
+- **DateRange 時間版面**：起/迄 時間移出 Calendar 至 DateRangeV2，兩月曆時置中於兩月曆之下並排、單月曆（手機 dialog）時垂直置中堆疊；移除 取消/確定，改 live commit。
+- **CamelotToast 強化**：8 方位堆疊（top/bottom/left/right/center + 四角）；`color` role 或 `type`（success/error/warning/info）對應狀態色，玻璃上疊 16% current-color 底色 + 狀態圓點 + 彩色標題讓狀態更明顯；新增 `#action` slot 與預設 action 按鈕（跟隨主題色）；tailwind 補 `--color-info/warning/success` fallback。
+- **CamelotTimeline（新元件）**：點/線恆在同一中軸（grid 軌道 `1fr auto 1fr` 置中 / 兩軌靠邊）；內容可 before/after/alternate（垂直左右、水平上下、交錯）；`#node`/`#title`/`#content` slot、color role、`animate` 捲動逐一淡入（IntersectionObserver）。
 
 ## 參考
 - 浮層落影裁切前例：[[popup-shadow-clip-pattern]]
