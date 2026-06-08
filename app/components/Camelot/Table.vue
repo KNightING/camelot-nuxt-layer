@@ -4,6 +4,7 @@
     :class="containerClass"
   >
     <div
+      ref="scrollContainerRef"
       class="w-full overflow-auto"
       :style="maxHeight ? { maxHeight } : undefined"
     >
@@ -62,10 +63,22 @@
             </td>
           </tr>
 
-          <!-- Data rows -->
+          <!-- 虛擬滾動上方留白 -->
           <tr
-            v-for="(row, rowIndex) in data"
+            v-if="virtual && topPad > 0"
+            aria-hidden="true"
+          >
+            <td
+              :colspan="columns.length"
+              :style="{ height: `${topPad}px`, padding: 0, border: 0 }"
+            />
+          </tr>
+
+          <!-- Data rows（虛擬模式僅渲染可視窗格，rowIndex 仍為真實索引） -->
+          <tr
+            v-for="{ row, rowIndex } in renderRows"
             :key="getRowKey(row, rowIndex)"
+            :data-vrow="rowIndex"
             class="group"
           >
             <td
@@ -86,6 +99,17 @@
                 {{ cellValue(row, col) }}
               </slot>
             </td>
+          </tr>
+
+          <!-- 虛擬滾動下方留白 -->
+          <tr
+            v-if="virtual && bottomPad > 0"
+            aria-hidden="true"
+          >
+            <td
+              :colspan="columns.length"
+              :style="{ height: `${bottomPad}px`, padding: 0, border: 0 }"
+            />
           </tr>
 
           <!-- Empty -->
@@ -115,11 +139,17 @@ const props = withDefaults(
     hover?: boolean
     maxHeight?: string
     pinnedTopRows?: T[]
+    /** 虛擬滾動（預設開啟；支援可變列高，需搭配 maxHeight 限制高度才有效益） */
+    virtual?: boolean
+    /** 預估列高（px），尚未量測的列以此估算 */
+    estimatedRowHeight?: number
   }>(),
   {
     stripe: false,
     hover: true,
     pinnedTopRows: () => [],
+    virtual: true,
+    estimatedRowHeight: 44,
   },
 )
 
@@ -127,6 +157,69 @@ const { themeMode } = useCamelotTheme()
 
 const headRowRef = useTemplateRef<HTMLElement>('headRowRef')
 const { height: headerHeight } = useElementBounding(headRowRef)
+
+const scrollContainerRef = useTemplateRef<HTMLElement>('scrollContainerRef')
+
+// 虛擬視窗：sticky header + pinned 列佔據資料列前的固定偏移
+const headerOffset = computed(() => headerHeight.value + props.pinnedTopRows.length * props.estimatedRowHeight)
+
+const {
+  visibleIndices, topPad, bottomPad, setSize,
+} = useCamelotVirtual(
+  scrollContainerRef,
+  () => props.data.length,
+  () => props.estimatedRowHeight,
+  {
+    overscan: 6,
+    headerOffset: () => headerOffset.value,
+  },
+)
+
+// 依虛擬開關決定實際渲染的資料列（保留真實 rowIndex 供條紋/插槽使用）
+const renderRows = computed(() =>
+  props.virtual
+    ? visibleIndices.value.map(i => ({
+        row: props.data[i] as T,
+        rowIndex: i,
+      }))
+    : props.data.map((row, i) => ({
+        row,
+        rowIndex: i,
+      })),
+)
+
+// 量測已渲染列的實際高度
+let rowRo: ResizeObserver | null = null
+const measureRows = () => {
+  const root = scrollContainerRef.value
+  if (!root) return
+  for (const el of root.querySelectorAll('tr[data-vrow]')) {
+    const idx = Number((el as HTMLElement).dataset.vrow)
+    if (!Number.isNaN(idx)) {
+      setSize(idx, (el as HTMLElement).offsetHeight)
+      rowRo?.observe(el)
+    }
+  }
+}
+
+onMounted(() => {
+  if (typeof window === 'undefined') return
+  rowRo = new ResizeObserver((entries) => {
+    for (const e of entries) {
+      const idx = Number((e.target as HTMLElement).dataset.vrow)
+      if (!Number.isNaN(idx)) setSize(idx, (e.target as HTMLElement).offsetHeight)
+    }
+  })
+  nextTick(measureRows)
+})
+
+watch(visibleIndices, () => nextTick(measureRows))
+watch(() => props.data, () => nextTick(measureRows), { deep: false })
+
+onBeforeUnmount(() => {
+  rowRo?.disconnect()
+  rowRo = null
+})
 
 const leftFixed = computed(() => props.columns.filter(c => c.fixed === 'left'))
 const rightFixed = computed(() => props.columns.filter(c => c.fixed === 'right'))
