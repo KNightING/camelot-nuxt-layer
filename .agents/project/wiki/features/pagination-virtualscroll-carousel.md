@@ -33,6 +33,13 @@
 - 控制面板（Active Style Theme / Dark-Light / Color Palette Role / Global Brand Color）改用 `CamelotButton`，跟著主題切換（active 實心、inactive container/淡化）。
 - 下半部 ad-hoc 測試區整合進上方展示卡（Date Pickers / Virtual Scroll / Utilities / Carousel / Pagination），移除舊測試區。
 
+## 🩹 後續強化（同分支）
+- **色彩角色擴展**：Tree / Menu / SelectV2（options）/ DateV2 / DateRangeV2 新增 `color` prop，注入 `--cml-color-current-color` 取代硬編 primary（MenuItem active、Select 選中項 + scoped CSS、Calendar 選中/今日/區間/dot）。Tree 透過 context 的 **reactive getter** 把 color 傳給列內 Checkbox。
+- **CamelotCarouselIndicator（新元件）**：獨立指標點，橫/縱排、`#dot` slot 自訂、`v-model` index、color role。Carousel 改用它並轉送 `#dot`；`showDots` 仍可整個關閉。
+- **Carousel 觸控/箭頭**：依方向設 `touch-action`（pan-y / pan-x）支援觸控換頁；`showArrows` 關閉左右按鈕。
+- **CamelotSlider（新元件）**：單值或雙滑桿 `range`；`min`/`max`/`step`（間隔停頓吸附）/`height`/`marks`（true 或 `{value,label}[]` 間隔文字）/`showTooltip`/`color`；pointer 拖曳 + 點軌道移最近 thumb + 方向鍵 a11y；四主題。
+- **DatePicker 修正**：手機 dialog 移除內層 `panelClass`（BaseDialogV2 已有外框）避免雙層框；DateRange trigger 依值寬度（避免多餘空白）並保留高度。
+
 ## 參考
 - 浮層落影裁切前例：[[popup-shadow-clip-pattern]]
 - 主題系統：[theme-system.md](./theme-system.md)、`useCamelotRoleColorClass.ts`、`useCamelotVirtual.ts`
