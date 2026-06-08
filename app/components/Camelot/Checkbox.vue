@@ -1,10 +1,14 @@
 <template>
-  <div :style="checkboxStyle" class="inline-block">
+  <div
+    class="inline-block"
+    :class="roleColorClass"
+  >
     <CamelotScifiCheckbox
       v-if="themeMode === 'scifi'"
       v-model="modelValue"
       :label="label"
       :disabled="disabled"
+      :indeterminate="indeterminate"
       @change="emit('change', $event)"
     />
 
@@ -14,6 +18,17 @@
       :label="label"
       :disabled="disabled"
       :shape="shape"
+      :indeterminate="indeterminate"
+      @change="emit('change', $event)"
+    />
+
+    <CamelotAquaCheckbox
+      v-else-if="themeMode === 'aqua'"
+      v-model="modelValue"
+      :label="label"
+      :disabled="disabled"
+      :shape="shape"
+      :indeterminate="indeterminate"
       @change="emit('change', $event)"
     />
 
@@ -22,6 +37,7 @@
       v-model="modelValue"
       :label="label"
       :disabled="disabled"
+      :indeterminate="indeterminate"
       @change="emit('change', $event)"
     />
   </div>
@@ -32,9 +48,10 @@ const props = withDefaults(
   defineProps<{
     label?: string
     disabled?: boolean
-    color?: 'primary' | 'secondary' | 'tertiary' | 'error' | 'info' | 'warning' | 'success'
+    color?: CamelotColorRole
     isContainer?: boolean
     shape?: 'square' | 'circle'
+    indeterminate?: boolean
   }>(),
   {
     label: '',
@@ -42,7 +59,8 @@ const props = withDefaults(
     color: 'primary',
     isContainer: false,
     shape: 'square',
-  }
+    indeterminate: false,
+  },
 )
 
 const emit = defineEmits<{
@@ -53,16 +71,5 @@ const modelValue = defineModel<boolean>({ default: false })
 
 const { themeMode } = useCamelotTheme()
 
-const checkboxStyle = computed(() => {
-  const role = props.color
-  const isContainer = props.isContainer
-
-  const colorToken = isContainer ? `var(--color-${role}-container)` : `var(--color-${role})`
-  const onColorToken = isContainer ? `var(--color-on-${role}-container)` : `var(--color-on-${role})`
-
-  return {
-    '--cml-color-current-color': colorToken,
-    '--cml-color-current-on-color': onColorToken,
-  }
-})
+const roleColorClass = useCamelotRoleColorClass(() => props.color, () => props.isContainer)
 </script>

@@ -1,7 +1,7 @@
 export type CamelotThemeMode = 'material' | 'cupertino' | 'scifi' | 'aqua'
 
 export const useCamelotTheme = () => {
-  const themeMode = useLocalStorage<CamelotThemeMode>('cml-theme-mode', 'material', {
+  const themeMode = useLocalStorage<CamelotThemeMode>('cml-theme-mode', 'aqua', {
     initOnMounted: true,
   })
 
@@ -9,8 +9,10 @@ export const useCamelotTheme = () => {
 
   // Get global color scheme refs (safely for SSR/client)
   const isClient = typeof document !== 'undefined'
-  const { lightColorScheme, darkColorScheme } = useCustomColorScheme(
-    isClient ? document.documentElement : (null as any)
+  const {
+    lightColorScheme, darkColorScheme,
+  } = useCustomColorScheme(
+    isClient ? document.documentElement : (null as any),
   )
 
   const setThemeColor = (key: string, lightColor: string, darkColor: string) => {

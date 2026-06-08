@@ -1,20 +1,20 @@
 <template>
   <div
-    class="cupertino-input-inner"
-    :class="{ focused: isFocused }"
+    class="flex h-11 w-full items-center rounded-[10px] bg-surface-container-highest px-4 transition-all duration-200 ease-in-out"
+    :class="{ 'bg-surface shadow-[inset_0_0_0_1px_var(--cml-color-current-color)]': isFocused }"
   >
     <slot name="before" />
-    
+
     <input
       ref="input"
       v-model="modelValue"
-      class="flex-1 outline-none border-none min-w-0 w-full bg-transparent"
+      class="w-full min-w-0 flex-1 border-none bg-transparent outline-none"
       :placeholder="placeholder"
       :disabled="disabled"
       @focus="onFocus"
       @blur="onBlur"
     >
-    
+
     <slot name="after" />
   </div>
 </template>
@@ -28,7 +28,7 @@ withDefaults(
   {
     placeholder: '',
     disabled: false,
-  }
+  },
 )
 
 const modelValue = defineModel<string | number>()
@@ -42,20 +42,3 @@ const onBlur = () => {
   isFocused.value = false
 }
 </script>
-
-<style scoped>
-.cupertino-input-inner {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  height: 44px;
-  padding: 0 16px;
-  border-radius: 10px;
-  background-color: var(--cml-c-m3-surface-container-highest, var(--color-surface-container-highest, #e6e0e9));
-  transition: all 0.2s ease-in-out;
-}
-.cupertino-input-inner.focused {
-  background-color: var(--cml-c-m3-surface, #fef7ff);
-  box-shadow: inset 0 0 0 1px var(--cml-color-current-color, var(--color-primary));
-}
-</style>

@@ -1,7 +1,10 @@
 <template>
   <CamelotBaseDialogV2>
     <template #wrapper>
-      <div class="wrapper" :class="[themeMode]">
+      <div
+        class="wrapper"
+        :class="[themeMode]"
+      >
         <!-- Sci-fi Layout -->
         <CamelotScifiFrame
           v-if="themeMode === 'scifi'"
@@ -22,6 +25,15 @@
           class="sheet-container cupertino-sheet w-screen max-h-[85vh] rounded-t-[20px] bg-slate-100/95 dark:bg-slate-900/95 backdrop-blur-xl border-t border-white/20 dark:border-black/20 p-4 shadow-2xl overflow-auto"
         >
           <div class="w-10 h-1.5 bg-slate-400/50 rounded-full mx-auto mb-4" />
+          <slot />
+        </div>
+
+        <!-- Aqua Frosted Glass Layout -->
+        <div
+          v-else-if="themeMode === 'aqua'"
+          class="sheet-container aqua-sheet aqua-glass max-h-[85vh] w-screen overflow-auto rounded-t-3xl p-4"
+        >
+          <div class="mx-auto mb-4 h-1.5 w-10 rounded-full bg-on-surface/20" />
           <slot />
         </div>
 
@@ -84,5 +96,4 @@ dialog {
     transform: translateY(0);
   }
 }
-
 </style>

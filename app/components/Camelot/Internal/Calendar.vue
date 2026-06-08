@@ -88,10 +88,10 @@
           <span
             v-if="isVisible"
             class="h-6 aspect-square flex items-center justify-center text-sm transition-all rounded-full shrink-0"
-            :class="{
-              'font-bold': (isToday && !isSelected) || isSelected,
-              'bg-primary shadow-sm text-on-primary': isSelected,
-            }"
+            :class="[
+              { 'font-bold': (isToday && !isSelected) || isSelected },
+              isSelected ? selectedSurfaceClass : '',
+            ]"
           >
             {{ format(date, 'd') }}
           </span>
@@ -151,7 +151,7 @@
         :key="month"
         type="button"
         class="py-3 rounded-lg hover:bg-surface-container transition-colors font-medium"
-        :class="index === viewDate.getMonth() ? 'bg-primary text-on-primary' : 'text-on-surface'"
+        :class="index === viewDate.getMonth() ? selectedSurfaceClass : 'text-on-surface'"
         @click="selectMonth(index)"
       >
         {{ month }}
@@ -186,7 +186,7 @@
           :key="year"
           type="button"
           class="py-3 rounded-lg hover:bg-surface-container transition-colors font-medium text-sm"
-          :class="year === viewDate.getFullYear() ? 'bg-primary text-on-primary' : 'text-on-surface'"
+          :class="year === viewDate.getFullYear() ? selectedSurfaceClass : 'text-on-surface'"
           @click="selectYear(year)"
         >
           {{ year }}
@@ -259,6 +259,9 @@ const pickerMode = ref<'calendar' | 'month' | 'year'>('calendar')
 const yearPage = ref(0)
 const weekDays = ['日', '一', '二', '三', '四', '五', '六']
 const monthNames = ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
+
+// 各風格的「選中態」表面樣式（日期、月份、年份共用）
+const { selectedSurfaceClass } = useCamelotPickerTheme()
 
 const hours = ref(0)
 const minutes = ref(0)

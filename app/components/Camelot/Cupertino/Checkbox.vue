@@ -1,18 +1,30 @@
 <template>
   <div
-    class="checkbox-cupertino-wrapper"
-    :class="{ checked: modelValue, disabled }"
+    class="inline-flex cursor-pointer items-center gap-2 select-none"
+    :class="{ 'pointer-events-none cursor-not-allowed opacity-30 grayscale': disabled }"
     @click="toggle"
   >
     <div
-      class="checkbox-container"
-      :class="`shape-${shape}`"
+      class="relative inline-block h-[22px] w-[22px] shrink-0 border align-middle transition-[background-color,border-color,border-radius] duration-200"
+      :class="[
+        shape === 'circle' ? 'rounded-full' : 'rounded-[5px]',
+        (modelValue || indeterminate)
+          ? 'border-[var(--cml-color-current-color)] bg-[var(--cml-color-current-color)]'
+          : 'border-outline-variant',
+      ]"
     >
-      <div class="check-icon" />
+      <div
+        class="absolute top-1/2 left-1/2 h-1.5 w-2.5 border-b-2 border-l-2 border-white transition-opacity duration-200 [transform:translate(-50%,-65%)_rotate(-45deg)]"
+        :class="modelValue ? 'opacity-100' : 'opacity-0'"
+      />
+      <div
+        class="absolute top-1/2 left-1/2 h-0.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white transition-opacity duration-200"
+        :class="(indeterminate && !modelValue) ? 'opacity-100' : 'opacity-0'"
+      />
     </div>
     <span
       v-if="label"
-      class="label-text"
+      class="text-sm text-on-surface"
     >{{ label }}</span>
   </div>
 </template>
@@ -23,12 +35,14 @@ const props = withDefaults(
     label?: string
     disabled?: boolean
     shape?: 'square' | 'circle'
+    indeterminate?: boolean
   }>(),
   {
     label: '',
     disabled: false,
     shape: 'square',
-  }
+    indeterminate: false,
+  },
 )
 
 const emit = defineEmits<{
@@ -43,55 +57,3 @@ const toggle = () => {
   emit('change', modelValue.value)
 }
 </script>
-
-<style scoped>
-.checkbox-cupertino-wrapper {
-  display: inline-flex;
-  align-items: center;
-  cursor: pointer;
-  user-select: none;
-}
-.checkbox-cupertino-wrapper .checkbox-container {
-  width: 22px;
-  height: 22px;
-  border: 1px solid var(--cml-c-m3-outline-variant, #c4c7c5);
-  margin-right: 8px;
-  transition: background-color 0.2s, border-color 0.2s, border-radius 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-}
-.shape-square {
-  border-radius: 5px;
-}
-.shape-circle {
-  border-radius: 50%;
-}
-.checked .checkbox-container {
-  background-color: var(--cml-color-current-color);
-  border-color: var(--cml-color-current-color);
-}
-.check-icon {
-  width: 10px;
-  height: 6px;
-  border-left: 2px solid white;
-  border-bottom: 2px solid white;
-  transform: rotate(-45deg) translateY(-1px);
-  opacity: 0;
-  transition: opacity 0.2s;
-}
-.checked .check-icon {
-  opacity: 1;
-}
-.checkbox-cupertino-wrapper .label-text {
-  font-size: 0.875rem;
-  color: var(--cml-c-m3-on-surface, #1c1b1f);
-}
-.disabled {
-  opacity: 0.3;
-  cursor: not-allowed;
-  pointer-events: none;
-  filter: grayscale(1);
-}
-</style>

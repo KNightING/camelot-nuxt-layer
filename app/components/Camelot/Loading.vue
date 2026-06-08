@@ -6,17 +6,24 @@
           v-if="isOpening"
           class="fixed inset-0 z-[1100] flex items-center justify-center bg-black/35 backdrop-blur-xs select-none pointer-events-auto"
         >
-          <div class="flex items-center justify-center" :class="[themeMode]">
-            <!-- Cyber Loading Radar -->
-            <div v-if="themeMode === 'cyber'" class="cyber-loader">
-              <div class="cyber-loader-ring">
-                <div class="ring-core" />
-                <div class="tech-text">LOADING...</div>
-              </div>
+          <div
+            class="flex items-center justify-center"
+            :class="[themeMode]"
+          >
+            <!-- Aqua Frosted Glass Spinner -->
+            <div
+              v-if="themeMode === 'aqua'"
+              class="aqua-loader"
+            >
+              <div class="aqua-loader-ring" />
+              <div class="aqua-loader-core" />
             </div>
 
             <!-- Sci-fi Loading Radar -->
-            <div v-else-if="themeMode === 'scifi'" class="scifi-radar">
+            <div
+              v-else-if="themeMode === 'scifi'"
+              class="scifi-radar"
+            >
               <CamelotScifiReticle active />
               <div class="radar-circle" />
               <div class="radar-scanner" />
@@ -24,14 +31,30 @@
             </div>
 
             <!-- Cupertino iOS Spinner -->
-            <div v-else-if="themeMode === 'cupertino'" class="ios-spinner">
-              <div v-for="i in 8" :key="i" class="ios-blade" />
+            <div
+              v-else-if="themeMode === 'cupertino'"
+              class="ios-spinner"
+            >
+              <div
+                v-for="i in 8"
+                :key="i"
+                class="ios-blade"
+              />
             </div>
 
             <!-- Material Spinner -->
-            <div v-else class="material-spinner">
+            <div
+              v-else
+              class="material-spinner"
+            >
               <svg viewBox="25 25 50 50">
-                <circle cx="50" cy="50" r="20" fill="none" class="path" />
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="20"
+                  fill="none"
+                  class="path"
+                />
               </svg>
             </div>
           </div>
@@ -156,49 +179,39 @@ const { themeMode } = useCamelotTheme()
 .fade-leave-to {
   opacity: 0;
 }
-/* Cyber Loading */
-.cyber-loader {
+/* Aqua Frosted Glass Spinner */
+.aqua-loader {
   position: relative;
-  width: 90px;
-  height: 90px;
+  width: 64px;
+  height: 64px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.cyber-loader-ring {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  border: 2px dashed #ff0055;
-  border-radius: 50%;
-  animation: rotate-ring 4s linear infinite;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.ring-core {
+.aqua-loader-ring {
   position: absolute;
-  inset: 6px;
-  border: 2px solid #00f0ff;
-  border-right-color: transparent;
-  border-left-color: transparent;
-  border-radius: 50%;
-  animation: rotate-ring-reverse 1.5s ease-in-out infinite;
-  filter: drop-shadow(0 0 4px #00f0ff);
+  inset: 0;
+  border-radius: 9999px;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 30%, transparent) 55%,
+    var(--cml-color-current-color, var(--color-primary)) 100%
+  );
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 6px), #000 calc(100% - 6px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 6px), #000 calc(100% - 6px));
+  filter: drop-shadow(0 4px 10px color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 35%, transparent));
+  animation: aqua-spin 0.9s linear infinite;
 }
-.tech-text {
-  font-family: monospace;
-  font-size: 0.65rem;
-  color: #00f0ff;
-  text-shadow: 0 0 5px #00f0ff;
-  animation: blink 1s linear infinite;
+.aqua-loader-core {
+  width: 26px;
+  height: 26px;
+  border-radius: 9999px;
+  background-color: color-mix(in srgb, var(--color-surface, white) 60%, transparent);
+  backdrop-filter: blur(8px);
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.7);
 }
-@keyframes rotate-ring {
-  from { transform: rotate(0deg); }
+@keyframes aqua-spin {
   to { transform: rotate(360deg); }
-}
-@keyframes rotate-ring-reverse {
-  from { transform: rotate(360deg); }
-  to { transform: rotate(0deg); }
 }
 </style>

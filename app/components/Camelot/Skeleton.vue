@@ -1,13 +1,12 @@
 <template>
   <template v-if="isLoading">
-    <!-- Cyber Layout -->
+    <!-- Aqua Frosted Glass Layout -->
     <div
-      v-if="themeMode === 'cyber'"
-      class="overflow-hidden relative w-full h-full skeleton cyber-skeleton"
+      v-if="themeMode === 'aqua'"
+      class="skeleton aqua-skeleton relative h-full w-full overflow-hidden"
       v-bind="$attrs"
     >
-      <div class="cyber-flash-bar" />
-      <div class="cyber-matrix-overlay" />
+      <div class="aqua-shimmer" />
     </div>
 
     <!-- Sci-fi Layout (using CamelotScifiFrame without borders and cut corners) -->
@@ -118,37 +117,25 @@ const { themeMode } = useCamelotTheme()
     transform: translateX(250%) rotate(315deg) scale(1.25);
   }
 }
-.skeleton.cyber-skeleton {
-  background-color: rgba(255, 0, 85, 0.12);
-  border: 1px solid rgba(255, 0, 85, 0.3);
+.skeleton.aqua-skeleton {
+  background-color: color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 8%, transparent);
+  border-radius: 12px;
   animation: none;
 }
-.cyber-matrix-overlay {
+.aqua-shimmer {
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(#ff0055 1.2px, transparent 1.2px);
-  background-size: 6px 6px;
-  opacity: 0.2;
-  pointer-events: none;
-}
-.cyber-flash-bar {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
   background: linear-gradient(
-    to bottom,
-    transparent,
-    rgba(0, 240, 255, 0.5) 50%,
-    transparent
+    100deg,
+    transparent 20%,
+    color-mix(in srgb, white 55%, transparent) 50%,
+    transparent 80%
   );
-  animation: cyber-sweep 2s linear infinite;
+  transform: translateX(-100%);
+  animation: aqua-shimmer 1.6s ease-in-out infinite;
   pointer-events: none;
-  filter: drop-shadow(0 0 6px #00f0ff);
 }
-@keyframes cyber-sweep {
-  0% { transform: translateY(-100%); }
-  100% { transform: translateY(100%); }
+@keyframes aqua-shimmer {
+  to { transform: translateX(100%); }
 }
 </style>

@@ -12,7 +12,9 @@ const props = defineProps<{
 
 const provider = useTemplateRef('provider')
 
-const { lightColorScheme, darkColorScheme, usedColorScheme } = useCustomColorScheme<T>(
+const {
+  lightColorScheme, darkColorScheme, usedColorScheme,
+} = useCustomColorScheme<T>(
   provider,
   {
     lightColorScheme: props.lightColorScheme,
@@ -21,11 +23,15 @@ const { lightColorScheme, darkColorScheme, usedColorScheme } = useCustomColorSch
 )
 
 onUpdated(() => {
-  lightColorScheme.value = { ...lightColorScheme.value, ...props.lightColorScheme }
-  darkColorScheme.value = { ...darkColorScheme.value, ...props.darkColorScheme }
+  lightColorScheme.value = {
+    ...lightColorScheme.value,
+    ...props.lightColorScheme,
+  }
+  darkColorScheme.value = {
+    ...darkColorScheme.value,
+    ...props.darkColorScheme,
+  }
 })
 
 defineExpose({ usedColorScheme })
 </script>
-
-<style scoped></style>

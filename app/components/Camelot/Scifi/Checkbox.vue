@@ -1,14 +1,14 @@
 <template>
   <div
     class="checkbox-scifi-wrapper"
-    :class="{ checked: modelValue, disabled }"
+    :class="{ checked: modelValue || indeterminate, disabled }"
     @click="toggle"
     @mouseenter="isHovered = true"
     @mouseleave="isHovered = false"
   >
     <div
       class="container"
-      :class="{ checked: modelValue, disabled }"
+      :class="{ checked: modelValue || indeterminate, disabled }"
     >
       <CamelotScifiReticle :active="isHovered" />
       <div class="checkbox-box">
@@ -27,11 +27,13 @@ const props = withDefaults(
   defineProps<{
     label?: string
     disabled?: boolean
+    indeterminate?: boolean
   }>(),
   {
     label: '',
     disabled: false,
-  }
+    indeterminate: false,
+  },
 )
 
 const emit = defineEmits<{

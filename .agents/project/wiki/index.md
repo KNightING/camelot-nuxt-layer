@@ -28,6 +28,8 @@
 
 ### UI 元件 (`app/components/Camelot/`)
 
+> 🎨 多數元件支援四種主題（material / cupertino / scifi / **aqua**，預設 aqua）。詳見 [主題系統](./features/theme-system.md)。
+
 | 元件 | 狀態 | 說明 | Wiki |
 | :--- | :---: | :--- | :--- |
 | `BaseBottomSheet` | ✅ | 底部彈出面板 (v1) | — |
@@ -42,6 +44,7 @@
 | `DateV2` | 🚧 | 日期選擇器 (v2，重構中) | [詳情](./features/calendar.md) |
 | `DateRange` | ✅ | 日期範圍選擇器 (v1，舊版) | — |
 | `DateRangeV2` | 🚧 | 日期範圍選擇器 (v2，重構中) | [詳情](./features/calendar.md) |
+| `Drawer` | ✅ | 側邊抽屜（左右、floating/fixed、四風格） | [詳情](./features/layout-data-components.md) |
 | `DropImage` | ✅ | 拖曳上傳圖片元件 | — |
 | `Expanded` | ✅ | 可展開/收合的內容區塊 | — |
 | `Gpu` | ✅ | GPU 加速動畫容器 | — |
@@ -51,6 +54,7 @@
 | `Input` | ✅ | 通用輸入框元件 | — |
 | `Loading` | ✅ | 載入中動畫元件 | — |
 | `Material3Provider` | ✅ | Material Design 3 主題 Provider | — |
+| `Menu` | ✅ | 多階層導覽選單（導引線/祖先變色、四風格） | [詳情](./features/layout-data-components.md) |
 | `NumberCounter` | ✅ | 數字計數動畫元件 | — |
 | `Popup` | ✅ | 彈出層元件 (v1) | — |
 | `PopupV2` | ✅ | 彈出層元件 (v2，功能更完整) | — |
@@ -64,14 +68,18 @@
 | `Skeleton` | ✅ | 骨架屏 Loading 佔位元件 | — |
 | `SlideTransitionGroup` | ✅ | 滑動過場群組元件 | — |
 | `Steps` | ✅ | 步驟指示器元件 | — |
-| `Tabs` | ✅ | 頁籤元件 | — |
+| `Table` | ✅ | 資料表格（fixed header/columns/rows、雙色/hover、slot、泛型、四風格） | [詳情](./features/layout-data-components.md) |
+| `Tabs` | ✅ | 頁籤元件（四風格 + 滑動指示器） | [詳情](./features/theme-system.md) |
 | `Toast` | ✅ | 吐司通知元件 | — |
+| `Tree` | ✅ | 多階層樹（勾選連動 + indeterminate、四風格） | [詳情](./features/layout-data-components.md) |
 
 ### 內部元件 (`app/components/Camelot/Internal/`)
 
 | 元件 | 狀態 | 說明 | Wiki |
 | :--- | :---: | :--- | :--- |
-| `Calendar` | 🚧 | 日曆核心元件（DateV2/DateRangeV2 共用） | [詳情](./features/calendar.md) |
+| `Calendar` | 🚧 | 日曆核心元件（DateV2/DateRangeV2 共用，四風格選中態） | [詳情](./features/calendar.md) |
+| `TreeNode` | ✅ | Tree 遞迴節點 | [詳情](./features/layout-data-components.md) |
+| `MenuItem` | ✅ | Menu 遞迴項目 | [詳情](./features/layout-data-components.md) |
 
 ---
 
@@ -80,6 +88,9 @@
 | Composable | 狀態 | 說明 |
 | :--- | :---: | :--- |
 | `useBaseApi` | ✅ | API 請求基礎封裝 (含串流支援) |
+| `useCamelotTheme` | ✅ | 主題切換狀態（themeMode / colorMode / 色彩方案，預設 aqua） |
+| `useCamelotRoleColorClass` | ✅ | 色彩角色 → 注入 `--cml-color-current-*` 的 Tailwind class |
+| `useCamelotPickerTheme` | ✅ | DatePicker 各風格 trigger/panel/選中態 class |
 | `useCamelotRouter` | ✅ | 擴展 Vue Router，含歷史堆疊管理 |
 | `useCamelotToast` | ✅ | Toast 通知系統 |
 | `useColor` | ✅ | 顏色處理工具 |
@@ -136,9 +147,13 @@ graph TD
     B --> H["Tailwind CSS v4 主題"]
 
     C --> C1["表單元件 (Input, Select, Date...)"]
-    C --> C2["對話框 (Dialog, BottomSheet, Popup)"]
+    C --> C2["對話框/側欄 (Dialog, BottomSheet, Drawer, Popup)"]
     C --> C3["動畫元件 (Reveal, Ripple, Skeleton...)"]
     C --> C4["Internal/Calendar (共用日曆核心)"]
+    C --> C5["版面/資料/導覽 (Tree, Table, Menu)"]
+
+    H --> H1["四風格主題 (material/cupertino/scifi/aqua, 預設 aqua)"]
+    H --> H2["aqua-glass / aqua-fill 等共用 utility"]
 
     D --> D1["useBaseApi (API 封裝)"]
     D --> D2["useCamelotRouter (路由管理)"]
@@ -154,6 +169,8 @@ graph TD
 
 ## 📎 快速導覽
 
+- [🎨 Theme System / 主題系統（四風格 + Aqua）](./features/theme-system.md)
+- [🧱 Drawer / Tree / Table / Menu](./features/layout-data-components.md)
 - [🗓️ Calendar / 日期選擇器](./features/calendar.md)
 - [🎨 Color Scheme / 色彩主題](./features/color-scheme.md)
 - [⚙️ 環境變數](./environment.md)

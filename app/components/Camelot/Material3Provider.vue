@@ -15,7 +15,9 @@ const props = defineProps<{
 const container = ref<HTMLElement>()
 
 onMounted(() => {
-  const { lightColorScheme: lcs, darkColorScheme: dcs } = useMaterial3ColorScheme(
+  const {
+    lightColorScheme: lcs, darkColorScheme: dcs,
+  } = useMaterial3ColorScheme(
     container,
     {
       lightColorScheme: props.lightColorScheme,
@@ -24,5 +26,3 @@ onMounted(() => {
   )
 })
 </script>
-
-<style scoped></style>

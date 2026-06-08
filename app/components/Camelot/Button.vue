@@ -1,5 +1,8 @@
 <template>
-  <div :style="buttonStyle" class="inline-block">
+  <div
+    class="inline-block"
+    :class="roleColorClass"
+  >
     <CamelotScifiButton
       v-if="themeMode === 'scifi'"
       :disabled="disabled"
@@ -15,6 +18,14 @@
     >
       <slot>{{ label }}</slot>
     </CamelotCupertinoButton>
+
+    <CamelotAquaButton
+      v-else-if="themeMode === 'aqua'"
+      :disabled="disabled"
+      @click="emit('click', $event)"
+    >
+      <slot>{{ label }}</slot>
+    </CamelotAquaButton>
 
     <CamelotMaterialButton
       v-else
@@ -33,7 +44,7 @@ const props = withDefaults(
   defineProps<{
     label?: string
     disabled?: boolean
-    color?: 'primary' | 'secondary' | 'tertiary' | 'error' | 'info' | 'warning' | 'success'
+    color?: CamelotColorRole
     isContainer?: boolean
   }>(),
   {
@@ -41,7 +52,7 @@ const props = withDefaults(
     disabled: false,
     color: 'primary',
     isContainer: false,
-  }
+  },
 )
 
 const emit = defineEmits<{
@@ -50,16 +61,5 @@ const emit = defineEmits<{
 
 const { themeMode } = useCamelotTheme()
 
-const buttonStyle = computed(() => {
-  const role = props.color
-  const isContainer = props.isContainer
-
-  const colorToken = isContainer ? `var(--color-${role}-container)` : `var(--color-${role})`
-  const onColorToken = isContainer ? `var(--color-on-${role}-container)` : `var(--color-on-${role})`
-
-  return {
-    '--cml-color-current-color': colorToken,
-    '--cml-color-current-on-color': onColorToken,
-  }
-})
+const roleColorClass = useCamelotRoleColorClass(() => props.color, () => props.isContainer)
 </script>

@@ -157,5 +157,3 @@ const onDrop = (files: File[] | null) => {
 
 const { isOverDropZone } = useDropZone(dropZoneRef, onDrop)
 </script>
-
-<style scoped></style>
