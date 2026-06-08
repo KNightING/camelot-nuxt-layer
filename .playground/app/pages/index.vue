@@ -406,7 +406,7 @@
           </h2>
           <CamelotTable
             :columns="tableColumns"
-            :data="tableData"
+            :data="pagedTableData"
             :pinned-top-rows="tablePinned"
             row-key="id"
             stripe
@@ -419,6 +419,18 @@
               >{{ value }}</span>
             </template>
           </CamelotTable>
+
+          <div class="mt-3 flex justify-end">
+            <CamelotPagination
+              v-model="tablePage"
+              v-model:page-size="tablePageSize"
+              :total="tableData.length"
+              :color="currentColorRole"
+              show-total
+              show-page-size
+              :page-size-options="[5, 10, 20]"
+            />
+          </div>
         </div>
 
         <!-- Progress Card -->
@@ -1232,6 +1244,14 @@ const tableData = ref(
     status: i % 3 === 0 ? 'inactive' : 'active',
   })),
 )
+
+// Pagination + Table 結合：父層自行切片
+const tablePage = ref(1)
+const tablePageSize = ref(5)
+const pagedTableData = computed(() => {
+  const start = (tablePage.value - 1) * tablePageSize.value
+  return tableData.value.slice(start, start + tablePageSize.value)
+})
 
 const cardClass = computed(() => {
   if (themeMode.value === 'scifi') {
