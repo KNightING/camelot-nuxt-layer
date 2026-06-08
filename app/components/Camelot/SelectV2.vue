@@ -6,7 +6,7 @@
     :disabled-close-when-scrolling="disabledCloseWhenScrolling"
     disabled-auto-space
     disabled-shadow
-    popup-class="shadow-xl rounded-xl"
+    :popup-class="popupShadowClass"
   >
     <slot :selected-data="selectedData">
       <!-- Sci-fi Trigger Wrapper -->
@@ -147,8 +147,8 @@
         class="options-container relative flex flex-col overflow-hidden"
         :class="[
           optionsContainerClass || (themeMode === 'aqua' ? 'aqua-glass' : 'bg-surface'),
-          themeMode === 'cupertino' ? 'rounded-[12px] shadow-2xl backdrop-blur-md' : '',
-          themeMode === 'aqua' ? 'aqua-options rounded-3xl p-1' : '',
+          themeMode === 'cupertino' ? 'rounded-[12px] backdrop-blur-md' : '',
+          themeMode === 'aqua' ? 'aqua-options rounded-3xl p-1 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.5)]!' : '',
           themeMode === 'scifi' ? 'scifi-options-panel bg-transparent border-none shadow-none!' : '',
           themeMode === 'material' ? 'rounded-md' : '',
         ]"
@@ -207,7 +207,7 @@
             <div
               v-if="filteredOptions && filteredOptions.length > 0"
               v-bind="virtualContainerProps"
-              class="flex-1 min-h-0 relative bg-transparent overflow-auto"
+              class="cml-options-scroll flex-1 min-h-0 relative bg-transparent overflow-auto"
             >
               <div
                 v-bind="virtualWrapperProps"
@@ -260,10 +260,10 @@
             </div>
           </template>
 
-          <!-- 一般模式 (原有行為) -->
-          <CamelotContainer
+          <!-- 一般模式：原生捲動，套用全站共通 scrollbar 樣式 -->
+          <div
             v-else
-            class="flex-1 min-h-0 relative bg-transparent"
+            class="cml-options-scroll flex-1 min-h-0 relative overflow-y-auto bg-transparent"
           >
             <div class="flex flex-col px-2 pb-2">
               <template v-if="filteredOptions && filteredOptions.length > 0">
@@ -309,7 +309,7 @@
                 </slot>
               </template>
             </div>
-          </CamelotContainer>
+          </div>
         </template>
       </div>
     </template>
@@ -385,6 +385,23 @@ const {
 )
 
 const { themeMode } = useCamelotTheme()
+
+// 陰影改畫在 popup 外層容器（位於 Expanded 的 overflow-hidden 之外，不會被方形裁切），
+// 且圓角需與選單面板一致。面板本身的落影改為移除，僅保留不會被裁切的內高光。
+const popupShadowClass = computed(() => {
+  switch (themeMode.value) {
+    case 'aqua':
+      return 'shadow-[0_12px_44px_-8px_rgba(0,0,0,0.30)] rounded-3xl'
+    case 'cupertino':
+      return 'shadow-2xl rounded-[12px]'
+    case 'material':
+      return 'shadow-lg rounded-md'
+    case 'scifi':
+      return ''
+    default:
+      return 'shadow-xl rounded-lg'
+  }
+})
 
 watch(open, (isOpen) => {
   if (isOpen) {
@@ -475,13 +492,16 @@ watch([() => props.options, () => props.default], ([options, isDefault]) => {
 </script>
 
 <style scoped>
-.options-container :deep(.scroll-container) {
-  height: 100%;
-}
-
 .option {
   display: flex;
   align-items: center;
+}
+
+/* aqua 玻璃面板四周有 4px padding，會使原生捲動條離右緣 4px。
+   將捲動容器右緣外推貼齊面板（margin），再以 padding-right 把內容推離捲動條，維持左右對稱 */
+.aqua-options .cml-options-scroll {
+  margin-right: -4px;
+  padding-right: 4px;
 }
 
 .option-btn {

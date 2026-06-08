@@ -88,11 +88,19 @@
 
   /* 共用動畫：Sci-Fi 掃描線（供 animate-scifi-scan 使用） */
   --animate-scifi-scan: scifi-scan 3s linear infinite;
+
+  /* 進度條不確定模式掃描（供 animate-progress-sweep 使用） */
+  --animate-progress-sweep: progress-sweep 1.4s ease-in-out infinite;
 }
 
 @keyframes scifi-scan {
   0% { background-position: 200% 0; }
   100% { background-position: -200% 0; }
+}
+
+@keyframes progress-sweep {
+  0% { margin-left: -40%; }
+  100% { margin-left: 100%; }
 }
 
 @layer base {

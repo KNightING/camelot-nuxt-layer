@@ -2,7 +2,7 @@
 # Plan: 2604131437 - Fix Calendar Type Errors
 - Created: 2026-04-13 14:37
 - Branch: N/A
-- Completed: [Wait for Finish]
+- Completed: 2026-06-08 16:17 （清理歸檔：功能已於代碼實作並驗證存在）
 
 ## Goals
 1. Resolve TypeScript errors in `DateV2` and `DateRangeV2` components.
@@ -20,3 +20,12 @@
 ## Impacted Files
 - [./app/components/Camelot/DateV2.vue](./app/components/Camelot/DateV2.vue)
 - [./app/components/Camelot/DateRangeV2.vue](./app/components/Camelot/DateRangeV2.vue)
+
+---
+
+# Tasks for 2604131437
+- [x] Research type errors [x]
+- [x] Create implementation plan [/]
+- [ ] Fix `DateV2.vue` type mismatch
+- [ ] Fix `DateRangeV2.vue` type mismatch
+- [ ] Run lint/type check verification

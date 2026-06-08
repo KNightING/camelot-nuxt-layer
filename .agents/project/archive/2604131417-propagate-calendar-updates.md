@@ -2,7 +2,7 @@
 # Plan: 2604131417 - Propagate Calendar Updates
 - Created: 2026-04-13 14:17
 - Branch: N/A
-- Completed: [Wait for Finish]
+- Completed: 2026-06-08 16:17 （清理歸檔：功能已於代碼實作並驗證存在）
 
 ## Goals
 1. Expose `getDayAttributes` in `DateV2` and `DateRangeV2`.
@@ -27,3 +27,13 @@
 - [./app/components/Camelot/DateV2.vue](./app/components/Camelot/DateV2.vue)
 - [./app/components/Camelot/DateRangeV2.vue](./app/components/Camelot/DateRangeV2.vue)
 - [./.playground/app/pages/index.vue](./.playground/app/pages/index.vue)
+
+---
+
+# Tasks for 2604131417
+- [ ] Research existing code [x]
+- [ ] Create implementation plan [/]
+- [ ] Refactor `DateV2.vue`
+- [ ] Refactor `DateRangeV2.vue`
+- [ ] Update playground `index.vue`
+- [ ] Verify functionality
