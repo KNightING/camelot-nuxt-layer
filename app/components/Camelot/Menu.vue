@@ -1,5 +1,8 @@
 <template>
-  <ul class="w-full select-none">
+  <ul
+    class="w-full select-none"
+    :class="roleColorClass"
+  >
     <CamelotInternalMenuItem
       v-for="item in items"
       :key="item.value"
@@ -14,11 +17,15 @@ const props = withDefaults(
   defineProps<{
     items: CamelotMenuItem[]
     defaultExpandAll?: boolean
+    color?: CamelotColorRole
   }>(),
   {
     defaultExpandAll: false,
+    color: 'primary',
   },
 )
+
+const roleColorClass = useCamelotRoleColorClass(() => props.color)
 
 const emit = defineEmits<{
   select: [item: CamelotMenuItem]

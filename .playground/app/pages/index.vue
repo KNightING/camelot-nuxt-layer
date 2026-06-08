@@ -160,9 +160,9 @@
 
           <CamelotSelectV2
             v-model="selectVal"
+            :color="currentColorRole"
             label="Choose option"
             :options="options"
-            :color="currentColorRole"
           />
         </div>
 
@@ -174,9 +174,9 @@
 
           <CamelotSelectV2
             v-model="selectV2Val"
+            :color="currentColorRole"
             label="Searchable selection"
             :options="options"
-            :color="currentColorRole"
             class="w-full"
           />
 
@@ -338,6 +338,7 @@
           </h2>
           <CamelotTree
             v-model:checked="treeChecked"
+            :color="currentColorRole"
             :nodes="treeNodes"
             checkable
             default-expand-all
@@ -354,6 +355,7 @@
           </h2>
           <CamelotMenu
             v-model="menuActive"
+            :color="currentColorRole"
             :items="menuItems"
             default-expand-all
           />
@@ -565,10 +567,12 @@
           </h2>
           <div class="flex flex-col gap-3">
             <CamelotDateV2
+              :color="currentColorRole"
               placeholder="請選擇日期"
               :get-day-attributes="getDayAttributes"
             />
             <CamelotDateRangeV2
+              :color="currentColorRole"
               :multi-calendars="true"
               :get-day-attributes="getDayAttributes"
             />
@@ -598,6 +602,7 @@
           <span class="text-xs text-slate-400">虛擬滾動的 Select（大量選項）：</span>
           <CamelotSelectV2
             v-model="virtualValue"
+            :color="currentColorRole"
             :options="largeOptionsForVirtual"
             virtual-scroll
             class="w-full"
@@ -705,6 +710,7 @@
           </p>
           <CamelotMenu
             v-model="menuActive"
+            :color="currentColorRole"
             :items="menuItems"
             default-expand-all
           />

@@ -18,8 +18,9 @@
     >
       <label
         ref="triggerRef"
-        class="group flex w-fit cursor-pointer items-center gap-2 px-4 transition-colors"
+        class="group flex w-fit cursor-pointer items-center gap-2 px-4 py-2 transition-colors"
         :class="[
+          roleColorClass,
           triggerClass,
           {
             'border-primary': open && themeMode !== 'aqua',
@@ -61,7 +62,7 @@
       <div
         ref="popupRef"
         class="flex flex-col sm:flex-row"
-        :class="[panelClass, popupPanelShadowFix]"
+        :class="[roleColorClass, panelClass, popupPanelShadowFix]"
         @click.stop
       >
         <div class="flex flex-col sm:flex-row">
@@ -121,6 +122,7 @@
       <CamelotInternalCalendar
         v-model:range-value="internalValue"
         v-model:view-date="viewDate"
+        :class="roleColorClass"
         is-range
         :min-date="minDate"
         :max-date="maxDate"
@@ -147,6 +149,7 @@ const props = withDefaults(defineProps<{
   autoApply?: boolean
   displayFormat?: (dates: [Date, Date]) => string
   format?: string
+  color?: CamelotColorRole
   getDayAttributes?: (date: Date, dayOfWeek: number) => CalendarDayAttributes | undefined | null
 }>(), {
   showType: 'auto',
@@ -154,7 +157,10 @@ const props = withDefaults(defineProps<{
   multiCalendars: true,
   autoApply: true,
   format: 'yyyy-MM-dd',
+  color: 'primary',
 })
+
+const roleColorClass = useCamelotRoleColorClass(() => props.color)
 
 const model = defineModel<[Date, Date] | null>()
 const open = ref(false)

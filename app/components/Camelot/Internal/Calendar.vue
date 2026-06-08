@@ -77,9 +77,9 @@
           :class="[
             (!isDisabled && isVisible) && 'hover:bg-surface-container',
             (isDisabled && isVisible) && 'cursor-not-allowed opacity-30',
-            (isInRange && !isSelected && isVisible) && 'bg-primary/10',
-            (isRangeStart && isVisible) && 'bg-primary/10',
-            (isRangeEnd && isVisible) && 'bg-primary/10',
+            (isInRange && !isSelected && isVisible) && 'bg-[color-mix(in_srgb,var(--cml-color-current-color,var(--color-primary))_10%,transparent)]',
+            (isRangeStart && isVisible) && 'bg-[color-mix(in_srgb,var(--cml-color-current-color,var(--color-primary))_10%,transparent)]',
+            (isRangeEnd && isVisible) && 'bg-[color-mix(in_srgb,var(--cml-color-current-color,var(--color-primary))_10%,transparent)]',
             dayColorClass,
             customClass,
           ]"
@@ -105,7 +105,7 @@
           <div
             v-if="isVisible && isDot"
             class="absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full"
-            :class="{ 'bg-on-primary': isSelected, 'bg-primary': !isSelected && !dotColor }"
+            :class="{ 'bg-[var(--cml-color-current-on-color)]': isSelected, 'bg-[var(--cml-color-current-color)]': !isSelected && !dotColor }"
             :style="dotColor ? { backgroundColor: dotColor } : {}"
           />
         </div>
@@ -345,10 +345,10 @@ const calendarDays = computed(() => {
       dayColorClass = 'text-error'
     }
     else if (isSelected) {
-      dayColorClass = 'text-primary'
+      dayColorClass = 'text-[var(--cml-color-current-color)]'
     }
     else if (isToday) {
-      dayColorClass = 'text-primary'
+      dayColorClass = 'text-[var(--cml-color-current-color)]'
     }
     else if (isCurrentMonth) {
       dayColorClass = 'text-on-surface'

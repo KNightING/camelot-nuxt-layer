@@ -146,6 +146,7 @@
         ref="optionsContainerEl"
         class="options-container relative flex flex-col overflow-hidden"
         :class="[
+          roleColorClass,
           optionsContainerClass || (themeMode === 'aqua' ? 'aqua-glass' : 'bg-surface'),
           themeMode === 'cupertino' ? 'rounded-[12px] backdrop-blur-md' : '',
           themeMode === 'aqua' ? 'aqua-options rounded-3xl p-1 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.5)]!' : '',
@@ -236,10 +237,10 @@
                         :is-selected="model === option.value"
                       >
                         <CamelotGpu class="option">
-                          <span class="w-5 text-primary">{{ model === option.value ? '✓' : '' }} </span>
+                          <span class="w-5 text-[var(--cml-color-current-color)]">{{ model === option.value ? '✓' : '' }} </span>
                           <span
                             class="my-0.5 font-normal leading-normal select-none"
-                            :class="model === option.value ? 'text-primary' : 'text-on-surface'"
+                            :class="model === option.value ? 'text-[var(--cml-color-current-color)]' : 'text-on-surface'"
                           >{{ option.label ?? option.name }}</span>
                         </CamelotGpu>
                       </slot>
@@ -290,10 +291,10 @@
                         :is-selected="model === option.value"
                       >
                         <CamelotGpu class="option">
-                          <span class="w-5 text-primary">{{ model === option.value ? '✓' : '' }} </span>
+                          <span class="w-5 text-[var(--cml-color-current-color)]">{{ model === option.value ? '✓' : '' }} </span>
                           <span
                             class="my-0.5 font-normal leading-normal select-none"
-                            :class="model === option.value ? 'text-primary' : 'text-on-surface'"
+                            :class="model === option.value ? 'text-[var(--cml-color-current-color)]' : 'text-on-surface'"
                           >{{ option.label ?? option.name }}</span>
                         </CamelotGpu>
                       </slot>
@@ -336,6 +337,7 @@ const props = withDefaults(defineProps<{
   itemHeight?: number
   overscan?: number
   disabled?: boolean
+  color?: CamelotColorRole
 }>(), {
   optionsContainerMaxHeight: 200,
   disabledCloseWhenScrolling: true,
@@ -348,7 +350,10 @@ const props = withDefaults(defineProps<{
   itemHeight: 36,
   overscan: 5,
   disabled: false,
+  color: 'primary',
 })
+
+const roleColorClass = useCamelotRoleColorClass(() => props.color)
 
 const open = defineModel<boolean>('open', { default: false })
 
@@ -518,18 +523,18 @@ watch([() => props.options, () => props.default], ([options, isDefault]) => {
   cursor: pointer;
   font-family: inherit;
   font-size: 0.85rem;
-  color: color-mix(in srgb, var(--color-primary) 70%, white);
+  color: color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 70%, white);
   border-left: 2px solid transparent;
   transition: all 0.2s ease;
 }
 .scifi-option:hover {
-  background: var(--color-primary);
+  background: var(--cml-color-current-color, var(--color-primary));
   border-left-color: var(--color-on-primary);
   color: var(--color-on-primary);
 }
 .scifi-option.selected {
-  background: color-mix(in srgb, var(--color-primary) 40%, transparent);
-  border-left-color: var(--color-primary);
+  background: color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 40%, transparent);
+  border-left-color: var(--cml-color-current-color, var(--color-primary));
   color: var(--color-on-primary);
 }
 
@@ -545,9 +550,9 @@ watch([() => props.options, () => props.default], ([options, isDefault]) => {
   transition: background-color 0.15s ease;
 }
 .aqua-options .option-btn:hover {
-  background-color: color-mix(in srgb, var(--color-primary) 8%, transparent);
+  background-color: color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 8%, transparent);
 }
 .aqua-options .option-btn.selected {
-  background-color: color-mix(in srgb, var(--color-primary) 14%, transparent);
+  background-color: color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 14%, transparent);
 }
 </style>
