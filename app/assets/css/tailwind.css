@@ -125,6 +125,26 @@
     user-select: none;
   }
 
+  /* 切換主題 / 深淺色 / 色系時的全站顏色漸變過場（由 triggerThemeTransition 暫時加上 class） */
+  html.cml-theme-transitioning *,
+  html.cml-theme-transitioning *::before,
+  html.cml-theme-transitioning *::after {
+    transition:
+      background-color 0.32s var(--ease-ios),
+      color 0.32s var(--ease-ios),
+      border-color 0.32s var(--ease-ios),
+      fill 0.32s var(--ease-ios),
+      stroke 0.32s var(--ease-ios);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html.cml-theme-transitioning *,
+    html.cml-theme-transitioning *::before,
+    html.cml-theme-transitioning *::after {
+      transition: none;
+    }
+  }
+
   h1,
   h2,
   h3,
