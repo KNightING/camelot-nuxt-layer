@@ -402,6 +402,24 @@
                 class="w-12 rounded border border-slate-300 bg-transparent px-1 dark:border-slate-700"
               >
             </label>
+            <label class="flex items-center gap-1 text-xs text-slate-400">
+              <input
+                v-model="carouselArrows"
+                type="checkbox"
+              > arrows
+            </label>
+            <label class="flex items-center gap-1 text-xs text-slate-400">
+              <input
+                v-model="carouselDots"
+                type="checkbox"
+              > dots
+            </label>
+            <label class="flex items-center gap-1 text-xs text-slate-400">
+              <input
+                v-model="carouselVertical"
+                type="checkbox"
+              > vertical
+            </label>
           </div>
 
           <CamelotCarousel
@@ -413,6 +431,9 @@
             :autoplay="carouselAutoplay"
             :peek="carouselEffect === 'slide' || carouselEffect === 'coverflow' || carouselEffect === 'zoom' ? carouselPeek : 0"
             :gap="12"
+            :direction="carouselVertical ? 'vertical' : 'horizontal'"
+            :show-arrows="carouselArrows"
+            :show-dots="carouselDots"
             :color="currentColorRole"
             height="240px"
           >
@@ -1094,6 +1115,9 @@ const carouselIndex = ref(0)
 const carouselLoop = ref(true)
 const carouselAutoplay = ref(false)
 const carouselPeek = ref(0)
+const carouselArrows = ref(true)
+const carouselDots = ref(true)
+const carouselVertical = ref(false)
 const carouselItems = ref(
   Array.from({ length: 6 }).map((_, i) => ({
     id: i,

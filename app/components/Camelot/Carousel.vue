@@ -2,7 +2,7 @@
   <div
     class="cml-carousel relative select-none"
     :class="roleColorClass"
-    :style="{ height }"
+    :style="{ height, touchAction: isVertical ? 'pan-x' : 'pan-y' }"
     @pointerenter="hovered = true"
     @pointerleave="hovered = false"
     @pointerdown="onPointerDown"
@@ -58,22 +58,27 @@
       </button>
     </template>
 
-    <!-- Dots -->
-    <div
+    <!-- Dots（獨立 CamelotCarouselIndicator，可 slot 自訂、支援垂直排列） -->
+    <CamelotCarouselIndicator
       v-if="showDots && items.length > 1"
-      class="absolute flex gap-2"
-      :class="direction === 'vertical' ? 'top-1/2 right-3 -translate-y-1/2 flex-col' : 'bottom-3 left-1/2 -translate-x-1/2'"
+      :model-value="current"
+      :total="items.length"
+      :direction="direction"
+      :color="color"
+      class="absolute"
+      :class="direction === 'vertical' ? 'top-1/2 right-3 -translate-y-1/2' : 'bottom-3 left-1/2 -translate-x-1/2'"
+      @update:model-value="go"
     >
-      <button
-        v-for="(_, i) in items"
-        :key="`dot-${i}`"
-        type="button"
-        class="cml-dot"
-        :class="i === current ? activeDotClass : 'bg-on-surface/30 hover:bg-on-surface/50'"
-        :aria-label="`go to ${i + 1}`"
-        @click="go(i)"
-      />
-    </div>
+      <template
+        v-if="$slots.dot"
+        #dot="scope"
+      >
+        <slot
+          name="dot"
+          v-bind="scope"
+        />
+      </template>
+    </CamelotCarouselIndicator>
   </div>
 </template>
 
@@ -305,12 +310,6 @@ const arrowClass = computed(() => {
   }
 })
 
-const activeDotClass = computed(() =>
-  themeMode.value === 'scifi'
-    ? 'bg-[var(--cml-color-current-color)] shadow-[0_0_6px_var(--cml-color-current-color)]'
-    : 'bg-[var(--cml-color-current-color)]',
-)
-
 defineExpose({
   next,
   prev,
@@ -334,15 +333,5 @@ defineExpose({
 }
 .cml-arrow:hover {
   opacity: 0.85;
-}
-.cml-dot {
-  width: 0.5rem;
-  height: 0.5rem;
-  border-radius: 9999px;
-  cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.2s ease;
-}
-.cml-dot:hover {
-  transform: scale(1.2);
 }
 </style>
