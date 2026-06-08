@@ -1,87 +1,123 @@
 <template>
-  <CamelotPopupV2
-    v-model:open="open"
-    manual
-    disabled-same-target-width
-    disabled-close-when-scrolling
-    :disabled="disabled"
-    disabled-shadow
-    :popup-class="popupShadowClass"
-    :z-index="selectZIndex"
+  <div
+    class="flex w-full flex-col gap-1.5"
+    :class="roleColorClass"
   >
-    <label
-      ref="triggerRef"
-      class="group flex w-full min-w-[16ch] cursor-pointer items-center gap-2 px-4 py-2 transition-colors"
-      :class="[
-        triggerClass,
-        {
-          'border-primary': open && themeMode !== 'aqua',
-          'aqua-glow': open && themeMode === 'aqua',
-          'border-error!': isError,
-          'bg-gray-200! opacity-50': disabled,
-        },
-      ]"
-      @click="togglePopup"
-    >
-      <IMaterialSymbolsCalendarMonthRounded
-        class="w-5 h-5 text-outline group-hover:text-primary transition-colors"
-        @click.stop="open = true"
-      />
-      <input
-        v-bind="$attrs"
-        v-model="inputModel"
-        type="text"
-        class="min-w-0 w-0 flex-1 text-on-surface bg-transparent placeholder:text-on-surface outline-none text-base caret-primary appearance-none cursor-pointer"
-        :class="{
-          'text-black!': disabled,
-        }"
-        :maxlength="10"
-        :placeholder="placeholder"
-        readonly
-      >
+    <span
+      v-if="label"
+      class="pl-1 text-sm font-medium text-on-surface"
+    >{{ label }}<span
+      v-if="required"
+      class="ml-0.5 text-error"
+    >*</span></span>
 
-    </label>
-
-    <CamelotBaseDialogV2
-      v-if="showType === 'dialog'"
+    <CamelotPopupV2
       v-model:open="open"
+      manual
+      disabled-same-target-width
+      disabled-close-when-scrolling
+      :disabled="disabled"
+      disabled-shadow
+      :popup-class="popupShadowClass"
+      :z-index="selectZIndex"
     >
-      <div
-        class="overflow-hidden shadow-sm"
-        :class="panelClass"
+      <label
+        ref="triggerRef"
+        class="group flex w-full min-w-[16ch] cursor-pointer items-center gap-2 px-4 py-2 transition-colors"
+        :class="[
+          triggerClass,
+          {
+            'border-[var(--cml-color-current-color)]': open && themeMode !== 'aqua',
+            'aqua-glow': open && themeMode === 'aqua',
+            'border-error!': isError,
+            'bg-gray-200! opacity-50': disabled,
+          },
+        ]"
+        @click="togglePopup"
       >
-        <CamelotInternalCalendar
-          v-model="model"
-          v-model:view-date="viewDate"
-          :min-date="minDate"
-          :max-date="maxDate"
-          :enable-time="enableTime"
-          :get-day-attributes="getDayAttributes"
-          @update:model-value="onDateSelect"
+        <IMaterialSymbolsCalendarMonthRounded
+          class="w-5 h-5 text-outline group-hover:text-[var(--cml-color-current-color)] transition-colors"
+          @click.stop="open = true"
         />
-      </div>
-    </CamelotBaseDialogV2>
+        <input
+          v-bind="$attrs"
+          v-model="inputModel"
+          type="text"
+          class="min-w-0 w-0 flex-1 text-on-surface bg-transparent placeholder:text-on-surface outline-none text-base caret-[var(--cml-color-current-color)] appearance-none cursor-pointer"
+          :class="{
+            'text-black!': disabled,
+          }"
+          :maxlength="enableTime ? 25 : 10"
+          :placeholder="placeholder"
+          readonly
+        >
 
-    <template
-      v-if="showType === 'popup'"
-      #popup
-    >
-      <div
-        ref="popupRef"
-        :class="[panelClass, popupPanelShadowFix]"
+      </label>
+
+      <CamelotBaseDialogV2
+        v-if="showType === 'dialog'"
+        v-model:open="open"
       >
-        <CamelotInternalCalendar
-          v-model="model"
-          v-model:view-date="viewDate"
-          :min-date="minDate"
-          :max-date="maxDate"
-          :enable-time="enableTime"
-          :get-day-attributes="getDayAttributes"
-          @update:model-value="onDateSelect"
-        />
-      </div>
-    </template>
-  </CamelotPopupV2>
+        <!-- dialog 模式：BaseDialogV2 已提供主題外框；小螢幕/橫向時可捲動避免被裁切 -->
+        <div class="max-h-[82dvh] overflow-y-auto overscroll-contain">
+          <CamelotInternalCalendar
+            v-model="model"
+            v-model:view-date="viewDate"
+            :class="roleColorClass"
+            :min-date="minDate"
+            :max-date="maxDate"
+            :enable-time="enableTime"
+            :time-precision="timePrecision"
+            :hour-format="hourFormat"
+            :get-day-attributes="getDayAttributes"
+            @update:model-value="onDateSelect"
+          >
+            <template
+              v-for="(_, name) in $slots"
+              #[name]="slotProps"
+            >
+              <slot
+                :name="name"
+                v-bind="slotProps"
+              />
+            </template>
+          </CamelotInternalCalendar>
+        </div>
+      </CamelotBaseDialogV2>
+
+      <template
+        v-if="showType === 'popup'"
+        #popup
+      >
+        <div
+          ref="popupRef"
+          :class="[roleColorClass, panelClass, popupPanelShadowFix]"
+        >
+          <CamelotInternalCalendar
+            v-model="model"
+            v-model:view-date="viewDate"
+            :min-date="minDate"
+            :max-date="maxDate"
+            :enable-time="enableTime"
+            :time-precision="timePrecision"
+            :hour-format="hourFormat"
+            :get-day-attributes="getDayAttributes"
+            @update:model-value="onDateSelect"
+          >
+            <template
+              v-for="(_, name) in $slots"
+              #[name]="slotProps"
+            >
+              <slot
+                :name="name"
+                v-bind="slotProps"
+              />
+            </template>
+          </CamelotInternalCalendar>
+        </div>
+      </template>
+    </CamelotPopupV2>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -99,12 +135,24 @@ const props = withDefaults(defineProps<{
   showType?: 'auto' | 'popup' | 'dialog'
   selectZIndex?: number
   enableTime?: boolean
+  /** 時間精細度（由下往上關閉）：hour 僅時、minute 時分、second 時分秒 */
+  timePrecision?: 'hour' | 'minute' | 'second'
+  /** 12 或 24 小時制（預設 24） */
+  hourFormat?: '12' | '24'
+  color?: CamelotColorRole
+  label?: string
+  required?: boolean
   getDayAttributes?: (date: Date, dayOfWeek: number) => CalendarDayAttributes | undefined | null
 }>(), {
   showType: 'auto',
   placeholder: 'YYYY-MM-DD',
   enableTime: false,
+  timePrecision: 'second',
+  hourFormat: '24',
+  color: 'primary',
 })
+
+const roleColorClass = useCamelotRoleColorClass(() => props.color)
 
 const model = defineModel<Date | number>()
 const inputModel = defineModel<string>('input')
@@ -145,9 +193,12 @@ const popupPanelShadowFix = computed(() => {
 const triggerRef = useTemplateRef('triggerRef')
 const popupRef = useTemplateRef('popupRef')
 
-// Better outside click handling
+// Better outside click handling（dialog 模式由 BaseDialogV2 自行處理遮罩/Esc 關閉，
+// 不可由 triggerRef 的 onClickOutside 介入，否則開啟當下即被關閉）
 onClickOutside(triggerRef, () => {
-  open.value = false
+  if (showType.value === 'popup') {
+    open.value = false
+  }
 }, {
   ignore: [popupRef],
 })
@@ -159,11 +210,20 @@ watch(open, (isOpen) => {
   }
 })
 
-watch(model, (nV) => {
+// 依 enableTime / 精細度 / 12-24 制組出顯示格式
+const displayFormat = computed(() => {
+  if (!props.enableTime) return 'yyyy-MM-dd'
+  let t = props.hourFormat === '12' ? 'hh' : 'HH'
+  if (props.timePrecision !== 'hour') t += ':mm'
+  if (props.timePrecision === 'second') t += ':ss'
+  if (props.hourFormat === '12') t += ' a'
+  return `yyyy-MM-dd ${t}`
+})
+
+watch([model, displayFormat], ([nV]) => {
   if (nV) {
     try {
-      const formatStr = props.enableTime ? 'yyyy-MM-dd HH:mm' : 'yyyy-MM-dd'
-      inputModel.value = format(new Date(nV), formatStr)
+      inputModel.value = format(new Date(nV), displayFormat.value)
     }
     catch (e) {
       inputModel.value = ''
@@ -185,9 +245,12 @@ const onDateSelect = (date: Date | number | null | undefined) => {
   }
 }
 
+const { isMobile } = useDeviceBreakpoints()
+
 const showType = computed<'popup' | 'dialog'>(() => {
+  // auto：手機改用置中 modal（dialog），桌機用 popup
   if (props.showType === 'auto') {
-    return 'popup'
+    return isMobile.value ? 'dialog' : 'popup'
   }
   return props.showType ?? 'dialog'
 })

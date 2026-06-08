@@ -7,7 +7,7 @@
         isActive
           ? activeClass
           : isActiveAncestor
-            ? 'font-medium text-primary hover:bg-on-surface/5'
+            ? 'font-medium text-[var(--cml-color-current-color)] hover:bg-on-surface/5'
             : ['hover:bg-on-surface/5', level === 0 ? 'font-medium text-on-surface' : 'text-on-surface/75'],
         { 'pointer-events-none opacity-40': item.disabled },
       ]"
@@ -61,13 +61,13 @@ const isExpanded = computed(() => menu.isExpanded(props.item))
 const activeClass = computed(() => {
   switch (themeMode.value) {
     case 'aqua':
-      return 'aqua-fill text-on-primary'
+      return 'aqua-fill text-[var(--cml-color-current-on-color)]'
     case 'scifi':
-      return 'bg-[color-mix(in_srgb,var(--color-primary)_18%,transparent)] text-primary [text-shadow:0_0_8px_color-mix(in_srgb,var(--color-primary)_50%,transparent)]'
+      return 'bg-[color-mix(in_srgb,var(--cml-color-current-color)_18%,transparent)] text-[var(--cml-color-current-color)] [text-shadow:0_0_8px_color-mix(in_srgb,var(--cml-color-current-color)_50%,transparent)]'
     case 'cupertino':
-      return 'bg-primary/10 font-semibold text-primary'
+      return 'bg-[color-mix(in_srgb,var(--cml-color-current-color)_10%,transparent)] font-semibold text-[var(--cml-color-current-color)]'
     default:
-      return 'bg-primary/10 font-medium text-primary'
+      return 'bg-[color-mix(in_srgb,var(--cml-color-current-color)_10%,transparent)] font-medium text-[var(--cml-color-current-color)]'
   }
 })
 

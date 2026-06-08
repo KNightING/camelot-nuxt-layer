@@ -1,5 +1,5 @@
 <template>
-  <ul>
+  <ul :class="roleColorClass">
     <li
       v-for="(v, index) in data"
       ref="tabsElRefs"
@@ -32,11 +32,16 @@ const props = withDefaults(
     displayKey?: string
     modelValue?: number
     scrollSmooth?: boolean
+    color?: CamelotColorRole
   }>(),
   {
     scrollSmooth: true,
+    color: 'primary',
   },
 )
+
+// 選中態使用 container 色階（primary-container 等）
+const roleColorClass = useCamelotRoleColorClass(() => props.color, () => true)
 
 const emit = defineEmits<{
   'update:modelValue': [value?: number]
@@ -159,8 +164,8 @@ li {
 }
 
 .tab-selected {
-  background-color: var(--cml-c-m3-primary-container) !important;
-  color: var(--cml-c-m3-on-primary-container) !important;
-  border-color: var(--cml-c-m3-primary-container) !important;
+  background-color: var(--cml-color-current-color, var(--color-primary-container)) !important;
+  color: var(--cml-color-current-on-color, var(--color-on-primary-container)) !important;
+  border-color: var(--cml-color-current-color, var(--color-primary-container)) !important;
 }
 </style>

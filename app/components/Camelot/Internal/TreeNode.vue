@@ -27,6 +27,7 @@
         :indeterminate="isIndeterminate"
         :disabled="node.disabled"
         :label="node.label"
+        :color="tree.color"
         @click.stop
         @change="tree.toggleCheck(node)"
       />
@@ -38,6 +39,7 @@
           :model-value="isChecked"
           :indeterminate="isIndeterminate"
           :disabled="node.disabled"
+          :color="tree.color"
           @click.stop
           @change="tree.toggleCheck(node)"
         />

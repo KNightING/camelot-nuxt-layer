@@ -15,111 +15,74 @@
 
       <!-- Theme and Color Selectors -->
       <div class="flex flex-wrap gap-6 items-center">
-        <!-- Style Switcher -->
+        <!-- Active Style Theme（控制項本身以 Camelot 元件呈現，跟著主題切換） -->
         <div class="flex flex-col gap-2">
           <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Active Style Theme</span>
-          <div class="flex bg-slate-200 dark:bg-slate-800 p-1 rounded-lg gap-1 w-fit">
-            <button
-              type="button"
-              class="px-4 py-1.5 rounded-md text-sm font-medium transition-colors cursor-pointer"
-              :class="themeMode === 'material' ? 'bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm' : 'text-slate-500 hover:text-slate-800 dark:hover:text-white'"
-              @click="themeMode = 'material'"
+          <div class="flex flex-wrap gap-2">
+            <CamelotButton
+              v-for="t in themeOptions"
+              :key="t.value"
+              :is-container="themeMode !== t.value"
+              :class="themeMode === t.value ? '' : 'opacity-50'"
+              @click="themeMode = t.value"
             >
-              Material 3
-            </button>
-            <button
-              type="button"
-              class="px-4 py-1.5 rounded-md text-sm font-medium transition-colors cursor-pointer"
-              :class="themeMode === 'cupertino' ? 'bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm' : 'text-slate-500 hover:text-slate-800 dark:hover:text-white'"
-              @click="themeMode = 'cupertino'"
-            >
-              Cupertino
-            </button>
-            <button
-              type="button"
-              class="px-4 py-1.5 rounded-md text-sm font-medium transition-colors cursor-pointer"
-              :class="themeMode === 'scifi' ? 'bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm' : 'text-slate-500 hover:text-slate-800 dark:hover:text-white'"
-              @click="themeMode = 'scifi'"
-            >
-              Sci-Fi HUD
-            </button>
-            <button
-              type="button"
-              class="px-4 py-1.5 rounded-md text-sm font-medium transition-colors cursor-pointer"
-              :class="themeMode === 'aqua' ? 'bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm' : 'text-slate-500 hover:text-slate-800 dark:hover:text-white'"
-              @click="themeMode = 'aqua'"
-            >
-              Aqua Pill
-            </button>
+              {{ t.label }}
+            </CamelotButton>
           </div>
         </div>
 
-        <!-- Dark/Light Mode Switcher -->
+        <!-- Dark / Light Mode -->
         <div class="flex flex-col gap-2">
           <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Dark / Light Mode</span>
-          <div class="flex bg-slate-200 dark:bg-slate-800 p-1 rounded-lg gap-1 w-fit">
-            <button
-              type="button"
-              class="px-4 py-1.5 rounded-md text-sm font-medium transition-colors cursor-pointer"
-              :class="colorMode === 'light' ? 'bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm' : 'text-slate-500 hover:text-slate-800 dark:hover:text-white'"
-              @click="colorMode = 'light'"
+          <div class="flex flex-wrap gap-2">
+            <CamelotButton
+              v-for="m in colorModeOptions"
+              :key="m.value"
+              :is-container="colorMode !== m.value"
+              :class="colorMode === m.value ? '' : 'opacity-50'"
+              @click="colorMode = m.value"
             >
-              Light
-            </button>
-            <button
-              type="button"
-              class="px-4 py-1.5 rounded-md text-sm font-medium transition-colors cursor-pointer"
-              :class="colorMode === 'dark' ? 'bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm' : 'text-slate-500 hover:text-slate-800 dark:hover:text-white'"
-              @click="colorMode = 'dark'"
-            >
-              Dark
-            </button>
-            <button
-              type="button"
-              class="px-4 py-1.5 rounded-md text-sm font-medium transition-colors cursor-pointer"
-              :class="colorMode === 'auto' ? 'bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm' : 'text-slate-500 hover:text-slate-800 dark:hover:text-white'"
-              @click="colorMode = 'auto'"
-            >
-              System
-            </button>
+              {{ m.label }}
+            </CamelotButton>
           </div>
         </div>
 
-        <!-- Color Swatches -->
+        <!-- Color Palette Role -->
         <div class="flex flex-col gap-2">
           <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Color Palette Role (Component prop)</span>
-          <div class="flex gap-2">
-            <button
-              v-for="c in (['primary', 'secondary', 'tertiary', 'error', 'warning', 'success'] as const)"
+          <div class="flex flex-wrap gap-2">
+            <CamelotButton
+              v-for="c in colorRoles"
               :key="c"
-              type="button"
-              class="px-3 py-1.5 rounded-md text-xs font-bold uppercase transition-all border cursor-pointer"
-              :class="currentColorRole === c ? 'bg-slate-800 dark:bg-slate-200 text-white dark:text-slate-900 border-slate-800 dark:border-slate-200' : 'bg-transparent border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'"
+              :color="c"
+              :is-container="currentColorRole !== c"
+              :class="currentColorRole === c ? '' : 'opacity-50'"
               @click="currentColorRole = c"
             >
               {{ c }}
-            </button>
+            </CamelotButton>
           </div>
         </div>
 
-        <!-- Global Brand Color Swatches -->
+        <!-- Global Brand Color -->
         <div class="flex flex-col gap-2">
           <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Global Brand Color (CSS Variable)</span>
-          <div class="flex gap-2 flex-wrap">
-            <button
+          <div class="flex flex-wrap gap-2">
+            <CamelotButton
               v-for="brand in brandColors"
               :key="brand.name"
-              type="button"
-              class="px-3 py-1.5 rounded-md text-xs font-bold uppercase transition-all border cursor-pointer flex items-center gap-1.5"
-              :class="activeBrandColorName === brand.name ? 'bg-slate-800 dark:bg-slate-200 text-white dark:text-slate-900 border-slate-800 dark:border-slate-200' : 'bg-transparent border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'"
+              :is-container="activeBrandColorName !== brand.name"
+              :class="activeBrandColorName === brand.name ? '' : 'opacity-50'"
               @click="changeBrandColor(brand)"
             >
-              <span
-                class="w-3 h-3 rounded-full"
-                :style="{ backgroundColor: brand.roles.primary.light }"
-              />
-              {{ brand.name }}
-            </button>
+              <span class="inline-flex items-center gap-1.5">
+                <span
+                  class="h-3 w-3 rounded-full"
+                  :style="{ backgroundColor: brand.roles.primary.light }"
+                />
+                {{ brand.name }}
+              </span>
+            </CamelotButton>
           </div>
         </div>
       </div>
@@ -197,8 +160,20 @@
 
           <CamelotSelectV2
             v-model="selectVal"
+            :color="currentColorRole"
             label="Choose option"
             :options="options"
+          />
+
+          <CamelotTextarea
+            v-model="textareaVal"
+            label="Message"
+            required
+            placeholder="輸入訊息…"
+            autosize
+            :max-rows="6"
+            :maxlength="200"
+            show-count
             :color="currentColorRole"
           />
         </div>
@@ -211,9 +186,9 @@
 
           <CamelotSelectV2
             v-model="selectV2Val"
+            :color="currentColorRole"
             label="Searchable selection"
             :options="options"
-            :color="currentColorRole"
             class="w-full"
           />
 
@@ -260,6 +235,7 @@
             <CamelotTabs
               v-model="demoActiveTab"
               :options="demoTabsOptions"
+              :color="currentColorRole"
             />
           </div>
 
@@ -269,6 +245,7 @@
               v-model="demoActiveStep"
               :steps="demoStepsList"
               enable-change-by-click
+              :color="currentColorRole"
             />
           </div>
         </div>
@@ -373,6 +350,7 @@
           </h2>
           <CamelotTree
             v-model:checked="treeChecked"
+            :color="currentColorRole"
             :nodes="treeNodes"
             checkable
             default-expand-all
@@ -389,11 +367,266 @@
           </h2>
           <CamelotMenu
             v-model="menuActive"
+            :color="currentColorRole"
             :items="menuItems"
             default-expand-all
           />
           <div class="mt-1 truncate text-xs text-slate-400">
             Active: {{ menuActive }}
+          </div>
+        </div>
+
+        <!-- Slider Card -->
+        <div :class="cardClass">
+          <h2 :class="cardTitleClass">
+            Slider / Range (step, marks, tooltip)
+          </h2>
+
+          <div class="flex flex-col gap-1">
+            <span class="text-xs text-slate-400">Single（value = {{ sliderVal }}）</span>
+            <CamelotSlider
+              v-model="sliderVal"
+              :color="currentColorRole"
+              show-tooltip
+            />
+          </div>
+
+          <div class="mt-3 flex flex-col gap-1">
+            <span class="text-xs text-slate-400">Range（{{ sliderRangeVal[0] }} ~ {{ sliderRangeVal[1] }}）</span>
+            <CamelotSlider
+              v-model="sliderRangeVal"
+              range
+              :color="currentColorRole"
+              show-tooltip
+            />
+          </div>
+
+          <div class="mt-3 flex flex-col gap-1">
+            <span class="text-xs text-slate-400">Step 20 + 間隔文字（value = {{ sliderStepVal }}）</span>
+            <CamelotSlider
+              v-model="sliderStepVal"
+              :step="20"
+              :height="8"
+              :marks="[
+                { value: 0, label: '低' },
+                { value: 20, label: '20' },
+                { value: 40, label: '40' },
+                { value: 60, label: '60' },
+                { value: 80, label: '80' },
+                { value: 100, label: '高' },
+              ]"
+              :color="currentColorRole"
+            />
+          </div>
+        </div>
+
+        <!-- Tag Card -->
+        <div :class="cardClass">
+          <h2 :class="cardTitleClass">
+            Tag (color roles / variants)
+          </h2>
+          <div class="flex flex-wrap gap-2">
+            <CamelotTag
+              v-for="c in colorRoles"
+              :key="c"
+              :color="c"
+            >
+              {{ c }}
+            </CamelotTag>
+          </div>
+          <div class="mt-2 flex flex-wrap gap-2">
+            <CamelotTag
+              :color="currentColorRole"
+              variant="solid"
+            >
+              solid
+            </CamelotTag>
+            <CamelotTag
+              :color="currentColorRole"
+              variant="soft"
+            >
+              soft
+            </CamelotTag>
+            <CamelotTag
+              :color="currentColorRole"
+              variant="outline"
+            >
+              outline
+            </CamelotTag>
+            <CamelotTag
+              v-for="t in tags"
+              :key="t"
+              :color="currentColorRole"
+              closable
+              @close="tags = tags.filter(x => x !== t)"
+            >
+              {{ t }}
+            </CamelotTag>
+          </div>
+        </div>
+
+        <!-- Breadcrumb Card -->
+        <div :class="cardClass">
+          <h2 :class="cardTitleClass">
+            Breadcrumb
+          </h2>
+          <CamelotBreadcrumb
+            :items="breadcrumbItems"
+            :color="currentColorRole"
+            @select="(it) => useCamelotToast().open('前往 ' + it.label)"
+          />
+        </div>
+
+        <!-- Notification Card -->
+        <div :class="cardClass">
+          <h2 :class="cardTitleClass">
+            Notifications (8 positions / title / action)
+          </h2>
+          <div class="grid grid-cols-3 gap-1.5 text-xs">
+            <button
+              v-for="p in toastPositions"
+              :key="p"
+              class="rounded-md border border-slate-300 px-2 py-1 text-slate-500 transition-colors hover:border-primary hover:text-primary dark:border-slate-700"
+              @click="notify(p)"
+            >
+              {{ p }}
+            </button>
+          </div>
+          <div class="mt-2 flex flex-wrap gap-2">
+            <span class="text-xs text-slate-400 self-center">狀態系列：</span>
+            <CamelotTag
+              v-for="ty in toastTypes"
+              :key="ty"
+              :color="ty === 'info' ? 'primary' : ty"
+              variant="soft"
+              class="cursor-pointer"
+              @click="notify('top-right', ty)"
+            >
+              {{ ty }}
+            </CamelotTag>
+          </div>
+        </div>
+
+        <!-- Timeline Card -->
+        <div :class="[cardClass, 'col-span-1 md:col-span-2 lg:col-span-3']">
+          <h2 :class="cardTitleClass">
+            Timeline (vertical alternate + horizontal, scroll fade-in)
+          </h2>
+          <div class="grid gap-8 md:grid-cols-2">
+            <CamelotTimeline
+              :items="timelineItems"
+              side="alternate"
+              animate
+              :color="currentColorRole"
+            />
+            <CamelotTimeline
+              :items="timelineItems"
+              :color="currentColorRole"
+            />
+          </div>
+          <div class="mt-6 overflow-x-auto">
+            <CamelotTimeline
+              :items="timelineItems"
+              direction="horizontal"
+              side="alternate"
+              animate
+              :color="currentColorRole"
+            />
+          </div>
+        </div>
+
+        <!-- Carousel Card -->
+        <div :class="[cardClass, 'col-span-1 md:col-span-2 lg:col-span-3']">
+          <h2 :class="cardTitleClass">
+            Carousel (effects / loop / autoplay / peek)
+          </h2>
+
+          <div class="flex flex-wrap items-center gap-2">
+            <button
+              v-for="eff in carouselEffects"
+              :key="eff"
+              class="rounded-md border px-2.5 py-1 text-xs transition-colors"
+              :class="carouselEffect === eff ? 'border-primary bg-primary/10 text-primary' : 'border-slate-300 dark:border-slate-700 text-slate-500'"
+              @click="carouselEffect = eff"
+            >
+              {{ eff }}
+            </button>
+            <label class="ml-2 flex items-center gap-1 text-xs text-slate-400">
+              <input
+                v-model="carouselLoop"
+                type="checkbox"
+              > loop
+            </label>
+            <label class="flex items-center gap-1 text-xs text-slate-400">
+              <input
+                v-model="carouselAutoplay"
+                type="checkbox"
+              > autoplay
+            </label>
+            <label class="flex items-center gap-1 text-xs text-slate-400">
+              peek
+              <input
+                v-model.number="carouselPeek"
+                type="number"
+                min="0"
+                max="2"
+                class="w-12 rounded border border-slate-300 bg-transparent px-1 dark:border-slate-700"
+              >
+            </label>
+            <label class="flex items-center gap-1 text-xs text-slate-400">
+              <input
+                v-model="carouselArrows"
+                type="checkbox"
+              > arrows
+            </label>
+            <label class="flex items-center gap-1 text-xs text-slate-400">
+              <input
+                v-model="carouselDots"
+                type="checkbox"
+              > dots
+            </label>
+            <label class="flex items-center gap-1 text-xs text-slate-400">
+              <input
+                v-model="carouselVertical"
+                type="checkbox"
+              > vertical
+            </label>
+          </div>
+
+          <CamelotCarousel
+            v-model="carouselIndex"
+            :items="carouselItems"
+            item-key="id"
+            :effect="carouselEffect"
+            :loop="carouselLoop"
+            :autoplay="carouselAutoplay"
+            :peek="carouselEffect === 'slide' || carouselEffect === 'coverflow' || carouselEffect === 'zoom' ? carouselPeek : 0"
+            :gap="12"
+            :direction="carouselVertical ? 'vertical' : 'horizontal'"
+            :show-arrows="carouselArrows"
+            :show-dots="carouselDots"
+            :color="currentColorRole"
+            height="240px"
+          >
+            <template #default="{ item, isActive }">
+              <div
+                class="flex h-full w-full items-center justify-center rounded-2xl text-2xl font-bold text-white transition-shadow"
+                :class="isActive ? 'shadow-xl' : 'shadow'"
+                :style="{ background: `hsl(${item.hue} 70% 55%)` }"
+              >
+                {{ item.title }}
+              </div>
+            </template>
+          </CamelotCarousel>
+
+          <!-- 外部連動的獨立指標（與上方 carousel 共用 v-model） -->
+          <div class="mt-3 flex items-center justify-center gap-3">
+            <span class="text-xs text-slate-400">外部指標：</span>
+            <CamelotCarouselIndicator
+              v-model="carouselIndex"
+              :total="carouselItems.length"
+              :color="currentColorRole"
+            />
           </div>
         </div>
 
@@ -404,7 +637,7 @@
           </h2>
           <CamelotTable
             :columns="tableColumns"
-            :data="tableData"
+            :data="pagedTableData"
             :pinned-top-rows="tablePinned"
             row-key="id"
             stripe
@@ -417,6 +650,18 @@
               >{{ value }}</span>
             </template>
           </CamelotTable>
+
+          <div class="mt-3 flex justify-end">
+            <CamelotPagination
+              v-model="tablePage"
+              v-model:page-size="tablePageSize"
+              :total="tableData.length"
+              :color="currentColorRole"
+              show-total
+              show-page-size
+              :page-size-options="[5, 10, 20]"
+            />
+          </div>
         </div>
 
         <!-- Progress Card -->
@@ -516,6 +761,174 @@
             </div>
           </div>
         </div>
+
+        <!-- Date Pickers Card -->
+        <div :class="cardClass">
+          <h2 :class="cardTitleClass">
+            Date Pickers (mobile → centered modal)
+          </h2>
+          <div class="flex flex-col gap-3">
+            <CamelotDateV2
+              :color="currentColorRole"
+              label="預約日期"
+              placeholder="請選擇日期"
+              :get-day-attributes="getDayAttributes"
+            />
+            <CamelotDateRangeV2
+              :color="currentColorRole"
+              label="活動區間"
+              :multi-calendars="true"
+              :get-day-attributes="getDayAttributes"
+            />
+
+            <span class="text-xs text-slate-400">區間含時間（24H・到分・起迄各自設定）</span>
+            <CamelotDateRangeV2
+              v-model="dateRangeTimeVal"
+              :color="currentColorRole"
+              label="會議時段"
+              enable-time
+              time-precision="minute"
+              :multi-calendars="true"
+            />
+
+            <span class="text-xs text-slate-400">含時間（24H・到秒）</span>
+            <CamelotDateV2
+              v-model="dateTimeSec"
+              :color="currentColorRole"
+              enable-time
+              placeholder="YYYY-MM-DD HH:mm:ss"
+            />
+
+            <span class="text-xs text-slate-400">含時間（12H・到分，關閉秒）</span>
+            <CamelotDateV2
+              v-model="dateTime12"
+              :color="currentColorRole"
+              enable-time
+              time-precision="minute"
+              hour-format="12"
+              placeholder="YYYY-MM-DD hh:mm a"
+            />
+
+            <span class="text-xs text-slate-400">含時間（僅時，關閉分與秒）</span>
+            <CamelotDateV2
+              v-model="dateTimeHour"
+              :color="currentColorRole"
+              enable-time
+              time-precision="hour"
+              placeholder="YYYY-MM-DD HH"
+            />
+          </div>
+        </div>
+
+        <!-- Virtual Scroll Card -->
+        <div :class="cardClass">
+          <h2 :class="cardTitleClass">
+            Virtual Scroll (variable height)
+          </h2>
+          <CamelotVirtualScroll
+            :items="virtualListItems"
+            item-key="id"
+            max-height="200px"
+            class="rounded-lg border border-outline-variant"
+          >
+            <template #default="{ item }">
+              <div
+                class="flex items-center border-b border-outline-variant px-3 text-sm text-on-surface"
+                :style="{ minHeight: item.tall ? '72px' : '40px' }"
+              >
+                {{ item.label }}{{ item.tall ? '（較高列）' : '' }}
+              </div>
+            </template>
+          </CamelotVirtualScroll>
+          <span class="text-xs text-slate-400">虛擬滾動的 Select（大量選項）：</span>
+          <CamelotSelectV2
+            v-model="virtualValue"
+            :color="currentColorRole"
+            :options="largeOptionsForVirtual"
+            virtual-scroll
+            class="w-full"
+          />
+        </div>
+
+        <!-- Utilities Card -->
+        <div :class="cardClass">
+          <h2 :class="cardTitleClass">
+            Utilities (Counter / Expanded / Image / Popup)
+          </h2>
+          <div class="flex items-center gap-3">
+            <span class="text-xs text-slate-400">Counter:</span>
+            <CamelotNumberCounter
+              v-model="v"
+              :max="10"
+              :min="0"
+            />
+          </div>
+          <div
+            class="w-fit cursor-pointer text-sm text-primary"
+            @click="expanded = !expanded"
+          >
+            ▸ Toggle Expanded
+          </div>
+          <CamelotExpanded :expanded="expanded">
+            <div class="h-24 rounded-lg bg-gradient-to-b from-primary/40 to-primary/5" />
+          </CamelotExpanded>
+          <div class="flex items-center gap-3">
+            <div class="h-24 w-24 overflow-hidden rounded-lg border border-outline-variant">
+              <CamelotImageV2
+                :src="url"
+                class="h-full w-full object-cover"
+              >
+                <template #error>
+                  <span class="flex h-full w-full items-center justify-center bg-surface-container text-xs text-error">load error</span>
+                </template>
+              </CamelotImageV2>
+            </div>
+            <CamelotPopupV2>
+              <CamelotButton
+                :color="currentColorRole"
+                label="Open Popup"
+              />
+              <template #popup>
+                <div class="flex flex-col gap-2 rounded-lg border border-outline-variant bg-surface px-4 py-3 text-sm text-on-surface shadow-lg">
+                  <span>客戶資料</span>
+                  <span>我的最愛</span>
+                  <span>登出</span>
+                </div>
+              </template>
+            </CamelotPopupV2>
+          </div>
+        </div>
+
+        <!-- Routing Card（useCamelotRouter） -->
+        <div :class="cardClass">
+          <h2 :class="cardTitleClass">
+            Routing (useCamelotRouter)
+          </h2>
+          <div class="flex flex-col gap-2 text-xs text-slate-400">
+            <span>canBack(): {{ canBack() }}</span>
+            <span class="break-all">baseUrl: {{ useBaseUrl() }}</span>
+          </div>
+          <div class="flex flex-wrap gap-3">
+            <CamelotButton
+              :color="currentColorRole"
+              label="前往 /page/1"
+              @click="toPath('/page/1').to()"
+            />
+            <CamelotButton
+              :color="currentColorRole"
+              is-container
+              label="上一頁 back()"
+              :disabled="!canBack()"
+              @click="back()"
+            />
+            <CamelotButton
+              :color="currentColorRole"
+              is-container
+              label="go to /dialog"
+              @click="toPath('/dialog').to()"
+            />
+          </div>
+        </div>
       </div>
 
       <!-- Demo dialog overlays -->
@@ -569,6 +982,7 @@
           </p>
           <CamelotMenu
             v-model="menuActive"
+            :color="currentColorRole"
             :items="menuItems"
             default-expand-all
           />
@@ -597,330 +1011,6 @@
         </div>
       </CamelotDrawer>
     </div>
-
-    <!-- Legacy / Extended components test section -->
-    <div class="p-6">
-      {{ canBack() }}
-      <button
-        class="text-blue-700 bg-blue-200 border border-blue-700 rounded-2xl p-2"
-        @click="toPath('/page/1').to()"
-      >
-        to page1
-      </button>
-      <div class="text-primary">
-        {{ useBaseUrl() }}
-      </div>
-      <div
-        class="text-primary cursor-pointer"
-        @click="useColorMode().value = 'light'"
-      >
-        light
-      </div>
-      <div
-        class="text-primary cursor-pointer"
-        @click="useColorMode().value = 'dark'"
-      >
-        dark
-      </div>
-      <button
-        type="button"
-        @click="useRouter().push('/dialog')"
-      >
-        go to dialog
-      </button>
-
-      <CamelotNumberCounter
-        v-model="v"
-        class="w-4"
-        :max="10"
-        :min="0"
-        min-step-by-value
-        used-min-step-by-value
-      />
-
-      <input v-model="v">
-
-      <CamelotTabs
-        v-model="tabSelected"
-        class="top-0 sticky bg-surface py-2 px-2 z-10 shadow"
-        :class="{
-          'drop-shadow': expanded,
-        }"
-        :options="data"
-        display-key="name"
-        trigger="hover"
-      />
-      <CamelotInput />
-
-      <CamelotSelectV2
-        v-model="department"
-        class="w-full"
-      />
-
-      <CamelotSelectV2
-        v-model="virtualValue"
-        :options="largeOptionsForVirtual"
-        virtual-scroll
-        class="w-full"
-      />
-
-      <CamelotSelectV2
-        v-model="department"
-        :options="options"
-        :options-container-max-height="250"
-        options-container-class="bg-gray-100 shadow-inner"
-        class="w-fit ml-4"
-      >
-        <!-- 自定義 Header -->
-        <template #header="{ searchValue: sVal, setSearchValue: setSVal }">
-          <div class="bg-blue-50/50 p-3 flex flex-col gap-2 border-b border-blue-100">
-            <span class="text-blue-800 font-bold text-sm flex items-center gap-1">
-              <span>✨</span> 客製化專屬標題區塊
-            </span>
-            <div class="relative">
-              <span class="absolute left-3 top-1/2 -translate-y-1/2 text-blue-500 text-sm">🔍</span>
-              <input
-                :value="sVal"
-                type="text"
-                placeholder="試著在這裡輸入條件..."
-                class="w-full py-2 pl-9 pr-3 bg-white border border-blue-200 rounded outline-none focus:border-blue-500 text-sm shadow-sm transition-colors"
-                @input="(e) => setSVal((e.target as HTMLInputElement).value)"
-                @click.stop
-              >
-            </div>
-          </div>
-        </template>
-
-        <!-- 自定義 Option -->
-        <template #option="{ data: itemData, isSelected }">
-          <div
-            class="flex items-center gap-3 p-2 my-1 rounded-lg cursor-pointer transition-all w-full"
-            :class="[
-              isSelected ? 'bg-blue-100/50 border border-blue-200' : 'hover:bg-slate-100 border border-transparent',
-            ]"
-          >
-            <div
-              class="w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition-colors"
-              :class="isSelected ? 'bg-blue-500 text-white shadow-md' : 'bg-slate-200 text-slate-500'"
-            >
-              {{ itemData.name ? itemData.name.charAt(0) : '?' }}
-            </div>
-            <div class="flex flex-col">
-              <span
-                class="text-sm font-medium transition-colors"
-                :class="isSelected ? 'text-blue-700' : 'text-slate-700'"
-              >
-                {{ itemData.name || itemData.label }}
-              </span>
-              <span class="text-xs text-slate-400">部門代號: {{ itemData.value }}</span>
-            </div>
-            <!-- 勾選圖標 (右靠) -->
-            <div
-              v-if="isSelected"
-              class="ml-auto text-blue-500 px-2 shrink-0"
-            >
-              ✓
-            </div>
-          </div>
-        </template>
-      </CamelotSelectV2>
-
-      <CamelotSteps
-        v-model="step"
-        :steps="[
-          '確認商品',
-          '填寫資料',
-          '訂購完成',
-        ]"
-        enable-change-by-click
-      >
-        <template #dot="{ index, isComplete }">
-          <div
-            class="w-7 aspect-square bg-white rounded-full flex justify-center items-center"
-            :class="{ 'bg-yellow-500!': isComplete }"
-          >
-            <span
-              class=" text-red-500 "
-              :class="{ 'text-blue-500!': isComplete }"
-            >{{ index }}</span>
-          </div>
-        </template>
-      </CamelotSteps>
-      <div class="text-on-surface">
-        {{ step }}
-      </div>
-      <div
-        class="cursor-pointer"
-        @click="expanded = !expanded"
-      >
-        Expanded
-      </div>
-
-      <CamelotExpanded :expanded="expanded">
-        <template #header>
-          <div>
-            Expanded
-          </div>
-        </template>
-        <div class="bg-linear-to-b from-red-500 to-blue-500 h-28" />
-      </CamelotExpanded>
-
-      <div class="w-40 h-60 rounded-2xl overflow-hidden ">
-        <CamelotSkeleton />
-      </div>
-
-      <div class="w-40 h-40">
-        <CamelotImageV2
-          :src="url"
-          class="w-full h-full object-scale-down"
-        >
-          <template #error>
-            <span class="flex w-full h-full bg-black text-red-600">loading image error</span>
-          </template>
-        </CamelotImageV2>
-      </div>
-
-      <div class="w-40 h-40">
-        <CamelotImageV2
-          :src="url"
-          class="w-full h-full"
-          hover-show-full-image
-        >
-          <template #error>
-            <span class="flex w-full h-full bg-black text-red-600">loading image error</span>
-          </template>
-        </CamelotImageV2>
-      </div>
-
-      isOnBottom: {{ isOnBottom }}
-
-      <CamelotDateV2
-        placeholder="請選擇日期"
-        :get-day-attributes="getDayAttributes"
-      />
-      <CamelotDateRangeV2
-        :multi-calendars="true"
-        :get-day-attributes="getDayAttributes"
-      />
-
-      <CamelotPopupV2
-        class="ml-10"
-      >
-        <div class="text-primary">
-          Open PopupV2
-        </div>
-        <template #popup>
-          <div class=" flex flex-col border border-outline-variant min-w-[205px] rounded-lg bg-surface gap-6 py-3 px-4 overflow-hidden">
-            <span
-              type="content1"
-              single-line
-            >
-              客戶資料
-            </span>
-            <span type="content1">
-              我的最愛
-            </span>
-            <span type="content1">
-              登出
-            </span>
-          </div>
-        </template>
-      </CamelotPopupV2>
-
-      <CamelotPopupV2 class="ml-10">
-        <div class="text-primary">
-          Open PopupV2 (Fallback)
-        </div>
-        <template #popup>
-          <div class="h-[100px] bg-blue-400 text-primary">
-            HIHI
-          </div>
-        </template>
-      </CamelotPopupV2>
-
-      <div class="w-40 h-40">
-        <CamelotImageV2
-          src="https://123"
-          class="w-full h-full object-scale-down "
-        >
-          <template #error>
-            <span class="flex w-full h-full bg-black text-red-600">loading image error</span>
-          </template>
-        </CamelotImageV2>
-      </div>
-
-      <CamelotSelectV2
-        v-model="department"
-        :options="options"
-      />
-
-      <CamelotSelectV2
-        v-model="department"
-        :options="options"
-        :searchable="false"
-        class="w-fit"
-        popup-width-mode="same-target"
-      >
-        <div
-          class="w-[200px] border bg-background text-black-700 border-black-300 focus:border-primary-500 outline-none rounded-lg px-4 py-2 text-base caret-primary-500 flex"
-        >
-          <span class="flex-1">{{ department }}</span>
-        </div>
-      </CamelotSelectV2>
-
-      <span>向下相容</span>
-      <CamelotBreakpoints>
-        <template
-          #default="{
-            isMobile,
-            isTablet,
-            isLaptop,
-            isDesktop,
-          }"
-        >
-          <div class="flex flex-col gap-4 ">
-            <span class="text-primary">isMobile:{{ isMobile }}</span>
-            <span class="text-primary">isTablet:{{ isTablet }}</span>
-            <span class="text-primary">isLaptop:{{ isLaptop }}</span>
-            <span class="text-primary">isDesktop:{{ isDesktop }}</span>
-          </div>
-        </template>
-
-        <template #mobile>
-          mobile
-        </template>
-
-        <template #laptop>
-          laptop
-        </template>
-      </CamelotBreakpoints>
-
-      <CamelotBreakpoints disabled-downward>
-        <template
-          #default="{
-            isMobile,
-            isTablet,
-            isLaptop,
-            isDesktop,
-          }"
-        >
-          <div class="flex flex-col gap-4">
-            <span class="text-primary">isMobile:{{ isMobile }}</span>
-            <span class="text-primary">isTablet:{{ isTablet }}</span>
-            <span class="text-primary">isLaptop:{{ isLaptop }}</span>
-            <span class="text-c-test">isDesktop:{{ isDesktop }}</span>
-          </div>
-        </template>
-
-        <template #mobile>
-          mobile
-        </template>
-
-        <template #laptop>
-          laptop
-        </template>
-      </CamelotBreakpoints>
-    </div>
   </div>
 </template>
 
@@ -934,7 +1024,7 @@ const getDayAttributes = (date: Date) => {
 }
 
 const {
-  toPath, canBack,
+  toPath, canBack, back,
 } = useCamelotRouter()
 const loading = useLoading()
 
@@ -1006,9 +1096,109 @@ const largeOptionsForVirtual = ref(
 
 // Demo specific state
 const {
-  themeMode, colorMode, setPrimaryColor, setThemeColor,
+  themeMode, colorMode, setPrimaryColor, setThemeColor, triggerThemeTransition,
 } = useCamelotTheme()
 const currentColorRole = ref<'primary' | 'secondary' | 'tertiary' | 'error' | 'info' | 'warning' | 'success'>('primary')
+
+// 控制面板選項（以 Camelot 元件渲染，跟著主題切換）
+const themeOptions = [
+  {
+    value: 'material',
+    label: 'Material 3',
+  },
+  {
+    value: 'cupertino',
+    label: 'Cupertino',
+  },
+  {
+    value: 'scifi',
+    label: 'Sci-Fi HUD',
+  },
+  {
+    value: 'aqua',
+    label: 'Aqua Pill',
+  },
+] as const
+const colorModeOptions = [
+  {
+    value: 'light',
+    label: 'Light',
+  },
+  {
+    value: 'dark',
+    label: 'Dark',
+  },
+  {
+    value: 'auto',
+    label: 'System',
+  },
+] as const
+const colorRoles = ['primary', 'secondary', 'tertiary', 'error', 'warning', 'success'] as const
+
+// Tag / Breadcrumb / Timeline / Notification demos
+const tags = ref(['Vue', 'Nuxt', 'Tailwind'])
+const breadcrumbItems = [
+  {
+    label: '首頁',
+    value: 'home',
+  },
+  {
+    label: '商品',
+    value: 'products',
+  },
+  {
+    label: '飲料',
+    value: 'drinks',
+  },
+  {
+    label: '珍珠奶茶',
+    value: 'item',
+  },
+]
+const timelineItems = [
+  {
+    title: '下單',
+    content: '已收到您的訂單',
+  },
+  {
+    title: '備貨',
+    content: '商品整理中',
+  },
+  {
+    title: '出貨',
+    content: '已交付物流',
+  },
+  {
+    title: '送達',
+    content: '包裹已送達',
+  },
+]
+const toastPositions = [
+  'top-left', 'top', 'top-right',
+  'left', 'center', 'right',
+  'bottom-left', 'bottom', 'bottom-right',
+] as const
+const toastTypes = ['info', 'success', 'warning', 'error'] as const
+const notify = (position: typeof toastPositions[number], type: typeof toastTypes[number] = 'info') => {
+  useCamelotToast().open({
+    title: type === 'info' ? '通知' : type,
+    message: `顯示於 ${position}`,
+    position,
+    type,
+    duration: 3000,
+    action: {
+      label: '查看',
+      handler: () => useCamelotToast().open({
+        message: '已查看',
+        type: 'success',
+        position: 'top',
+      }),
+    },
+  })
+}
+
+// 切換色彩角色時也觸發顏色漸變
+watch(currentColorRole, () => triggerThemeTransition())
 const switchVal = ref(false)
 const checkboxVal = ref(false)
 const inputTextVal = ref('')
@@ -1230,6 +1420,54 @@ const tableData = ref(
     status: i % 3 === 0 ? 'inactive' : 'active',
   })),
 )
+
+// Carousel demo
+const carouselEffects = ['slide', 'fade', 'zoom', 'coverflow', 'cardStack', 'flip'] as const
+const carouselEffect = ref<typeof carouselEffects[number]>('slide')
+const carouselIndex = ref(0)
+const carouselLoop = ref(true)
+const carouselAutoplay = ref(false)
+const carouselPeek = ref(0)
+const carouselArrows = ref(true)
+const carouselDots = ref(true)
+const carouselVertical = ref(false)
+const carouselItems = ref(
+  Array.from({ length: 6 }).map((_, i) => ({
+    id: i,
+    title: `Slide ${i + 1}`,
+    hue: (i * 60) % 360,
+  })),
+)
+
+const textareaVal = ref('')
+
+// DatePicker time demo
+const dateTimeSec = ref(new Date())
+const dateTime12 = ref(new Date())
+const dateTimeHour = ref(new Date())
+const dateRangeTimeVal = ref<[Date, Date] | null>(null)
+
+// Slider demo
+const sliderVal = ref(40)
+const sliderRangeVal = ref<[number, number]>([20, 70])
+const sliderStepVal = ref(4)
+
+// VirtualScroll demo：可變高度的長清單
+const virtualListItems = ref(
+  Array.from({ length: 500 }).map((_, i) => ({
+    id: i,
+    label: `項目 ${i + 1}`,
+    tall: i % 5 === 0,
+  })),
+)
+
+// Pagination + Table 結合：父層自行切片
+const tablePage = ref(1)
+const tablePageSize = ref(5)
+const pagedTableData = computed(() => {
+  const start = (tablePage.value - 1) * tablePageSize.value
+  return tableData.value.slice(start, start + tablePageSize.value)
+})
 
 const cardClass = computed(() => {
   if (themeMode.value === 'scifi') {

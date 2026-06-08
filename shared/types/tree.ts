@@ -10,6 +10,8 @@ export interface CamelotTreeNode<T = unknown> {
 /** Tree 透過 provide/inject 傳給遞迴 TreeNode 的上下文 */
 export interface CamelotTreeContext {
   checkable: boolean
+  /** 色彩角色（傳給 Checkbox） */
+  color: CamelotColorRole
   /** 消費端是否提供了自訂 node slot（決定預設標籤是否由 Checkbox 渲染） */
   hasNodeSlot: boolean
   isChecked: (node: CamelotTreeNode) => boolean

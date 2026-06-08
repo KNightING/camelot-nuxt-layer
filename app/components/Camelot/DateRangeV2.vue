@@ -1,143 +1,241 @@
 <template>
-  <CamelotPopupV2
-    v-model:open="open"
-    manual
-    disabled-same-target-width
-    disabled-close-when-scrolling
-    :disabled="disabled"
-    disabled-shadow
-    :popup-class="popupShadowClass"
-    :z-index="selectZIndex"
+  <div
+    class="flex w-full flex-col gap-1.5"
+    :class="roleColorClass"
   >
-    <slot
-      name="default"
-      :display-value="displayValue"
-      :open="open"
-      :disabled="disabled"
-      :toggle="togglePopup"
-    >
-      <label
-        ref="triggerRef"
-        class="group flex w-fit cursor-pointer items-center gap-2 px-4 transition-colors"
-        :class="[
-          triggerClass,
-          {
-            'border-primary': open && themeMode !== 'aqua',
-            'aqua-glow': open && themeMode === 'aqua',
-            'border-error!': isError,
-            'bg-gray-200! opacity-50': disabled,
-          },
-        ]"
-        @click="togglePopup"
-      >
-        <IMaterialSymbolsCalendarMonthRounded class="w-5 h-5 text-outline group-hover:text-primary transition-colors shrink-0" />
-        <div class="flex-1 flex items-center gap-1 overflow-hidden ">
-          <input
-            v-bind="$attrs"
-            :value="startDisplay"
-            type="text"
-            class=" min-w-0 w-[14ch] flex-1 text-on-surface bg-transparent placeholder:text-on-surface/50 outline-none text-base caret-primary appearance-none cursor-pointer"
-            :class="{ 'text-black!': disabled }"
-            placeholder="請選擇開始日期"
-            readonly
-          >
-          <div class="py-2 px-1  text-outline group-hover:text-primary">
-            <span>~</span>
-          </div>
-          <input
-            v-bind="$attrs"
-            :value="endDisplay"
-            type="text"
-            class=" min-w-0 w-[14ch] flex-1 text-on-surface bg-transparent placeholder:text-on-surface/50 outline-none text-base caret-primary appearance-none cursor-pointer"
-            :class="{ 'text-black!': disabled }"
-            placeholder="請選擇結束日期"
-            readonly
-          >
-        </div>
-      </label>
-    </slot>
+    <span
+      v-if="label"
+      class="pl-1 text-sm font-medium text-on-surface"
+    >{{ label }}<span
+      v-if="required"
+      class="ml-0.5 text-error"
+    >*</span></span>
 
-    <template #popup>
-      <div
-        ref="popupRef"
-        class="flex flex-col sm:flex-row"
-        :class="[panelClass, popupPanelShadowFix]"
-        @click.stop
+    <CamelotPopupV2
+      v-model:open="open"
+      manual
+      disabled-same-target-width
+      disabled-close-when-scrolling
+      :disabled="disabled"
+      disabled-shadow
+      :popup-class="popupShadowClass"
+      :z-index="selectZIndex"
+    >
+      <slot
+        name="default"
+        :display-value="displayValue"
+        :open="open"
+        :disabled="disabled"
+        :toggle="togglePopup"
       >
-        <div class="flex flex-col sm:flex-row">
+        <label
+          ref="triggerRef"
+          class="group flex w-full cursor-pointer items-center gap-2 px-4 py-2 transition-colors"
+          :class="[
+            triggerClass,
+            {
+              'border-[var(--cml-color-current-color)]': open && themeMode !== 'aqua',
+              'aqua-glow': open && themeMode === 'aqua',
+              'border-error!': isError,
+              'bg-gray-200! opacity-50': disabled,
+            },
+          ]"
+          @click="togglePopup"
+        >
+          <IMaterialSymbolsCalendarMonthRounded class="w-5 h-5 text-outline group-hover:text-[var(--cml-color-current-color)] transition-colors shrink-0" />
+          <div class="flex items-center gap-1 overflow-hidden">
+            <input
+              v-bind="$attrs"
+              :value="startDisplay"
+              type="text"
+              class="min-w-0 text-on-surface bg-transparent placeholder:text-on-surface/50 outline-none text-base caret-[var(--cml-color-current-color)] appearance-none cursor-pointer"
+              :class="[{ 'text-black!': disabled }, startDisplay ? 'w-[10.5ch]' : 'w-[14ch]']"
+              placeholder="請選擇起日"
+              readonly
+            >
+            <div class="px-1 text-outline group-hover:text-[var(--cml-color-current-color)]">
+              <span>~</span>
+            </div>
+            <input
+              v-bind="$attrs"
+              :value="endDisplay"
+              type="text"
+              class="min-w-0 text-on-surface bg-transparent placeholder:text-on-surface/50 outline-none text-base caret-[var(--cml-color-current-color)] appearance-none cursor-pointer"
+              :class="[{ 'text-black!': disabled }, endDisplay ? 'w-[10.5ch]' : 'w-[14ch]']"
+              placeholder="請選擇迄日"
+              readonly
+            >
+          </div>
+        </label>
+      </slot>
+
+      <template
+        v-if="showType === 'popup'"
+        #popup
+      >
+        <div
+          ref="popupRef"
+          class="flex flex-col"
+          :class="[roleColorClass, panelClass, popupPanelShadowFix]"
+          @click.stop
+        >
+          <div class="flex flex-col sm:flex-row">
+            <CamelotInternalCalendar
+              v-model:range-value="internalValue"
+              v-model:view-date="viewDate"
+              is-range
+              hide-time
+              :enable-time="enableTime"
+              :time-precision="timePrecision"
+              :hour-format="hourFormat"
+              :hide-next-arrow="showSecondCalendar"
+              :hide-next-month="showSecondCalendar"
+              :min-date="minDate"
+              :max-date="maxDate"
+              :get-day-attributes="getDayAttributes"
+              @update:range-value="onRangeSelect"
+            >
+              <template
+                v-for="(_, name) in $slots"
+                #[name]="slotProps"
+              >
+                <slot
+                  :name="name"
+                  v-bind="slotProps"
+                />
+              </template>
+            </CamelotInternalCalendar>
+            <CamelotInternalCalendar
+              v-if="showSecondCalendar"
+              v-model:range-value="internalValue"
+              is-range
+              :enable-time="enableTime"
+              :time-precision="timePrecision"
+              :hour-format="hourFormat"
+              hide-time
+              hide-prev-arrow
+              hide-prev-month
+              :view-date="nextMonthViewDate"
+              :min-date="minDate"
+              :max-date="maxDate"
+              :get-day-attributes="getDayAttributes"
+              @update:view-date="onNextMonthViewDateUpdate"
+              @update:range-value="onRangeSelect"
+            >
+              <template
+                v-for="(_, name) in $slots"
+                #[name]="slotProps"
+              >
+                <slot
+                  :name="name"
+                  v-bind="slotProps"
+                />
+              </template>
+            </CamelotInternalCalendar>
+          </div>
+
+          <!-- 起/迄時間：置中於月曆之下；雙月曆並排、單月曆垂直堆疊 -->
+          <div
+            v-if="enableTime"
+            class="mt-1 flex items-center justify-center border-t border-outline px-3 py-3"
+            :class="showSecondCalendar ? 'flex-wrap gap-x-8 gap-y-2' : 'flex-col gap-2'"
+          >
+            <div class="flex items-center gap-2">
+              <span class="w-6 text-xs text-outline">起</span>
+              <CamelotInternalTimeRow
+                v-model:hours="startTime.t.h"
+                v-model:minutes="startTime.t.m"
+                v-model:seconds="startTime.t.s"
+                :precision="timePrecision"
+                :hour-format="hourFormat"
+                @change="startTime.apply"
+              />
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-6 text-xs text-outline">迄</span>
+              <CamelotInternalTimeRow
+                v-model:hours="endTime.t.h"
+                v-model:minutes="endTime.t.m"
+                v-model:seconds="endTime.t.s"
+                :precision="timePrecision"
+                :hour-format="hourFormat"
+                @change="endTime.apply"
+              />
+            </div>
+          </div>
+        </div>
+      </template>
+
+      <CamelotBaseDialogV2
+        v-if="showType === 'dialog'"
+        v-model:open="open"
+      >
+        <!-- dialog 模式：BaseDialogV2 已提供主題外框；小螢幕/橫向時可捲動避免被裁切 -->
+        <div class="max-h-[82dvh] overflow-y-auto overscroll-contain">
           <CamelotInternalCalendar
             v-model:range-value="internalValue"
             v-model:view-date="viewDate"
+            :class="roleColorClass"
             is-range
-            hide-next-arrow
-            hide-next-month
+            hide-time
+            :enable-time="enableTime"
+            :time-precision="timePrecision"
+            :hour-format="hourFormat"
             :min-date="minDate"
             :max-date="maxDate"
             :get-day-attributes="getDayAttributes"
             @update:range-value="onRangeSelect"
-          />
-          <CamelotInternalCalendar
-            v-if="multiCalendars"
-            v-model:range-value="internalValue"
-            is-range
-            hide-prev-arrow
-            hide-prev-month
-            class="hidden sm:block"
-            :view-date="nextMonthViewDate"
-            :min-date="minDate"
-            :max-date="maxDate"
-            :get-day-attributes="getDayAttributes"
-            @update:view-date="onNextMonthViewDateUpdate"
-            @update:range-value="onRangeSelect"
-          />
-        </div>
-
-        <div
-          v-if="!autoApply"
-          class="p-3 border-t border-outline flex justify-end gap-2 bg-surface-container-lowest"
-        >
-          <button
-            type="button"
-            class="px-4 py-2 rounded-lg text-primary hover:bg-primary/5 transition-colors text-sm font-medium"
-            @click="open = false"
           >
-            取消
-          </button>
-          <button
-            type="button"
-            class="px-4 py-2 rounded-lg bg-primary text-on-primary hover:bg-primary/90 transition-colors text-sm font-medium shadow-sm"
-            @click="applyRange"
-          >
-            確定
-          </button>
-        </div>
-      </div>
-    </template>
+            <template
+              v-for="(_, name) in $slots"
+              #[name]="slotProps"
+            >
+              <slot
+                :name="name"
+                v-bind="slotProps"
+              />
+            </template>
+          </CamelotInternalCalendar>
 
-    <CamelotBaseDialogV2
-      v-if="showType === 'dialog'"
-      v-model:open="open"
-    >
-      <div
-        class="overflow-hidden"
-        :class="panelClass"
-      >
-        <CamelotInternalCalendar
-          v-model:range-value="internalValue"
-          v-model:view-date="viewDate"
-          is-range
-          :min-date="minDate"
-          :max-date="maxDate"
-          :get-day-attributes="getDayAttributes"
-          @update:range-value="onRangeSelect"
-        />
-      </div>
-    </CamelotBaseDialogV2>
-  </CamelotPopupV2>
+          <!-- 單月曆（手機）：起/迄垂直置中於月曆之下 -->
+          <div
+            v-if="enableTime"
+            class="mt-1 flex flex-col items-center gap-2 border-t border-outline px-3 py-3"
+          >
+            <div class="flex items-center gap-2">
+              <span class="w-6 text-xs text-outline">起</span>
+              <CamelotInternalTimeRow
+                v-model:hours="startTime.t.h"
+                v-model:minutes="startTime.t.m"
+                v-model:seconds="startTime.t.s"
+                :precision="timePrecision"
+                :hour-format="hourFormat"
+                @change="startTime.apply"
+              />
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-6 text-xs text-outline">迄</span>
+              <CamelotInternalTimeRow
+                v-model:hours="endTime.t.h"
+                v-model:minutes="endTime.t.m"
+                v-model:seconds="endTime.t.s"
+                :precision="timePrecision"
+                :hour-format="hourFormat"
+                @change="endTime.apply"
+              />
+            </div>
+          </div>
+        </div>
+      </CamelotBaseDialogV2>
+    </CamelotPopupV2>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { format as formatDate, addMonths, subMonths, isSameDay } from 'date-fns'
+import {
+  format as formatDate, addMonths, subMonths, isSameDay,
+  setHours, setMinutes, setSeconds, getHours, getMinutes, getSeconds,
+} from 'date-fns'
 import type { CalendarDayAttributes } from './Internal/Calendar.vue'
 
 const props = withDefaults(defineProps<{
@@ -152,6 +250,12 @@ const props = withDefaults(defineProps<{
   autoApply?: boolean
   displayFormat?: (dates: [Date, Date]) => string
   format?: string
+  enableTime?: boolean
+  timePrecision?: 'hour' | 'minute' | 'second'
+  hourFormat?: '12' | '24'
+  color?: CamelotColorRole
+  label?: string
+  required?: boolean
   getDayAttributes?: (date: Date, dayOfWeek: number) => CalendarDayAttributes | undefined | null
 }>(), {
   showType: 'auto',
@@ -159,7 +263,23 @@ const props = withDefaults(defineProps<{
   multiCalendars: true,
   autoApply: true,
   format: 'yyyy-MM-dd',
+  enableTime: false,
+  timePrecision: 'second',
+  hourFormat: '24',
+  color: 'primary',
 })
+
+// 含時間時自動延伸顯示格式
+const effectiveFormat = computed(() => {
+  if (!props.enableTime) return props.format
+  let t = props.hourFormat === '12' ? 'hh' : 'HH'
+  if (props.timePrecision !== 'hour') t += ':mm'
+  if (props.timePrecision === 'second') t += ':ss'
+  if (props.hourFormat === '12') t += ' a'
+  return `${props.format} ${t}`
+})
+
+const roleColorClass = useCamelotRoleColorClass(() => props.color)
 
 const model = defineModel<[Date, Date] | null>()
 const open = ref(false)
@@ -202,14 +322,48 @@ const internalValue = ref<(Date | null)[]>(model.value ? [model.value[0], model.
 const viewDate = ref(new Date())
 const nextMonthViewDate = computed(() => addMonths(viewDate.value, 1))
 
+// 起/迄時間狀態（綁定到 internalValue 端點），時間區塊渲染於兩個月曆之下而非月曆內
+const makeTime = (idx: 0 | 1) => {
+  const t = reactive({
+    h: 0,
+    m: 0,
+    s: 0,
+  })
+  watch(() => internalValue.value[idx], (val) => {
+    if (val) {
+      const d = new Date(val)
+      t.h = getHours(d)
+      t.m = getMinutes(d)
+      t.s = getSeconds(d)
+    }
+  }, { immediate: true })
+  const apply = () => {
+    const val = internalValue.value[idx]
+    if (!val) return
+    const nd = setSeconds(setMinutes(setHours(new Date(val), t.h), t.m), t.s)
+    const arr = [...internalValue.value]
+    arr[idx] = nd
+    internalValue.value = arr
+    if (arr[0] && arr[1]) model.value = [arr[0], arr[1]]
+  }
+  return {
+    t,
+    apply,
+  }
+}
+const startTime = makeTime(0)
+const endTime = makeTime(1)
+
 const togglePopup = () => {
   if (props.disabled) return
   open.value = !open.value
 }
 
-// Better outside click handling
+// Better outside click handling（dialog 模式由 BaseDialogV2 自行處理遮罩/Esc 關閉）
 onClickOutside(triggerRef, () => {
-  open.value = false
+  if (showType.value === 'popup') {
+    open.value = false
+  }
 }, {
   ignore: [popupRef],
 })
@@ -239,12 +393,12 @@ watch(open, (isOpen) => {
 
 const startDisplay = computed(() => {
   if (!model.value || !model.value[0]) return ''
-  return formatDate(new Date(model.value[0]), props.format)
+  return formatDate(new Date(model.value[0]), effectiveFormat.value)
 })
 
 const endDisplay = computed(() => {
   if (!model.value || !model.value[1]) return ''
-  return formatDate(new Date(model.value[1]), props.format)
+  return formatDate(new Date(model.value[1]), effectiveFormat.value)
 })
 
 const displayValue = computed(() => {
@@ -272,23 +426,24 @@ const onRangeSelect = (range: (Date | number | null)[] | null | undefined) => {
   internalValue.value = [range[0] as Date | null, range[1] as Date | null]
 
   if (range[0] && range[1]) {
-    if (props.autoApply) {
-      applyRange()
+    // 即時套用（無確定按鈕）；含時間時不自動關閉，讓使用者調整起/迄時間，點外面再關
+    model.value = [range[0] as Date, range[1] as Date]
+    if (props.autoApply && !props.enableTime) {
+      open.value = false
     }
   }
 }
 
-const applyRange = () => {
-  if (internalValue.value[0] && internalValue.value[1]) {
-    model.value = [internalValue.value[0], internalValue.value[1]]
-    open.value = false
-  }
-}
+const { isMobile } = useDeviceBreakpoints()
 
 const showType = computed<'popup' | 'dialog'>(() => {
+  // auto：手機改用置中 modal（dialog），桌機用 popup
   if (props.showType === 'auto') {
-    return 'popup'
+    return isMobile.value ? 'dialog' : 'popup'
   }
   return props.showType ?? 'dialog'
 })
+
+// 第二個月曆是否顯示（多月曆且非手機）。決定第一個月曆是否要自行顯示「下個月」箭頭
+const showSecondCalendar = computed(() => props.multiCalendars && !isMobile.value)
 </script>

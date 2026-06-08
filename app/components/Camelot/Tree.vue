@@ -22,10 +22,12 @@ const props = withDefaults(
     nodes: CamelotTreeNode[]
     checkable?: boolean
     defaultExpandAll?: boolean
+    color?: CamelotColorRole
   }>(),
   {
     checkable: false,
     defaultExpandAll: false,
+    color: 'primary',
   },
 )
 
@@ -94,6 +96,10 @@ const slots = useSlots()
 
 provide<CamelotTreeContext>(CAMELOT_TREE_KEY, {
   checkable: props.checkable,
+  // getter 以保持反應性（color 可於執行期變動）
+  get color() {
+    return props.color
+  },
   hasNodeSlot: !!slots.node,
   isChecked,
   isIndeterminate,

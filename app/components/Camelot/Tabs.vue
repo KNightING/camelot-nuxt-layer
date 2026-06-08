@@ -2,12 +2,15 @@
   <ul
     ref="tabsContainerRef"
     class="flex select-none flex-row flex-nowrap items-center overflow-x-auto text-base font-medium transition-all duration-300 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-    :class="{
-      'relative inline-flex w-auto max-w-full gap-0 rounded-full p-[5px] aqua-track': themeMode === 'aqua',
-      'relative w-full gap-6 border-b border-outline-variant px-2': themeMode === 'material',
-      'relative inline-flex w-auto max-w-full gap-0.5 rounded-lg bg-surface-container-highest p-0.5': themeMode === 'cupertino',
-      'relative w-full gap-2 p-2': themeMode === 'scifi',
-    }"
+    :class="[
+      roleColorClass,
+      {
+        'relative inline-flex w-auto max-w-full gap-0 rounded-full p-[5px] aqua-track': themeMode === 'aqua',
+        'relative w-full gap-6 border-b border-outline-variant px-2': themeMode === 'material',
+        'relative inline-flex w-auto max-w-full gap-0.5 rounded-lg bg-surface-container-highest p-0.5': themeMode === 'cupertino',
+        'relative w-full gap-2 p-2': themeMode === 'scifi',
+      },
+    ]"
   >
     <!-- Sliding indicator (geometry is runtime-measured → stays inline :style) -->
     <div
@@ -15,8 +18,8 @@
       :class="{
         'aqua-fill top-[5px] h-[calc(100%-10px)] rounded-full': themeMode === 'aqua',
         'top-0.5 h-[calc(100%-4px)] rounded-md bg-surface shadow-[0_1px_3px_rgba(0,0,0,0.1)]': themeMode === 'cupertino',
-        'bottom-0 h-[3px] rounded-t-full bg-primary': themeMode === 'material',
-        'bottom-0 h-[2px] bg-primary shadow-[0_0_8px_var(--color-primary)]': themeMode === 'scifi',
+        'bottom-0 h-[3px] rounded-t-full bg-[var(--cml-color-current-color)]': themeMode === 'material',
+        'bottom-0 h-[2px] bg-[var(--cml-color-current-color)] shadow-[0_0_8px_var(--cml-color-current-color)]': themeMode === 'scifi',
       }"
       :style="indicatorStyle"
       aria-hidden="true"
@@ -41,7 +44,7 @@
         <div
           v-if="themeMode === 'aqua'"
           class="relative z-[1] cursor-pointer rounded-full px-6 py-[9px] text-sm font-semibold whitespace-nowrap transition-[color,transform] duration-200 active:scale-95"
-          :class="isSelected(option.value) ? 'text-on-primary' : 'text-on-surface-variant hover:text-primary'"
+          :class="isSelected(option.value) ? 'text-[var(--cml-color-current-on-color)]' : 'text-on-surface-variant hover:text-[var(--cml-color-current-color)]'"
         >
           {{ getText(option) }}
         </div>
@@ -51,8 +54,8 @@
           v-else-if="themeMode === 'scifi'"
           class="relative z-[1] cursor-pointer px-4 py-2 font-mono text-sm tracking-wider uppercase transition-colors duration-200"
           :class="isSelected(option.value)
-            ? 'text-primary [text-shadow:0_0_8px_color-mix(in_srgb,var(--color-primary)_60%,transparent)]'
-            : 'text-[color-mix(in_srgb,var(--color-primary)_55%,white)] hover:text-primary'"
+            ? 'text-[var(--cml-color-current-color)] [text-shadow:0_0_8px_color-mix(in_srgb,var(--cml-color-current-color)_60%,transparent)]'
+            : 'text-[color-mix(in_srgb,var(--cml-color-current-color)_55%,white)] hover:text-[var(--cml-color-current-color)]'"
         >
           {{ getText(option) }}
         </div>
@@ -70,7 +73,7 @@
         <CamelotRippleEffect
           v-else
           class="relative z-[1] cursor-pointer rounded-t-md px-5 py-3 text-sm transition-colors duration-200"
-          :class="isSelected(option.value) ? 'font-semibold text-primary' : 'text-on-surface-variant hover:text-on-surface'"
+          :class="isSelected(option.value) ? 'font-semibold text-[var(--cml-color-current-color)]' : 'text-on-surface-variant hover:text-on-surface'"
         >
           {{ getText(option) }}
         </CamelotRippleEffect>
@@ -86,9 +89,11 @@ const props = withDefaults(
     dataKey?: string
     scrollSmooth?: boolean
     trigger?: 'click' | 'hover' | 'manual'
+    color?: CamelotColorRole
   }>(),
   {
     scrollSmooth: true,
+    color: 'primary',
   },
 )
 
@@ -98,6 +103,7 @@ const emit = defineEmits<{
 }>()
 
 const { themeMode } = useCamelotTheme()
+const roleColorClass = useCamelotRoleColorClass(() => props.color)
 
 const isValidKey = (
   key: string | number | symbol,

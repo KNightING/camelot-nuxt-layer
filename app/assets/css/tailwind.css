@@ -71,12 +71,14 @@
   --color-scrim: var(--cml-c-m3-scrim);
   --color-shadow: var(--cml-c-m3-shadow);
 
-  /* 用於camelot custom scheme的規則 --cml-c-* */
+  /* 用於camelot custom scheme的規則 --cml-c-*（含預設值，未由色系設定時仍有狀態色，不致黑色） */
   --color-test: var(--cml-c-test);
-  --color-warning: var(--cml-c-warning);
-  --color-on-warning: var(--cml-c-on-warning);
-  --color-success: var(--cml-c-success);
-  --color-on-success: var(--cml-c-on-success);
+  --color-info: var(--cml-c-info, #2563eb);
+  --color-on-info: var(--cml-c-on-info, #ffffff);
+  --color-warning: var(--cml-c-warning, #d97706);
+  --color-on-warning: var(--cml-c-on-warning, #ffffff);
+  --color-success: var(--cml-c-success, #16a34a);
+  --color-on-success: var(--cml-c-on-success, #ffffff);
 
   --spacing-header: 3rem;
   --spacing-footer: 30px;
@@ -123,6 +125,26 @@
 
   html img {
     user-select: none;
+  }
+
+  /* 切換主題 / 深淺色 / 色系時的全站顏色漸變過場（由 triggerThemeTransition 暫時加上 class） */
+  html.cml-theme-transitioning *,
+  html.cml-theme-transitioning *::before,
+  html.cml-theme-transitioning *::after {
+    transition:
+      background-color 0.32s var(--ease-ios),
+      color 0.32s var(--ease-ios),
+      border-color 0.32s var(--ease-ios),
+      fill 0.32s var(--ease-ios),
+      stroke 0.32s var(--ease-ios);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html.cml-theme-transitioning *,
+    html.cml-theme-transitioning *::before,
+    html.cml-theme-transitioning *::after {
+      transition: none;
+    }
   }
 
   h1,

@@ -25,14 +25,26 @@
           class="px-2 py-1 rounded-md hover:bg-surface-container font-medium text-lg transition-colors text-on-surface"
           @click="toggleYearPicker"
         >
-          {{ format(viewDate, 'yyyy') }}年
+          <slot
+            name="year-label"
+            :view-date="viewDate"
+            :year="viewDate.getFullYear()"
+          >
+            {{ format(viewDate, 'yyyy') }}年
+          </slot>
         </button>
         <button
           type="button"
           class="px-2 py-1 rounded-md hover:bg-surface-container font-medium text-lg transition-colors text-on-surface"
           @click="toggleMonthPicker"
         >
-          {{ format(viewDate, 'MM') }}月
+          <slot
+            name="month-label"
+            :view-date="viewDate"
+            :month="viewDate.getMonth()"
+          >
+            {{ format(viewDate, 'MM') }}月
+          </slot>
         </button>
       </div>
 
@@ -62,11 +74,17 @@
       <div class="grid grid-cols-7 gap-1 text-center">
         <!-- Weekday Headers -->
         <div
-          v-for="day in weekDays"
+          v-for="(day, wi) in weekDays"
           :key="day"
           class="w-10 aspect-square flex items-center justify-center text-sm font-medium text-outline"
         >
-          {{ day }}
+          <slot
+            name="weekday"
+            :day="day"
+            :index="wi"
+          >
+            {{ day }}
+          </slot>
         </div>
 
         <!-- Days -->
@@ -77,9 +95,9 @@
           :class="[
             (!isDisabled && isVisible) && 'hover:bg-surface-container',
             (isDisabled && isVisible) && 'cursor-not-allowed opacity-30',
-            (isInRange && !isSelected && isVisible) && 'bg-primary/10',
-            (isRangeStart && isVisible) && 'bg-primary/10',
-            (isRangeEnd && isVisible) && 'bg-primary/10',
+            (isInRange && !isSelected && isVisible) && 'bg-[color-mix(in_srgb,var(--cml-color-current-color,var(--color-primary))_10%,transparent)]',
+            (isRangeStart && isVisible) && 'bg-[color-mix(in_srgb,var(--cml-color-current-color,var(--color-primary))_10%,transparent)]',
+            (isRangeEnd && isVisible) && 'bg-[color-mix(in_srgb,var(--cml-color-current-color,var(--color-primary))_10%,transparent)]',
             dayColorClass,
             customClass,
           ]"
@@ -93,7 +111,13 @@
               isSelected ? selectedSurfaceClass : '',
             ]"
           >
-            {{ format(date, 'd') }}
+            <slot
+              name="day"
+              :date="date"
+              :day="Number(format(date, 'd'))"
+              :is-selected="isSelected"
+              :is-today="isToday"
+            >{{ format(date, 'd') }}</slot>
           </span>
           <span
             v-if="isVisible && dayLabel"
@@ -105,39 +129,52 @@
           <div
             v-if="isVisible && isDot"
             class="absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full"
-            :class="{ 'bg-on-primary': isSelected, 'bg-primary': !isSelected && !dotColor }"
+            :class="{ 'bg-[var(--cml-color-current-on-color)]': isSelected, 'bg-[var(--cml-color-current-color)]': !isSelected && !dotColor }"
             :style="dotColor ? { backgroundColor: dotColor } : {}"
           />
         </div>
       </div>
 
-      <!-- Time Picker Section -->
+      <!-- Time Picker Section（可輸入亦可下拉選擇；時/分/秒由下往上關閉；12/24 小時制；數字跟隨 current-color） -->
       <div
-        v-if="enableTime"
-        class="border-t border-outline mt-4 pt-4 flex items-center justify-center gap-4"
+        v-if="enableTime && !hideTime"
+        class="border-t border-outline mt-4 pt-4 flex flex-wrap items-center justify-center gap-x-6 gap-y-2"
       >
-        <label class="flex items-center gap-2">
-          <IMaterialSymbolsScheduleRounded class="w-5 h-5 text-outline" />
-          <div class="flex items-center bg-surface-container rounded-lg p-1">
-            <input
-              v-model="hours"
-              type="number"
-              min="0"
-              max="23"
-              class="w-10 bg-transparent text-center outline-none font-medium"
-              @change="onTimeChange"
-            >
-            <span class="text-outline">:</span>
-            <input
-              v-model="minutes"
-              type="number"
-              min="0"
-              max="59"
-              class="w-10 bg-transparent text-center outline-none font-medium"
-              @change="onTimeChange"
-            >
+        <!-- 單選 -->
+        <CamelotInternalTimeRow
+          v-if="!isRange"
+          v-model:hours="singleTime.t.h"
+          v-model:minutes="singleTime.t.m"
+          v-model:seconds="singleTime.t.s"
+          :precision="timePrecision"
+          :hour-format="hourFormat"
+          @change="singleTime.apply"
+        />
+        <!-- 區間：起 / 迄 -->
+        <template v-else>
+          <div class="flex items-center gap-2">
+            <span class="w-6 text-xs text-outline">起</span>
+            <CamelotInternalTimeRow
+              v-model:hours="startTime.t.h"
+              v-model:minutes="startTime.t.m"
+              v-model:seconds="startTime.t.s"
+              :precision="timePrecision"
+              :hour-format="hourFormat"
+              @change="startTime.apply"
+            />
           </div>
-        </label>
+          <div class="flex items-center gap-2">
+            <span class="w-6 text-xs text-outline">迄</span>
+            <CamelotInternalTimeRow
+              v-model:hours="endTime.t.h"
+              v-model:minutes="endTime.t.m"
+              v-model:seconds="endTime.t.s"
+              :precision="timePrecision"
+              :hour-format="hourFormat"
+              @change="endTime.apply"
+            />
+          </div>
+        </template>
       </div>
     </div>
 
@@ -154,7 +191,13 @@
         :class="index === viewDate.getMonth() ? selectedSurfaceClass : 'text-on-surface'"
         @click="selectMonth(index)"
       >
-        {{ month }}
+        <slot
+          name="month-name"
+          :month="month"
+          :index="index"
+        >
+          {{ month }}
+        </slot>
       </button>
     </div>
 
@@ -166,18 +209,18 @@
       <div class="flex items-center justify-between mb-2">
         <button
           type="button"
-          class="p-1 hover:bg-surface-container rounded-full"
+          class="p-1.5 rounded-full hover:bg-surface-container transition-colors disabled:opacity-30 text-on-surface"
           @click="yearPage--"
         >
-          <IMaterialSymbolsChevronLeftRounded class="w-5 h-5" />
+          <IMaterialSymbolsChevronLeftRounded class="w-6 h-6" />
         </button>
         <span class="text-sm text-outline">{{ yearsRange[0] }} - {{ yearsRange[yearsRange.length - 1] }}</span>
         <button
           type="button"
-          class="p-1 hover:bg-surface-container rounded-full"
+          class="p-1.5 rounded-full hover:bg-surface-container transition-colors disabled:opacity-30 text-on-surface"
           @click="yearPage++"
         >
-          <IMaterialSymbolsChevronRightRounded class="w-5 h-5" />
+          <IMaterialSymbolsChevronRightRounded class="w-6 h-6" />
         </button>
       </div>
       <div class="grid grid-cols-3 gap-2">
@@ -218,8 +261,10 @@ import {
   setMonth,
   setHours,
   setMinutes,
+  setSeconds,
   getHours,
   getMinutes,
+  getSeconds,
   getDay,
 } from 'date-fns'
 
@@ -240,6 +285,12 @@ const props = withDefaults(defineProps<{
   hidePrevMonth?: boolean
   hideNextMonth?: boolean
   enableTime?: boolean
+  /** 時間精細度（由下往上關閉）：hour 僅時、minute 時分、second 時分秒 */
+  timePrecision?: 'hour' | 'minute' | 'second'
+  /** 12 或 24 小時制 */
+  hourFormat?: '12' | '24'
+  /** 隱藏時間區（多月曆 range 時，只在其中一個月曆顯示時間） */
+  hideTime?: boolean
   hidePrevArrow?: boolean
   hideNextArrow?: boolean
   getDayAttributes?: (date: Date, dayOfWeek: number) => CalendarDayAttributes | undefined | null
@@ -247,6 +298,8 @@ const props = withDefaults(defineProps<{
   hidePrevMonth: false,
   hideNextMonth: false,
   enableTime: false,
+  timePrecision: 'second',
+  hourFormat: '24',
   hidePrevArrow: false,
   hideNextArrow: false,
 })
@@ -263,17 +316,45 @@ const monthNames = ['一月', '二月', '三月', '四月', '五月', '六月', 
 // 各風格的「選中態」表面樣式（日期、月份、年份共用）
 const { selectedSurfaceClass } = useCamelotPickerTheme()
 
-const hours = ref(0)
-const minutes = ref(0)
-
-// Sync time from modelValue
-watch(modelValue, (val) => {
-  if (val) {
-    const d = new Date(val)
-    hours.value = getHours(d)
-    minutes.value = getMinutes(d)
+// 時間狀態工廠：綁定到某個日期（單選或區間端點），回傳可雙向綁定的 h/m/s 與套用函式
+const useTimeState = (
+  getDate: () => Date | number | null | undefined,
+  setDate: (d: Date) => void,
+) => {
+  const t = reactive({
+    h: 0,
+    m: 0,
+    s: 0,
+  })
+  watch(getDate, (val) => {
+    if (val) {
+      const d = new Date(val)
+      t.h = getHours(d)
+      t.m = getMinutes(d)
+      t.s = getSeconds(d)
+    }
+  }, { immediate: true })
+  const apply = () => {
+    const val = getDate()
+    if (val) setDate(setSeconds(setMinutes(setHours(new Date(val), t.h), t.m), t.s))
   }
-}, { immediate: true })
+  return {
+    t,
+    apply,
+  }
+}
+
+const singleTime = useTimeState(() => modelValue.value, (d) => {
+  modelValue.value = d
+})
+const startTime = useTimeState(() => rangeValue.value?.[0], (d) => {
+  rangeValue.value = [d, rangeValue.value?.[1] ?? null]
+})
+const endTime = useTimeState(() => rangeValue.value?.[1], (d) => {
+  rangeValue.value = [rangeValue.value?.[0] ?? null, d]
+})
+
+const applyTime = (date: Date) => setSeconds(setMinutes(setHours(date, singleTime.t.h), singleTime.t.m), singleTime.t.s)
 
 const yearsRange = computed(() => {
   const currentYear = new Date().getFullYear() + (yearPage.value * 12)
@@ -345,10 +426,10 @@ const calendarDays = computed(() => {
       dayColorClass = 'text-error'
     }
     else if (isSelected) {
-      dayColorClass = 'text-primary'
+      dayColorClass = 'text-[var(--cml-color-current-color)]'
     }
     else if (isToday) {
-      dayColorClass = 'text-primary'
+      dayColorClass = 'text-[var(--cml-color-current-color)]'
     }
     else if (isCurrentMonth) {
       dayColorClass = 'text-on-surface'
@@ -381,8 +462,9 @@ const calendarDays = computed(() => {
 
 const selectDate = (date: Date) => {
   let finalDate = date
-  if (props.enableTime) {
-    finalDate = setHours(setMinutes(date, minutes.value), hours.value)
+  // 單選含時間：套用 time row 的時間；區間則由起/迄 time row 各自處理
+  if (props.enableTime && !props.isRange) {
+    finalDate = applyTime(date)
   }
 
   // If selecting a date from adjacent month, we might want to switch the view
@@ -410,13 +492,6 @@ const selectDate = (date: Date) => {
   }
   else {
     modelValue.value = finalDate
-  }
-}
-
-const onTimeChange = () => {
-  if (!props.isRange && modelValue.value) {
-    const date = setHours(setMinutes(new Date(modelValue.value), minutes.value), hours.value)
-    modelValue.value = date
   }
 }
 
