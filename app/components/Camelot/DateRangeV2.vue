@@ -58,7 +58,10 @@
       </label>
     </slot>
 
-    <template #popup>
+    <template
+      v-if="showType === 'popup'"
+      #popup
+    >
       <div
         ref="popupRef"
         class="flex flex-col sm:flex-row"
