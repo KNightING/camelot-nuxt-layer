@@ -75,7 +75,7 @@
       >
         <div
           ref="popupRef"
-          class="flex flex-col sm:flex-row"
+          class="flex flex-col"
           :class="[roleColorClass, panelClass, popupPanelShadowFix]"
           @click.stop
         >
@@ -84,6 +84,7 @@
               v-model:range-value="internalValue"
               v-model:view-date="viewDate"
               is-range
+              hide-time
               :enable-time="enableTime"
               :time-precision="timePrecision"
               :hour-format="hourFormat"
@@ -132,6 +133,36 @@
               </template>
             </CamelotInternalCalendar>
           </div>
+
+          <!-- 起/迄時間：置中於月曆之下；雙月曆並排、單月曆垂直堆疊 -->
+          <div
+            v-if="enableTime"
+            class="mt-1 flex items-center justify-center border-t border-outline px-3 py-3"
+            :class="showSecondCalendar ? 'flex-wrap gap-x-8 gap-y-2' : 'flex-col gap-2'"
+          >
+            <div class="flex items-center gap-2">
+              <span class="w-6 text-xs text-outline">起</span>
+              <CamelotInternalTimeRow
+                v-model:hours="startTime.t.h"
+                v-model:minutes="startTime.t.m"
+                v-model:seconds="startTime.t.s"
+                :precision="timePrecision"
+                :hour-format="hourFormat"
+                @change="startTime.apply"
+              />
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-6 text-xs text-outline">迄</span>
+              <CamelotInternalTimeRow
+                v-model:hours="endTime.t.h"
+                v-model:minutes="endTime.t.m"
+                v-model:seconds="endTime.t.s"
+                :precision="timePrecision"
+                :hour-format="hourFormat"
+                @change="endTime.apply"
+              />
+            </div>
+          </div>
         </div>
       </template>
 
@@ -146,6 +177,7 @@
             v-model:view-date="viewDate"
             :class="roleColorClass"
             is-range
+            hide-time
             :enable-time="enableTime"
             :time-precision="timePrecision"
             :hour-format="hourFormat"
@@ -164,6 +196,35 @@
               />
             </template>
           </CamelotInternalCalendar>
+
+          <!-- 單月曆（手機）：起/迄垂直置中於月曆之下 -->
+          <div
+            v-if="enableTime"
+            class="mt-1 flex flex-col items-center gap-2 border-t border-outline px-3 py-3"
+          >
+            <div class="flex items-center gap-2">
+              <span class="w-6 text-xs text-outline">起</span>
+              <CamelotInternalTimeRow
+                v-model:hours="startTime.t.h"
+                v-model:minutes="startTime.t.m"
+                v-model:seconds="startTime.t.s"
+                :precision="timePrecision"
+                :hour-format="hourFormat"
+                @change="startTime.apply"
+              />
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-6 text-xs text-outline">迄</span>
+              <CamelotInternalTimeRow
+                v-model:hours="endTime.t.h"
+                v-model:minutes="endTime.t.m"
+                v-model:seconds="endTime.t.s"
+                :precision="timePrecision"
+                :hour-format="hourFormat"
+                @change="endTime.apply"
+              />
+            </div>
+          </div>
         </div>
       </CamelotBaseDialogV2>
     </CamelotPopupV2>
@@ -171,7 +232,10 @@
 </template>
 
 <script setup lang="ts">
-import { format as formatDate, addMonths, subMonths, isSameDay } from 'date-fns'
+import {
+  format as formatDate, addMonths, subMonths, isSameDay,
+  setHours, setMinutes, setSeconds, getHours, getMinutes, getSeconds,
+} from 'date-fns'
 import type { CalendarDayAttributes } from './Internal/Calendar.vue'
 
 const props = withDefaults(defineProps<{
@@ -257,6 +321,38 @@ const popupRef = useTemplateRef('popupRef')
 const internalValue = ref<(Date | null)[]>(model.value ? [model.value[0], model.value[1]] : [null, null])
 const viewDate = ref(new Date())
 const nextMonthViewDate = computed(() => addMonths(viewDate.value, 1))
+
+// 起/迄時間狀態（綁定到 internalValue 端點），時間區塊渲染於兩個月曆之下而非月曆內
+const makeTime = (idx: 0 | 1) => {
+  const t = reactive({
+    h: 0,
+    m: 0,
+    s: 0,
+  })
+  watch(() => internalValue.value[idx], (val) => {
+    if (val) {
+      const d = new Date(val)
+      t.h = getHours(d)
+      t.m = getMinutes(d)
+      t.s = getSeconds(d)
+    }
+  }, { immediate: true })
+  const apply = () => {
+    const val = internalValue.value[idx]
+    if (!val) return
+    const nd = setSeconds(setMinutes(setHours(new Date(val), t.h), t.m), t.s)
+    const arr = [...internalValue.value]
+    arr[idx] = nd
+    internalValue.value = arr
+    if (arr[0] && arr[1]) model.value = [arr[0], arr[1]]
+  }
+  return {
+    t,
+    apply,
+  }
+}
+const startTime = makeTime(0)
+const endTime = makeTime(1)
 
 const togglePopup = () => {
   if (props.disabled) return
