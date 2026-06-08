@@ -364,6 +364,50 @@
           </div>
         </div>
 
+        <!-- Slider Card -->
+        <div :class="cardClass">
+          <h2 :class="cardTitleClass">
+            Slider / Range (step, marks, tooltip)
+          </h2>
+
+          <div class="flex flex-col gap-1">
+            <span class="text-xs text-slate-400">Single（value = {{ sliderVal }}）</span>
+            <CamelotSlider
+              v-model="sliderVal"
+              :color="currentColorRole"
+              show-tooltip
+            />
+          </div>
+
+          <div class="mt-3 flex flex-col gap-1">
+            <span class="text-xs text-slate-400">Range（{{ sliderRangeVal[0] }} ~ {{ sliderRangeVal[1] }}）</span>
+            <CamelotSlider
+              v-model="sliderRangeVal"
+              range
+              :color="currentColorRole"
+              show-tooltip
+            />
+          </div>
+
+          <div class="mt-3 flex flex-col gap-1">
+            <span class="text-xs text-slate-400">Step 20 + 間隔文字（value = {{ sliderStepVal }}）</span>
+            <CamelotSlider
+              v-model="sliderStepVal"
+              :step="20"
+              :height="8"
+              :marks="[
+                { value: 0, label: '低' },
+                { value: 20, label: '20' },
+                { value: 40, label: '40' },
+                { value: 60, label: '60' },
+                { value: 80, label: '80' },
+                { value: 100, label: '高' },
+              ]"
+              :color="currentColorRole"
+            />
+          </div>
+        </div>
+
         <!-- Carousel Card -->
         <div :class="[cardClass, 'col-span-1 md:col-span-2 lg:col-span-3']">
           <h2 :class="cardTitleClass">
@@ -1125,6 +1169,11 @@ const carouselItems = ref(
     hue: (i * 60) % 360,
   })),
 )
+
+// Slider demo
+const sliderVal = ref(40)
+const sliderRangeVal = ref<[number, number]>([20, 70])
+const sliderStepVal = ref(4)
 
 // VirtualScroll demo：可變高度的長清單
 const virtualListItems = ref(
