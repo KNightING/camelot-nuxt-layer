@@ -399,6 +399,70 @@
           </div>
         </div>
 
+        <!-- Carousel Card -->
+        <div :class="[cardClass, 'col-span-1 md:col-span-2 lg:col-span-3']">
+          <h2 :class="cardTitleClass">
+            Carousel (effects / loop / autoplay / peek)
+          </h2>
+
+          <div class="flex flex-wrap items-center gap-2">
+            <button
+              v-for="eff in carouselEffects"
+              :key="eff"
+              class="rounded-md border px-2.5 py-1 text-xs transition-colors"
+              :class="carouselEffect === eff ? 'border-primary bg-primary/10 text-primary' : 'border-slate-300 dark:border-slate-700 text-slate-500'"
+              @click="carouselEffect = eff"
+            >
+              {{ eff }}
+            </button>
+            <label class="ml-2 flex items-center gap-1 text-xs text-slate-400">
+              <input
+                v-model="carouselLoop"
+                type="checkbox"
+              > loop
+            </label>
+            <label class="flex items-center gap-1 text-xs text-slate-400">
+              <input
+                v-model="carouselAutoplay"
+                type="checkbox"
+              > autoplay
+            </label>
+            <label class="flex items-center gap-1 text-xs text-slate-400">
+              peek
+              <input
+                v-model.number="carouselPeek"
+                type="number"
+                min="0"
+                max="2"
+                class="w-12 rounded border border-slate-300 bg-transparent px-1 dark:border-slate-700"
+              >
+            </label>
+          </div>
+
+          <CamelotCarousel
+            v-model="carouselIndex"
+            :items="carouselItems"
+            item-key="id"
+            :effect="carouselEffect"
+            :loop="carouselLoop"
+            :autoplay="carouselAutoplay"
+            :peek="carouselEffect === 'slide' || carouselEffect === 'coverflow' || carouselEffect === 'zoom' ? carouselPeek : 0"
+            :gap="12"
+            :color="currentColorRole"
+            height="240px"
+          >
+            <template #default="{ item, isActive }">
+              <div
+                class="flex h-full w-full items-center justify-center rounded-2xl text-2xl font-bold text-white transition-shadow"
+                :class="isActive ? 'shadow-xl' : 'shadow'"
+                :style="{ background: `hsl(${item.hue} 70% 55%)` }"
+              >
+                {{ item.title }}
+              </div>
+            </template>
+          </CamelotCarousel>
+        </div>
+
         <!-- Table Card -->
         <div :class="[cardClass, 'col-span-1 md:col-span-2 lg:col-span-3']">
           <h2 :class="cardTitleClass">
@@ -1242,6 +1306,21 @@ const tableData = ref(
     price: `$${100 + i * 15}`,
     phone: `02-1234-${1000 + i}`,
     status: i % 3 === 0 ? 'inactive' : 'active',
+  })),
+)
+
+// Carousel demo
+const carouselEffects = ['slide', 'fade', 'zoom', 'coverflow', 'cardStack', 'flip'] as const
+const carouselEffect = ref<typeof carouselEffects[number]>('slide')
+const carouselIndex = ref(0)
+const carouselLoop = ref(true)
+const carouselAutoplay = ref(false)
+const carouselPeek = ref(0)
+const carouselItems = ref(
+  Array.from({ length: 6 }).map((_, i) => ({
+    id: i,
+    title: `Slide ${i + 1}`,
+    hue: (i * 60) % 360,
   })),
 )
 
