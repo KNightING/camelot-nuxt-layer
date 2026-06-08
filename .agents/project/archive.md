@@ -12,3 +12,4 @@
 | [2604131437-fix-calendar-type-errors](./archive/2604131437-fix-calendar-type-errors.md) | [DateV2, DateRangeV2] 修復 `defineModel` 相關 TypeScript 型別問題（清理歸檔：build 已通過） | 2026-04-13 14:37 | 2026-06-08 16:17 |
 | [2604131441-unify-calendar-colors-and-2-line-label](./archive/2604131441-unify-calendar-colors-and-2-line-label.md) | [Calendar] 統一日色控制 + 支援 2 行 Label（line-clamp-2）（清理歸檔：已實作） | 2026-04-13 14:41 | 2026-06-08 16:17 |
 | [2604131510-refactor-daterange-separate-inputs](./archive/2604131510-refactor-daterange-separate-inputs.md) | [DateRangeV2] 單一顯示改為起訖兩個獨立 Input（清理歸檔：已實作） | 2026-04-13 15:10 | 2026-06-08 16:17 |
+| [2606081628-progress-bar-and-circle](./archive/2606081628-progress-bar-and-circle.md) | [ProgressBar, ProgressCircle, ProgressStage] 三個進度元件（四風格 + 動畫 + determinate/indeterminate、label percent/fraction）；附帶修正 CamelotPopupV2 浮層落影方形裁切（Select/Date/DateRange）與 Select scrollbar 共通化/靠右 | 2026-06-08 16:28 | 2026-06-08 18:43 |
