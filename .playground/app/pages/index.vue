@@ -898,6 +898,37 @@
             </CamelotPopupV2>
           </div>
         </div>
+
+        <!-- Routing Card（useCamelotRouter） -->
+        <div :class="cardClass">
+          <h2 :class="cardTitleClass">
+            Routing (useCamelotRouter)
+          </h2>
+          <div class="flex flex-col gap-2 text-xs text-slate-400">
+            <span>canBack(): {{ canBack() }}</span>
+            <span class="break-all">baseUrl: {{ useBaseUrl() }}</span>
+          </div>
+          <div class="flex flex-wrap gap-3">
+            <CamelotButton
+              :color="currentColorRole"
+              label="前往 /page/1"
+              @click="toPath('/page/1').to()"
+            />
+            <CamelotButton
+              :color="currentColorRole"
+              is-container
+              label="上一頁 back()"
+              :disabled="!canBack()"
+              @click="back()"
+            />
+            <CamelotButton
+              :color="currentColorRole"
+              is-container
+              label="go to /dialog"
+              @click="toPath('/dialog').to()"
+            />
+          </div>
+        </div>
       </div>
 
       <!-- Demo dialog overlays -->
@@ -993,7 +1024,7 @@ const getDayAttributes = (date: Date) => {
 }
 
 const {
-  toPath, canBack,
+  toPath, canBack, back,
 } = useCamelotRouter()
 const loading = useLoading()
 
