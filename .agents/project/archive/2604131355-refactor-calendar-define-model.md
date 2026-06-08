@@ -3,7 +3,7 @@
 - Created: 2026-04-13 13:55
 - Iterated: 2026-04-13 14:11
 - Branch: N/A
-- Completed: [Wait for Finish]
+- Completed: 2026-06-08 16:17 （清理歸檔：功能已於代碼實作並驗證存在）
 
 ## Goals
 1. Refactor `Calendar.vue` to use `defineModel`.
@@ -21,3 +21,15 @@
 
 ## Impacted Files
 - [./app/components/Camelot/Internal/Calendar.vue](./app/components/Camelot/Internal/Calendar.vue)
+
+---
+
+# Tasks for 2604131355
+- [x] Research existing code
+- [x] Create updated implementation plan
+- [ ] Add `getDay` to imports in `Calendar.vue`
+- [ ] Update props to include `isHoliday` and `getDateLabel`
+- [ ] Refactor v-models to `defineModel`
+- [ ] Update `calendarDays` logic for weekends/holidays/labels
+- [ ] Update Template for red text and label display
+- [ ] Run verification checks
