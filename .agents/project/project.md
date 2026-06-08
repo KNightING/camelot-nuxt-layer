@@ -45,10 +45,10 @@ camelot-nuxt-layer/
 
 | Module | Path | Description |
 | :--- | :--- | :--- |
-| UI Components | `app/components/Camelot/` | 36 個核心 UI 元件，涵蓋表單（Input, Select, Date）、對話框（Dialog, BottomSheet, Popup）、動畫（Reveal, Ripple, Skeleton）、日期選擇（DateV2, DateRangeV2）；支援 Material、Cupertino、Sci-Fi、Aqua Pill 風格 |
-| Internal Components | `app/components/Camelot/Internal/` | DateV2 / DateRangeV2 共用的日曆核心（Calendar） |
+| UI Components | `app/components/Camelot/` | 核心 UI 元件，涵蓋表單（Input, Select, Date）、對話框/側欄（Dialog, BottomSheet, Drawer, Popup）、版面/資料/導覽（Tree, Table, Menu）、動畫（Reveal, Ripple, Skeleton）、日期選擇（DateV2, DateRangeV2）；支援 Material、Cupertino、Sci-Fi、**Aqua（Frosted Glass，預設）** 四種主題。詳見 [主題系統 wiki](./wiki/features/theme-system.md) |
+| Internal Components | `app/components/Camelot/Internal/` | DateV2/DateRangeV2 共用日曆核心（Calendar）、Tree 遞迴節點（TreeNode）、Menu 遞迴項目（MenuItem） |
 | Composables | `app/composables/` | 40+ 個共用 Composables，涵蓋 API 封裝、路由管理、色彩主題、表單驗證、串流請求等 |
-| Theme Manager | `app/composables/useCamelotTheme` | 全域風格選擇的狀態管理 |
+| Theme Manager | `app/composables/useCamelotTheme` | 全域風格選擇的狀態管理（預設主題 = aqua） |
 | Nuxt Modules | `modules/` | `tappay`（條件注入 TapPay SDK）、`googleFont`（Noto Sans TC）、`buildHook`、`echartModule`（ECharts 整合） |
 | Server | `server/` | `securityPlugin`（CSP Headers、Nonce 注入、安全 HTTP 標頭）、`api/version`（`GET /api/version`） |
 
@@ -59,6 +59,8 @@ camelot-nuxt-layer/
 | 分類 | 連結 |
 | :--- | :--- |
 | 📋 Wiki 首頁 | [wiki/index.md](./wiki/index.md) |
+| 🎨 主題系統（四風格 + Aqua） | [wiki/features/theme-system.md](./wiki/features/theme-system.md) |
+| 🧱 Drawer/Tree/Table/Menu | [wiki/features/layout-data-components.md](./wiki/features/layout-data-components.md) |
 | 🗓️ 日期選擇器系統 | [wiki/features/calendar.md](./wiki/features/calendar.md) |
 | 🎨 色彩主題系統 | [wiki/features/color-scheme.md](./wiki/features/color-scheme.md) |
 | ⚙️ 環境變數 | [wiki/environment.md](./wiki/environment.md) |
