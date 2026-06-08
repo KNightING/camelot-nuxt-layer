@@ -111,33 +111,54 @@
         </div>
       </div>
 
-      <!-- Time Picker Section -->
+      <!-- Time Picker Section（時 / 分 / 秒，由下往上關閉；支援 12/24 小時制） -->
       <div
         v-if="enableTime"
-        class="border-t border-outline mt-4 pt-4 flex items-center justify-center gap-4"
+        class="border-t border-outline mt-4 pt-4 flex items-center justify-center gap-3"
       >
         <label class="flex items-center gap-2">
-          <IMaterialSymbolsScheduleRounded class="w-5 h-5 text-outline" />
+          <IMaterialSymbolsScheduleRounded class="w-5 h-5 text-outline shrink-0" />
           <div class="flex items-center bg-surface-container rounded-lg p-1">
             <input
-              v-model="hours"
+              :value="displayHour"
               type="number"
-              min="0"
-              max="23"
-              class="w-10 bg-transparent text-center outline-none font-medium"
-              @change="onTimeChange"
+              :min="hourFormat === '12' ? 1 : 0"
+              :max="hourFormat === '12' ? 12 : 23"
+              class="w-10 bg-transparent text-center outline-none font-medium tabular-nums"
+              @change="onHourInput"
             >
-            <span class="text-outline">:</span>
-            <input
-              v-model="minutes"
-              type="number"
-              min="0"
-              max="59"
-              class="w-10 bg-transparent text-center outline-none font-medium"
-              @change="onTimeChange"
-            >
+            <template v-if="timePrecision !== 'hour'">
+              <span class="text-outline">:</span>
+              <input
+                :value="String(minutes).padStart(2, '0')"
+                type="number"
+                min="0"
+                max="59"
+                class="w-10 bg-transparent text-center outline-none font-medium tabular-nums"
+                @change="onMinuteInput"
+              >
+            </template>
+            <template v-if="timePrecision === 'second'">
+              <span class="text-outline">:</span>
+              <input
+                :value="String(seconds).padStart(2, '0')"
+                type="number"
+                min="0"
+                max="59"
+                class="w-10 bg-transparent text-center outline-none font-medium tabular-nums"
+                @change="onSecondInput"
+              >
+            </template>
           </div>
         </label>
+        <button
+          v-if="hourFormat === '12'"
+          type="button"
+          class="rounded-lg bg-surface-container px-3 py-1.5 text-sm font-semibold text-[var(--cml-color-current-color)] transition-colors hover:bg-surface-container-high"
+          @click="toggleMeridiem"
+        >
+          {{ isPM ? 'PM' : 'AM' }}
+        </button>
       </div>
     </div>
 
@@ -218,8 +239,10 @@ import {
   setMonth,
   setHours,
   setMinutes,
+  setSeconds,
   getHours,
   getMinutes,
+  getSeconds,
   getDay,
 } from 'date-fns'
 
@@ -240,6 +263,10 @@ const props = withDefaults(defineProps<{
   hidePrevMonth?: boolean
   hideNextMonth?: boolean
   enableTime?: boolean
+  /** 時間精細度（由下往上關閉）：hour 僅時、minute 時分、second 時分秒 */
+  timePrecision?: 'hour' | 'minute' | 'second'
+  /** 12 或 24 小時制 */
+  hourFormat?: '12' | '24'
   hidePrevArrow?: boolean
   hideNextArrow?: boolean
   getDayAttributes?: (date: Date, dayOfWeek: number) => CalendarDayAttributes | undefined | null
@@ -247,6 +274,8 @@ const props = withDefaults(defineProps<{
   hidePrevMonth: false,
   hideNextMonth: false,
   enableTime: false,
+  timePrecision: 'second',
+  hourFormat: '24',
   hidePrevArrow: false,
   hideNextArrow: false,
 })
@@ -263,8 +292,9 @@ const monthNames = ['一月', '二月', '三月', '四月', '五月', '六月', 
 // 各風格的「選中態」表面樣式（日期、月份、年份共用）
 const { selectedSurfaceClass } = useCamelotPickerTheme()
 
-const hours = ref(0)
+const hours = ref(0) // 內部一律 24 小時制
 const minutes = ref(0)
+const seconds = ref(0)
 
 // Sync time from modelValue
 watch(modelValue, (val) => {
@@ -272,8 +302,46 @@ watch(modelValue, (val) => {
     const d = new Date(val)
     hours.value = getHours(d)
     minutes.value = getMinutes(d)
+    seconds.value = getSeconds(d)
   }
 }, { immediate: true })
+
+const clampNum = (v: number, lo: number, hi: number) => Math.min(Math.max(Number.isFinite(v) ? v : lo, lo), hi)
+
+const isPM = computed(() => hours.value >= 12)
+// 12 小時制顯示用時（1–12）
+const displayHour = computed(() => {
+  if (props.hourFormat !== '12') return hours.value
+  const h = hours.value % 12
+  return h === 0 ? 12 : h
+})
+
+const onHourInput = (e: Event) => {
+  const raw = Number((e.target as HTMLInputElement).value)
+  if (props.hourFormat === '12') {
+    const v = clampNum(raw, 1, 12)
+    const base = v % 12 // 12 → 0
+    hours.value = isPM.value ? base + 12 : base
+  }
+  else {
+    hours.value = clampNum(raw, 0, 23)
+  }
+  onTimeChange()
+}
+const onMinuteInput = (e: Event) => {
+  minutes.value = clampNum(Number((e.target as HTMLInputElement).value), 0, 59)
+  onTimeChange()
+}
+const onSecondInput = (e: Event) => {
+  seconds.value = clampNum(Number((e.target as HTMLInputElement).value), 0, 59)
+  onTimeChange()
+}
+const toggleMeridiem = () => {
+  hours.value = (hours.value + 12) % 24
+  onTimeChange()
+}
+
+const applyTime = (date: Date) => setSeconds(setMinutes(setHours(date, hours.value), minutes.value), seconds.value)
 
 const yearsRange = computed(() => {
   const currentYear = new Date().getFullYear() + (yearPage.value * 12)
@@ -382,7 +450,7 @@ const calendarDays = computed(() => {
 const selectDate = (date: Date) => {
   let finalDate = date
   if (props.enableTime) {
-    finalDate = setHours(setMinutes(date, minutes.value), hours.value)
+    finalDate = applyTime(date)
   }
 
   // If selecting a date from adjacent month, we might want to switch the view
@@ -415,8 +483,7 @@ const selectDate = (date: Date) => {
 
 const onTimeChange = () => {
   if (!props.isRange && modelValue.value) {
-    const date = setHours(setMinutes(new Date(modelValue.value), minutes.value), hours.value)
-    modelValue.value = date
+    modelValue.value = applyTime(new Date(modelValue.value))
   }
 }
 

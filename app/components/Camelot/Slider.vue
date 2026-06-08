@@ -24,8 +24,8 @@
       <span
         v-for="m in normalizedMarks"
         :key="`mk-${m.value}`"
-        class="absolute top-1/2 z-[1] h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-on-surface/40"
-        :style="{ left: `${percent(m.value)}%` }"
+        class="absolute top-1/2 z-[1] h-1.5 w-1.5 rounded-full bg-on-surface/40"
+        :style="markDotStyle(m.value)"
       />
       <!-- thumbs -->
       <button
@@ -57,8 +57,8 @@
       <span
         v-for="m in normalizedMarks"
         :key="`lb-${m.value}`"
-        class="absolute -translate-x-1/2 whitespace-nowrap tabular-nums"
-        :style="{ left: `${percent(m.value)}%` }"
+        class="absolute whitespace-nowrap tabular-nums"
+        :style="markLabelStyle(m.value)"
       >{{ m.label ?? m.value }}</span>
     </div>
   </div>
@@ -112,6 +112,20 @@ const values = computed<number[]>(() => {
 
 const span = computed(() => (props.max - props.min) || 1)
 const percent = (v: number) => ((clamp(v, props.min, props.max) - props.min) / span.value) * 100
+
+// 端點刻度/文字對齊軌道邊緣（首靠左、尾靠右），避免置中而懸出邊界
+const markDotStyle = (v: number) => ({
+  left: `${percent(v)}%`,
+  transform: v <= props.min
+    ? 'translate(0, -50%)'
+    : v >= props.max ? 'translate(-100%, -50%)' : 'translate(-50%, -50%)',
+})
+const markLabelStyle = (v: number) => ({
+  left: `${percent(v)}%`,
+  transform: v <= props.min
+    ? 'translateX(0)'
+    : v >= props.max ? 'translateX(-100%)' : 'translateX(-50%)',
+})
 
 const fillStyle = computed(() => {
   if (props.range) {

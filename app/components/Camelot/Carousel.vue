@@ -1,6 +1,6 @@
 <template>
   <div
-    class="cml-carousel relative select-none"
+    class="cml-carousel relative select-none isolate"
     :class="roleColorClass"
     :style="{ height, touchAction: isVertical ? 'pan-x' : 'pan-y' }"
     @pointerenter="hovered = true"

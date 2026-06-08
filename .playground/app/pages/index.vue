@@ -641,6 +641,33 @@
               :multi-calendars="true"
               :get-day-attributes="getDayAttributes"
             />
+
+            <span class="text-xs text-slate-400">含時間（24H・到秒）</span>
+            <CamelotDateV2
+              v-model="dateTimeSec"
+              :color="currentColorRole"
+              enable-time
+              placeholder="YYYY-MM-DD HH:mm:ss"
+            />
+
+            <span class="text-xs text-slate-400">含時間（12H・到分，關閉秒）</span>
+            <CamelotDateV2
+              v-model="dateTime12"
+              :color="currentColorRole"
+              enable-time
+              time-precision="minute"
+              hour-format="12"
+              placeholder="YYYY-MM-DD hh:mm a"
+            />
+
+            <span class="text-xs text-slate-400">含時間（僅時，關閉分與秒）</span>
+            <CamelotDateV2
+              v-model="dateTimeHour"
+              :color="currentColorRole"
+              enable-time
+              time-precision="hour"
+              placeholder="YYYY-MM-DD HH"
+            />
           </div>
         </div>
 
@@ -1169,6 +1196,11 @@ const carouselItems = ref(
     hue: (i * 60) % 360,
   })),
 )
+
+// DatePicker time demo
+const dateTimeSec = ref(new Date())
+const dateTime12 = ref(new Date())
+const dateTimeHour = ref(new Date())
 
 // Slider demo
 const sliderVal = ref(40)

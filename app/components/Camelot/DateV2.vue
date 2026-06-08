@@ -36,7 +36,7 @@
         :class="{
           'text-black!': disabled,
         }"
-        :maxlength="10"
+        :maxlength="enableTime ? 25 : 10"
         :placeholder="placeholder"
         readonly
       >
@@ -55,6 +55,8 @@
         :min-date="minDate"
         :max-date="maxDate"
         :enable-time="enableTime"
+        :time-precision="timePrecision"
+        :hour-format="hourFormat"
         :get-day-attributes="getDayAttributes"
         @update:model-value="onDateSelect"
       />
@@ -74,6 +76,8 @@
           :min-date="minDate"
           :max-date="maxDate"
           :enable-time="enableTime"
+          :time-precision="timePrecision"
+          :hour-format="hourFormat"
           :get-day-attributes="getDayAttributes"
           @update:model-value="onDateSelect"
         />
@@ -97,12 +101,18 @@ const props = withDefaults(defineProps<{
   showType?: 'auto' | 'popup' | 'dialog'
   selectZIndex?: number
   enableTime?: boolean
+  /** 時間精細度（由下往上關閉）：hour 僅時、minute 時分、second 時分秒 */
+  timePrecision?: 'hour' | 'minute' | 'second'
+  /** 12 或 24 小時制（預設 24） */
+  hourFormat?: '12' | '24'
   color?: CamelotColorRole
   getDayAttributes?: (date: Date, dayOfWeek: number) => CalendarDayAttributes | undefined | null
 }>(), {
   showType: 'auto',
   placeholder: 'YYYY-MM-DD',
   enableTime: false,
+  timePrecision: 'second',
+  hourFormat: '24',
   color: 'primary',
 })
 
@@ -164,11 +174,20 @@ watch(open, (isOpen) => {
   }
 })
 
-watch(model, (nV) => {
+// 依 enableTime / 精細度 / 12-24 制組出顯示格式
+const displayFormat = computed(() => {
+  if (!props.enableTime) return 'yyyy-MM-dd'
+  let t = props.hourFormat === '12' ? 'hh' : 'HH'
+  if (props.timePrecision !== 'hour') t += ':mm'
+  if (props.timePrecision === 'second') t += ':ss'
+  if (props.hourFormat === '12') t += ' a'
+  return `yyyy-MM-dd ${t}`
+})
+
+watch([model, displayFormat], ([nV]) => {
   if (nV) {
     try {
-      const formatStr = props.enableTime ? 'yyyy-MM-dd HH:mm' : 'yyyy-MM-dd'
-      inputModel.value = format(new Date(nV), formatStr)
+      inputModel.value = format(new Date(nV), displayFormat.value)
     }
     catch (e) {
       inputModel.value = ''
