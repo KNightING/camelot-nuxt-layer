@@ -1,78 +1,68 @@
 <template>
-  <CamelotPopupV2
-    v-model:open="open"
-    manual
-    disabled-same-target-width
-    disabled-close-when-scrolling
-    :disabled="disabled"
-    disabled-shadow
-    :popup-class="popupShadowClass"
-    :z-index="selectZIndex"
+  <div
+    class="flex w-full flex-col gap-1.5"
+    :class="roleColorClass"
   >
-    <label
-      ref="triggerRef"
-      class="group flex w-full min-w-[16ch] cursor-pointer items-center gap-2 px-4 py-2 transition-colors"
-      :class="[
-        roleColorClass,
-        triggerClass,
-        {
-          'border-primary': open && themeMode !== 'aqua',
-          'aqua-glow': open && themeMode === 'aqua',
-          'border-error!': isError,
-          'bg-gray-200! opacity-50': disabled,
-        },
-      ]"
-      @click="togglePopup"
-    >
-      <IMaterialSymbolsCalendarMonthRounded
-        class="w-5 h-5 text-outline group-hover:text-primary transition-colors"
-        @click.stop="open = true"
-      />
-      <input
-        v-bind="$attrs"
-        v-model="inputModel"
-        type="text"
-        class="min-w-0 w-0 flex-1 text-on-surface bg-transparent placeholder:text-on-surface outline-none text-base caret-primary appearance-none cursor-pointer"
-        :class="{
-          'text-black!': disabled,
-        }"
-        :maxlength="enableTime ? 25 : 10"
-        :placeholder="placeholder"
-        readonly
-      >
+    <span
+      v-if="label"
+      class="pl-1 text-sm font-medium text-on-surface"
+    >{{ label }}<span
+      v-if="required"
+      class="ml-0.5 text-error"
+    >*</span></span>
 
-    </label>
-
-    <CamelotBaseDialogV2
-      v-if="showType === 'dialog'"
+    <CamelotPopupV2
       v-model:open="open"
+      manual
+      disabled-same-target-width
+      disabled-close-when-scrolling
+      :disabled="disabled"
+      disabled-shadow
+      :popup-class="popupShadowClass"
+      :z-index="selectZIndex"
     >
-      <!-- dialog 模式：BaseDialogV2 已提供主題外框，不再套 panelClass 以免雙層外框 -->
-      <CamelotInternalCalendar
-        v-model="model"
-        v-model:view-date="viewDate"
-        :class="roleColorClass"
-        :min-date="minDate"
-        :max-date="maxDate"
-        :enable-time="enableTime"
-        :time-precision="timePrecision"
-        :hour-format="hourFormat"
-        :get-day-attributes="getDayAttributes"
-        @update:model-value="onDateSelect"
-      />
-    </CamelotBaseDialogV2>
-
-    <template
-      v-if="showType === 'popup'"
-      #popup
-    >
-      <div
-        ref="popupRef"
-        :class="[roleColorClass, panelClass, popupPanelShadowFix]"
+      <label
+        ref="triggerRef"
+        class="group flex w-full min-w-[16ch] cursor-pointer items-center gap-2 px-4 py-2 transition-colors"
+        :class="[
+          triggerClass,
+          {
+            'border-[var(--cml-color-current-color)]': open && themeMode !== 'aqua',
+            'aqua-glow': open && themeMode === 'aqua',
+            'border-error!': isError,
+            'bg-gray-200! opacity-50': disabled,
+          },
+        ]"
+        @click="togglePopup"
       >
+        <IMaterialSymbolsCalendarMonthRounded
+          class="w-5 h-5 text-outline group-hover:text-[var(--cml-color-current-color)] transition-colors"
+          @click.stop="open = true"
+        />
+        <input
+          v-bind="$attrs"
+          v-model="inputModel"
+          type="text"
+          class="min-w-0 w-0 flex-1 text-on-surface bg-transparent placeholder:text-on-surface outline-none text-base caret-[var(--cml-color-current-color)] appearance-none cursor-pointer"
+          :class="{
+            'text-black!': disabled,
+          }"
+          :maxlength="enableTime ? 25 : 10"
+          :placeholder="placeholder"
+          readonly
+        >
+
+      </label>
+
+      <CamelotBaseDialogV2
+        v-if="showType === 'dialog'"
+        v-model:open="open"
+      >
+        <!-- dialog 模式：BaseDialogV2 已提供主題外框，不再套 panelClass 以免雙層外框 -->
         <CamelotInternalCalendar
           v-model="model"
           v-model:view-date="viewDate"
+          :class="roleColorClass"
           :min-date="minDate"
           :max-date="maxDate"
           :enable-time="enableTime"
@@ -81,9 +71,31 @@
           :get-day-attributes="getDayAttributes"
           @update:model-value="onDateSelect"
         />
-      </div>
-    </template>
-  </CamelotPopupV2>
+      </CamelotBaseDialogV2>
+
+      <template
+        v-if="showType === 'popup'"
+        #popup
+      >
+        <div
+          ref="popupRef"
+          :class="[roleColorClass, panelClass, popupPanelShadowFix]"
+        >
+          <CamelotInternalCalendar
+            v-model="model"
+            v-model:view-date="viewDate"
+            :min-date="minDate"
+            :max-date="maxDate"
+            :enable-time="enableTime"
+            :time-precision="timePrecision"
+            :hour-format="hourFormat"
+            :get-day-attributes="getDayAttributes"
+            @update:model-value="onDateSelect"
+          />
+        </div>
+      </template>
+    </CamelotPopupV2>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -106,6 +118,8 @@ const props = withDefaults(defineProps<{
   /** 12 或 24 小時制（預設 24） */
   hourFormat?: '12' | '24'
   color?: CamelotColorRole
+  label?: string
+  required?: boolean
   getDayAttributes?: (date: Date, dayOfWeek: number) => CalendarDayAttributes | undefined | null
 }>(), {
   showType: 'auto',

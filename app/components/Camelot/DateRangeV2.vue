@@ -1,139 +1,151 @@
 <template>
-  <CamelotPopupV2
-    v-model:open="open"
-    manual
-    disabled-same-target-width
-    disabled-close-when-scrolling
-    :disabled="disabled"
-    disabled-shadow
-    :popup-class="popupShadowClass"
-    :z-index="selectZIndex"
+  <div
+    class="flex w-fit flex-col gap-1.5"
+    :class="roleColorClass"
   >
-    <slot
-      name="default"
-      :display-value="displayValue"
-      :open="open"
-      :disabled="disabled"
-      :toggle="togglePopup"
-    >
-      <label
-        ref="triggerRef"
-        class="group flex w-fit cursor-pointer items-center gap-2 px-4 py-2 transition-colors"
-        :class="[
-          roleColorClass,
-          triggerClass,
-          {
-            'border-primary': open && themeMode !== 'aqua',
-            'aqua-glow': open && themeMode === 'aqua',
-            'border-error!': isError,
-            'bg-gray-200! opacity-50': disabled,
-          },
-        ]"
-        @click="togglePopup"
-      >
-        <IMaterialSymbolsCalendarMonthRounded class="w-5 h-5 text-outline group-hover:text-primary transition-colors shrink-0" />
-        <div class="flex items-center gap-1 overflow-hidden">
-          <input
-            v-bind="$attrs"
-            :value="startDisplay"
-            type="text"
-            class="min-w-0 text-on-surface bg-transparent placeholder:text-on-surface/50 outline-none text-base caret-primary appearance-none cursor-pointer"
-            :class="[{ 'text-black!': disabled }, startDisplay ? 'w-[10.5ch]' : 'w-[14ch]']"
-            placeholder="請選擇開始日期"
-            readonly
-          >
-          <div class="px-1 text-outline group-hover:text-primary">
-            <span>~</span>
-          </div>
-          <input
-            v-bind="$attrs"
-            :value="endDisplay"
-            type="text"
-            class="min-w-0 text-on-surface bg-transparent placeholder:text-on-surface/50 outline-none text-base caret-primary appearance-none cursor-pointer"
-            :class="[{ 'text-black!': disabled }, endDisplay ? 'w-[10.5ch]' : 'w-[14ch]']"
-            placeholder="請選擇結束日期"
-            readonly
-          >
-        </div>
-      </label>
-    </slot>
+    <span
+      v-if="label"
+      class="pl-1 text-sm font-medium text-on-surface"
+    >{{ label }}<span
+      v-if="required"
+      class="ml-0.5 text-error"
+    >*</span></span>
 
-    <template
-      v-if="showType === 'popup'"
-      #popup
-    >
-      <div
-        ref="popupRef"
-        class="flex flex-col sm:flex-row"
-        :class="[roleColorClass, panelClass, popupPanelShadowFix]"
-        @click.stop
-      >
-        <div class="flex flex-col sm:flex-row">
-          <CamelotInternalCalendar
-            v-model:range-value="internalValue"
-            v-model:view-date="viewDate"
-            is-range
-            :hide-next-arrow="showSecondCalendar"
-            :hide-next-month="showSecondCalendar"
-            :min-date="minDate"
-            :max-date="maxDate"
-            :get-day-attributes="getDayAttributes"
-            @update:range-value="onRangeSelect"
-          />
-          <CamelotInternalCalendar
-            v-if="showSecondCalendar"
-            v-model:range-value="internalValue"
-            is-range
-            hide-prev-arrow
-            hide-prev-month
-            :view-date="nextMonthViewDate"
-            :min-date="minDate"
-            :max-date="maxDate"
-            :get-day-attributes="getDayAttributes"
-            @update:view-date="onNextMonthViewDateUpdate"
-            @update:range-value="onRangeSelect"
-          />
-        </div>
-
-        <div
-          v-if="!autoApply"
-          class="p-3 border-t border-outline flex justify-end gap-2 bg-surface-container-lowest"
-        >
-          <button
-            type="button"
-            class="px-4 py-2 rounded-lg text-primary hover:bg-primary/5 transition-colors text-sm font-medium"
-            @click="open = false"
-          >
-            取消
-          </button>
-          <button
-            type="button"
-            class="px-4 py-2 rounded-lg bg-primary text-on-primary hover:bg-primary/90 transition-colors text-sm font-medium shadow-sm"
-            @click="applyRange"
-          >
-            確定
-          </button>
-        </div>
-      </div>
-    </template>
-
-    <CamelotBaseDialogV2
-      v-if="showType === 'dialog'"
+    <CamelotPopupV2
       v-model:open="open"
+      manual
+      disabled-same-target-width
+      disabled-close-when-scrolling
+      :disabled="disabled"
+      disabled-shadow
+      :popup-class="popupShadowClass"
+      :z-index="selectZIndex"
     >
-      <!-- dialog 模式：BaseDialogV2 已提供主題外框，不再套 panelClass 以免雙層外框 -->
-      <CamelotInternalCalendar
-        v-model:range-value="internalValue"
-        v-model:view-date="viewDate"
-        :class="roleColorClass"
-        is-range
-        :min-date="minDate"
-        :max-date="maxDate"
-        :get-day-attributes="getDayAttributes"
-        @update:range-value="onRangeSelect"
-      />
-    </CamelotBaseDialogV2>
-  </CamelotPopupV2>
+      <slot
+        name="default"
+        :display-value="displayValue"
+        :open="open"
+        :disabled="disabled"
+        :toggle="togglePopup"
+      >
+        <label
+          ref="triggerRef"
+          class="group flex w-fit cursor-pointer items-center gap-2 px-4 py-2 transition-colors"
+          :class="[
+            triggerClass,
+            {
+              'border-[var(--cml-color-current-color)]': open && themeMode !== 'aqua',
+              'aqua-glow': open && themeMode === 'aqua',
+              'border-error!': isError,
+              'bg-gray-200! opacity-50': disabled,
+            },
+          ]"
+          @click="togglePopup"
+        >
+          <IMaterialSymbolsCalendarMonthRounded class="w-5 h-5 text-outline group-hover:text-[var(--cml-color-current-color)] transition-colors shrink-0" />
+          <div class="flex items-center gap-1 overflow-hidden">
+            <input
+              v-bind="$attrs"
+              :value="startDisplay"
+              type="text"
+              class="min-w-0 text-on-surface bg-transparent placeholder:text-on-surface/50 outline-none text-base caret-[var(--cml-color-current-color)] appearance-none cursor-pointer"
+              :class="[{ 'text-black!': disabled }, startDisplay ? 'w-[10.5ch]' : 'w-[14ch]']"
+              placeholder="請選擇開始日期"
+              readonly
+            >
+            <div class="px-1 text-outline group-hover:text-[var(--cml-color-current-color)]">
+              <span>~</span>
+            </div>
+            <input
+              v-bind="$attrs"
+              :value="endDisplay"
+              type="text"
+              class="min-w-0 text-on-surface bg-transparent placeholder:text-on-surface/50 outline-none text-base caret-[var(--cml-color-current-color)] appearance-none cursor-pointer"
+              :class="[{ 'text-black!': disabled }, endDisplay ? 'w-[10.5ch]' : 'w-[14ch]']"
+              placeholder="請選擇結束日期"
+              readonly
+            >
+          </div>
+        </label>
+      </slot>
+
+      <template
+        v-if="showType === 'popup'"
+        #popup
+      >
+        <div
+          ref="popupRef"
+          class="flex flex-col sm:flex-row"
+          :class="[roleColorClass, panelClass, popupPanelShadowFix]"
+          @click.stop
+        >
+          <div class="flex flex-col sm:flex-row">
+            <CamelotInternalCalendar
+              v-model:range-value="internalValue"
+              v-model:view-date="viewDate"
+              is-range
+              :hide-next-arrow="showSecondCalendar"
+              :hide-next-month="showSecondCalendar"
+              :min-date="minDate"
+              :max-date="maxDate"
+              :get-day-attributes="getDayAttributes"
+              @update:range-value="onRangeSelect"
+            />
+            <CamelotInternalCalendar
+              v-if="showSecondCalendar"
+              v-model:range-value="internalValue"
+              is-range
+              hide-prev-arrow
+              hide-prev-month
+              :view-date="nextMonthViewDate"
+              :min-date="minDate"
+              :max-date="maxDate"
+              :get-day-attributes="getDayAttributes"
+              @update:view-date="onNextMonthViewDateUpdate"
+              @update:range-value="onRangeSelect"
+            />
+          </div>
+
+          <div
+            v-if="!autoApply"
+            class="p-3 border-t border-outline flex justify-end gap-2 bg-surface-container-lowest"
+          >
+            <button
+              type="button"
+              class="px-4 py-2 rounded-lg text-[var(--cml-color-current-color)] hover:bg-[color-mix(in_srgb,var(--cml-color-current-color)_8%,transparent)] transition-colors text-sm font-medium"
+              @click="open = false"
+            >
+              取消
+            </button>
+            <button
+              type="button"
+              class="px-4 py-2 rounded-lg bg-[var(--cml-color-current-color)] text-[var(--cml-color-current-on-color)] hover:opacity-90 transition-colors text-sm font-medium shadow-sm"
+              @click="applyRange"
+            >
+              確定
+            </button>
+          </div>
+        </div>
+      </template>
+
+      <CamelotBaseDialogV2
+        v-if="showType === 'dialog'"
+        v-model:open="open"
+      >
+        <!-- dialog 模式：BaseDialogV2 已提供主題外框，不再套 panelClass 以免雙層外框 -->
+        <CamelotInternalCalendar
+          v-model:range-value="internalValue"
+          v-model:view-date="viewDate"
+          :class="roleColorClass"
+          is-range
+          :min-date="minDate"
+          :max-date="maxDate"
+          :get-day-attributes="getDayAttributes"
+          @update:range-value="onRangeSelect"
+        />
+      </CamelotBaseDialogV2>
+    </CamelotPopupV2>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -153,6 +165,8 @@ const props = withDefaults(defineProps<{
   displayFormat?: (dates: [Date, Date]) => string
   format?: string
   color?: CamelotColorRole
+  label?: string
+  required?: boolean
   getDayAttributes?: (date: Date, dayOfWeek: number) => CalendarDayAttributes | undefined | null
 }>(), {
   showType: 'auto',

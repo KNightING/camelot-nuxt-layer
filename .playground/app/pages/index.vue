@@ -164,6 +164,18 @@
             label="Choose option"
             :options="options"
           />
+
+          <CamelotTextarea
+            v-model="textareaVal"
+            label="Message"
+            required
+            placeholder="輸入訊息…"
+            autosize
+            :max-rows="6"
+            :maxlength="200"
+            show-count
+            :color="currentColorRole"
+          />
         </div>
 
         <!-- SelectV2 Card -->
@@ -633,11 +645,13 @@
           <div class="flex flex-col gap-3">
             <CamelotDateV2
               :color="currentColorRole"
+              label="預約日期"
               placeholder="請選擇日期"
               :get-day-attributes="getDayAttributes"
             />
             <CamelotDateRangeV2
               :color="currentColorRole"
+              label="活動區間"
               :multi-calendars="true"
               :get-day-attributes="getDayAttributes"
             />
@@ -1196,6 +1210,8 @@ const carouselItems = ref(
     hue: (i * 60) % 360,
   })),
 )
+
+const textareaVal = ref('')
 
 // DatePicker time demo
 const dateTimeSec = ref(new Date())
