@@ -14,10 +14,10 @@
       @keydown.up.prevent="step(1)"
       @keydown.down.prevent="step(-1)"
     >
-    <!-- 可選的下拉清單 -->
+    <!-- 可選的下拉清單（向上展開：時間列位於日曆底部，向上不會被面板裁切） -->
     <div
       v-if="open"
-      class="absolute left-1/2 top-full z-50 mt-1 max-h-40 w-12 -translate-x-1/2 overflow-y-auto rounded-lg border border-outline-variant bg-surface shadow-lg"
+      class="absolute bottom-full left-1/2 z-[60] mb-1 max-h-40 w-12 -translate-x-1/2 overflow-y-auto rounded-lg border border-outline-variant bg-surface shadow-lg"
     >
       <button
         v-for="v in options"

@@ -7,13 +7,12 @@
       v-for="(item, i) in items"
       :key="item.key ?? i"
       :ref="(el) => setItemRef(el, i)"
-      class="cml-tl-item transition-all duration-500 ease-out"
+      class="cml-tl-item grid transition-all duration-500 ease-out"
       :class="[
-        isHorizontal ? 'flex flex-col flex-1 min-w-[120px]' : 'grid',
-        sideFor(i) === 'before' ? 'cml-tl-before' : 'cml-tl-after',
+        isHorizontal ? 'flex-1 min-w-[140px]' : '',
         animate ? (shown.has(i) ? 'opacity-100 translate-x-0 translate-y-0' : enterClass) : '',
       ]"
-      :style="!isHorizontal ? { gridTemplateColumns: gridCols } : undefined"
+      :style="gridStyle"
     >
       <!-- content BEFORE node (vertical: left / horizontal: top) -->
       <div
@@ -47,10 +46,13 @@
         </slot>
       </div>
 
-      <!-- axis: node + connector -->
+      <!-- axis: node + connector（alternate 垂直時固定置中欄，避免被推到左側） -->
       <div
         class="cml-tl-axis relative flex shrink-0 items-center justify-center"
-        :class="isHorizontal ? 'flex-row h-9' : 'flex-col w-9 self-stretch'"
+        :class="[
+          isHorizontal ? 'flex-row h-9 w-full' : 'flex-col w-9 self-stretch',
+          side === 'alternate' ? (isHorizontal ? 'row-start-2' : 'col-start-2') : '',
+        ]"
       >
         <!-- connector to next item -->
         <span
@@ -142,21 +144,29 @@ const sideFor = (i: number): 'before' | 'after' => {
   return props.side
 }
 
-// 垂直 alternate 需置中軸線（三欄）；否則軸線靠邊（兩欄）
-const gridCols = computed(() => {
+// 軸線固定軌道：alternate 用三軌（軸線置中）；單側用兩軌（軸線靠邊）。
+// 垂直 → 欄(grid-cols)；水平 → 列(grid-rows)，確保節點/線恆在同一水平或垂直線上。
+const tracks = computed(() => {
   if (props.side === 'alternate') return '1fr auto 1fr'
   return props.side === 'before' ? '1fr auto' : 'auto 1fr'
 })
+const gridStyle = computed(() =>
+  isHorizontal.value
+    ? { gridTemplateRows: tracks.value }
+    : { gridTemplateColumns: tracks.value },
+)
 
 const contentClass = (i: number, slotSide: 'before' | 'after') => {
   const pad = isHorizontal.value
     ? (slotSide === 'before' ? 'pb-2 text-center' : 'pt-2 text-center')
     : (slotSide === 'before' ? 'pr-4 pb-6 text-right' : 'pl-4 pb-6')
-  // alternate 垂直：before 內容置於左欄(col1)，after 置於右欄(col3)
-  const col = (!isHorizontal.value && props.side === 'alternate')
-    ? (slotSide === 'before' ? 'col-start-1' : 'col-start-3')
-    : ''
-  return [pad, col, isHorizontal.value ? 'flex-1' : '']
+  // alternate：把內容固定到對應的首/末軌（垂直=欄、水平=列）
+  let track = ''
+  if (props.side === 'alternate') {
+    if (isHorizontal.value) track = slotSide === 'before' ? 'row-start-1' : 'row-start-3'
+    else track = slotSide === 'before' ? 'col-start-1' : 'col-start-3'
+  }
+  return [pad, track]
 }
 
 // 捲動淡入

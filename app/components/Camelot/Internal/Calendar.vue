@@ -137,7 +137,7 @@
 
       <!-- Time Picker Section（可輸入亦可下拉選擇；時/分/秒由下往上關閉；12/24 小時制；數字跟隨 current-color） -->
       <div
-        v-if="enableTime"
+        v-if="enableTime && !hideTime"
         class="border-t border-outline mt-4 pt-4 flex flex-col items-center gap-2"
       >
         <!-- 單選 -->
@@ -289,6 +289,8 @@ const props = withDefaults(defineProps<{
   timePrecision?: 'hour' | 'minute' | 'second'
   /** 12 或 24 小時制 */
   hourFormat?: '12' | '24'
+  /** 隱藏時間區（多月曆 range 時，只在其中一個月曆顯示時間） */
+  hideTime?: boolean
   hidePrevArrow?: boolean
   hideNextArrow?: boolean
   getDayAttributes?: (date: Date, dayOfWeek: number) => CalendarDayAttributes | undefined | null

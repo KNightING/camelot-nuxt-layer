@@ -111,6 +111,7 @@
               :enable-time="enableTime"
               :time-precision="timePrecision"
               :hour-format="hourFormat"
+              hide-time
               hide-prev-arrow
               hide-prev-month
               :view-date="nextMonthViewDate"
@@ -131,26 +132,6 @@
               </template>
             </CamelotInternalCalendar>
           </div>
-
-          <div
-            v-if="!autoApply || enableTime"
-            class="p-3 border-t border-outline flex justify-end gap-2 bg-surface-container-lowest"
-          >
-            <button
-              type="button"
-              class="px-4 py-2 rounded-lg text-[var(--cml-color-current-color)] hover:bg-[color-mix(in_srgb,var(--cml-color-current-color)_8%,transparent)] transition-colors text-sm font-medium"
-              @click="open = false"
-            >
-              取消
-            </button>
-            <button
-              type="button"
-              class="px-4 py-2 rounded-lg bg-[var(--cml-color-current-color)] text-[var(--cml-color-current-on-color)] hover:opacity-90 transition-colors text-sm font-medium shadow-sm"
-              @click="applyRange"
-            >
-              確定
-            </button>
-          </div>
         </div>
       </template>
 
@@ -158,30 +139,32 @@
         v-if="showType === 'dialog'"
         v-model:open="open"
       >
-        <!-- dialog 模式：BaseDialogV2 已提供主題外框，不再套 panelClass 以免雙層外框 -->
-        <CamelotInternalCalendar
-          v-model:range-value="internalValue"
-          v-model:view-date="viewDate"
-          :class="roleColorClass"
-          is-range
-          :enable-time="enableTime"
-          :time-precision="timePrecision"
-          :hour-format="hourFormat"
-          :min-date="minDate"
-          :max-date="maxDate"
-          :get-day-attributes="getDayAttributes"
-          @update:range-value="onRangeSelect"
-        >
-          <template
-            v-for="(_, name) in $slots"
-            #[name]="slotProps"
+        <!-- dialog 模式：BaseDialogV2 已提供主題外框；小螢幕/橫向時可捲動避免被裁切 -->
+        <div class="max-h-[82dvh] overflow-y-auto overscroll-contain">
+          <CamelotInternalCalendar
+            v-model:range-value="internalValue"
+            v-model:view-date="viewDate"
+            :class="roleColorClass"
+            is-range
+            :enable-time="enableTime"
+            :time-precision="timePrecision"
+            :hour-format="hourFormat"
+            :min-date="minDate"
+            :max-date="maxDate"
+            :get-day-attributes="getDayAttributes"
+            @update:range-value="onRangeSelect"
           >
-            <slot
-              :name="name"
-              v-bind="slotProps"
-            />
-          </template>
-        </CamelotInternalCalendar>
+            <template
+              v-for="(_, name) in $slots"
+              #[name]="slotProps"
+            >
+              <slot
+                :name="name"
+                v-bind="slotProps"
+              />
+            </template>
+          </CamelotInternalCalendar>
+        </div>
       </CamelotBaseDialogV2>
     </CamelotPopupV2>
   </div>
@@ -347,17 +330,11 @@ const onRangeSelect = (range: (Date | number | null)[] | null | undefined) => {
   internalValue.value = [range[0] as Date | null, range[1] as Date | null]
 
   if (range[0] && range[1]) {
-    // 含時間時不自動套用，讓使用者調整起/迄時間後再確定
+    // 即時套用（無確定按鈕）；含時間時不自動關閉，讓使用者調整起/迄時間，點外面再關
+    model.value = [range[0] as Date, range[1] as Date]
     if (props.autoApply && !props.enableTime) {
-      applyRange()
+      open.value = false
     }
-  }
-}
-
-const applyRange = () => {
-  if (internalValue.value[0] && internalValue.value[1]) {
-    model.value = [internalValue.value[0], internalValue.value[1]]
-    open.value = false
   }
 }
 

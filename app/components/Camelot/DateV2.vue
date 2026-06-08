@@ -58,29 +58,31 @@
         v-if="showType === 'dialog'"
         v-model:open="open"
       >
-        <!-- dialog 模式：BaseDialogV2 已提供主題外框，不再套 panelClass 以免雙層外框 -->
-        <CamelotInternalCalendar
-          v-model="model"
-          v-model:view-date="viewDate"
-          :class="roleColorClass"
-          :min-date="minDate"
-          :max-date="maxDate"
-          :enable-time="enableTime"
-          :time-precision="timePrecision"
-          :hour-format="hourFormat"
-          :get-day-attributes="getDayAttributes"
-          @update:model-value="onDateSelect"
-        >
-          <template
-            v-for="(_, name) in $slots"
-            #[name]="slotProps"
+        <!-- dialog 模式：BaseDialogV2 已提供主題外框；小螢幕/橫向時可捲動避免被裁切 -->
+        <div class="max-h-[82dvh] overflow-y-auto overscroll-contain">
+          <CamelotInternalCalendar
+            v-model="model"
+            v-model:view-date="viewDate"
+            :class="roleColorClass"
+            :min-date="minDate"
+            :max-date="maxDate"
+            :enable-time="enableTime"
+            :time-precision="timePrecision"
+            :hour-format="hourFormat"
+            :get-day-attributes="getDayAttributes"
+            @update:model-value="onDateSelect"
           >
-            <slot
-              :name="name"
-              v-bind="slotProps"
-            />
-          </template>
-        </CamelotInternalCalendar>
+            <template
+              v-for="(_, name) in $slots"
+              #[name]="slotProps"
+            >
+              <slot
+                :name="name"
+                v-bind="slotProps"
+              />
+            </template>
+          </CamelotInternalCalendar>
+        </div>
       </CamelotBaseDialogV2>
 
       <template
