@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!--置頂 Header -->
+    <!-- 置頂 Header -->
     <Header>
       <template #bottom>
         <div class="w-full bg-primary h-10 z-10" />
@@ -9,40 +9,42 @@
 
     <!-- Beautiful Theme Selector & Demo section (放置於 Header 下方，加上 pt-4 避免重疊) -->
     <div class="p-6 pt-10 bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 flex flex-col gap-6">
-      <h1 class="text-2xl font-bold text-slate-800 dark:text-white">Camelot UI Style System Demo</h1>
-      
+      <h1 class="text-2xl font-bold text-slate-800 dark:text-white">
+        Camelot UI Style System Demo
+      </h1>
+
       <!-- Theme and Color Selectors -->
       <div class="flex flex-wrap gap-6 items-center">
         <!-- Style Switcher -->
         <div class="flex flex-col gap-2">
           <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Active Style Theme</span>
           <div class="flex bg-slate-200 dark:bg-slate-800 p-1 rounded-lg gap-1 w-fit">
-            <button 
-              type="button" 
+            <button
+              type="button"
               class="px-4 py-1.5 rounded-md text-sm font-medium transition-colors cursor-pointer"
               :class="themeMode === 'material' ? 'bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm' : 'text-slate-500 hover:text-slate-800 dark:hover:text-white'"
               @click="themeMode = 'material'"
             >
               Material 3
             </button>
-            <button 
-              type="button" 
+            <button
+              type="button"
               class="px-4 py-1.5 rounded-md text-sm font-medium transition-colors cursor-pointer"
               :class="themeMode === 'cupertino' ? 'bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm' : 'text-slate-500 hover:text-slate-800 dark:hover:text-white'"
               @click="themeMode = 'cupertino'"
             >
               Cupertino
             </button>
-            <button 
-              type="button" 
+            <button
+              type="button"
               class="px-4 py-1.5 rounded-md text-sm font-medium transition-colors cursor-pointer"
               :class="themeMode === 'scifi' ? 'bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm' : 'text-slate-500 hover:text-slate-800 dark:hover:text-white'"
               @click="themeMode = 'scifi'"
             >
               Sci-Fi HUD
             </button>
-            <button 
-              type="button" 
+            <button
+              type="button"
               class="px-4 py-1.5 rounded-md text-sm font-medium transition-colors cursor-pointer"
               :class="themeMode === 'aqua' ? 'bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm' : 'text-slate-500 hover:text-slate-800 dark:hover:text-white'"
               @click="themeMode = 'aqua'"
@@ -51,29 +53,29 @@
             </button>
           </div>
         </div>
-        
+
         <!-- Dark/Light Mode Switcher -->
         <div class="flex flex-col gap-2">
           <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Dark / Light Mode</span>
           <div class="flex bg-slate-200 dark:bg-slate-800 p-1 rounded-lg gap-1 w-fit">
-            <button 
-              type="button" 
+            <button
+              type="button"
               class="px-4 py-1.5 rounded-md text-sm font-medium transition-colors cursor-pointer"
               :class="colorMode === 'light' ? 'bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm' : 'text-slate-500 hover:text-slate-800 dark:hover:text-white'"
               @click="colorMode = 'light'"
             >
               Light
             </button>
-            <button 
-              type="button" 
+            <button
+              type="button"
               class="px-4 py-1.5 rounded-md text-sm font-medium transition-colors cursor-pointer"
               :class="colorMode === 'dark' ? 'bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm' : 'text-slate-500 hover:text-slate-800 dark:hover:text-white'"
               @click="colorMode = 'dark'"
             >
               Dark
             </button>
-            <button 
-              type="button" 
+            <button
+              type="button"
               class="px-4 py-1.5 rounded-md text-sm font-medium transition-colors cursor-pointer"
               :class="colorMode === 'auto' ? 'bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm' : 'text-slate-500 hover:text-slate-800 dark:hover:text-white'"
               @click="colorMode = 'auto'"
@@ -87,7 +89,7 @@
         <div class="flex flex-col gap-2">
           <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Color Palette Role (Component prop)</span>
           <div class="flex gap-2">
-            <button 
+            <button
               v-for="c in (['primary', 'secondary', 'tertiary', 'error', 'warning', 'success'] as const)"
               :key="c"
               type="button"
@@ -104,7 +106,7 @@
         <div class="flex flex-col gap-2">
           <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Global Brand Color (CSS Variable)</span>
           <div class="flex gap-2 flex-wrap">
-            <button 
+            <button
               v-for="brand in brandColors"
               :key="brand.name"
               type="button"
@@ -112,7 +114,10 @@
               :class="activeBrandColorName === brand.name ? 'bg-slate-800 dark:bg-slate-200 text-white dark:text-slate-900 border-slate-800 dark:border-slate-200' : 'bg-transparent border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'"
               @click="changeBrandColor(brand)"
             >
-              <span class="w-3 h-3 rounded-full" :style="{ backgroundColor: brand.roles.primary.light }" />
+              <span
+                class="w-3 h-3 rounded-full"
+                :style="{ backgroundColor: brand.roles.primary.light }"
+              />
               {{ brand.name }}
             </button>
           </div>
@@ -123,144 +128,376 @@
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
         <!-- Button & Switch & Checkbox Card -->
         <div :class="cardClass">
-          <h2 :class="cardTitleClass">Basic Inputs & Controls</h2>
-          
+          <h2 :class="cardTitleClass">
+            Basic Inputs & Controls
+          </h2>
+
           <div class="flex items-center gap-4 flex-wrap">
-            <CamelotButton :color="currentColorRole" label="Action" />
-            <CamelotButton :color="currentColorRole" label="Container" is-container />
-            <CamelotButton :color="currentColorRole" label="Disabled" disabled />
+            <CamelotButton
+              :color="currentColorRole"
+              label="Action"
+            />
+            <CamelotButton
+              :color="currentColorRole"
+              label="Container"
+              is-container
+            />
+            <CamelotButton
+              :color="currentColorRole"
+              label="Disabled"
+              disabled
+            />
           </div>
 
           <div class="flex items-center gap-6 mt-2">
             <div class="flex items-center gap-2">
               <span class="text-xs text-slate-400">Switch:</span>
-              <CamelotSwitch v-model="switchVal" :color="currentColorRole" />
+              <CamelotSwitch
+                v-model="switchVal"
+                :color="currentColorRole"
+              />
             </div>
             <div class="flex items-center gap-2">
               <span class="text-xs text-slate-400">Disabled:</span>
-              <CamelotSwitch :model-value="true" disabled :color="currentColorRole" />
+              <CamelotSwitch
+                :model-value="true"
+                disabled
+                :color="currentColorRole"
+              />
             </div>
           </div>
 
           <div class="flex flex-col gap-2 mt-2">
-            <CamelotCheckbox v-model="checkboxVal" label="Agree to terms" :color="currentColorRole" />
-            <CamelotCheckbox :model-value="true" label="Disabled Checkbox" disabled :color="currentColorRole" />
+            <CamelotCheckbox
+              v-model="checkboxVal"
+              label="Agree to terms"
+              :color="currentColorRole"
+            />
+            <CamelotCheckbox
+              :model-value="true"
+              label="Disabled Checkbox"
+              disabled
+              :color="currentColorRole"
+            />
           </div>
         </div>
 
         <!-- Inputs and Select Card -->
         <div :class="cardClass">
-          <h2 :class="cardTitleClass">Form Inputs & Fields</h2>
-          
-          <CamelotInput 
-            v-model="inputTextVal" 
-            label="Username" 
-            placeholder="Enter your username..." 
+          <h2 :class="cardTitleClass">
+            Form Inputs & Fields
+          </h2>
+
+          <CamelotInput
+            v-model="inputTextVal"
+            label="Username"
+            placeholder="Enter your username..."
             :color="currentColorRole"
           />
 
-          <CamelotSelectV2 
-            v-model="selectVal" 
-            label="Choose option" 
-            :options="options" 
+          <CamelotSelectV2
+            v-model="selectVal"
+            label="Choose option"
+            :options="options"
             :color="currentColorRole"
           />
         </div>
 
         <!-- SelectV2 Card -->
         <div :class="cardClass">
-          <h2 :class="cardTitleClass">Searchable Selection</h2>
-          
-          <CamelotSelectV2 
-            v-model="selectV2Val" 
-            label="Searchable selection" 
-            :options="options" 
+          <h2 :class="cardTitleClass">
+            Searchable Selection
+          </h2>
+
+          <CamelotSelectV2
+            v-model="selectV2Val"
+            label="Searchable selection"
+            :options="options"
             :color="currentColorRole"
             class="w-full"
           />
-          
+
           <div class="text-xs text-slate-400 mt-2 p-3 bg-slate-50 dark:bg-slate-900/50 rounded-lg">
-            Selected values: <br/>
-            Text: {{ inputTextVal }} <br/>
-            Dropdown: {{ selectVal }} <br/>
-            Search Select: {{ selectV2Val }} <br/>
-            Switch: {{ switchVal }} <br/>
+            Selected values: <br>
+            Text: {{ inputTextVal }} <br>
+            Dropdown: {{ selectVal }} <br>
+            Search Select: {{ selectV2Val }} <br>
+            Switch: {{ switchVal }} <br>
             Checkbox: {{ checkboxVal }}
           </div>
         </div>
 
         <!-- Dialog & Bottom Sheet Card -->
         <div :class="cardClass">
-          <h2 :class="cardTitleClass">Overlays (Dialog & Sheet)</h2>
-          <p class="text-xs text-slate-400">Backdrop filters, curved corners, and clip-path structures change dynamically.</p>
+          <h2 :class="cardTitleClass">
+            Overlays (Dialog & Sheet)
+          </h2>
+          <p class="text-xs text-slate-400">
+            Backdrop filters, curved corners, and clip-path structures change dynamically.
+          </p>
           <div class="flex gap-4">
-            <CamelotButton :color="currentColorRole" label="Open Dialog" @click="demoDialogOpen = true" />
-            <CamelotButton :color="currentColorRole" label="Open Sheet" @click="demoSheetOpen = true" />
+            <CamelotButton
+              :color="currentColorRole"
+              label="Open Dialog"
+              @click="demoDialogOpen = true"
+            />
+            <CamelotButton
+              :color="currentColorRole"
+              label="Open Sheet"
+              @click="demoSheetOpen = true"
+            />
           </div>
         </div>
 
         <!-- Tabs & Steps Card -->
         <div :class="[cardClass, 'col-span-1 md:col-span-2']">
-          <h2 :class="cardTitleClass">Navigation (Tabs & Steps)</h2>
-          
+          <h2 :class="cardTitleClass">
+            Navigation (Tabs & Steps)
+          </h2>
+
           <div class="flex flex-col gap-2">
             <span class="text-xs text-slate-400">Themed Tabs Bar:</span>
-            <CamelotTabs v-model="demoActiveTab" :options="demoTabsOptions" />
+            <CamelotTabs
+              v-model="demoActiveTab"
+              :options="demoTabsOptions"
+            />
           </div>
 
           <div class="flex flex-col gap-2 mt-2">
             <span class="text-xs text-slate-400">Themed Steps tracker:</span>
-            <CamelotSteps v-model="demoActiveStep" :steps="demoStepsList" enable-change-by-click />
+            <CamelotSteps
+              v-model="demoActiveStep"
+              :steps="demoStepsList"
+              enable-change-by-click
+            />
           </div>
         </div>
 
         <!-- Feedbacks, Skeletons & Spinner Card -->
         <div :class="cardClass">
-          <h2 :class="cardTitleClass">Loaders & Toast Feedback</h2>
+          <h2 :class="cardTitleClass">
+            Loaders & Toast Feedback
+          </h2>
           <div class="flex gap-4">
-            <CamelotButton :color="currentColorRole" label="Run Loader" @click="triggerLoading" />
-            <CamelotButton :color="currentColorRole" label="Show Toast" @click="triggerToast" />
+            <CamelotButton
+              :color="currentColorRole"
+              label="Run Loader"
+              @click="triggerLoading"
+            />
+            <CamelotButton
+              :color="currentColorRole"
+              label="Show Toast"
+              @click="triggerToast"
+            />
           </div>
 
           <div class="flex flex-col gap-2 mt-2">
             <div class="flex items-center justify-between">
               <span class="text-xs text-slate-400">Skeleton Loader:</span>
-              <button 
-                type="button" 
+              <button
+                type="button"
                 class="text-xs text-slate-500 hover:text-primary underline cursor-pointer"
                 @click="demoSkeletonLoading = !demoSkeletonLoading"
               >
                 Toggle ({{ demoSkeletonLoading ? 'Loading' : 'Static' }})
               </button>
             </div>
-            
+
             <div class="w-full h-16 rounded-xl overflow-hidden border border-slate-100 dark:border-slate-700 p-2 flex items-center gap-3">
-              <CamelotSkeleton :is-loading="demoSkeletonLoading" class="w-10 h-10 rounded-full shrink-0" />
+              <CamelotSkeleton
+                :is-loading="demoSkeletonLoading"
+                class="w-10 h-10 rounded-full shrink-0"
+              />
               <div class="flex-1 flex flex-col gap-1.5 h-full justify-center">
-                <CamelotSkeleton :is-loading="demoSkeletonLoading" class="w-3/4 h-3.5 rounded" />
-                <CamelotSkeleton :is-loading="demoSkeletonLoading" class="w-1/2 h-3 rounded" />
+                <CamelotSkeleton
+                  :is-loading="demoSkeletonLoading"
+                  class="w-3/4 h-3.5 rounded"
+                />
+                <CamelotSkeleton
+                  :is-loading="demoSkeletonLoading"
+                  class="w-1/2 h-3 rounded"
+                />
               </div>
             </div>
           </div>
         </div>
+
+        <!-- Drawer Card -->
+        <div :class="cardClass">
+          <h2 :class="cardTitleClass">
+            Drawer (Floating & Fixed)
+          </h2>
+          <div class="flex flex-wrap gap-3">
+            <CamelotButton
+              :color="currentColorRole"
+              label="Open Left"
+              @click="drawerLeftOpen = true"
+            />
+            <CamelotButton
+              :color="currentColorRole"
+              label="Open Right"
+              @click="drawerRightOpen = true"
+            />
+            <CamelotButton
+              :color="currentColorRole"
+              :label="fixedDrawerOpen ? 'Collapse Fixed' : 'Expand Fixed'"
+              @click="fixedDrawerOpen = !fixedDrawerOpen"
+            />
+          </div>
+          <div class="flex h-40 overflow-hidden rounded-lg border border-slate-200 dark:border-slate-700">
+            <CamelotDrawer
+              v-model:open="fixedDrawerOpen"
+              variant="fixed"
+              position="left"
+              width="160px"
+            >
+              <div class="p-3 text-sm">
+                <div class="mb-2 font-bold">
+                  Fixed Panel
+                </div>
+                <div class="opacity-70">
+                  常駐側欄內容
+                </div>
+              </div>
+            </CamelotDrawer>
+            <div class="flex-1 p-3 text-sm opacity-70">
+              主內容區（固定 Drawer 會推擠此區）
+            </div>
+          </div>
+        </div>
+
+        <!-- Tree Card -->
+        <div :class="cardClass">
+          <h2 :class="cardTitleClass">
+            Tree (Multi-level + Check)
+          </h2>
+          <CamelotTree
+            v-model:checked="treeChecked"
+            :nodes="treeNodes"
+            checkable
+            default-expand-all
+          />
+          <div class="mt-1 truncate text-xs text-slate-400">
+            Checked: {{ treeChecked.join(', ') || '—' }}
+          </div>
+        </div>
+
+        <!-- Menu Card -->
+        <div :class="cardClass">
+          <h2 :class="cardTitleClass">
+            Menu (3-level navigation)
+          </h2>
+          <CamelotMenu
+            v-model="menuActive"
+            :items="menuItems"
+            default-expand-all
+          />
+          <div class="mt-1 truncate text-xs text-slate-400">
+            Active: {{ menuActive }}
+          </div>
+        </div>
+
+        <!-- Table Card -->
+        <div :class="[cardClass, 'col-span-1 md:col-span-2 lg:col-span-3']">
+          <h2 :class="cardTitleClass">
+            Table (Fixed header / columns / rows, zebra, hover)
+          </h2>
+          <CamelotTable
+            :columns="tableColumns"
+            :data="tableData"
+            :pinned-top-rows="tablePinned"
+            row-key="id"
+            stripe
+            max-height="240px"
+          >
+            <template #cell-status="{ value }">
+              <span
+                class="rounded-full px-2 py-0.5 text-xs"
+                :class="value === 'active' ? 'bg-success/15 text-success' : 'bg-error/15 text-error'"
+              >{{ value }}</span>
+            </template>
+          </CamelotTable>
+        </div>
       </div>
 
       <!-- Demo dialog overlays -->
-      <CamelotBaseDialogV2 v-model:open="demoDialogOpen" :close-by-mask="true">
+      <CamelotBaseDialogV2
+        v-model:open="demoDialogOpen"
+        :close-by-mask="true"
+      >
         <div class="flex flex-col items-center gap-4">
-          <h3 class="text-lg font-bold">Themed Modal Dialog</h3>
-          <p class="text-sm opacity-80 text-center">This dialog utilizes M3 card parameters, Cupertino frosted blur, or Sci-Fi clip-paths depending on the theme!</p>
-          <CamelotButton :color="currentColorRole" label="Close Dialog" @click="demoDialogOpen = false" />
+          <h3 class="text-lg font-bold">
+            Themed Modal Dialog
+          </h3>
+          <p class="text-sm opacity-80 text-center">
+            This dialog utilizes M3 card parameters, Cupertino frosted blur, or Sci-Fi clip-paths depending on the theme!
+          </p>
+          <CamelotButton
+            :color="currentColorRole"
+            label="Close Dialog"
+            @click="demoDialogOpen = false"
+          />
         </div>
       </CamelotBaseDialogV2>
 
       <CamelotBaseBottomSheetV2 v-model:open="demoSheetOpen">
         <div class="flex flex-col gap-4 p-4 min-w-[300px]">
-          <h3 class="text-lg font-bold text-center">Themed Bottom Sheet</h3>
-          <p class="text-sm opacity-80 text-center">Handles pull-up offsets, smooth slide-up actions, and border frame customizations dynamically.</p>
-          <CamelotButton :color="currentColorRole" label="Dismiss" @click="demoSheetOpen = false" class="mx-auto" />
+          <h3 class="text-lg font-bold text-center">
+            Themed Bottom Sheet
+          </h3>
+          <p class="text-sm opacity-80 text-center">
+            Handles pull-up offsets, smooth slide-up actions, and border frame customizations dynamically.
+          </p>
+          <CamelotButton
+            :color="currentColorRole"
+            label="Dismiss"
+            class="mx-auto"
+            @click="demoSheetOpen = false"
+          />
         </div>
       </CamelotBaseBottomSheetV2>
+
+      <!-- Floating drawers -->
+      <CamelotDrawer
+        v-model:open="drawerLeftOpen"
+        position="left"
+      >
+        <div class="flex w-full flex-col gap-2 p-4">
+          <h3 class="px-2 text-lg font-bold">
+            選單 Menu
+          </h3>
+          <p class="px-2 text-xs opacity-60">
+            三階層導覽選單（獨立 CamelotMenu 元件，四種主題風格）
+          </p>
+          <CamelotMenu
+            v-model="menuActive"
+            :items="menuItems"
+            default-expand-all
+          />
+          <div class="px-2 text-xs text-slate-400">
+            Active: {{ menuActive }}
+          </div>
+        </div>
+      </CamelotDrawer>
+
+      <CamelotDrawer
+        v-model:open="drawerRightOpen"
+        position="right"
+      >
+        <div class="flex w-full flex-col gap-3 p-5">
+          <h3 class="text-lg font-bold">
+            Right Drawer
+          </h3>
+          <p class="text-sm opacity-70">
+            浮動模式，從右側滑入。
+          </p>
+          <CamelotButton
+            :color="currentColorRole"
+            label="Close"
+            @click="drawerRightOpen = false"
+          />
+        </div>
+      </CamelotDrawer>
     </div>
 
     <!-- Legacy / Extended components test section -->
@@ -414,7 +651,10 @@
       <div class="text-on-surface">
         {{ step }}
       </div>
-      <div class="cursor-pointer" @click="expanded = !expanded">
+      <div
+        class="cursor-pointer"
+        @click="expanded = !expanded"
+      >
         Expanded
       </div>
 
@@ -667,7 +907,9 @@ const largeOptionsForVirtual = ref(
 )
 
 // Demo specific state
-const { themeMode, colorMode, setPrimaryColor, setThemeColor } = useCamelotTheme()
+const {
+  themeMode, colorMode, setPrimaryColor, setThemeColor,
+} = useCamelotTheme()
 const currentColorRole = ref<'primary' | 'secondary' | 'tertiary' | 'error' | 'info' | 'warning' | 'success'>('primary')
 const switchVal = ref(false)
 const checkboxVal = ref(false)
@@ -680,19 +922,219 @@ const demoSheetOpen = ref(false)
 const demoStepsList = ref(['Init', 'Verify', 'Deploy', 'Success'])
 const demoActiveStep = ref(1)
 const demoTabsOptions = ref([
-  { name: 'Dashboard', value: 'dash' },
-  { name: 'Analytics', value: 'analytics' },
-  { name: 'System Settings', value: 'settings' }
+  {
+    name: 'Dashboard',
+    value: 'dash',
+  },
+  {
+    name: 'Analytics',
+    value: 'analytics',
+  },
+  {
+    name: 'System Settings',
+    value: 'settings',
+  },
 ])
 const demoActiveTab = ref('dash')
 const demoSkeletonLoading = ref(true)
 
+// Drawer demo state
+const drawerLeftOpen = ref(false)
+const drawerRightOpen = ref(false)
+const fixedDrawerOpen = ref(true)
+
+// Tree demo state
+const treeChecked = ref<(string | number)[]>(['kr'])
+const treeNodes = ref<CamelotTreeNode[]>([
+  {
+    label: '餐廳分類',
+    value: 'cat',
+    children: [
+      {
+        label: '亞洲',
+        value: 'asia',
+        children: [
+          {
+            label: '韓式',
+            value: 'kr',
+          },
+          {
+            label: '日式',
+            value: 'jp',
+          },
+          {
+            label: '中式',
+            value: 'cn',
+          },
+        ],
+      },
+      {
+        label: '西式',
+        value: 'west',
+        children: [
+          {
+            label: '義式',
+            value: 'it',
+          },
+          {
+            label: '美式',
+            value: 'us',
+          },
+        ],
+      },
+    ],
+  },
+])
+
+// Menu demo state (3+ levels)
+const menuActive = ref<string | number>('dashboard')
+const menuItems = ref<CamelotMenuItem[]>([
+  {
+    label: '儀表板',
+    value: 'dashboard',
+  },
+  {
+    label: '訂單管理',
+    value: 'orders',
+    children: [
+      {
+        label: '全部訂單',
+        value: 'orders-all',
+      },
+      {
+        label: '待處理',
+        value: 'orders-pending',
+        children: [
+          {
+            label: '今日',
+            value: 'orders-pending-today',
+          },
+          {
+            label: '本週',
+            value: 'orders-pending-week',
+          },
+        ],
+      },
+      {
+        label: '已完成',
+        value: 'orders-done',
+      },
+    ],
+  },
+  {
+    label: '商品',
+    value: 'products',
+    children: [
+      {
+        label: '分類',
+        value: 'products-cat',
+        children: [
+          {
+            label: '飲料',
+            value: 'products-cat-drink',
+          },
+          {
+            label: '餐點',
+            value: 'products-cat-food',
+          },
+        ],
+      },
+      {
+        label: '庫存',
+        value: 'products-stock',
+      },
+    ],
+  },
+  {
+    label: '設定',
+    value: 'settings',
+  },
+])
+
+// Table demo state
+const tableColumns = ref<CamelotTableColumn[]>([
+  {
+    key: 'id',
+    title: 'ID',
+    width: '70px',
+    fixed: 'left',
+  },
+  {
+    key: 'name',
+    title: '名稱',
+    width: '160px',
+    fixed: 'left',
+  },
+  {
+    key: 'category',
+    title: '分類',
+    width: '120px',
+  },
+  {
+    key: 'city',
+    title: '城市',
+    width: '120px',
+  },
+  {
+    key: 'rating',
+    title: '評分',
+    width: '100px',
+    align: 'right',
+  },
+  {
+    key: 'price',
+    title: '價位',
+    width: '120px',
+    align: 'right',
+  },
+  {
+    key: 'phone',
+    title: '電話',
+    width: '170px',
+  },
+  {
+    key: 'status',
+    title: '狀態',
+    width: '110px',
+    fixed: 'right',
+    align: 'center',
+  },
+])
+
+const tablePinned = ref([
+  {
+    id: 0,
+    name: '★ 本月推薦',
+    category: '韓式',
+    city: '台北',
+    rating: '4.9',
+    price: '$$$',
+    phone: '02-0000-0000',
+    status: 'active',
+  },
+])
+
+const tableData = ref(
+  Array.from({ length: 20 }).map((_, i) => ({
+    id: i + 1,
+    name: `店家 ${i + 1}`,
+    category: ['韓式', '日式', '中式', '義式'][i % 4],
+    city: ['台北', '台中', '高雄'][i % 3],
+    rating: (3 + (i % 20) / 10).toFixed(1),
+    price: `$${100 + i * 15}`,
+    phone: `02-1234-${1000 + i}`,
+    status: i % 3 === 0 ? 'inactive' : 'active',
+  })),
+)
+
 const cardClass = computed(() => {
   if (themeMode.value === 'scifi') {
     return 'p-6 bg-slate-950/60 border border-primary/25 relative font-mono text-primary shadow-[inset_0_0_15px_rgba(0,240,255,0.05)] transition-all flex flex-col gap-4'
-  } else if (themeMode.value === 'cupertino') {
+  }
+  else if (themeMode.value === 'cupertino') {
     return 'p-6 bg-slate-100/40 dark:bg-slate-900/40 backdrop-blur-md rounded-2xl border border-white/20 dark:border-black/30 shadow-md text-slate-800 dark:text-slate-100 transition-all flex flex-col gap-4'
-  } else {
+  }
+  else {
     return 'p-6 bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white transition-all flex flex-col gap-4'
   }
 })
@@ -700,9 +1142,11 @@ const cardClass = computed(() => {
 const cardTitleClass = computed(() => {
   if (themeMode.value === 'scifi') {
     return 'text-lg font-bold tracking-wider text-primary border-b border-primary/20 pb-1.5'
-  } else if (themeMode.value === 'cupertino') {
+  }
+  else if (themeMode.value === 'cupertino') {
     return 'text-lg font-semibold text-slate-800 dark:text-slate-100'
-  } else {
+  }
+  else {
     return 'text-lg font-semibold text-slate-800 dark:text-white'
   }
 })
@@ -721,88 +1165,268 @@ const brandColors = [
   {
     name: 'Blue',
     roles: {
-      primary: { light: '#0061a4', dark: '#9ecaFF' },
-      onPrimary: { light: '#ffffff', dark: '#003258' },
-      secondary: { light: '#008bb0', dark: '#80e2ff' },
-      onSecondary: { light: '#ffffff', dark: '#003544' },
-      tertiary: { light: '#9c27b0', dark: '#f3c2ff' },
-      onTertiary: { light: '#ffffff', dark: '#570068' },
-      error: { light: '#ba1a1a', dark: '#ffb4ab' },
-      onError: { light: '#ffffff', dark: '#690005' },
-      warning: { light: '#e68500', dark: '#ffbe6b' },
-      onWarning: { light: '#ffffff', dark: '#4b2800' },
-      success: { light: '#00875a', dark: '#63e6be' },
-      onSuccess: { light: '#ffffff', dark: '#003822' }
-    }
+      primary: {
+        light: '#0061a4',
+        dark: '#9ecaFF',
+      },
+      onPrimary: {
+        light: '#ffffff',
+        dark: '#003258',
+      },
+      secondary: {
+        light: '#008bb0',
+        dark: '#80e2ff',
+      },
+      onSecondary: {
+        light: '#ffffff',
+        dark: '#003544',
+      },
+      tertiary: {
+        light: '#9c27b0',
+        dark: '#f3c2ff',
+      },
+      onTertiary: {
+        light: '#ffffff',
+        dark: '#570068',
+      },
+      error: {
+        light: '#ba1a1a',
+        dark: '#ffb4ab',
+      },
+      onError: {
+        light: '#ffffff',
+        dark: '#690005',
+      },
+      warning: {
+        light: '#e68500',
+        dark: '#ffbe6b',
+      },
+      onWarning: {
+        light: '#ffffff',
+        dark: '#4b2800',
+      },
+      success: {
+        light: '#00875a',
+        dark: '#63e6be',
+      },
+      onSuccess: {
+        light: '#ffffff',
+        dark: '#003822',
+      },
+    },
   },
   {
     name: 'Emerald',
     roles: {
-      primary: { light: '#00875a', dark: '#63e6be' },
-      onPrimary: { light: '#ffffff', dark: '#003822' },
-      secondary: { light: '#009688', dark: '#80cbc4' },
-      onSecondary: { light: '#ffffff', dark: '#003731' },
-      tertiary: { light: '#689f38', dark: '#c5e1a5' },
-      onTertiary: { light: '#ffffff', dark: '#243a00' },
-      error: { light: '#ba1a1a', dark: '#ffb4ab' },
-      onError: { light: '#ffffff', dark: '#690005' },
-      warning: { light: '#f57c00', dark: '#ffb74d' },
-      onWarning: { light: '#ffffff', dark: '#4d2000' },
-      success: { light: '#009624', dark: '#81c784' },
-      onSuccess: { light: '#ffffff', dark: '#003308' }
-    }
+      primary: {
+        light: '#00875a',
+        dark: '#63e6be',
+      },
+      onPrimary: {
+        light: '#ffffff',
+        dark: '#003822',
+      },
+      secondary: {
+        light: '#009688',
+        dark: '#80cbc4',
+      },
+      onSecondary: {
+        light: '#ffffff',
+        dark: '#003731',
+      },
+      tertiary: {
+        light: '#689f38',
+        dark: '#c5e1a5',
+      },
+      onTertiary: {
+        light: '#ffffff',
+        dark: '#243a00',
+      },
+      error: {
+        light: '#ba1a1a',
+        dark: '#ffb4ab',
+      },
+      onError: {
+        light: '#ffffff',
+        dark: '#690005',
+      },
+      warning: {
+        light: '#f57c00',
+        dark: '#ffb74d',
+      },
+      onWarning: {
+        light: '#ffffff',
+        dark: '#4d2000',
+      },
+      success: {
+        light: '#009624',
+        dark: '#81c784',
+      },
+      onSuccess: {
+        light: '#ffffff',
+        dark: '#003308',
+      },
+    },
   },
   {
     name: 'Violet',
     roles: {
-      primary: { light: '#6750a4', dark: '#d0bcff' },
-      onPrimary: { light: '#ffffff', dark: '#381e72' },
-      secondary: { light: '#ab47bc', dark: '#ea80fc' },
-      onSecondary: { light: '#ffffff', dark: '#5c007a' },
-      tertiary: { light: '#e91e63', dark: '#ff80ab' },
-      onTertiary: { light: '#ffffff', dark: '#5f002b' },
-      error: { light: '#ba1a1a', dark: '#ffb4ab' },
-      onError: { light: '#ffffff', dark: '#690005' },
-      warning: { light: '#ffa000', dark: '#ffe082' },
-      onWarning: { light: '#ffffff', dark: '#4c2d00' },
-      success: { light: '#00875a', dark: '#63e6be' },
-      onSuccess: { light: '#ffffff', dark: '#003822' }
-    }
+      primary: {
+        light: '#6750a4',
+        dark: '#d0bcff',
+      },
+      onPrimary: {
+        light: '#ffffff',
+        dark: '#381e72',
+      },
+      secondary: {
+        light: '#ab47bc',
+        dark: '#ea80fc',
+      },
+      onSecondary: {
+        light: '#ffffff',
+        dark: '#5c007a',
+      },
+      tertiary: {
+        light: '#e91e63',
+        dark: '#ff80ab',
+      },
+      onTertiary: {
+        light: '#ffffff',
+        dark: '#5f002b',
+      },
+      error: {
+        light: '#ba1a1a',
+        dark: '#ffb4ab',
+      },
+      onError: {
+        light: '#ffffff',
+        dark: '#690005',
+      },
+      warning: {
+        light: '#ffa000',
+        dark: '#ffe082',
+      },
+      onWarning: {
+        light: '#ffffff',
+        dark: '#4c2d00',
+      },
+      success: {
+        light: '#00875a',
+        dark: '#63e6be',
+      },
+      onSuccess: {
+        light: '#ffffff',
+        dark: '#003822',
+      },
+    },
   },
   {
     name: 'Rose',
     roles: {
-      primary: { light: '#ba1a1a', dark: '#ffb4ab' },
-      onPrimary: { light: '#ffffff', dark: '#690005' },
-      secondary: { light: '#e91e63', dark: '#ff80ab' },
-      onSecondary: { light: '#ffffff', dark: '#5f002b' },
-      tertiary: { light: '#e65100', dark: '#ffb74d' },
-      onTertiary: { light: '#ffffff', dark: '#4d1c00' },
-      error: { light: '#e01919', dark: '#ffb3b3' },
-      onError: { light: '#ffffff', dark: '#680003' },
-      warning: { light: '#f57c00', dark: '#ffb74d' },
-      onWarning: { light: '#ffffff', dark: '#4d2000' },
-      success: { light: '#00875a', dark: '#63e6be' },
-      onSuccess: { light: '#ffffff', dark: '#003822' }
-    }
+      primary: {
+        light: '#ba1a1a',
+        dark: '#ffb4ab',
+      },
+      onPrimary: {
+        light: '#ffffff',
+        dark: '#690005',
+      },
+      secondary: {
+        light: '#e91e63',
+        dark: '#ff80ab',
+      },
+      onSecondary: {
+        light: '#ffffff',
+        dark: '#5f002b',
+      },
+      tertiary: {
+        light: '#e65100',
+        dark: '#ffb74d',
+      },
+      onTertiary: {
+        light: '#ffffff',
+        dark: '#4d1c00',
+      },
+      error: {
+        light: '#e01919',
+        dark: '#ffb3b3',
+      },
+      onError: {
+        light: '#ffffff',
+        dark: '#680003',
+      },
+      warning: {
+        light: '#f57c00',
+        dark: '#ffb74d',
+      },
+      onWarning: {
+        light: '#ffffff',
+        dark: '#4d2000',
+      },
+      success: {
+        light: '#00875a',
+        dark: '#63e6be',
+      },
+      onSuccess: {
+        light: '#ffffff',
+        dark: '#003822',
+      },
+    },
   },
   {
     name: 'Amber',
     roles: {
-      primary: { light: '#8b5000', dark: '#ffb85d' },
-      onPrimary: { light: '#ffffff', dark: '#4b2800' },
-      secondary: { light: '#f57c00', dark: '#ffb74d' },
-      onSecondary: { light: '#ffffff', dark: '#4d2000' },
-      tertiary: { light: '#558b2f', dark: '#aeec88' },
-      onTertiary: { light: '#ffffff', dark: '#1b3b00' },
-      error: { light: '#ba1a1a', dark: '#ffb4ab' },
-      onError: { light: '#ffffff', dark: '#690005' },
-      warning: { light: '#ff6f00', dark: '#ffe082' },
-      onWarning: { light: '#ffffff', dark: '#4c2d00' },
-      success: { light: '#00875a', dark: '#63e6be' },
-      onSuccess: { light: '#ffffff', dark: '#003822' }
-    }
-  }
+      primary: {
+        light: '#8b5000',
+        dark: '#ffb85d',
+      },
+      onPrimary: {
+        light: '#ffffff',
+        dark: '#4b2800',
+      },
+      secondary: {
+        light: '#f57c00',
+        dark: '#ffb74d',
+      },
+      onSecondary: {
+        light: '#ffffff',
+        dark: '#4d2000',
+      },
+      tertiary: {
+        light: '#558b2f',
+        dark: '#aeec88',
+      },
+      onTertiary: {
+        light: '#ffffff',
+        dark: '#1b3b00',
+      },
+      error: {
+        light: '#ba1a1a',
+        dark: '#ffb4ab',
+      },
+      onError: {
+        light: '#ffffff',
+        dark: '#690005',
+      },
+      warning: {
+        light: '#ff6f00',
+        dark: '#ffe082',
+      },
+      onWarning: {
+        light: '#ffffff',
+        dark: '#4c2d00',
+      },
+      success: {
+        light: '#00875a',
+        dark: '#63e6be',
+      },
+      onSuccess: {
+        light: '#ffffff',
+        dark: '#003822',
+      },
+    },
+  },
 ]
 
 const activeBrandColorName = ref('Blue')

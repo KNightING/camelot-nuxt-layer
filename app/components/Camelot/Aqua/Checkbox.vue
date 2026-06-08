@@ -5,15 +5,19 @@
     @click="toggle"
   >
     <span
-      class="flex h-5 w-5 items-center justify-center border transition-all duration-200 ease-spring"
+      class="relative inline-block h-5 w-5 shrink-0 border align-middle transition-all duration-200 ease-spring"
       :class="[
         shape === 'circle' ? 'rounded-full' : 'rounded-md',
-        modelValue ? 'aqua-fill border-transparent' : 'aqua-track',
+        (modelValue || indeterminate) ? 'aqua-fill border-transparent' : 'aqua-track',
       ]"
     >
       <span
-        class="h-2 w-1 rotate-45 border-r-2 border-b-2 border-white transition-opacity duration-200"
+        class="absolute top-1/2 left-1/2 h-2 w-1 border-r-2 border-b-2 border-white transition-opacity duration-200 [transform:translate(-50%,-60%)_rotate(45deg)]"
         :class="modelValue ? 'opacity-100' : 'opacity-0'"
+      />
+      <span
+        class="absolute top-1/2 left-1/2 h-0.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white transition-opacity duration-200"
+        :class="(indeterminate && !modelValue) ? 'opacity-100' : 'opacity-0'"
       />
     </span>
     <span
@@ -29,11 +33,13 @@ const props = withDefaults(
     label?: string
     disabled?: boolean
     shape?: 'square' | 'circle'
+    indeterminate?: boolean
   }>(),
   {
     label: '',
     disabled: false,
     shape: 'square',
+    indeterminate: false,
   },
 )
 

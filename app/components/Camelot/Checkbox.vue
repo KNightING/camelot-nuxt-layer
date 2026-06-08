@@ -8,6 +8,7 @@
       v-model="modelValue"
       :label="label"
       :disabled="disabled"
+      :indeterminate="indeterminate"
       @change="emit('change', $event)"
     />
 
@@ -17,6 +18,7 @@
       :label="label"
       :disabled="disabled"
       :shape="shape"
+      :indeterminate="indeterminate"
       @change="emit('change', $event)"
     />
 
@@ -26,6 +28,7 @@
       :label="label"
       :disabled="disabled"
       :shape="shape"
+      :indeterminate="indeterminate"
       @change="emit('change', $event)"
     />
 
@@ -34,6 +37,7 @@
       v-model="modelValue"
       :label="label"
       :disabled="disabled"
+      :indeterminate="indeterminate"
       @change="emit('change', $event)"
     />
   </div>
@@ -47,6 +51,7 @@ const props = withDefaults(
     color?: CamelotColorRole
     isContainer?: boolean
     shape?: 'square' | 'circle'
+    indeterminate?: boolean
   }>(),
   {
     label: '',
@@ -54,6 +59,7 @@ const props = withDefaults(
     color: 'primary',
     isContainer: false,
     shape: 'square',
+    indeterminate: false,
   },
 )
 

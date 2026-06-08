@@ -6,7 +6,7 @@
     :disabled-close-when-scrolling="disabledCloseWhenScrolling"
     disabled-auto-space
     disabled-shadow
-    popup-class="shadow-lg rounded-md"
+    popup-class="shadow-xl rounded-xl"
   >
     <slot :selected-data="selectedData">
       <!-- Sci-fi Trigger Wrapper -->
@@ -144,12 +144,13 @@
     <template #popup>
       <div
         ref="optionsContainerEl"
-        class="options-container flex flex-col rounded-md overflow-hidden relative"
+        class="options-container relative flex flex-col overflow-hidden"
         :class="[
           optionsContainerClass || (themeMode === 'aqua' ? 'aqua-glass' : 'bg-surface'),
           themeMode === 'cupertino' ? 'rounded-[12px] shadow-2xl backdrop-blur-md' : '',
           themeMode === 'aqua' ? 'aqua-options rounded-3xl p-1' : '',
           themeMode === 'scifi' ? 'scifi-options-panel bg-transparent border-none shadow-none!' : '',
+          themeMode === 'material' ? 'rounded-md' : '',
         ]"
         :style="[`max-height: ${optionsContainerMaxHeight}px;`]"
       >
@@ -206,7 +207,7 @@
             <div
               v-if="filteredOptions && filteredOptions.length > 0"
               v-bind="virtualContainerProps"
-              class="flex-1 min-h-0 relative bg-inherit overflow-auto"
+              class="flex-1 min-h-0 relative bg-transparent overflow-auto"
             >
               <div
                 v-bind="virtualWrapperProps"
@@ -249,7 +250,7 @@
             </div>
             <div
               v-else
-              class="flex-1 min-h-0 relative bg-inherit px-2 pb-2"
+              class="flex-1 min-h-0 relative bg-transparent px-2 pb-2"
             >
               <slot name="empty-options">
                 <div class="flex flex-col items-center justify-center text-on-surface-variant gap-2 py-2">
@@ -262,7 +263,7 @@
           <!-- 一般模式 (原有行為) -->
           <CamelotContainer
             v-else
-            class="flex-1 min-h-0 relative bg-inherit"
+            class="flex-1 min-h-0 relative bg-transparent"
           >
             <div class="flex flex-col px-2 pb-2">
               <template v-if="filteredOptions && filteredOptions.length > 0">
