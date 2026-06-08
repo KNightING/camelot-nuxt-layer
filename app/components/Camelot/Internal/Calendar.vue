@@ -138,7 +138,7 @@
       <!-- Time Picker Section（可輸入亦可下拉選擇；時/分/秒由下往上關閉；12/24 小時制；數字跟隨 current-color） -->
       <div
         v-if="enableTime && !hideTime"
-        class="border-t border-outline mt-4 pt-4 flex flex-col items-center gap-2"
+        class="border-t border-outline mt-4 pt-4 flex flex-wrap items-center justify-center gap-x-6 gap-y-2"
       >
         <!-- 單選 -->
         <CamelotInternalTimeRow
