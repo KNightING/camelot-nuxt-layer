@@ -49,7 +49,8 @@
               :value="startDisplay"
               type="text"
               class="min-w-0 text-on-surface bg-transparent placeholder:text-on-surface/50 outline-none text-base caret-[var(--cml-color-current-color)] appearance-none cursor-pointer"
-              :class="[{ 'text-black!': disabled }, startDisplay ? 'w-[10.5ch]' : 'w-[14ch]']"
+              :class="{ 'text-black!': disabled }"
+              :style="{ width: startInputWidth }"
               placeholder="請選擇起日"
               readonly
             >
@@ -61,7 +62,8 @@
               :value="endDisplay"
               type="text"
               class="min-w-0 text-on-surface bg-transparent placeholder:text-on-surface/50 outline-none text-base caret-[var(--cml-color-current-color)] appearance-none cursor-pointer"
-              :class="[{ 'text-black!': disabled }, endDisplay ? 'w-[10.5ch]' : 'w-[14ch]']"
+              :class="{ 'text-black!': disabled }"
+              :style="{ width: endInputWidth }"
               placeholder="請選擇迄日"
               readonly
             >
@@ -172,6 +174,11 @@
                 @change="endTime.apply"
               />
             </div>
+            <CamelotButton
+              label="確認"
+              :color="color"
+              @click="confirmRange"
+            />
           </div>
         </div>
       </template>
@@ -234,6 +241,11 @@
                 @change="endTime.apply"
               />
             </div>
+            <CamelotButton
+              label="確認"
+              :color="color"
+              @click="confirmRange"
+            />
           </div>
         </div>
       </CamelotBaseDialogV2>
@@ -382,6 +394,11 @@ const togglePopup = () => {
   open.value = !open.value
 }
 
+// 時間模式的「確認」：model 已即時 commit，這裡負責關閉浮層作為明確完成入口
+const confirmRange = () => {
+  open.value = false
+}
+
 // Better outside click handling（dialog 模式由 BaseDialogV2 自行處理遮罩/Esc 關閉）
 onClickOutside(triggerRef, () => {
   if (showType.value === 'popup') {
@@ -426,6 +443,10 @@ const endDisplay = computed(() => {
   if (!model.value || !model.value[1]) return ''
   return formatDate(new Date(model.value[1]), effectiveFormat.value)
 })
+
+// 觸發器 input 寬度依顯示內容自適應（含時間時字串較長，避免被裁切）；無值時用 placeholder 寬度
+const startInputWidth = computed(() => `${Math.max(startDisplay.value.length + 1, 14)}ch`)
+const endInputWidth = computed(() => `${Math.max(endDisplay.value.length + 1, 14)}ch`)
 
 const displayValue = computed(() => {
   if (!model.value || !model.value[0] || !model.value[1]) {
