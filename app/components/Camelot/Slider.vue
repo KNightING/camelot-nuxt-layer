@@ -153,6 +153,25 @@ const snap = (raw: number) => {
   return clamp(Number(stepped.toFixed(decimals)), props.min, props.max)
 }
 
+// 載入 / 外部值變動時，將 model 對齊到 step（避免初始非整數倍位置與刻度錯位）
+watch(
+  [model, () => props.step, () => props.min, () => props.max],
+  () => {
+    if (props.range) {
+      if (Array.isArray(model.value)) {
+        const a = snap(model.value[0]!)
+        const b = snap(model.value[1]!)
+        if (a !== model.value[0] || b !== model.value[1]) model.value = [a, b]
+      }
+    }
+    else if (typeof model.value === 'number') {
+      const v = snap(model.value)
+      if (v !== model.value) model.value = v
+    }
+  },
+  { immediate: true },
+)
+
 const setThumb = (index: number, raw: number) => {
   const v = snap(raw)
   if (props.range) {
