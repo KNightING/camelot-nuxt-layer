@@ -145,9 +145,12 @@ const popupPanelShadowFix = computed(() => {
 const triggerRef = useTemplateRef('triggerRef')
 const popupRef = useTemplateRef('popupRef')
 
-// Better outside click handling
+// Better outside click handling（dialog 模式由 BaseDialogV2 自行處理遮罩/Esc 關閉，
+// 不可由 triggerRef 的 onClickOutside 介入，否則開啟當下即被關閉）
 onClickOutside(triggerRef, () => {
-  open.value = false
+  if (showType.value === 'popup') {
+    open.value = false
+  }
 }, {
   ignore: [popupRef],
 })
@@ -185,9 +188,12 @@ const onDateSelect = (date: Date | number | null | undefined) => {
   }
 }
 
+const { isMobile } = useDeviceBreakpoints()
+
 const showType = computed<'popup' | 'dialog'>(() => {
+  // auto：手機改用置中 modal（dialog），桌機用 popup
   if (props.showType === 'auto') {
-    return 'popup'
+    return isMobile.value ? 'dialog' : 'popup'
   }
   return props.showType ?? 'dialog'
 })

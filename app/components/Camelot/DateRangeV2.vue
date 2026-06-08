@@ -69,20 +69,19 @@
             v-model:range-value="internalValue"
             v-model:view-date="viewDate"
             is-range
-            hide-next-arrow
-            hide-next-month
+            :hide-next-arrow="showSecondCalendar"
+            :hide-next-month="showSecondCalendar"
             :min-date="minDate"
             :max-date="maxDate"
             :get-day-attributes="getDayAttributes"
             @update:range-value="onRangeSelect"
           />
           <CamelotInternalCalendar
-            v-if="multiCalendars"
+            v-if="showSecondCalendar"
             v-model:range-value="internalValue"
             is-range
             hide-prev-arrow
             hide-prev-month
-            class="hidden sm:block"
             :view-date="nextMonthViewDate"
             :min-date="minDate"
             :max-date="maxDate"
@@ -207,9 +206,11 @@ const togglePopup = () => {
   open.value = !open.value
 }
 
-// Better outside click handling
+// Better outside click handling（dialog 模式由 BaseDialogV2 自行處理遮罩/Esc 關閉）
 onClickOutside(triggerRef, () => {
-  open.value = false
+  if (showType.value === 'popup') {
+    open.value = false
+  }
 }, {
   ignore: [popupRef],
 })
@@ -285,10 +286,16 @@ const applyRange = () => {
   }
 }
 
+const { isMobile } = useDeviceBreakpoints()
+
 const showType = computed<'popup' | 'dialog'>(() => {
+  // auto：手機改用置中 modal（dialog），桌機用 popup
   if (props.showType === 'auto') {
-    return 'popup'
+    return isMobile.value ? 'dialog' : 'popup'
   }
   return props.showType ?? 'dialog'
 })
+
+// 第二個月曆是否顯示（多月曆且非手機）。決定第一個月曆是否要自行顯示「下個月」箭頭
+const showSecondCalendar = computed(() => props.multiCalendars && !isMobile.value)
 </script>
