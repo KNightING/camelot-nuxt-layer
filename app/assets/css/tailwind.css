@@ -82,6 +82,17 @@
   --spacing-footer: 30px;
 
   --ease-overshoot: cubic-bezier(0.2, 0.4, 0.8, 1.3);
+  /* Aqua pill 的 Spring 物理感 / iOS segmented 的緩動 / Sci-Fi 收斂緩動 */
+  --ease-spring: cubic-bezier(0.34, 1.2, 0.64, 1);
+  --ease-ios: cubic-bezier(0.19, 1, 0.22, 1);
+
+  /* 共用動畫：Sci-Fi 掃描線（供 animate-scifi-scan 使用） */
+  --animate-scifi-scan: scifi-scan 3s linear infinite;
+}
+
+@keyframes scifi-scan {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
 
 @layer base {
@@ -159,6 +170,52 @@
 
 @utility clip-rounded {
   clip-path: inset(0px 0px 0px round 20px);
+}
+
+/* ===== Aqua Frosted Glass 風格共用 utility（消費 router 注入的 --cml-color-current-color） ===== */
+
+/* 玻璃面板：半透明 + backdrop blur + 髮絲白邊 + 柔和大範圍陰影 + 頂部內高光
+   用於 dialog / select 浮層 / steps 容器等浮動表面 */
+@utility aqua-glass {
+  background-color: color-mix(in srgb, var(--color-surface, white) 72%, transparent);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid color-mix(in srgb, white 55%, transparent);
+  box-shadow:
+    0 8px 40px -8px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 0 color-mix(in srgb, white 60%, transparent);
+}
+
+/* 填滿態：135deg 漸層 + 頂部內高光 + 柔光（按鈕、選中、checkbox 勾選、switch 開啟軌道） */
+@utility aqua-fill {
+  background-image: linear-gradient(
+    135deg,
+    var(--cml-color-current-color, var(--color-primary)),
+    color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 78%, white)
+  );
+  box-shadow:
+    0 6px 16px -4px color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 42%, transparent),
+    inset 0 1px 0 0 color-mix(in srgb, white 35%, transparent);
+}
+
+/* 軌道/未選態：髮絲級半透明（switch 軌道、input 底、未選背景）— 邊框刻意細而淡 */
+@utility aqua-track {
+  background-color: color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 6%, transparent);
+  border: 1px solid color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 12%, transparent);
+}
+
+/* 聚焦光暈（可加 focus: / focus-within: 變體）— ring 收細為 2px、淡化 */
+@utility aqua-glow {
+  border-color: color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 32%, transparent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 12%, transparent);
+}
+
+/* 玻璃 thumb 的高光（switch / 拖曳點）：頂部漸層 + 內白高光 + 落影 */
+@utility aqua-thumb {
+  background-image: linear-gradient(180deg, #ffffff, color-mix(in srgb, white 85%, transparent));
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.9);
 }
 
 @custom-variant hover (&:hover);

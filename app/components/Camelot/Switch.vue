@@ -1,5 +1,8 @@
 <template>
-  <div :style="switchStyle" class="inline-block">
+  <div
+    class="inline-block"
+    :class="roleColorClass"
+  >
     <CamelotScifiSwitch
       v-if="themeMode === 'scifi'"
       v-model="modelValue"
@@ -9,6 +12,13 @@
 
     <CamelotCupertinoSwitch
       v-else-if="themeMode === 'cupertino'"
+      v-model="modelValue"
+      :disabled="disabled"
+      @change="emit('change', $event)"
+    />
+
+    <CamelotAquaSwitch
+      v-else-if="themeMode === 'aqua'"
       v-model="modelValue"
       :disabled="disabled"
       @change="emit('change', $event)"
@@ -27,14 +37,14 @@
 const props = withDefaults(
   defineProps<{
     disabled?: boolean
-    color?: 'primary' | 'secondary' | 'tertiary' | 'error' | 'info' | 'warning' | 'success'
+    color?: CamelotColorRole
     isContainer?: boolean
   }>(),
   {
     disabled: false,
     color: 'primary',
     isContainer: false,
-  }
+  },
 )
 
 const emit = defineEmits<{
@@ -45,16 +55,5 @@ const modelValue = defineModel<boolean>({ default: false })
 
 const { themeMode } = useCamelotTheme()
 
-const switchStyle = computed(() => {
-  const role = props.color
-  const isContainer = props.isContainer
-
-  const colorToken = isContainer ? `var(--color-${role}-container)` : `var(--color-${role})`
-  const onColorToken = isContainer ? `var(--color-on-${role}-container)` : `var(--color-on-${role})`
-
-  return {
-    '--cml-color-current-color': colorToken,
-    '--cml-color-current-on-color': onColorToken,
-  }
-})
+const roleColorClass = useCamelotRoleColorClass(() => props.color, () => props.isContainer)
 </script>

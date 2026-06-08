@@ -70,5 +70,3 @@ const onShiftTab = (event: KeyboardEvent) => {
   }
 }
 </script>
-
-<style scoped></style>

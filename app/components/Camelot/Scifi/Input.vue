@@ -8,19 +8,19 @@
     @mouseenter="isHovered = true"
     @mouseleave="isHovered = false"
   >
-    <div class="scifi-input-inner">
+    <div class="flex h-9 w-full items-center px-2">
       <slot name="before" />
-      
+
       <input
         ref="input"
         v-model="modelValue"
-        class="flex-1 outline-none border-none min-w-0 w-full bg-transparent"
+        class="w-full min-w-0 flex-1 border-none bg-transparent text-sm text-on-surface outline-none transition-colors duration-200 placeholder:text-[color-mix(in_srgb,var(--cml-color-current-color)_40%,var(--color-on-surface))] placeholder:opacity-50"
         :placeholder="placeholder"
         :disabled="disabled"
         @focus="onFocus"
         @blur="onBlur"
       >
-      
+
       <slot name="after" />
     </div>
   </CamelotScifiFrame>
@@ -35,7 +35,7 @@ withDefaults(
   {
     placeholder: '',
     disabled: false,
-  }
+  },
 )
 
 const modelValue = defineModel<string | number>()
@@ -50,24 +50,3 @@ const onBlur = () => {
   isFocused.value = false
 }
 </script>
-
-<style scoped>
-.scifi-input-inner {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  height: 36px;
-  padding: 0 8px;
-  box-sizing: border-box;
-}
-input {
-  color: var(--cml-color-on-surface, #1c1b1f);
-  font-family: inherit;
-  font-size: 14px;
-  transition: color 0.2s ease;
-}
-input::placeholder {
-  color: color-mix(in srgb, var(--cml-color-current-color) 40%, var(--cml-color-on-surface, #1c1b1f));
-  opacity: 0.5;
-}
-</style>

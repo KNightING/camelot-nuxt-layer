@@ -2,15 +2,16 @@
   <!-- Sci-fi Input Layout -->
   <label
     v-if="themeMode === 'scifi'"
-    class="flex flex-col w-full min-w-10 gap-1.5"
-    :class="{ 'opacity-60 cursor-not-allowed': disabled }"
-    :style="inputStyle"
+    class="flex w-full min-w-10 flex-col gap-1.5"
+    :class="[roleColorClass, { 'cursor-not-allowed opacity-60': disabled }]"
   >
     <slot name="label">
       <span
         v-if="label"
-        class="label-text"
-        :class="{ 'focused': isFocused }"
+        class="pl-1 text-xs tracking-[0.1em] uppercase text-on-surface transition-all duration-200"
+        :class="isFocused
+          ? 'text-[var(--cml-color-current-color)] opacity-100 [text-shadow:0_0_8px_color-mix(in_srgb,var(--cml-color-current-color),transparent_50%)]'
+          : 'opacity-80'"
       >
         {{ label }}<span
           v-if="required"
@@ -18,16 +19,16 @@
         >*</span>
       </span>
     </slot>
-    
+
     <div
       ref="target"
-      class="relative flex-1 w-full"
+      class="relative w-full flex-1"
     >
       <CamelotScifiInput
         v-model="model"
         :placeholder="placeholder"
         :disabled="disabled || mode === 'only-select'"
-        :class="{ 'select-none pointer-events-none': mode === 'only-select' }"
+        :class="{ 'pointer-events-none select-none': mode === 'only-select' }"
         @focus="onFocus"
         @blur="onBlur"
         @input="onInput"
@@ -44,25 +45,23 @@
           <slot name="after" />
         </template>
       </CamelotScifiInput>
-      
+
       <!-- Select Options Dropdown -->
       <template v-if="isSelectMode">
         <div
-          class="absolute left-0 min-w-full w-fit z-10"
+          class="absolute left-0 z-10 w-fit min-w-full"
           :class="{
             'bottom-[110%]': isBottom,
             'top-[110%]': !isBottom,
           }"
         >
           <div
-            :class="{
-              close: !isOpen,
-            }"
-            class="expanded-container"
+            class="grid overflow-hidden transition-all duration-[400ms] ease-[cubic-bezier(0.4,0,0.2,1)]"
+            :class="isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr] opacity-0'"
           >
             <div class="min-h-0">
               <div
-                class="flex overflow-x-hidden overscroll-contain overflow-y-auto max-h-[250px] bg-white rounded-lg border border-app-border flex-col justify-start items-start"
+                class="border-app-border flex max-h-[250px] flex-col items-start justify-start overflow-x-hidden overflow-y-auto overscroll-contain rounded-lg border bg-white"
               >
                 <template v-if="options && options.length > 0">
                   <slot
@@ -72,9 +71,9 @@
                     <button
                       v-for="(option) in options"
                       :key="option.value"
-                      class="cursor-pointer flex justify-start px-4 items-center py-4 min-w-full border-b border-app-divider h-12 text-app-text bg-white hover:bg-primary/5"
+                      class="border-app-divider text-app-text flex h-12 min-w-full cursor-pointer items-center justify-start border-b bg-white px-4 py-4 hover:bg-primary/5"
                       :class="{
-                        '!text-primary !bg-primary/10': option.value === selectedValue,
+                        '!bg-primary/10 !text-primary': option.value === selectedValue,
                       }"
                       @click="() => onOptionSelected(option)"
                     >
@@ -82,7 +81,7 @@
                         name="option"
                         :option="option"
                       >
-                        <span class="text-nowrap text-base font-normal">
+                        <span class="text-base font-normal text-nowrap">
                           {{ option.label }}
                         </span>
                       </slot>
@@ -92,7 +91,7 @@
                 <template v-else>
                   <slot name="empty-options">
                     <div
-                      class="flex flex-col w-full justify-center items-center py-2 gap-1 text-app-secondary-gray select-none"
+                      class="text-app-secondary-gray flex w-full flex-col items-center justify-center gap-1 py-2 select-none"
                     >
                       <i-material-symbols-error-circle-rounded class="text-2xl" />
                       無選項
@@ -110,28 +109,30 @@
   <!-- Cupertino Input Layout -->
   <label
     v-else-if="themeMode === 'cupertino'"
-    class="flex flex-col w-full min-w-10 gap-1.5"
-    :class="{ 'opacity-40 cursor-not-allowed': disabled }"
-    :style="inputStyle"
+    class="flex w-full min-w-10 flex-col gap-1.5"
+    :class="[roleColorClass, { 'cursor-not-allowed opacity-40': disabled }]"
   >
     <slot name="label">
-      <span v-if="label" class="label-text-cupertino">
+      <span
+        v-if="label"
+        class="pl-0.5 text-sm text-on-surface"
+      >
         {{ label }}<span
           v-if="required"
           class="text-app-error ml-0.5"
         >*</span>
       </span>
     </slot>
-    
+
     <div
       ref="target"
-      class="relative flex-1 w-full"
+      class="relative w-full flex-1"
     >
       <CamelotCupertinoInput
         v-model="model"
         :placeholder="placeholder"
         :disabled="disabled || mode === 'only-select'"
-        :class="{ 'select-none pointer-events-none': mode === 'only-select' }"
+        :class="{ 'pointer-events-none select-none': mode === 'only-select' }"
         @focus="onFocus"
         @blur="onBlur"
         @input="onInput"
@@ -148,25 +149,23 @@
           <slot name="after" />
         </template>
       </CamelotCupertinoInput>
-      
+
       <!-- Select Options Dropdown -->
       <template v-if="isSelectMode">
         <div
-          class="absolute left-0 min-w-full w-fit z-10"
+          class="absolute left-0 z-10 w-fit min-w-full"
           :class="{
             'bottom-[110%]': isBottom,
             'top-[110%]': !isBottom,
           }"
         >
           <div
-            :class="{
-              close: !isOpen,
-            }"
-            class="expanded-container"
+            class="grid overflow-hidden transition-all duration-[400ms] ease-[cubic-bezier(0.4,0,0.2,1)]"
+            :class="isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr] opacity-0'"
           >
             <div class="min-h-0">
               <div
-                class="flex overflow-x-hidden overscroll-contain overflow-y-auto max-h-[250px] bg-white rounded-lg border border-app-border flex-col justify-start items-start"
+                class="border-app-border flex max-h-[250px] flex-col items-start justify-start overflow-x-hidden overflow-y-auto overscroll-contain rounded-lg border bg-white"
               >
                 <template v-if="options && options.length > 0">
                   <slot
@@ -176,9 +175,9 @@
                     <button
                       v-for="(option) in options"
                       :key="option.value"
-                      class="cursor-pointer flex justify-start px-4 items-center py-4 min-w-full border-b border-app-divider h-12 text-app-text bg-white hover:bg-primary/5"
+                      class="border-app-divider text-app-text flex h-12 min-w-full cursor-pointer items-center justify-start border-b bg-white px-4 py-4 hover:bg-primary/5"
                       :class="{
-                        '!text-primary !bg-primary/10': option.value === selectedValue,
+                        '!bg-primary/10 !text-primary': option.value === selectedValue,
                       }"
                       @click="() => onOptionSelected(option)"
                     >
@@ -186,7 +185,7 @@
                         name="option"
                         :option="option"
                       >
-                        <span class="text-nowrap text-base font-normal">
+                        <span class="text-base font-normal text-nowrap">
                           {{ option.label }}
                         </span>
                       </slot>
@@ -196,7 +195,111 @@
                 <template v-else>
                   <slot name="empty-options">
                     <div
-                      class="flex flex-col w-full justify-center items-center py-2 gap-1 text-app-secondary-gray select-none"
+                      class="text-app-secondary-gray flex w-full flex-col items-center justify-center gap-1 py-2 select-none"
+                    >
+                      <i-material-symbols-error-circle-rounded class="text-2xl" />
+                      無選項
+                    </div>
+                  </slot>
+                </template>
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+    </div>
+  </label>
+
+  <!-- Aqua Pill Input Layout -->
+  <label
+    v-else-if="themeMode === 'aqua'"
+    class="flex w-full min-w-10 flex-col gap-1.5"
+    :class="[roleColorClass, { 'cursor-not-allowed opacity-40': disabled }]"
+  >
+    <slot name="label">
+      <span
+        v-if="label"
+        class="pl-3 text-sm font-medium text-on-surface"
+      >
+        {{ label }}<span
+          v-if="required"
+          class="text-app-error ml-0.5"
+        >*</span>
+      </span>
+    </slot>
+
+    <div
+      ref="target"
+      class="relative w-full flex-1"
+    >
+      <CamelotAquaInput
+        v-model="model"
+        :placeholder="placeholder"
+        :disabled="disabled || mode === 'only-select'"
+        :class="{ 'pointer-events-none select-none': mode === 'only-select' }"
+        @focus="onFocus"
+        @blur="onBlur"
+        @input="onInput"
+      >
+        <template #before>
+          <slot name="before">
+            <span
+              v-if="mark === 'money'"
+              class="text-app-secondary-gray mr-1.5"
+            >$</span>
+          </slot>
+        </template>
+        <template #after>
+          <slot name="after" />
+        </template>
+      </CamelotAquaInput>
+
+      <!-- Select Options Dropdown -->
+      <template v-if="isSelectMode">
+        <div
+          class="absolute left-0 z-10 w-fit min-w-full"
+          :class="{
+            'bottom-[110%]': isBottom,
+            'top-[110%]': !isBottom,
+          }"
+        >
+          <div
+            class="grid overflow-hidden transition-all duration-[400ms] ease-[cubic-bezier(0.4,0,0.2,1)]"
+            :class="isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr] opacity-0'"
+          >
+            <div class="min-h-0">
+              <div
+                class="border-app-border flex max-h-[250px] flex-col items-start justify-start overflow-x-hidden overflow-y-auto overscroll-contain rounded-2xl border bg-white"
+              >
+                <template v-if="options && options.length > 0">
+                  <slot
+                    name="options"
+                    :options="options"
+                  >
+                    <button
+                      v-for="(option) in options"
+                      :key="option.value"
+                      class="border-app-divider text-app-text flex h-12 min-w-full cursor-pointer items-center justify-start border-b bg-white px-4 py-4 hover:bg-primary/5"
+                      :class="{
+                        '!bg-primary/10 !text-primary': option.value === selectedValue,
+                      }"
+                      @click="() => onOptionSelected(option)"
+                    >
+                      <slot
+                        name="option"
+                        :option="option"
+                      >
+                        <span class="text-base font-normal text-nowrap">
+                          {{ option.label }}
+                        </span>
+                      </slot>
+                    </button>
+                  </slot>
+                </template>
+                <template v-else>
+                  <slot name="empty-options">
+                    <div
+                      class="text-app-secondary-gray flex w-full flex-col items-center justify-center gap-1 py-2 select-none"
                     >
                       <i-material-symbols-error-circle-rounded class="text-2xl" />
                       無選項
@@ -214,13 +317,12 @@
   <!-- Material Input Layout (Default) -->
   <label
     v-else
-    class="flex flex-col w-full min-w-10 relative"
-    :class="{ 'opacity-50 cursor-not-allowed': disabled }"
-    :style="inputStyle"
+    class="relative flex w-full min-w-10 flex-col"
+    :class="[roleColorClass, { 'cursor-not-allowed opacity-50': disabled }]"
   >
     <div
       ref="target"
-      class="relative flex-1 w-full"
+      class="relative w-full flex-1"
     >
       <CamelotMaterialInput
         v-model="model"
@@ -228,7 +330,7 @@
         :required="required"
         :placeholder="placeholder"
         :disabled="disabled || mode === 'only-select'"
-        :class="{ 'select-none pointer-events-none': mode === 'only-select' }"
+        :class="{ 'pointer-events-none select-none': mode === 'only-select' }"
         @focus="onFocus"
         @blur="onBlur"
         @input="onInput"
@@ -245,25 +347,23 @@
           <slot name="after" />
         </template>
       </CamelotMaterialInput>
-      
+
       <!-- Select Options Dropdown -->
       <template v-if="isSelectMode">
         <div
-          class="absolute left-0 min-w-full w-fit z-10"
+          class="absolute left-0 z-10 w-fit min-w-full"
           :class="{
             'bottom-[110%]': isBottom,
             'top-[110%]': !isBottom,
           }"
         >
           <div
-            :class="{
-              close: !isOpen,
-            }"
-            class="expanded-container"
+            class="grid overflow-hidden transition-all duration-[400ms] ease-[cubic-bezier(0.4,0,0.2,1)]"
+            :class="isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr] opacity-0'"
           >
             <div class="min-h-0">
               <div
-                class="flex overflow-x-hidden overscroll-contain overflow-y-auto max-h-[250px] bg-white rounded-lg border border-app-border flex-col justify-start items-start"
+                class="border-app-border flex max-h-[250px] flex-col items-start justify-start overflow-x-hidden overflow-y-auto overscroll-contain rounded-lg border bg-white"
               >
                 <template v-if="options && options.length > 0">
                   <slot
@@ -273,9 +373,9 @@
                     <button
                       v-for="(option) in options"
                       :key="option.value"
-                      class="cursor-pointer flex justify-start px-4 items-center py-4 min-w-full border-b border-app-divider h-12 text-app-text bg-white hover:bg-primary/5"
+                      class="border-app-divider text-app-text flex h-12 min-w-full cursor-pointer items-center justify-start border-b bg-white px-4 py-4 hover:bg-primary/5"
                       :class="{
-                        '!text-primary !bg-primary/10': option.value === selectedValue,
+                        '!bg-primary/10 !text-primary': option.value === selectedValue,
                       }"
                       @click="() => onOptionSelected(option)"
                     >
@@ -283,7 +383,7 @@
                         name="option"
                         :option="option"
                       >
-                        <span class="text-nowrap text-base font-normal">
+                        <span class="text-base font-normal text-nowrap">
                           {{ option.label }}
                         </span>
                       </slot>
@@ -293,7 +393,7 @@
                 <template v-else>
                   <slot name="empty-options">
                     <div
-                      class="flex flex-col w-full justify-center items-center py-2 gap-1 text-app-secondary-gray select-none"
+                      class="text-app-secondary-gray flex w-full flex-col items-center justify-center gap-1 py-2 select-none"
                     >
                       <i-material-symbols-error-circle-rounded class="text-2xl" />
                       無選項
@@ -325,7 +425,7 @@ const props = withDefaults(defineProps<{
   showOptionOnFocus?: boolean
   hideOptionOnBlur?: boolean
   selectedValue?: string | number
-  color?: 'primary' | 'secondary' | 'tertiary' | 'error' | 'info' | 'warning' | 'success'
+  color?: CamelotColorRole
 }>(), {
   border: true,
   size: 'basic',
@@ -387,6 +487,8 @@ const toggle = () => {
 const { themeMode } = useCamelotTheme()
 const isFocused = ref(false)
 
+const roleColorClass = useCamelotRoleColorClass(() => props.color)
+
 const onFocus = () => {
   isFocused.value = true
   if (isSelectMode.value && props.showOptionOnFocus) {
@@ -411,57 +513,7 @@ const onOptionSelected = (option: SelectOption<T>) => {
   emit('optionSelected', option)
 }
 
-const inputStyle = computed(() => {
-  const role = props.color
-  const colorToken = `var(--color-${role})`
-  return {
-    '--cml-color-current-color': colorToken,
-  }
-})
-
 defineExpose({
   inputEl,
 })
 </script>
-
-<style scoped>
-.expanded-container {
-  display: grid;
-  overflow: hidden;
-  grid-template-rows: 1fr;
-  transition-property: all;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 400ms;
-}
-
-.close {
-  grid-template-rows: 0fr !important;
-  opacity: 0 !important;
-}
-
-
-
-/* Scifi styles */
-.label-text {
-  font-family: inherit;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--cml-c-m3-on-surface, #1c1b1f);
-  opacity: 0.8;
-  padding-left: 4px;
-  transition: all 0.2s ease;
-}
-.label-text.focused {
-  opacity: 1;
-  color: var(--cml-color-current-color, var(--color-primary));
-  text-shadow: 0 0 8px color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)), transparent 50%);
-}
-
-/* Cupertino styles */
-.label-text-cupertino {
-  font-size: 0.875rem;
-  color: var(--cml-c-m3-on-surface, #1c1b1f);
-  padding-left: 2px;
-}
-</style>

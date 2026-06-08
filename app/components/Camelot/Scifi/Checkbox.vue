@@ -31,7 +31,7 @@ const props = withDefaults(
   {
     label: '',
     disabled: false,
-  }
+  },
 )
 
 const emit = defineEmits<{

@@ -14,7 +14,6 @@
     >
       <slot name="wrapper">
         <div class="w-screen min-h-screen flex items-center justify-center p-4">
-
           <!-- Sci-fi Layout -->
           <CamelotScifiFrame
             v-if="themeMode === 'scifi'"
@@ -32,6 +31,14 @@
           <div
             v-else-if="themeMode === 'cupertino'"
             class="dialog-content-box cupertino-dialog min-w-[270px] max-w-[340px] rounded-[14px] bg-slate-100/90 dark:bg-slate-900/90 backdrop-blur-xl border border-white/20 dark:border-black/20 p-5 shadow-2xl text-center flex flex-col"
+          >
+            <slot />
+          </div>
+
+          <!-- Aqua Frosted Glass Layout -->
+          <div
+            v-else-if="themeMode === 'aqua'"
+            class="dialog-content-box aqua-glass text-on-surface flex min-w-[280px] max-w-[560px] flex-col rounded-3xl p-6"
           >
             <slot />
           </div>
@@ -219,11 +226,15 @@ dialog::backdrop {
   background-color: rgba(0, 0, 0, 0.3);
 }
 
+.camelot-dialog.aqua::backdrop {
+  backdrop-filter: blur(8px);
+  background-color: color-mix(in srgb, var(--cml-c-mask-color, #000) 35%, transparent);
+}
+
 .camelot-dialog.scifi::backdrop {
   background-color: color-mix(in srgb, var(--cml-color-current-color, var(--color-primary, #00ffff)) 8%, rgba(0, 0, 0, 0.75));
   backdrop-filter: blur(3px);
 }
-
 
 .dialog-content-box {
   transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);

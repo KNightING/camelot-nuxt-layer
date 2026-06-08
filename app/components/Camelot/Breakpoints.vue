@@ -54,9 +54,7 @@ const props = withDefaults(defineProps<{
 }>(), {
 })
 
-const { isMobile, isTablet, isLaptop, isDesktop } = useDeviceBreakpoints()
+const {
+  isMobile, isTablet, isLaptop, isDesktop,
+} = useDeviceBreakpoints()
 </script>
-
-<style scoped>
-
-</style>

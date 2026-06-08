@@ -1,14 +1,14 @@
 <template>
   <div
-    class="flex h-11 w-full items-center rounded-[10px] bg-surface-container-highest px-4 transition-all duration-200 ease-in-out"
-    :class="{ 'bg-surface shadow-[inset_0_0_0_1px_var(--cml-color-current-color)]': isFocused }"
+    class="flex h-11 w-full items-center rounded-full px-4 transition-all duration-200 ease-spring aqua-track"
+    :class="{ 'aqua-glow': isFocused }"
   >
     <slot name="before" />
 
     <input
       ref="input"
       v-model="modelValue"
-      class="w-full min-w-0 flex-1 border-none bg-transparent outline-none"
+      class="w-full min-w-0 flex-1 border-none bg-transparent text-sm text-on-surface outline-none placeholder:text-on-surface-variant"
       :placeholder="placeholder"
       :disabled="disabled"
       @focus="onFocus"

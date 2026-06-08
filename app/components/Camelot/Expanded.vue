@@ -4,12 +4,10 @@
       <slot name="header" />
     </div>
     <div
-      class="expanded-container"
-      :class="{ close: !expanded }"
+      class="grid overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]"
+      :class="expanded ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'"
     >
-      <div
-        style="min-height:0px"
-      >
+      <div class="min-h-0">
         <div ref="contentRef">
           <slot />
         </div>
@@ -26,26 +24,12 @@ const expanded = defineModel<boolean>('expanded', {
 
 const contentRef = useTemplateRef('contentRef')
 
-const { height: contentHeight, width: contentWidth } = useElementBounding(contentRef)
+const {
+  height: contentHeight, width: contentWidth,
+} = useElementBounding(contentRef)
 
 defineExpose({
   contentHeight,
   contentWidth,
 })
 </script>
-
-<style scoped>
-.expanded-container{
-  display: grid;
-  overflow: hidden;
-  grid-template-rows: 1fr;
-  transition-property: all;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 500ms;
-}
-
-.close {
-  grid-template-rows: 0fr !important;
-  opacity: 0 !important;
-}
-</style>

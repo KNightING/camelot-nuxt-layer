@@ -18,7 +18,7 @@ const props = withDefaults(
   }>(),
   {
     disabled: false,
-  }
+  },
 )
 
 const emit = defineEmits<{
@@ -37,8 +37,11 @@ const toggle = () => {
   if (switchRef.value) {
     switchRef.value.animate([
       { filter: 'brightness(1)' },
-      { filter: 'brightness(2)', boxShadow: `0 0 20px var(--cml-color-current-color)` },
-      { filter: 'brightness(1)' }
+      {
+        filter: 'brightness(2)',
+        boxShadow: `0 0 20px var(--cml-color-current-color)`,
+      },
+      { filter: 'brightness(1)' },
     ], { duration: 200 })
   }
 }

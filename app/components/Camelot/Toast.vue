@@ -13,19 +13,17 @@
             }"
             :style="{ zIndex: props.zIndex }"
           >
-            <div class="container" :class="[themeMode]">
+            <div
+              class="container"
+              :class="[themeMode]"
+            >
               <slot :toast="currentToast">
-                <!-- Cyber Layout -->
+                <!-- Aqua Frosted Glass Layout -->
                 <div
-                  v-if="themeMode === 'cyber'"
-                  class="toast-box cyber border border-[#ff0055] bg-black text-white py-3 px-5 shadow-2xl font-mono text-xs tracking-wider min-w-[240px] max-w-[400px] relative"
+                  v-if="themeMode === 'aqua'"
+                  class="toast-box aqua-glass text-on-surface min-w-[200px] max-w-[400px] rounded-2xl px-5 py-3 text-center text-sm font-medium"
                 >
-                  <div class="cyber-brackets top-left-bracket">[</div>
-                  <div class="cyber-brackets bottom-right-bracket">]</div>
-                  <div class="text-[#00f0ff] uppercase font-bold text-[9px] mb-1 tracking-widest border-b border-gray-800 pb-0.5">
-                    // BROADCAST_ALERT
-                  </div>
-                  <span>{{ currentToast?.message }}</span>
+                  {{ currentToast?.message }}
                 </div>
 
                 <!-- Sci-fi Layout -->
@@ -104,19 +102,4 @@ const { themeMode } = useCamelotTheme()
 .v-leave-to .container {
   transform: translateY(-30px);
 }
-
-/* Cyber styles */
-.toast-box.cyber {
-  box-shadow: 0 0 15px rgba(255, 0, 85, 0.4);
-}
-.toast-box.cyber .cyber-brackets {
-  position: absolute;
-  color: #ff0055;
-  font-size: 1.5rem;
-  font-weight: 800;
-  line-height: 1;
-  pointer-events: none;
-}
-.toast-box.cyber .top-left-bracket { top: -2px; left: -6px; }
-.toast-box.cyber .bottom-right-bracket { bottom: -2px; right: -6px; }
 </style>

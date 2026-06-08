@@ -86,7 +86,9 @@ const emit = defineEmits<{
 
 const containerRef = useTemplateRef('containerRef')
 
-const { isLoading, isError, isPending, isReady, load, image, isLandscapeImage } = useLazyImage(props.src, {
+const {
+  isLoading, isError, isPending, isReady, load, image, isLandscapeImage,
+} = useLazyImage(props.src, {
   immediate: props.immediate,
 })
 
@@ -100,12 +102,19 @@ const { stop } = useIntersectionObserver(containerRef, ([entry], observerElement
     load()
     stop()
   }
-}, { immediate: true, threshold: 0.5 })
+}, {
+  immediate: true,
+  threshold: 0.5,
+})
 
-const { top, bottom, right, left, height: imgHeight } = useElementBounding(imgRef)
+const {
+  top, bottom, right, left, height: imgHeight,
+} = useElementBounding(imgRef)
 
 const imgPopupEl = useTemplateRef('imgPopupEl')
-const { width: popupWidth, height: popupHeight, bottom: popupBottom } = useElementBounding(imgPopupEl)
+const {
+  width: popupWidth, height: popupHeight, bottom: popupBottom,
+} = useElementBounding(imgPopupEl)
 
 const popupTop = computed(() => {
   const result = top.value + (imgHeight.value / 2) - (popupHeight.value / 2)
@@ -148,9 +157,9 @@ onBeforeUnmount(() => {
   stop()
 })
 
-defineExpose({ isLoading, isError, isReady })
+defineExpose({
+  isLoading,
+  isError,
+  isReady,
+})
 </script>
-
-<style scoped>
-
-</style>

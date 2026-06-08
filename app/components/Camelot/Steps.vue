@@ -1,5 +1,8 @@
 <template>
-  <div class="container" :class="[themeMode]">
+  <div
+    class="container"
+    :class="[themeMode]"
+  >
     <template
       v-for="(value, index) in steps"
       :key="index"
@@ -41,7 +44,7 @@
                   :class="{
                     'step-dot-text-doing': isDoing(index),
                   }"
-                >{{ themeMode === 'cyber' ? `0${index + 1}` : index + 1 }}</span>
+                >{{ index + 1 }}</span>
               </div>
             </slot>
           </div>
@@ -162,6 +165,7 @@ const isComplete = (index: number) => {
   aspect-ratio: 1 / 1;
   display: flex;
   position: relative;
+  align-items: center;
   justify-content: center;
   border-radius: 9999px;
   border-width: 2px;
@@ -258,59 +262,47 @@ const isComplete = (index: number) => {
   font-family: monospace;
   letter-spacing: 1px;
 }
-/* Cyber style overrides */
-.container.cyber .step-line {
-  height: 4px;
-  background-color: rgba(0, 0, 0, 0.8);
-  border: 1px solid rgba(255, 0, 85, 0.4);
+
+/* Aqua Frosted Glass style overrides */
+.container.aqua .step-line {
+  height: 3px;
+  border-radius: 9999px;
+  background-color: color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 14%, transparent);
 }
-.container.cyber .step-line-complete {
-  border-color: #00f0ff !important;
-  background-color: #00f0ff !important;
-  box-shadow: 0 0 10px #00f0ff;
+.container.aqua .step-line-complete {
+  background-color: transparent !important;
+  background-image: linear-gradient(
+    90deg,
+    var(--cml-color-current-color, var(--color-primary)),
+    color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 78%, white)
+  );
 }
-.container.cyber .step-dot {
-  clip-path: polygon(6px 0%, 100% 0%, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0% 100%, 0% 6px);
-  width: 2rem;
-  height: 2rem;
-  border-radius: 0;
+.container.aqua .step-dot {
+  width: 1.75rem;
   border-width: 1px;
-  background-color: #000;
-  border-color: #ff0055;
-  color: #ff0055;
-  font-family: monospace;
-  font-weight: 700;
-  font-size: 0.75rem;
+  border-color: color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 16%, transparent);
+  background-color: color-mix(in srgb, var(--color-surface, white) 60%, transparent);
+  backdrop-filter: blur(8px);
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.6);
 }
-.container.cyber .step-dot-doing {
-  border-color: #00f0ff !important;
-  color: #00f0ff !important;
-  box-shadow: 0 0 12px rgba(0, 240, 255, 0.6);
+.container.aqua .step-dot-doing {
+  border-color: var(--cml-color-current-color, var(--color-primary)) !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 16%, transparent);
 }
-.container.cyber .step-dot-doing .step-dot-text {
-  color: #00f0ff !important;
-  text-shadow: 0 0 5px #00f0ff;
+.container.aqua .step-dot-doing .step-dot-text {
+  color: var(--cml-color-current-color, var(--color-primary)) !important;
 }
-.container.cyber .step-dot-complete {
-  background-color: #00f0ff !important;
-  border-color: #00f0ff !important;
-  color: #000 !important;
-  box-shadow: 0 0 10px #00f0ff;
+.container.aqua .step-dot-complete {
+  border-color: transparent !important;
+  background-color: transparent !important;
+  background-image: linear-gradient(
+    135deg,
+    var(--cml-color-current-color, var(--color-primary)),
+    color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 78%, white)
+  ) !important;
+  box-shadow: 0 6px 16px -4px color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 42%, transparent);
 }
-.container.cyber .step-dot-text-complete {
-  color: #000 !important;
-  font-weight: 900;
-}
-.container.cyber .step-content {
-  font-family: monospace;
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  color: #ff0055;
-  opacity: 0.7;
-}
-.container.cyber .step-content-complete {
-  color: #00f0ff !important;
-  opacity: 1;
-  text-shadow: 0 0 4px #00f0ff;
+.container.aqua .step-content-complete {
+  color: var(--cml-color-current-color, var(--color-primary)) !important;
 }
 </style>

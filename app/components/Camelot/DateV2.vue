@@ -11,12 +11,16 @@
   >
     <label
       ref="triggerRef"
-      class=" min-w-[16ch] w-full border border-outline bg-surface-container-lowest has-focus:border-primary rounded-lg px-4 py-2 flex items-center gap-2 group cursor-pointer transition-colors"
-      :class="{
-        'border-primary': open,
-        'border-error!': isError,
-        'bg-gray-200! opacity-50': disabled,
-      }"
+      class="group flex w-full min-w-[16ch] cursor-pointer items-center gap-2 px-4 py-2 transition-colors"
+      :class="[
+        triggerClass,
+        {
+          'border-primary': open && themeMode !== 'aqua',
+          'aqua-glow': open && themeMode === 'aqua',
+          'border-error!': isError,
+          'bg-gray-200! opacity-50': disabled,
+        },
+      ]"
       @click="togglePopup"
     >
       <IMaterialSymbolsCalendarMonthRounded
@@ -42,7 +46,10 @@
       v-if="showType === 'dialog'"
       v-model:open="open"
     >
-      <div class="bg-surface rounded-xl overflow-hidden shadow-sm">
+      <div
+        class="overflow-hidden shadow-sm"
+        :class="panelClass"
+      >
         <CamelotInternalCalendar
           v-model="model"
           v-model:view-date="viewDate"
@@ -61,7 +68,7 @@
     >
       <div
         ref="popupRef"
-        class="bg-surface rounded-xl"
+        :class="panelClass"
       >
         <CamelotInternalCalendar
           v-model="model"
@@ -104,6 +111,10 @@ const inputModel = defineModel<string>('input')
 
 const open = ref(false)
 const viewDate = ref(new Date())
+
+const {
+  themeMode, triggerClass, panelClass,
+} = useCamelotPickerTheme()
 
 const triggerRef = useTemplateRef('triggerRef')
 const popupRef = useTemplateRef('popupRef')

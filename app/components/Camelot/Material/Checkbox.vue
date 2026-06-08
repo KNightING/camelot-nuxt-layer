@@ -1,13 +1,18 @@
 <template>
   <div
-    class="checkbox-material-wrapper"
-    :class="{ checked: modelValue, disabled }"
+    class="inline-flex cursor-pointer items-center select-none"
+    :class="{ 'pointer-events-none cursor-not-allowed opacity-[0.38]': disabled }"
     @click="toggle"
   >
-    <div class="checkbox-container" />
+    <span
+      class="relative mr-2 flex h-[18px] w-[18px] items-center justify-center rounded-[2px] border-2 transition-all duration-200 after:h-2 after:w-1 after:border-r-2 after:border-b-2 after:border-white after:opacity-0 after:[transform:rotate(45deg)_translate(-1px,-1px)] after:content-['']"
+      :class="modelValue
+        ? 'border-[var(--cml-color-current-color)] bg-[var(--cml-color-current-color)] after:opacity-100'
+        : 'border-outline'"
+    />
     <span
       v-if="label"
-      class="label-text"
+      class="text-sm text-on-surface"
     >{{ label }}</span>
   </div>
 </template>
@@ -21,7 +26,7 @@ const props = withDefaults(
   {
     label: '',
     disabled: false,
-  }
+  },
 )
 
 const emit = defineEmits<{
@@ -36,51 +41,3 @@ const toggle = () => {
   emit('change', modelValue.value)
 }
 </script>
-
-<style scoped>
-.checkbox-material-wrapper {
-  display: inline-flex;
-  align-items: center;
-  cursor: pointer;
-  user-select: none;
-}
-.checkbox-material-wrapper .checkbox-container {
-  position: relative;
-  width: 18px;
-  height: 18px;
-  margin-right: 8px;
-  border: 2px solid var(--cml-c-m3-outline, #79747e);
-  border-radius: 2px;
-  transition: all 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-}
-.checked .checkbox-container {
-  background-color: var(--cml-color-current-color);
-  border-color: var(--cml-color-current-color);
-}
-.checkbox-material-wrapper .checkbox-container::after {
-  content: '';
-  width: 4px;
-  height: 8px;
-  border: solid white;
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg) translate(-1px, -1px);
-  opacity: 0;
-  transition: opacity 0.2s;
-}
-.checked .checkbox-container::after {
-  opacity: 1;
-}
-.checkbox-material-wrapper .label-text {
-  font-size: 0.875rem;
-  color: var(--cml-c-m3-on-surface, #1c1b1f);
-}
-.disabled {
-  opacity: 0.38;
-  cursor: not-allowed;
-  pointer-events: none;
-}
-</style>

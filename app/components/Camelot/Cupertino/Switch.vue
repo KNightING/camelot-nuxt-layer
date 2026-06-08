@@ -1,10 +1,16 @@
 <template>
   <div
-    class="switch-cupertino"
-    :class="{ checked: modelValue, disabled }"
+    class="relative inline-block h-[31px] w-[51px] cursor-pointer rounded-[15.5px] align-middle transition-colors duration-300"
+    :class="[
+      modelValue ? 'bg-[var(--cml-color-current-color)]' : 'bg-[rgba(120,120,128,0.16)]',
+      { 'cursor-not-allowed opacity-30 grayscale': disabled },
+    ]"
     @click="toggle"
   >
-    <div class="thumb" />
+    <div
+      class="absolute top-0.5 left-0.5 h-[27px] w-[27px] rounded-full bg-white shadow-[0_3px_8px_rgba(0,0,0,0.15),0_3px_1px_rgba(0,0,0,0.06)] transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]"
+      :class="{ 'translate-x-5': modelValue }"
+    />
   </div>
 </template>
 
@@ -15,7 +21,7 @@ const props = withDefaults(
   }>(),
   {
     disabled: false,
-  }
+  },
 )
 
 const emit = defineEmits<{
@@ -30,39 +36,3 @@ const toggle = () => {
   emit('change', modelValue.value)
 }
 </script>
-
-<style scoped>
-.switch-cupertino {
-  position: relative;
-  width: 51px;
-  height: 31px;
-  background-color: rgba(120, 120, 128, 0.16);
-  border-radius: 15.5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  display: inline-block;
-  vertical-align: middle;
-}
-.switch-cupertino.checked {
-  background-color: var(--cml-color-current-color);
-}
-.switch-cupertino .thumb {
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  width: 27px;
-  height: 27px;
-  background-color: #ffffff;
-  border-radius: 50%;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15), 0 3px 1px rgba(0, 0, 0, 0.06);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.switch-cupertino.checked .thumb {
-  transform: translateX(20px);
-}
-.switch-cupertino.disabled {
-  cursor: not-allowed;
-  opacity: 0.3;
-  filter: grayscale(1);
-}
-</style>

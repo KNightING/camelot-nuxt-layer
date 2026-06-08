@@ -127,9 +127,13 @@ if (!props.manual && !props.disabledClickOutside) {
   })
 }
 
-const { x, y, width, height, bottom, update } = useElementBounding(targetRef)
+const {
+  x, y, width, height, bottom, update,
+} = useElementBounding(targetRef)
 
-const { height: windowHeight, width: windowWidth } = useWindowSize()
+const {
+  height: windowHeight, width: windowWidth,
+} = useWindowSize()
 
 useWindowScroll({
   onScroll(e) {
@@ -282,8 +286,8 @@ const isTargetHovered = ref(false)
 const isPopupHovered = ref(false)
 let hoverTimeout: ReturnType<typeof setTimeout> | null = null
 
-const targetListeners: { event: string; handler: any }[] = []
-const popupListeners: { event: string; handler: any }[] = []
+const targetListeners: { event: string, handler: any }[] = []
+const popupListeners: { event: string, handler: any }[] = []
 
 const startHoverOpen = () => {
   if (props.disabled || props.triggerMode !== 'hover') return
@@ -315,7 +319,13 @@ watch(targetRef, (el) => {
     }
     el.addEventListener('mouseenter', enter)
     el.addEventListener('mouseleave', leave)
-    targetListeners.push({ event: 'mouseenter', handler: enter }, { event: 'mouseleave', handler: leave })
+    targetListeners.push({
+      event: 'mouseenter',
+      handler: enter,
+    }, {
+      event: 'mouseleave',
+      handler: leave,
+    })
   }
 })
 
@@ -332,7 +342,13 @@ watch(popupRef, (component) => {
     }
     el.addEventListener('mouseenter', enter)
     el.addEventListener('mouseleave', leave)
-    popupListeners.push({ event: 'mouseenter', handler: enter }, { event: 'mouseleave', handler: leave })
+    popupListeners.push({
+      event: 'mouseenter',
+      handler: enter,
+    }, {
+      event: 'mouseleave',
+      handler: leave,
+    })
   }
 })
 
@@ -355,7 +371,3 @@ onBeforeUnmount(() => {
   }
 })
 </script>
-
-<style scoped>
-
-</style>

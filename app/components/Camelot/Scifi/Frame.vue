@@ -3,7 +3,7 @@
     class="scifi-frame-wrapper"
     :style="[
       variant === '4-corner' ? { '--cml-frame-clip': 'polygon(10px 0%, calc(100% - 10px) 0%, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0% calc(100% - 10px), 0% 10px)' } : {},
-      !clipCorners ? { '--cml-frame-clip': 'none' } : {}
+      !clipCorners ? { '--cml-frame-clip': 'none' } : {},
     ]"
   >
     <CamelotScifiReticle :active="activeReticle" />
@@ -12,15 +12,30 @@
       :class="{ filled, focused, 'show-shine': showShine }"
       :style="{ '--cml-scifi-bg-opacity': showBorders ? undefined : '0%' }"
     >
-      <div v-if="showCorners && clipCorners" class="corner-decoration top-left" />
-      <div v-if="showCorners && clipCorners" class="corner-decoration bottom-right" />
-      
+      <div
+        v-if="showCorners && clipCorners"
+        class="corner-decoration top-left"
+      />
+      <div
+        v-if="showCorners && clipCorners"
+        class="corner-decoration bottom-right"
+      />
+
       <div class="frame-inner">
-        <div v-if="showGrid" class="grid-bg" />
-        <div v-if="showPulse" class="pulse-bg" />
-        <div v-if="showScanline" class="scanline" />
+        <div
+          v-if="showGrid"
+          class="grid-bg"
+        />
+        <div
+          v-if="showPulse"
+          class="pulse-bg"
+        />
+        <div
+          v-if="showScanline"
+          class="scanline"
+        />
         <div class="shine-glide" />
-        
+
         <div class="content">
           <slot />
         </div>
@@ -56,7 +71,7 @@ withDefaults(
     showBorders: true,
     showCorners: true,
     clipCorners: true,
-  }
+  },
 )
 </script>
 
@@ -67,9 +82,9 @@ withDefaults(
   box-sizing: border-box;
   transition: all 0.3s ease;
   --cml-scifi-color: var(--cml-color-current-color, var(--color-primary, currentColor));
-  
+
   --cml-frame-clip: polygon(
-    0% 0%, calc(100% - 10px) 0%, 100% 10px, 
+    0% 0%, calc(100% - 10px) 0%, 100% 10px,
     100% 100%, 10px 100%, 0% calc(100% - 10px)
   );
 }
@@ -150,7 +165,7 @@ withDefaults(
 .grid-bg {
   position: absolute;
   inset: 0;
-  background-image: 
+  background-image:
     linear-gradient(color-mix(in srgb, var(--cml-scifi-color) 10%, transparent) 1px, transparent 1px),
     linear-gradient(90deg, color-mix(in srgb, var(--cml-scifi-color) 10%, transparent) 1px, transparent 1px);
   background-size: 15px 15px;
@@ -163,10 +178,10 @@ withDefaults(
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    90deg, 
-    transparent 0%, 
+    90deg,
+    transparent 0%,
     color-mix(in srgb, var(--cml-scifi-color), transparent 90%) 35%,
-    color-mix(in srgb, var(--cml-scifi-color), transparent 70%) 50%, 
+    color-mix(in srgb, var(--cml-scifi-color), transparent 70%) 50%,
     color-mix(in srgb, var(--cml-scifi-color), transparent 90%) 65%,
     transparent 100%
   );
@@ -221,14 +236,14 @@ withDefaults(
   pointer-events: none;
   z-index: 5;
 }
-.top-left { 
-  top: 0; 
-  left: 0; 
+.top-left {
+  top: 0;
+  left: 0;
   clip-path: polygon(0 0, 100% 0, calc(100% - 6px) 3px, 3px 3px, 3px calc(100% - 6px), 0 100%);
 }
-.bottom-right { 
-  bottom: 0; 
-  right: 0; 
+.bottom-right {
+  bottom: 0;
+  right: 0;
   clip-path: polygon(100% 100%, 0 100%, 6px calc(100% - 3px), calc(100% - 3px) calc(100% - 3px), calc(100% - 3px) 6px, 100% 0);
 }
 </style>

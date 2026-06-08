@@ -1,6 +1,6 @@
 <template>
   <div
-    class="camelot-button-scifi-wrapper"
+    class="group inline-block cursor-pointer align-middle outline-none [&[disabled]]:pointer-events-none [&[disabled]]:cursor-not-allowed [&[disabled]]:opacity-60"
     :disabled="disabled ? true : undefined"
   >
     <CamelotScifiFrame
@@ -9,16 +9,16 @@
       :show-shine="isHovered && !disabled"
       :active-reticle="isActive || isFocused || isHovered"
       :focused="isFocused"
+      :tabindex="disabled ? -1 : 0"
       @mouseenter="isHovered = true"
       @mouseleave="isHovered = false"
       @mousedown="isActive = true"
       @mouseup="isActive = false"
       @focus="isFocused = true"
       @blur="isFocused = false"
-      :tabindex="disabled ? -1 : 0"
     >
       <button
-        class="btn-scifi"
+        class="relative z-10 flex w-full min-w-[120px] cursor-pointer items-center justify-center gap-2 border-none bg-transparent px-6 py-2 font-bold tracking-[0.15em] text-[color-mix(in_srgb,var(--cml-color-current-color)_80%,white)] uppercase outline-none transition-all duration-200 group-active:text-[var(--cml-color-current-on-color)]"
         :disabled="disabled"
         @click="emit('click', $event)"
       >
@@ -35,7 +35,7 @@ withDefaults(
   }>(),
   {
     disabled: false,
-  }
+  },
 )
 
 const emit = defineEmits<{
@@ -46,41 +46,3 @@ const isHovered = ref(false)
 const isFocused = ref(false)
 const isActive = ref(false)
 </script>
-
-<style scoped>
-.camelot-button-scifi-wrapper {
-  display: inline-block;
-  vertical-align: middle;
-  cursor: pointer;
-  outline: none;
-}
-.camelot-button-scifi-wrapper[disabled] {
-  cursor: not-allowed;
-  opacity: 0.6;
-  pointer-events: none;
-}
-.btn-scifi {
-  padding: 8px 24px;
-  min-width: 120px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  color: color-mix(in srgb, var(--cml-color-current-color) 80%, white);
-  font-family: inherit;
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  transition: all 0.2s ease;
-  position: relative;
-  z-index: 10;
-  outline: none;
-  width: 100%;
-}
-.camelot-button-scifi-wrapper:active .btn-scifi {
-  color: var(--cml-color-current-on-color);
-}
-</style>
