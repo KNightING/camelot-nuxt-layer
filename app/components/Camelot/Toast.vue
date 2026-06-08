@@ -1,105 +1,142 @@
 <template>
   <ClientOnly>
     <Teleport to="body">
-      <Transition>
-        <template v-if="currentToast">
+      <div
+        v-for="pos in positions"
+        :key="pos"
+        class="fixed flex flex-col gap-2 p-4 pointer-events-none"
+        :class="positionClass(pos)"
+        :style="{ zIndex }"
+      >
+        <TransitionGroup name="cml-toast">
           <div
-            :key="currentToast.id"
-            class="fixed translate-x-[-50%] translate-y-[-50%] left-[50%]"
-            :class="{
-              'top-[50%] ': direction === 'center',
-              'bottom-[10%]': direction === 'bottom',
-              'top-[10%]': direction === 'top',
-            }"
-            :style="{ zIndex: props.zIndex }"
+            v-for="t in toastsByPosition(pos)"
+            :key="t.id"
+            class="pointer-events-auto"
+            :class="roleClass(t.type)"
           >
-            <div
-              class="container"
-              :class="[themeMode]"
-            >
-              <slot :toast="currentToast">
-                <!-- Aqua Frosted Glass Layout -->
-                <div
-                  v-if="themeMode === 'aqua'"
-                  class="toast-box aqua-glass text-on-surface min-w-[200px] max-w-[400px] rounded-2xl px-5 py-3 text-center text-sm font-medium"
-                >
-                  {{ currentToast?.message }}
-                </div>
-
-                <!-- Sci-fi Layout -->
-                <CamelotScifiFrame
-                  v-else-if="themeMode === 'scifi'"
-                  variant="2-corner"
-                  focused
-                  :show-grid="false"
-                  :show-scanline="false"
-                  class="toast-box scifi text-primary"
-                >
-                  <div class="py-2.5 px-5 bg-slate-950/95 font-mono text-xs tracking-wider">
-                    <span>[STATUS_MSG]: {{ currentToast?.message }}</span>
+            <slot :toast="t">
+              <div
+                class="cml-toast-box flex items-start gap-3 min-w-[240px] max-w-[400px] px-4 py-3 text-sm"
+                :class="boxClass"
+              >
+                <div class="flex-1">
+                  <div
+                    v-if="t.title"
+                    class="font-semibold text-on-surface"
+                  >
+                    {{ t.title }}
                   </div>
-                </CamelotScifiFrame>
-
-                <!-- Cupertino Layout -->
-                <div
-                  v-else-if="themeMode === 'cupertino'"
-                  class="toast-box cupertino bg-slate-100/90 dark:bg-slate-900/90 backdrop-blur-xl border border-white/20 dark:border-black/20 text-slate-800 dark:text-slate-100 text-sm rounded-[12px] py-3 px-5 shadow-xl font-medium min-w-[200px] text-center"
-                >
-                  {{ currentToast?.message }}
+                  <div :class="t.title ? 'text-on-surface-variant' : 'text-on-surface'">
+                    {{ t.message }}
+                  </div>
                 </div>
-
-                <!-- Material Layout (Default) -->
-                <div
-                  v-else
-                  class="toast-box material bg-slate-800 dark:bg-slate-200 text-slate-100 dark:text-slate-900 text-sm rounded-[4px] py-3.5 px-6 shadow-lg min-w-[288px] max-w-[568px] flex items-center justify-between"
+                <button
+                  v-if="t.action"
+                  type="button"
+                  class="shrink-0 text-sm font-semibold text-[var(--cml-color-current-color)] hover:opacity-80"
+                  @click="onAction(t)"
                 >
-                  {{ currentToast?.message }}
-                </div>
-              </slot>
-            </div>
+                  {{ t.action.label }}
+                </button>
+                <button
+                  type="button"
+                  class="shrink-0 text-on-surface-variant hover:text-on-surface"
+                  aria-label="close"
+                  @click="removeToast(t.id)"
+                >
+                  <IMaterialSymbolsCloseRounded class="h-4 w-4" />
+                </button>
+              </div>
+            </slot>
           </div>
-        </template>
-      </Transition>
+        </TransitionGroup>
+      </div>
     </Teleport>
   </ClientOnly>
 </template>
 
 <script setup lang="ts">
-const props = withDefaults(defineProps<{
-  zIndex?: number
-  direction?: 'top' | 'bottom' | 'center'
-}>(), {
-  zIndex: 1000,
-  direction: 'bottom',
+withDefaults(defineProps<{ zIndex?: number }>(), { zIndex: 1000 })
+
+const {
+  toasts, removeToast,
+} = useCamelotToast()
+const { themeMode } = useCamelotTheme()
+
+const positions: CamelotToastPosition[] = [
+  'top', 'bottom', 'left', 'right', 'center',
+  'top-left', 'top-right', 'bottom-left', 'bottom-right',
+]
+
+const toastsByPosition = (pos: CamelotToastPosition) =>
+  toasts.value.filter(t => (t.position ?? 'bottom') === pos)
+
+// 顏色角色：依 type 對應
+const roleClass = (type?: CamelotToastType) => {
+  const role = type === 'success'
+    ? 'success'
+    : type === 'error'
+      ? 'error'
+      : type === 'warning' ? 'warning' : 'info'
+  return `[--cml-color-current-color:var(--color-${role})] [--cml-color-current-on-color:var(--color-on-${role})]`
+}
+
+const boxClass = computed(() => {
+  switch (themeMode.value) {
+    case 'aqua':
+      return 'aqua-glass rounded-2xl shadow-[0_8px_30px_-8px_rgba(0,0,0,0.3)] border-l-4 border-[var(--cml-color-current-color)]'
+    case 'scifi':
+      return 'rounded-none bg-slate-950/95 border border-[color-mix(in_srgb,var(--cml-color-current-color)_45%,transparent)] border-l-4 border-l-[var(--cml-color-current-color)] font-mono shadow-[0_0_16px_color-mix(in_srgb,var(--cml-color-current-color)_25%,transparent)]'
+    case 'cupertino':
+      return 'rounded-[14px] bg-surface-container-high/90 backdrop-blur-xl border border-outline-variant shadow-xl border-l-4 border-l-[var(--cml-color-current-color)]'
+    default:
+      return 'rounded-lg bg-surface-container-high shadow-lg border-l-4 border-[var(--cml-color-current-color)]'
+  }
 })
 
-const toast = useCamelotToast()
-const { currentToast } = toast
+const positionClass = (pos: CamelotToastPosition) => {
+  switch (pos) {
+    case 'top':
+      return 'top-0 left-1/2 -translate-x-1/2 items-center'
+    case 'bottom':
+      return 'bottom-0 left-1/2 -translate-x-1/2 items-center flex-col-reverse'
+    case 'left':
+      return 'top-1/2 left-0 -translate-y-1/2 items-start'
+    case 'right':
+      return 'top-1/2 right-0 -translate-y-1/2 items-end'
+    case 'center':
+      return 'top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 items-center'
+    case 'top-left':
+      return 'top-0 left-0 items-start'
+    case 'top-right':
+      return 'top-0 right-0 items-end'
+    case 'bottom-left':
+      return 'bottom-0 left-0 items-start flex-col-reverse'
+    case 'bottom-right':
+      return 'bottom-0 right-0 items-end flex-col-reverse'
+    default:
+      return ''
+  }
+}
 
-const { themeMode } = useCamelotTheme()
+const onAction = (t: CamelotToast) => {
+  t.action?.handler?.()
+  removeToast(t.id)
+}
 </script>
 
 <style scoped>
-.v-enter-active,
-.v-leave-active {
-  transition: all 0.5s ease;
+.cml-toast-enter-active,
+.cml-toast-leave-active {
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
-
-.v-enter-from,
-.v-leave-to {
+.cml-toast-enter-from,
+.cml-toast-leave-to {
   opacity: 0;
+  transform: translateY(8px) scale(0.97);
 }
-
-.v-enter-active .container,
-.v-leave-active .container{
-  transition: transform 0.4s ease;
-}
-
-.v-enter-from .container {
-  transform: translateY(30px);
-}
-
-.v-leave-to .container {
-  transform: translateY(-30px);
+.cml-toast-leave-active {
+  position: absolute;
 }
 </style>

@@ -1,5 +1,3 @@
-import { isClient } from '@vueuse/core'
-
 let camelotToast: ReturnType<typeof CreateCamelotToast> | null = null
 
 export const useCamelotToast = () => {
@@ -11,58 +9,45 @@ export const useCamelotToast = () => {
 
 const CreateCamelotToast = () => {
   const toastState = useState<CamelotToast[]>('Camelot:Toasts', () => [])
-  const currentToast = computed(() => {
-    if (toastState.value.length === 0 && !isClient) {
-      return null
-    }
-    return toastState.value[0]
-  })
+  // 向後相容：仍提供「第一個」通知
+  const currentToast = computed(() => toastState.value[0] ?? null)
 
-  let timeout: NodeJS.Timeout | null = null
+  const timers = new Map<string, ReturnType<typeof setTimeout>>()
 
-  watch(currentToast, (toast) => {
-    if (timeout) return
-    if (toast && toast.duration) {
-      timeout = setTimeout(() => {
-        removeToast(toast.id)
-        toast.onClose?.()
-        timeout = null
-      }, toast.duration)
+  const removeToast = (id?: string) => {
+    if (!id) return
+    const timer = timers.get(id)
+    if (timer) {
+      clearTimeout(timer)
+      timers.delete(id)
     }
-  }, {
-    immediate: true,
-  })
+    const toast = toastState.value.find(t => t.id === id)
+    toastState.value = toastState.value.filter(t => t.id !== id)
+    toast?.onClose?.()
+  }
 
   const addToast = (toast: CamelotToast, options?: CamelotToastOptions) => {
     const clone = useObject().deepClone({
       id: Math.random().toString(36).substring(2, 11),
-      duration: 2000,
+      duration: 3000,
       type: 'info',
+      position: 'bottom',
       ...toast,
     }) as CamelotToast
 
-    if (options?.only) {
-      if (timeout) {
-        clearTimeout(timeout)
-        timeout = null
-      }
-      toastState.value = [clone]
-      return clone.id
-    }
+    if (options?.only) clear()
 
     toastState.value = [...toastState.value, clone]
+
+    if (clone.duration && clone.id) {
+      timers.set(clone.id, setTimeout(() => removeToast(clone.id), clone.duration))
+    }
     return clone.id
   }
 
-  const removeToast = (id?: string) => {
-    toastState.value = toastState.value.filter(toast => toast.id !== id)
-  }
-
   const clear = () => {
-    if (timeout) {
-      clearTimeout(timeout)
-      timeout = null
-    }
+    timers.forEach(t => clearTimeout(t))
+    timers.clear()
     toastState.value = []
   }
 
@@ -72,6 +57,7 @@ const CreateCamelotToast = () => {
   }
 
   return {
+    toasts: toastState,
     currentToast,
     addToast,
     removeToast,
@@ -80,16 +66,28 @@ const CreateCamelotToast = () => {
   }
 }
 
-export type CamelotToastType = 'success' | 'error' | 'info'
+export type CamelotToastType = 'success' | 'error' | 'info' | 'warning'
 
-export type CamelotToast = {
+export type CamelotToastPosition
+  = | 'top' | 'bottom' | 'left' | 'right' | 'center'
+    | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
+
+export interface CamelotToastAction {
+  label: string
+  handler?: () => void
+}
+
+export interface CamelotToast {
   id?: string
   message: string
+  title?: string
   type?: CamelotToastType
   duration?: number
+  position?: CamelotToastPosition
+  action?: CamelotToastAction
   onClose?: () => void
 }
 
-export type CamelotToastOptions = {
+export interface CamelotToastOptions {
   only?: boolean
 }

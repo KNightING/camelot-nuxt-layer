@@ -420,6 +420,108 @@
           </div>
         </div>
 
+        <!-- Tag Card -->
+        <div :class="cardClass">
+          <h2 :class="cardTitleClass">
+            Tag (color roles / variants)
+          </h2>
+          <div class="flex flex-wrap gap-2">
+            <CamelotTag
+              v-for="c in colorRoles"
+              :key="c"
+              :color="c"
+            >
+              {{ c }}
+            </CamelotTag>
+          </div>
+          <div class="mt-2 flex flex-wrap gap-2">
+            <CamelotTag
+              :color="currentColorRole"
+              variant="solid"
+            >
+              solid
+            </CamelotTag>
+            <CamelotTag
+              :color="currentColorRole"
+              variant="soft"
+            >
+              soft
+            </CamelotTag>
+            <CamelotTag
+              :color="currentColorRole"
+              variant="outline"
+            >
+              outline
+            </CamelotTag>
+            <CamelotTag
+              v-for="t in tags"
+              :key="t"
+              :color="currentColorRole"
+              closable
+              @close="tags = tags.filter(x => x !== t)"
+            >
+              {{ t }}
+            </CamelotTag>
+          </div>
+        </div>
+
+        <!-- Breadcrumb Card -->
+        <div :class="cardClass">
+          <h2 :class="cardTitleClass">
+            Breadcrumb
+          </h2>
+          <CamelotBreadcrumb
+            :items="breadcrumbItems"
+            :color="currentColorRole"
+            @select="(it) => useCamelotToast().open('前往 ' + it.label)"
+          />
+        </div>
+
+        <!-- Notification Card -->
+        <div :class="cardClass">
+          <h2 :class="cardTitleClass">
+            Notifications (8 positions / title / action)
+          </h2>
+          <div class="grid grid-cols-3 gap-1.5 text-xs">
+            <button
+              v-for="p in toastPositions"
+              :key="p"
+              class="rounded-md border border-slate-300 px-2 py-1 text-slate-500 transition-colors hover:border-primary hover:text-primary dark:border-slate-700"
+              @click="notify(p)"
+            >
+              {{ p }}
+            </button>
+          </div>
+        </div>
+
+        <!-- Timeline Card -->
+        <div :class="[cardClass, 'col-span-1 md:col-span-2 lg:col-span-3']">
+          <h2 :class="cardTitleClass">
+            Timeline (vertical alternate + horizontal, scroll fade-in)
+          </h2>
+          <div class="grid gap-8 md:grid-cols-2">
+            <CamelotTimeline
+              :items="timelineItems"
+              side="alternate"
+              animate
+              :color="currentColorRole"
+            />
+            <CamelotTimeline
+              :items="timelineItems"
+              :color="currentColorRole"
+            />
+          </div>
+          <div class="mt-6 overflow-x-auto">
+            <CamelotTimeline
+              :items="timelineItems"
+              direction="horizontal"
+              side="alternate"
+              animate
+              :color="currentColorRole"
+            />
+          </div>
+        </div>
+
         <!-- Carousel Card -->
         <div :class="[cardClass, 'col-span-1 md:col-span-2 lg:col-span-3']">
           <h2 :class="cardTitleClass">
@@ -988,6 +1090,63 @@ const colorModeOptions = [
   },
 ] as const
 const colorRoles = ['primary', 'secondary', 'tertiary', 'error', 'warning', 'success'] as const
+
+// Tag / Breadcrumb / Timeline / Notification demos
+const tags = ref(['Vue', 'Nuxt', 'Tailwind'])
+const breadcrumbItems = [
+  {
+    label: '首頁',
+    value: 'home',
+  },
+  {
+    label: '商品',
+    value: 'products',
+  },
+  {
+    label: '飲料',
+    value: 'drinks',
+  },
+  {
+    label: '珍珠奶茶',
+    value: 'item',
+  },
+]
+const timelineItems = [
+  {
+    title: '下單',
+    content: '已收到您的訂單',
+  },
+  {
+    title: '備貨',
+    content: '商品整理中',
+  },
+  {
+    title: '出貨',
+    content: '已交付物流',
+  },
+  {
+    title: '送達',
+    content: '包裹已送達',
+  },
+]
+const toastPositions = [
+  'top-left', 'top', 'top-right',
+  'left', 'center', 'right',
+  'bottom-left', 'bottom', 'bottom-right',
+] as const
+const notify = (position: typeof toastPositions[number]) => {
+  useCamelotToast().open({
+    title: '通知',
+    message: `顯示於 ${position}`,
+    position,
+    type: 'info',
+    duration: 3000,
+    action: {
+      label: '查看',
+      handler: () => useCamelotToast().open('已查看'),
+    },
+  })
+}
 
 // 切換色彩角色時也觸發顏色漸變
 watch(currentColorRole, () => triggerThemeTransition())
