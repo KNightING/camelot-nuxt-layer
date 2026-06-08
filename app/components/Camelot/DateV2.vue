@@ -46,20 +46,16 @@
       v-if="showType === 'dialog'"
       v-model:open="open"
     >
-      <div
-        class="overflow-hidden shadow-sm"
-        :class="panelClass"
-      >
-        <CamelotInternalCalendar
-          v-model="model"
-          v-model:view-date="viewDate"
-          :min-date="minDate"
-          :max-date="maxDate"
-          :enable-time="enableTime"
-          :get-day-attributes="getDayAttributes"
-          @update:model-value="onDateSelect"
-        />
-      </div>
+      <!-- dialog 模式：BaseDialogV2 已提供主題外框，不再套 panelClass 以免雙層外框 -->
+      <CamelotInternalCalendar
+        v-model="model"
+        v-model:view-date="viewDate"
+        :min-date="minDate"
+        :max-date="maxDate"
+        :enable-time="enableTime"
+        :get-day-attributes="getDayAttributes"
+        @update:model-value="onDateSelect"
+      />
     </CamelotBaseDialogV2>
 
     <template
