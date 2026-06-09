@@ -72,6 +72,7 @@
 | `Steps` | ✅ | 步驟指示器元件 | — |
 | `Table` | ✅ | 資料表格（fixed header/columns/rows、雙色/hover、slot、泛型、四風格） | [詳情](./features/layout-data-components.md) |
 | `Tabs` | ✅ | 頁籤元件（四風格 + 滑動指示器） | [詳情](./features/theme-system.md) |
+| `TimeV2` | ✅ | 純時間選擇器（trigger + popup/dialog + TimeRow，v-model "HH:mm[:ss]"，四風格） | [詳情](./features/time-picker.md) |
 | `Toast` | ✅ | 吐司通知元件（透明玻璃、滑入漸入、8 方位、center 不跳動） | [詳情](./features/datepicker-time-aqua-toast.md) |
 | `Tree` | ✅ | 多階層樹（勾選連動 + indeterminate、四風格） | [詳情](./features/layout-data-components.md) |
 
@@ -176,6 +177,7 @@ graph TD
 - [🗓️ Calendar / 日期選擇器](./features/calendar.md)
 - [🗓️🔔 DatePicker 時間/確認・Aqua 邊框 Token・Toast 動畫](./features/datepicker-time-aqua-toast.md)
 - [✍️🖼️ RichTextEditor（TipTap）與 ImageDropzone](./features/richtext-editor-image-dropzone.md)
+- [⏰ TimeV2 / 純時間選擇器](./features/time-picker.md)
 - [🎨 Color Scheme / 色彩主題](./features/color-scheme.md)
 - [⚙️ 環境變數](./environment.md)
 
