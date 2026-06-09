@@ -70,7 +70,7 @@
 | `Steps` | ✅ | 步驟指示器元件 | — |
 | `Table` | ✅ | 資料表格（fixed header/columns/rows、雙色/hover、slot、泛型、四風格） | [詳情](./features/layout-data-components.md) |
 | `Tabs` | ✅ | 頁籤元件（四風格 + 滑動指示器） | [詳情](./features/theme-system.md) |
-| `Toast` | ✅ | 吐司通知元件 | — |
+| `Toast` | ✅ | 吐司通知元件（透明玻璃、滑入漸入、8 方位、center 不跳動） | [詳情](./features/datepicker-time-aqua-toast.md) |
 | `Tree` | ✅ | 多階層樹（勾選連動 + indeterminate、四風格） | [詳情](./features/layout-data-components.md) |
 
 ### 內部元件 (`app/components/Camelot/Internal/`)
@@ -172,6 +172,7 @@ graph TD
 - [🎨 Theme System / 主題系統（四風格 + Aqua）](./features/theme-system.md)
 - [🧱 Drawer / Tree / Table / Menu](./features/layout-data-components.md)
 - [🗓️ Calendar / 日期選擇器](./features/calendar.md)
+- [🗓️🔔 DatePicker 時間/確認・Aqua 邊框 Token・Toast 動畫](./features/datepicker-time-aqua-toast.md)
 - [🎨 Color Scheme / 色彩主題](./features/color-scheme.md)
 - [⚙️ 環境變數](./environment.md)
 
