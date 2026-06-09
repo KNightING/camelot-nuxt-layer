@@ -1,6 +1,7 @@
 <template>
   <div
     class="cml-rte flex w-full flex-col overflow-hidden"
+    :data-cml-theme="themeMode"
     :class="[roleColorClass, boxClass, { 'pointer-events-none opacity-60': disabled }]"
   >
     <!-- Toolbar -->
@@ -109,29 +110,14 @@
         >
           <template v-if="uploadHandler">
             <label class="mb-1 block text-sm font-medium text-on-surface-variant">{{ t.fromComputer }}</label>
-            <div
-              class="flex h-28 w-full cursor-pointer flex-col items-center justify-center gap-1.5 rounded-md border border-dashed border-border px-3 text-sm text-on-surface-variant transition"
-              :class="{
-                'border-[var(--cml-color-current-color)] bg-surface-container': dialogDragOver,
-                'hover:border-[var(--cml-color-current-color)] hover:bg-surface-container': !dialogDragOver,
-                'cursor-wait opacity-60': uploading,
-              }"
-              @click="!uploading && triggerFilePicker()"
-              @dragover.prevent="dialogDragOver = true"
-              @dragenter.prevent="dialogDragOver = true"
-              @dragleave.prevent="dialogDragOver = false"
-              @drop.prevent="onDropToDialog"
-            >
-              <IMaterialSymbolsAddPhotoAlternate class="h-6 w-6 text-on-surface-variant/70" />
-              <span class="text-xs leading-tight">{{ t.dropHint }}</span>
-            </div>
-            <input
-              ref="imageFilePicker"
-              type="file"
+            <CamelotImageDropzone
+              :color="color"
+              :disabled="uploading"
+              :preview="false"
               accept="image/jpeg,image/png,image/webp,image/gif,image/avif"
-              class="hidden"
-              @change="onPickFile"
-            >
+              :hint="t.dropHint"
+              @select="onDropzoneSelect"
+            />
             <div class="my-3 flex items-center gap-2 text-xs text-on-surface-variant/70">
               <span class="h-px flex-1 bg-border" />
               <span>{{ t.or }}</span>
@@ -471,7 +457,6 @@ const linkInputRef = useTemplateRef<HTMLInputElement>('linkInputRef')
 const imageOpen = ref(false)
 const imageUrl = ref('')
 const imageInputRef = useTemplateRef<HTMLInputElement>('imageInputRef')
-const imageFilePicker = useTemplateRef<HTMLInputElement>('imageFilePicker')
 
 function openLink() {
   linkUrl.value = (editor.value?.getAttributes('link').href as string) ?? ''
@@ -505,33 +490,16 @@ function applyImage() {
   imageOpen.value = false
 }
 
-const dialogDragOver = ref(false)
-
-function triggerFilePicker() {
-  imageFilePicker.value?.click()
-}
-
-function handleDialogFile(file: File) {
+// 由 CamelotImageDropzone 選到檔案 → 暫存 blob 並插入，關閉彈窗
+function onDropzoneSelect(files: File[]) {
+  const file = files[0]
+  if (!file) return
   if (!file.type.startsWith('image/')) {
     uploadError.value = '只接受圖片檔案'
     return
   }
   insertImageUrl(stageLocalImage(file), true)
   imageOpen.value = false
-}
-
-function onPickFile(e: Event) {
-  const input = e.target as HTMLInputElement
-  const file = input.files?.[0]
-  input.value = ''
-  if (!file) return
-  handleDialogFile(file)
-}
-
-function onDropToDialog(e: DragEvent) {
-  dialogDragOver.value = false
-  const file = e.dataTransfer?.files?.[0]
-  if (file) handleDialogFile(file)
 }
 
 const pasteHtmlBusy = ref(false)
@@ -729,8 +697,33 @@ const popClass = computed(() => {
 })
 
 const dividerClass = computed(() => 'mx-1 h-6 w-px bg-border')
-const idleBtnClass = computed(() => 'text-on-surface-variant hover:bg-surface-container')
-const activeBtnClass = computed(() => 'bg-[var(--cml-color-current-color)] text-[var(--cml-color-current-on-color)]')
+
+// 工具列按鈕的閒置/啟用態依主題各有識別度（形狀由 scoped CSS 依 data-cml-theme 控制）
+const idleBtnClass = computed(() => {
+  switch (themeMode.value) {
+    case 'aqua':
+      return 'text-on-surface-variant hover:bg-[color-mix(in_srgb,var(--cml-color-current-color)_12%,transparent)] hover:text-[var(--cml-color-current-color)]'
+    case 'scifi':
+      return 'text-on-surface-variant hover:text-[var(--cml-color-current-color)] hover:bg-[color-mix(in_srgb,var(--cml-color-current-color)_10%,transparent)]'
+    case 'cupertino':
+      return 'text-on-surface-variant hover:bg-surface-container/70'
+    default:
+      return 'text-on-surface-variant hover:bg-surface-container'
+  }
+})
+const activeBtnClass = computed(() => {
+  switch (themeMode.value) {
+    case 'aqua':
+      // 玻璃填滿態：135deg 漸層 + 柔光（aqua-fill），與其他 aqua 選中態一致
+      return 'aqua-fill text-[var(--cml-color-current-on-color)]'
+    case 'scifi':
+      // 霓虹：淡色底 + 角色色字 + 邊框 + 外發光
+      return 'text-[var(--cml-color-current-color)] bg-[color-mix(in_srgb,var(--cml-color-current-color)_16%,transparent)] border-[color-mix(in_srgb,var(--cml-color-current-color)_55%,transparent)]! shadow-[0_0_8px_color-mix(in_srgb,var(--cml-color-current-color)_35%,transparent)]'
+    default:
+      // material / cupertino：實心填滿
+      return 'bg-[var(--cml-color-current-color)] text-[var(--cml-color-current-on-color)]'
+  }
+})
 </script>
 
 <style scoped>
@@ -740,10 +733,15 @@ const activeBtnClass = computed(() => 'bg-[var(--cml-color-current-color)] text-
   min-width: 2.25rem;
   align-items: center;
   justify-content: center;
-  border-radius: 0.375rem;
+  border: 1px solid transparent; /* 佔位避免 scifi active 邊框造成位移 */
+  border-radius: 0.375rem; /* material 預設 */
   padding-inline: 0.5rem;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
 }
+/* 按鈕形狀依主題識別 */
+.cml-rte[data-cml-theme="aqua"] .cml-rte-btn { border-radius: 9999px; }
+.cml-rte[data-cml-theme="scifi"] .cml-rte-btn { border-radius: 0; }
+.cml-rte[data-cml-theme="cupertino"] .cml-rte-btn { border-radius: 0.625rem; }
 .cml-rte-pop {
   position: absolute;
   left: 0;
