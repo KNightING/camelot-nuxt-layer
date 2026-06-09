@@ -1,5 +1,8 @@
 <template>
-  <div class="calendar-container select-none p-3 w-fit min-w-[280px]">
+  <div
+    class="calendar-container select-none p-3"
+    :class="pickerExpand && pickerMode !== 'calendar' ? 'w-full flex flex-col items-center' : 'w-fit min-w-[280px]'"
+  >
     <!-- Month/Year Picker Header -->
     <div class="flex items-center justify-between mb-4 px-1">
       <div
@@ -182,6 +185,7 @@
     <div
       v-else-if="pickerMode === 'month'"
       class="month-view grid grid-cols-3 gap-2 px-2 animate-in slide-in-from-bottom-2 duration-200"
+      :class="pickerExpand ? 'w-[300px]' : ''"
     >
       <button
         v-for="(month, index) in monthNames"
@@ -205,6 +209,7 @@
     <div
       v-else-if="pickerMode === 'year'"
       class="year-view overflow-hidden animate-in slide-in-from-bottom-2 duration-200"
+      :class="pickerExpand ? 'w-[300px]' : ''"
     >
       <div class="flex items-center justify-between mb-2">
         <button
@@ -291,6 +296,8 @@ const props = withDefaults(defineProps<{
   hourFormat?: '12' | '24'
   /** 隱藏時間區（多月曆 range 時，只在其中一個月曆顯示時間） */
   hideTime?: boolean
+  /** 進入月/年選擇時，撐滿容器寬度並置中（多月曆 range 用，讓選擇器橫跨兩個月曆） */
+  pickerExpand?: boolean
   hidePrevArrow?: boolean
   hideNextArrow?: boolean
   getDayAttributes?: (date: Date, dayOfWeek: number) => CalendarDayAttributes | undefined | null
@@ -308,7 +315,7 @@ const modelValue = defineModel<Date | number | null>('modelValue')
 const rangeValue = defineModel<(Date | number | null)[] | null>('rangeValue')
 const viewDate = defineModel<Date>('viewDate', { required: true })
 
-const pickerMode = ref<'calendar' | 'month' | 'year'>('calendar')
+const pickerMode = defineModel<'calendar' | 'month' | 'year'>('pickerMode', { default: 'calendar' })
 const yearPage = ref(0)
 const weekDays = ['日', '一', '二', '三', '四', '五', '六']
 const monthNames = ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']

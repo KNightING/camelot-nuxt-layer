@@ -31,7 +31,7 @@
         <!-- Aqua Frosted Glass Layout -->
         <div
           v-else-if="themeMode === 'aqua'"
-          class="sheet-container aqua-sheet aqua-glass max-h-[85vh] w-screen overflow-auto rounded-t-3xl p-4"
+          class="sheet-container aqua-sheet aqua-glass text-on-surface max-h-[85vh] w-screen overflow-auto rounded-t-3xl p-4"
         >
           <div class="mx-auto mb-4 h-1.5 w-10 rounded-full bg-on-surface/20" />
           <slot />

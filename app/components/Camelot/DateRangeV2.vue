@@ -43,28 +43,48 @@
           @click="togglePopup"
         >
           <IMaterialSymbolsCalendarMonthRounded class="w-5 h-5 text-outline group-hover:text-[var(--cml-color-current-color)] transition-colors shrink-0" />
-          <div class="flex items-center gap-1 overflow-hidden">
-            <input
-              v-bind="$attrs"
-              :value="startDisplay"
-              type="text"
-              class="min-w-0 text-on-surface bg-transparent placeholder:text-on-surface/50 outline-none text-base caret-[var(--cml-color-current-color)] appearance-none cursor-pointer"
-              :class="[{ 'text-black!': disabled }, startDisplay ? 'w-[10.5ch]' : 'w-[14ch]']"
-              placeholder="請選擇起日"
-              readonly
+          <div
+            class="overflow-hidden"
+            :class="verticalTrigger ? 'flex flex-col items-start gap-0.5' : 'flex items-center gap-1'"
+          >
+            <div class="flex min-w-0 items-center gap-1">
+              <span
+                v-if="verticalTrigger"
+                class="shrink-0 text-xs text-outline"
+              >起</span>
+              <input
+                v-bind="$attrs"
+                :value="startDisplay"
+                type="text"
+                class="min-w-0 text-on-surface bg-transparent placeholder:text-on-surface/50 outline-none text-base caret-[var(--cml-color-current-color)] appearance-none cursor-pointer"
+                :class="{ 'text-black!': disabled }"
+                :style="{ width: startInputWidth }"
+                placeholder="請選擇起日"
+                readonly
+              >
+            </div>
+            <div
+              v-if="!verticalTrigger"
+              class="px-1 text-outline group-hover:text-[var(--cml-color-current-color)]"
             >
-            <div class="px-1 text-outline group-hover:text-[var(--cml-color-current-color)]">
               <span>~</span>
             </div>
-            <input
-              v-bind="$attrs"
-              :value="endDisplay"
-              type="text"
-              class="min-w-0 text-on-surface bg-transparent placeholder:text-on-surface/50 outline-none text-base caret-[var(--cml-color-current-color)] appearance-none cursor-pointer"
-              :class="[{ 'text-black!': disabled }, endDisplay ? 'w-[10.5ch]' : 'w-[14ch]']"
-              placeholder="請選擇迄日"
-              readonly
-            >
+            <div class="flex min-w-0 items-center gap-1">
+              <span
+                v-if="verticalTrigger"
+                class="shrink-0 text-xs text-outline"
+              >迄</span>
+              <input
+                v-bind="$attrs"
+                :value="endDisplay"
+                type="text"
+                class="min-w-0 text-on-surface bg-transparent placeholder:text-on-surface/50 outline-none text-base caret-[var(--cml-color-current-color)] appearance-none cursor-pointer"
+                :class="{ 'text-black!': disabled }"
+                :style="{ width: endInputWidth }"
+                placeholder="請選擇迄日"
+                readonly
+              >
+            </div>
           </div>
         </label>
       </slot>
@@ -79,12 +99,19 @@
           :class="[roleColorClass, panelClass, popupPanelShadowFix]"
           @click.stop
         >
-          <div class="flex flex-col sm:flex-row">
+          <div
+            ref="calRowRef"
+            class="flex flex-col sm:flex-row"
+            :style="anyPicking && pinnedRowWidth ? { width: pinnedRowWidth + 'px' } : undefined"
+          >
             <CamelotInternalCalendar
+              v-show="picker2 === 'calendar'"
               v-model:range-value="internalValue"
               v-model:view-date="viewDate"
+              v-model:picker-mode="picker1"
               is-range
               hide-time
+              :picker-expand="showSecondCalendar"
               :enable-time="enableTime"
               :time-precision="timePrecision"
               :hour-format="hourFormat"
@@ -107,8 +134,11 @@
             </CamelotInternalCalendar>
             <CamelotInternalCalendar
               v-if="showSecondCalendar"
+              v-show="picker1 === 'calendar'"
               v-model:range-value="internalValue"
+              v-model:picker-mode="picker2"
               is-range
+              :picker-expand="showSecondCalendar"
               :enable-time="enableTime"
               :time-precision="timePrecision"
               :hour-format="hourFormat"
@@ -162,6 +192,11 @@
                 @change="endTime.apply"
               />
             </div>
+            <CamelotButton
+              label="確認"
+              :color="color"
+              @click="confirmRange"
+            />
           </div>
         </div>
       </template>
@@ -224,6 +259,11 @@
                 @change="endTime.apply"
               />
             </div>
+            <CamelotButton
+              label="確認"
+              :color="color"
+              @click="confirmRange"
+            />
           </div>
         </div>
       </CamelotBaseDialogV2>
@@ -306,7 +346,7 @@ const popupShadowClass = computed(() => {
 const popupPanelShadowFix = computed(() => {
   switch (themeMode.value) {
     case 'aqua':
-      return 'shadow-[inset_0_1px_0_0_rgba(255,255,255,0.5)]!'
+      return 'shadow-[inset_0_1px_0_0_rgba(255,255,255,0.16)]!'
     case 'scifi':
       return 'shadow-none!'
     default:
@@ -320,6 +360,19 @@ const popupRef = useTemplateRef('popupRef')
 // Use internal value for the picker state
 const internalValue = ref<(Date | null)[]>(model.value ? [model.value[0], model.value[1]] : [null, null])
 const viewDate = ref(new Date())
+
+// 月/年選擇模式：任一月曆進入選擇時，隱藏另一個，讓選擇器橫跨兩個月曆並置中
+const picker1 = ref<'calendar' | 'month' | 'year'>('calendar')
+const picker2 = ref<'calendar' | 'month' | 'year'>('calendar')
+const anyPicking = computed(() => picker1.value !== 'calendar' || picker2.value !== 'calendar')
+
+// 選擇器要橫跨兩個月曆：隱藏另一個月曆後版面會收縮，故記住雙月曆時的列寬並在選擇期間釘住
+const calRowRef = useTemplateRef('calRowRef')
+const { width: calRowWidth } = useElementSize(calRowRef)
+const pinnedRowWidth = ref(0)
+watch(calRowWidth, (w) => {
+  if (!anyPicking.value && w) pinnedRowWidth.value = Math.round(w)
+})
 const nextMonthViewDate = computed(() => addMonths(viewDate.value, 1))
 
 // 起/迄時間狀態（綁定到 internalValue 端點），時間區塊渲染於兩個月曆之下而非月曆內
@@ -359,6 +412,11 @@ const togglePopup = () => {
   open.value = !open.value
 }
 
+// 時間模式的「確認」：model 已即時 commit，這裡負責關閉浮層作為明確完成入口
+const confirmRange = () => {
+  open.value = false
+}
+
 // Better outside click handling（dialog 模式由 BaseDialogV2 自行處理遮罩/Esc 關閉）
 onClickOutside(triggerRef, () => {
   if (showType.value === 'popup') {
@@ -381,6 +439,9 @@ watch(model, (newVal) => {
 // Sync viewDate when popup opens
 watch(open, (isOpen) => {
   if (isOpen) {
+    // 每次開啟回到月曆視圖，避免殘留在月/年選擇
+    picker1.value = 'calendar'
+    picker2.value = 'calendar'
     if (model.value && model.value[0]) {
       viewDate.value = new Date(model.value[0])
     }
@@ -400,6 +461,10 @@ const endDisplay = computed(() => {
   if (!model.value || !model.value[1]) return ''
   return formatDate(new Date(model.value[1]), effectiveFormat.value)
 })
+
+// 觸發器 input 寬度依顯示內容自適應（含時間時字串較長，避免被裁切）；無值時用 placeholder 寬度
+const startInputWidth = computed(() => `${Math.max(startDisplay.value.length + 1, 14)}ch`)
+const endInputWidth = computed(() => `${Math.max(endDisplay.value.length + 1, 14)}ch`)
 
 const displayValue = computed(() => {
   if (!model.value || !model.value[0] || !model.value[1]) {
@@ -435,6 +500,9 @@ const onRangeSelect = (range: (Date | number | null)[] | null | undefined) => {
 }
 
 const { isMobile } = useDeviceBreakpoints()
+
+// 小螢幕 + 含時間時，trigger 內容過長放不下：改成起/迄垂直顯示（各帶「起」「迄」標籤）
+const verticalTrigger = computed(() => isMobile.value && props.enableTime)
 
 const showType = computed<'popup' | 'dialog'>(() => {
   // auto：手機改用置中 modal（dialog），桌機用 popup

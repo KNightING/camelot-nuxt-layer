@@ -67,6 +67,7 @@
             :min-date="minDate"
             :max-date="maxDate"
             :enable-time="enableTime"
+            hide-time
             :time-precision="timePrecision"
             :hour-format="hourFormat"
             :get-day-attributes="getDayAttributes"
@@ -82,6 +83,26 @@
               />
             </template>
           </CamelotInternalCalendar>
+
+          <!-- 時間 + 確認：置中於月曆下，同一區塊（與 DateRangeV2 一致） -->
+          <div
+            v-if="enableTime"
+            class="mt-1 flex flex-col items-center gap-2 border-t border-outline px-3 py-3"
+          >
+            <CamelotInternalTimeRow
+              v-model:hours="timeH"
+              v-model:minutes="timeM"
+              v-model:seconds="timeS"
+              :precision="timePrecision"
+              :hour-format="hourFormat"
+              @change="applyTime"
+            />
+            <CamelotButton
+              label="確認"
+              :color="color"
+              @click="confirmTime"
+            />
+          </div>
         </div>
       </CamelotBaseDialogV2>
 
@@ -99,6 +120,7 @@
             :min-date="minDate"
             :max-date="maxDate"
             :enable-time="enableTime"
+            hide-time
             :time-precision="timePrecision"
             :hour-format="hourFormat"
             :get-day-attributes="getDayAttributes"
@@ -114,6 +136,26 @@
               />
             </template>
           </CamelotInternalCalendar>
+
+          <!-- 時間 + 確認：置中於月曆下，同一區塊（與 DateRangeV2 一致） -->
+          <div
+            v-if="enableTime"
+            class="mt-1 flex flex-col items-center gap-2 border-t border-outline px-3 py-3"
+          >
+            <CamelotInternalTimeRow
+              v-model:hours="timeH"
+              v-model:minutes="timeM"
+              v-model:seconds="timeS"
+              :precision="timePrecision"
+              :hour-format="hourFormat"
+              @change="applyTime"
+            />
+            <CamelotButton
+              label="確認"
+              :color="color"
+              @click="confirmTime"
+            />
+          </div>
         </div>
       </template>
     </CamelotPopupV2>
@@ -121,7 +163,9 @@
 </template>
 
 <script setup lang="ts">
-import { format } from 'date-fns'
+import {
+  format, setHours, setMinutes, setSeconds, getHours, getMinutes, getSeconds,
+} from 'date-fns'
 import type { CalendarDayAttributes } from './Internal/Calendar.vue'
 
 const props = withDefaults(defineProps<{
@@ -182,7 +226,7 @@ const popupShadowClass = computed(() => {
 const popupPanelShadowFix = computed(() => {
   switch (themeMode.value) {
     case 'aqua':
-      return 'shadow-[inset_0_1px_0_0_rgba(255,255,255,0.5)]!'
+      return 'shadow-[inset_0_1px_0_0_rgba(255,255,255,0.16)]!'
     case 'scifi':
       return 'shadow-none!'
     default:
@@ -235,6 +279,28 @@ const togglePopup = () => {
   if (!props.disabled) {
     open.value = !open.value
   }
+}
+
+// 時間模式的「確認」：model 已即時更新，這裡負責關閉浮層作為明確完成入口
+const confirmTime = () => {
+  open.value = false
+}
+
+// 時間狀態：抽出時間列至月曆下方，與確認鈕同一區塊（與 DateRangeV2 一致）。月曆設 hide-time。
+const timeH = ref(0)
+const timeM = ref(0)
+const timeS = ref(0)
+watch(model, (v) => {
+  if (v) {
+    const d = new Date(v)
+    timeH.value = getHours(d)
+    timeM.value = getMinutes(d)
+    timeS.value = getSeconds(d)
+  }
+}, { immediate: true })
+const applyTime = () => {
+  if (!model.value) return
+  model.value = setSeconds(setMinutes(setHours(new Date(model.value), timeH.value), timeM.value), timeS.value)
 }
 
 const onDateSelect = (date: Date | number | null | undefined) => {

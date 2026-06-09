@@ -8,7 +8,11 @@
         :class="positionClass(pos)"
         :style="{ zIndex }"
       >
-        <TransitionGroup name="cml-toast">
+        <TransitionGroup
+          :css="false"
+          @enter="onEnter"
+          @leave="onLeave"
+        >
           <div
             v-for="t in toastsByPosition(pos)"
             :key="t.id"
@@ -112,7 +116,7 @@ const ROLE_COLOR_MAP: Record<CamelotColorRole, string> = {
 const boxClass = computed(() => {
   switch (themeMode.value) {
     case 'aqua':
-      return 'aqua-glass rounded-2xl shadow-[0_8px_30px_-8px_rgba(0,0,0,0.3)] border-l-4 border-[var(--cml-color-current-color)]'
+      return 'aqua-glass bg-[color-mix(in_srgb,var(--color-surface)_55%,transparent)]! rounded-2xl shadow-[0_8px_30px_-8px_rgba(0,0,0,0.3)] border-l-4 border-[var(--cml-color-current-color)]'
     case 'scifi':
       return 'rounded-none bg-slate-950/95 border border-[color-mix(in_srgb,var(--cml-color-current-color)_45%,transparent)] border-l-4 border-l-[var(--cml-color-current-color)] font-mono shadow-[0_0_16px_color-mix(in_srgb,var(--cml-color-current-color)_25%,transparent)]'
     case 'cupertino':
@@ -133,7 +137,9 @@ const positionClass = (pos: CamelotToastPosition) => {
     case 'right':
       return 'top-1/2 right-0 -translate-y-1/2 items-end'
     case 'center':
-      return 'top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 items-center'
+      // 垂直不用 -translate-y-1/2（會在堆疊變高時瞬間重新置中＝跳動）；
+      // 改由中心往下堆疊：頂端錨在中央，新增不位移既有通知。
+      return 'top-1/2 left-1/2 -translate-x-1/2 items-center'
     case 'top-left':
       return 'top-0 left-0 items-start'
     case 'top-right':
@@ -151,19 +157,118 @@ const onAction = (t: CamelotToast) => {
   t.action?.handler?.()
   removeToast(t.id)
 }
+
+// 入場/退場動畫（JS hooks）：
+// 用 transform 做滑入+淡入（GPU 流暢），但 transform 期間 backdrop-filter 會失效，
+// 故滑入結束、transform 移除後，再把毛玻璃模糊 0→目標值「漸入」，避免玻璃在結尾瞬間閃出。
+const SLIDE_PX = 10
+
+// 各主題玻璃的目標 backdrop-filter；非玻璃主題回傳 null（不做漸入）
+const glassTarget = (): string | null => {
+  switch (themeMode.value) {
+    case 'aqua':
+      return 'blur(20px) saturate(180%)'
+    case 'cupertino':
+      return 'blur(24px)'
+    default:
+      return null
+  }
+}
+
+const setBackdrop = (box: HTMLElement, v: string) => {
+  box.style.backdropFilter = v
+  box.style.setProperty('-webkit-backdrop-filter', v)
+}
+const clearBackdrop = (box: HTMLElement) => {
+  box.style.transition = ''
+  box.style.backdropFilter = ''
+  box.style.removeProperty('-webkit-backdrop-filter')
+}
+
+const onEnter = (el: Element, done: () => void) => {
+  const wrap = el as HTMLElement
+  const box = wrap.querySelector('.cml-toast-box') as HTMLElement | null
+  const target = glassTarget()
+
+  wrap.style.opacity = '0'
+  wrap.style.transform = `translateY(${SLIDE_PX}px) scale(0.97)`
+  if (box && target) setBackdrop(box, target.replace(/blur\([^)]*\)/, 'blur(0px)'))
+  void wrap.offsetWidth // reflow
+
+  wrap.style.transition = 'opacity 0.3s ease, transform 0.3s ease'
+  wrap.style.opacity = '1'
+  wrap.style.transform = 'translateY(0px) scale(1)'
+
+  let slid = false
+  const afterSlide = () => {
+    wrap.style.transition = ''
+    wrap.style.transform = 'none' // identity→none：讓 backdrop-filter 重新生效
+    if (!box || !target) {
+      done()
+      return
+    }
+    void box.offsetWidth
+    box.style.transition = 'backdrop-filter 0.25s ease, -webkit-backdrop-filter 0.25s ease'
+    setBackdrop(box, target)
+    let ramped = false
+    const finish = () => {
+      if (ramped) return
+      ramped = true
+      clearBackdrop(box)
+      done()
+    }
+    const onRamp = (e: TransitionEvent) => {
+      if (e.target !== box) return
+      box.removeEventListener('transitionend', onRamp)
+      finish()
+    }
+    box.addEventListener('transitionend', onRamp)
+    setTimeout(finish, 320)
+  }
+  const onSlide = (e: TransitionEvent) => {
+    if (e.target !== wrap || e.propertyName !== 'transform') return
+    wrap.removeEventListener('transitionend', onSlide)
+    if (!slid) {
+      slid = true
+      afterSlide()
+    }
+  }
+  wrap.addEventListener('transitionend', onSlide)
+  setTimeout(() => {
+    if (!slid) {
+      slid = true
+      wrap.removeEventListener('transitionend', onSlide)
+      afterSlide()
+    }
+  }, 380)
+}
+
+const onLeave = (el: Element, done: () => void) => {
+  const wrap = el as HTMLElement
+  // 抽離流外，避免離場時其餘通知瞬間補位
+  wrap.style.position = 'absolute'
+  wrap.style.width = `${wrap.offsetWidth}px`
+  void wrap.offsetWidth
+  wrap.style.transition = 'opacity 0.28s ease, transform 0.28s ease'
+  wrap.style.opacity = '0'
+  wrap.style.transform = `translateY(${SLIDE_PX}px) scale(0.97)`
+  let ended = false
+  const fin = () => {
+    if (ended) return
+    ended = true
+    done()
+  }
+  const onEnd = (e: TransitionEvent) => {
+    if (e.target !== wrap) return
+    wrap.removeEventListener('transitionend', onEnd)
+    fin()
+  }
+  wrap.addEventListener('transitionend', onEnd)
+  setTimeout(fin, 340)
+}
 </script>
 
 <style scoped>
-.cml-toast-enter-active,
-.cml-toast-leave-active {
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-.cml-toast-enter-from,
-.cml-toast-leave-to {
-  opacity: 0;
-  transform: translateY(8px) scale(0.97);
-}
-.cml-toast-leave-active {
-  position: absolute;
-}
+/* 入場/退場動畫改由 TransitionGroup 的 JS hooks 控制（onEnter/onLeave）：
+   滑入+淡入後再漸入毛玻璃，避免 transform 期間 backdrop-filter 失效造成的閃現。 */
 </style>

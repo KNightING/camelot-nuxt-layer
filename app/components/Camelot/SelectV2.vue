@@ -161,7 +161,7 @@
             roleColorClass,
             optionsContainerClass || (themeMode === 'aqua' ? 'aqua-glass' : 'bg-surface'),
             themeMode === 'cupertino' ? 'rounded-[12px] backdrop-blur-md' : '',
-            themeMode === 'aqua' ? 'aqua-options rounded-3xl p-1 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.5)]!' : '',
+            themeMode === 'aqua' ? 'aqua-options rounded-3xl p-1 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.16)]!' : '',
             themeMode === 'scifi' ? 'scifi-options-panel bg-transparent border-none shadow-none!' : '',
             themeMode === 'material' ? 'rounded-md' : '',
           ]"
@@ -544,13 +544,13 @@ watch([() => props.options, () => props.default], ([options, isDefault]) => {
 }
 .scifi-option:hover {
   background: var(--cml-color-current-color, var(--color-primary));
-  border-left-color: var(--color-on-primary);
-  color: var(--color-on-primary);
+  border-left-color: var(--cml-color-current-on-color, var(--color-on-primary));
+  color: var(--cml-color-current-on-color, var(--color-on-primary));
 }
 .scifi-option.selected {
   background: color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 40%, transparent);
   border-left-color: var(--cml-color-current-color, var(--color-primary));
-  color: var(--color-on-primary);
+  color: var(--cml-color-current-on-color, var(--color-on-primary));
 }
 
 .options-list-inner {

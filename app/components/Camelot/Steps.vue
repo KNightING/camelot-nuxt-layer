@@ -242,7 +242,7 @@ const isComplete = (index: number) => {
   border-color: var(--cml-color-current-color, var(--color-primary)) !important;
 }
 .container.cupertino .step-dot-doing .step-dot-text {
-  color: #ffffff !important;
+  color: var(--cml-color-current-on-color, var(--color-on-primary)) !important;
 }
 
 /* Sci-fi style overrides */
