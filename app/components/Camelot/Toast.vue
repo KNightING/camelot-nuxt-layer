@@ -154,14 +154,15 @@ const onAction = (t: CamelotToast) => {
 </script>
 
 <style scoped>
+/* 入場/退場只動 opacity：避免 transform 中斷玻璃盒的 backdrop-filter，
+   造成毛玻璃在動畫結束後才「閃」出來 */
 .cml-toast-enter-active,
 .cml-toast-leave-active {
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition: opacity 0.3s ease;
 }
 .cml-toast-enter-from,
 .cml-toast-leave-to {
   opacity: 0;
-  transform: translateY(8px) scale(0.97);
 }
 .cml-toast-leave-active {
   position: absolute;
