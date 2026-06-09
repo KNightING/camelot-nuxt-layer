@@ -89,6 +89,55 @@
 
       <!-- Component Showcase -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+        <!-- Rich Text Editor (WYSIWYG) Card -->
+        <div :class="[cardClass, 'col-span-1 md:col-span-2 lg:col-span-3']">
+          <h2 :class="cardTitleClass">
+            Rich Text Editor (TipTap・四主題)
+          </h2>
+          <span class="text-xs text-slate-400">工具列跟隨主題與色彩角色；圖片上傳可插拔（此處用 demo handler 模擬）</span>
+          <CamelotRichTextEditor
+            v-model="richText"
+            :color="currentColorRole"
+            :upload-handler="demoUpload"
+            placeholder="開始撰寫內容…（試試 H1 / 粗體 / 清單 / 連結 / 貼圖）"
+            class="mt-3"
+          />
+          <details class="mt-2">
+            <summary class="cursor-pointer text-xs text-slate-400">
+              輸出 HTML
+            </summary>
+            <pre class="mt-1 max-h-40 overflow-auto rounded bg-surface-container p-2 text-[11px] text-on-surface-variant">{{ richText }}</pre>
+          </details>
+        </div>
+
+        <!-- Image Dropzone Card -->
+        <div :class="cardClass">
+          <h2 :class="cardTitleClass">
+            Image Dropzone (拖曳/選擇・四主題)
+          </h2>
+          <span class="text-xs text-slate-400">grid 多格：圖片佔格、新增格在右側，達 {{ dropzoneMax }} 張後消失（也可拖曳）</span>
+          <CamelotImageDropzone
+            v-model="dropzoneFiles"
+            :color="currentColorRole"
+            layout="grid"
+            :max="dropzoneMax"
+            :columns="5"
+            class="mt-3"
+            @select="onDropzoneSelect"
+          />
+          <p class="mt-2 text-xs text-on-surface-variant">
+            已選 {{ dropzoneFiles?.length ?? 0 }} / {{ dropzoneMax }} 張：{{ (dropzoneFiles ?? []).map(f => f.name).join('、') || '（無）' }}
+          </p>
+
+          <span class="mt-4 block text-xs text-slate-400">stacked（預設）：大區塊 + 下方預覽</span>
+          <CamelotImageDropzone
+            v-model="dropzoneFiles2"
+            :color="currentColorRole"
+            multiple
+            class="mt-2"
+          />
+        </div>
+
         <!-- Button & Switch & Checkbox Card -->
         <div :class="cardClass">
           <h2 :class="cardTitleClass">
@@ -1099,6 +1148,23 @@ const {
   themeMode, colorMode, setPrimaryColor, setThemeColor, triggerThemeTransition,
 } = useCamelotTheme()
 const currentColorRole = ref<'primary' | 'secondary' | 'tertiary' | 'error' | 'info' | 'warning' | 'success'>('primary')
+
+// Rich Text Editor 展示
+const richText = ref('<h2>歡迎使用 Camelot 富文本編輯器</h2><p>支援 <strong>粗體</strong>、<em>斜體</em>、清單、引言、連結與圖片。</p><ul><li>四主題自動套用</li><li>圖片上傳可插拔</li></ul>')
+// demo 上傳：模擬延遲後回傳一個可顯示的圖片 URL（實務上由使用端上傳到 GCS/S3 等）
+async function demoUpload(file: File): Promise<string> {
+  await new Promise(r => setTimeout(r, 600))
+  return URL.createObjectURL(file)
+}
+
+// ImageDropzone 展示
+const dropzoneFiles = ref<File[] | null>(null)
+const dropzoneFiles2 = ref<File[] | null>(null)
+const dropzoneMax = 6
+function onDropzoneSelect(files: File[]) {
+  // 實務上可在此上傳；此處僅示範取得 File 陣列
+  console.log('dropzone selected', files.map(f => f.name))
+}
 
 // 控制面板選項（以 Camelot 元件渲染，跟著主題切換）
 const themeOptions = [

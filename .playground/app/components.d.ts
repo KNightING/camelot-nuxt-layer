@@ -12,13 +12,19 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    IMaterialSymbolsAddPhotoAlternate: typeof import('~icons/material-symbols/add-photo-alternate')['default']
     IMaterialSymbolsCalendarMonthRounded: typeof import('~icons/material-symbols/calendar-month-rounded')['default']
     IMaterialSymbolsChevronLeftRounded: typeof import('~icons/material-symbols/chevron-left-rounded')['default']
     IMaterialSymbolsChevronRightRounded: typeof import('~icons/material-symbols/chevron-right-rounded')['default']
     IMaterialSymbolsClose: typeof import('~icons/material-symbols/close')['default']
     IMaterialSymbolsCloseRounded: typeof import('~icons/material-symbols/close-rounded')['default']
+    IMaterialSymbolsContentPaste: typeof import('~icons/material-symbols/content-paste')['default']
     IMaterialSymbolsErrorCircleRounded: typeof import('~icons/material-symbols/error-circle-rounded')['default']
+    IMaterialSymbolsImage: typeof import('~icons/material-symbols/image')['default']
+    IMaterialSymbolsLink: typeof import('~icons/material-symbols/link')['default']
+    IMaterialSymbolsRedo: typeof import('~icons/material-symbols/redo')['default']
     IMaterialSymbolsScheduleRounded: typeof import('~icons/material-symbols/schedule-rounded')['default']
+    IMaterialSymbolsUndo: typeof import('~icons/material-symbols/undo')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }
@@ -26,13 +32,19 @@ declare module 'vue' {
 
 // For TSX support
 declare global {
+  const IMaterialSymbolsAddPhotoAlternate: typeof import('~icons/material-symbols/add-photo-alternate')['default']
   const IMaterialSymbolsCalendarMonthRounded: typeof import('~icons/material-symbols/calendar-month-rounded')['default']
   const IMaterialSymbolsChevronLeftRounded: typeof import('~icons/material-symbols/chevron-left-rounded')['default']
   const IMaterialSymbolsChevronRightRounded: typeof import('~icons/material-symbols/chevron-right-rounded')['default']
   const IMaterialSymbolsClose: typeof import('~icons/material-symbols/close')['default']
   const IMaterialSymbolsCloseRounded: typeof import('~icons/material-symbols/close-rounded')['default']
+  const IMaterialSymbolsContentPaste: typeof import('~icons/material-symbols/content-paste')['default']
   const IMaterialSymbolsErrorCircleRounded: typeof import('~icons/material-symbols/error-circle-rounded')['default']
+  const IMaterialSymbolsImage: typeof import('~icons/material-symbols/image')['default']
+  const IMaterialSymbolsLink: typeof import('~icons/material-symbols/link')['default']
+  const IMaterialSymbolsRedo: typeof import('~icons/material-symbols/redo')['default']
   const IMaterialSymbolsScheduleRounded: typeof import('~icons/material-symbols/schedule-rounded')['default']
+  const IMaterialSymbolsUndo: typeof import('~icons/material-symbols/undo')['default']
   const RouterLink: typeof import('vue-router')['RouterLink']
   const RouterView: typeof import('vue-router')['RouterView']
 }
