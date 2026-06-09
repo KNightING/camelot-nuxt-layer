@@ -115,17 +115,27 @@
           <h2 :class="cardTitleClass">
             Image Dropzone (拖曳/選擇・四主題)
           </h2>
-          <span class="text-xs text-slate-400">拖曳圖片到區塊或點擊選檔；含選取預覽，邊框跟隨主題與色彩角色</span>
+          <span class="text-xs text-slate-400">grid 多格：圖片佔格、新增格在右側，達 {{ dropzoneMax }} 張後消失（也可拖曳）</span>
           <CamelotImageDropzone
             v-model="dropzoneFiles"
             :color="currentColorRole"
-            multiple
+            layout="grid"
+            :max="dropzoneMax"
+            :columns="5"
             class="mt-3"
             @select="onDropzoneSelect"
           />
           <p class="mt-2 text-xs text-on-surface-variant">
-            已選 {{ dropzoneFiles?.length ?? 0 }} 張：{{ (dropzoneFiles ?? []).map(f => f.name).join('、') || '（無）' }}
+            已選 {{ dropzoneFiles?.length ?? 0 }} / {{ dropzoneMax }} 張：{{ (dropzoneFiles ?? []).map(f => f.name).join('、') || '（無）' }}
           </p>
+
+          <span class="mt-4 block text-xs text-slate-400">stacked（預設）：大區塊 + 下方預覽</span>
+          <CamelotImageDropzone
+            v-model="dropzoneFiles2"
+            :color="currentColorRole"
+            multiple
+            class="mt-2"
+          />
         </div>
 
         <!-- Button & Switch & Checkbox Card -->
@@ -1149,6 +1159,8 @@ async function demoUpload(file: File): Promise<string> {
 
 // ImageDropzone 展示
 const dropzoneFiles = ref<File[] | null>(null)
+const dropzoneFiles2 = ref<File[] | null>(null)
+const dropzoneMax = 6
 function onDropzoneSelect(files: File[]) {
   // 實務上可在此上傳；此處僅示範取得 File 陣列
   console.log('dropzone selected', files.map(f => f.name))
