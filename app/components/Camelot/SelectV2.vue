@@ -544,13 +544,13 @@ watch([() => props.options, () => props.default], ([options, isDefault]) => {
 }
 .scifi-option:hover {
   background: var(--cml-color-current-color, var(--color-primary));
-  border-left-color: var(--color-on-primary);
-  color: var(--color-on-primary);
+  border-left-color: var(--cml-color-current-on-color, var(--color-on-primary));
+  color: var(--cml-color-current-on-color, var(--color-on-primary));
 }
 .scifi-option.selected {
   background: color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 40%, transparent);
   border-left-color: var(--cml-color-current-color, var(--color-primary));
-  color: var(--color-on-primary);
+  color: var(--cml-color-current-on-color, var(--color-on-primary));
 }
 
 .options-list-inner {

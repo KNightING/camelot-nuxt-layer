@@ -37,7 +37,7 @@ export const useCamelotPickerTheme = () => {
   const selectedSurfaceClass = computed(() => {
     switch (themeMode.value) {
       case 'aqua':
-        return 'aqua-fill text-on-primary'
+        return 'aqua-fill text-[var(--cml-color-current-on-color)]'
       case 'scifi':
         return 'bg-[color-mix(in_srgb,var(--color-primary)_85%,transparent)] text-white shadow-[0_0_8px_color-mix(in_srgb,var(--color-primary)_60%,transparent)]'
       case 'cupertino':
