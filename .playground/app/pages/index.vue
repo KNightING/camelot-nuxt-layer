@@ -869,6 +869,33 @@
           </div>
         </div>
 
+        <!-- Time Picker Card -->
+        <div :class="cardClass">
+          <h2 :class="cardTitleClass">
+            Time Picker (純時間・參考 DatePicker)
+          </h2>
+
+          <span class="text-xs text-slate-400">時:分（24 制）</span>
+          <CamelotTimeV2
+            v-model="timeVal"
+            :color="currentColorRole"
+            label="會議時間"
+          />
+
+          <span class="text-xs text-slate-400">時:分:秒（12 制）</span>
+          <CamelotTimeV2
+            v-model="timeVal12"
+            :color="currentColorRole"
+            time-precision="second"
+            hour-format="12"
+            placeholder="hh:mm:ss a"
+          />
+
+          <p class="text-xs text-on-surface-variant">
+            v-model：{{ timeVal || '（無）' }} ／ {{ timeVal12 || '（無）' }}
+          </p>
+        </div>
+
         <!-- Virtual Scroll Card -->
         <div :class="cardClass">
           <h2 :class="cardTitleClass">
@@ -1156,6 +1183,10 @@ async function demoUpload(file: File): Promise<string> {
   await new Promise(r => setTimeout(r, 600))
   return URL.createObjectURL(file)
 }
+
+// TimeV2 展示
+const timeVal = ref<string>('')
+const timeVal12 = ref<string>('14:30:00')
 
 // ImageDropzone 展示
 const dropzoneFiles = ref<File[] | null>(null)
