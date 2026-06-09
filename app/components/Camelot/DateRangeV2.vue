@@ -43,30 +43,48 @@
           @click="togglePopup"
         >
           <IMaterialSymbolsCalendarMonthRounded class="w-5 h-5 text-outline group-hover:text-[var(--cml-color-current-color)] transition-colors shrink-0" />
-          <div class="flex items-center gap-1 overflow-hidden">
-            <input
-              v-bind="$attrs"
-              :value="startDisplay"
-              type="text"
-              class="min-w-0 text-on-surface bg-transparent placeholder:text-on-surface/50 outline-none text-base caret-[var(--cml-color-current-color)] appearance-none cursor-pointer"
-              :class="{ 'text-black!': disabled }"
-              :style="{ width: startInputWidth }"
-              placeholder="請選擇起日"
-              readonly
+          <div
+            class="overflow-hidden"
+            :class="verticalTrigger ? 'flex flex-col items-start gap-0.5' : 'flex items-center gap-1'"
+          >
+            <div class="flex min-w-0 items-center gap-1">
+              <span
+                v-if="verticalTrigger"
+                class="shrink-0 text-xs text-outline"
+              >起</span>
+              <input
+                v-bind="$attrs"
+                :value="startDisplay"
+                type="text"
+                class="min-w-0 text-on-surface bg-transparent placeholder:text-on-surface/50 outline-none text-base caret-[var(--cml-color-current-color)] appearance-none cursor-pointer"
+                :class="{ 'text-black!': disabled }"
+                :style="{ width: startInputWidth }"
+                placeholder="請選擇起日"
+                readonly
+              >
+            </div>
+            <div
+              v-if="!verticalTrigger"
+              class="px-1 text-outline group-hover:text-[var(--cml-color-current-color)]"
             >
-            <div class="px-1 text-outline group-hover:text-[var(--cml-color-current-color)]">
               <span>~</span>
             </div>
-            <input
-              v-bind="$attrs"
-              :value="endDisplay"
-              type="text"
-              class="min-w-0 text-on-surface bg-transparent placeholder:text-on-surface/50 outline-none text-base caret-[var(--cml-color-current-color)] appearance-none cursor-pointer"
-              :class="{ 'text-black!': disabled }"
-              :style="{ width: endInputWidth }"
-              placeholder="請選擇迄日"
-              readonly
-            >
+            <div class="flex min-w-0 items-center gap-1">
+              <span
+                v-if="verticalTrigger"
+                class="shrink-0 text-xs text-outline"
+              >迄</span>
+              <input
+                v-bind="$attrs"
+                :value="endDisplay"
+                type="text"
+                class="min-w-0 text-on-surface bg-transparent placeholder:text-on-surface/50 outline-none text-base caret-[var(--cml-color-current-color)] appearance-none cursor-pointer"
+                :class="{ 'text-black!': disabled }"
+                :style="{ width: endInputWidth }"
+                placeholder="請選擇迄日"
+                readonly
+              >
+            </div>
           </div>
         </label>
       </slot>
@@ -482,6 +500,9 @@ const onRangeSelect = (range: (Date | number | null)[] | null | undefined) => {
 }
 
 const { isMobile } = useDeviceBreakpoints()
+
+// 小螢幕 + 含時間時，trigger 內容過長放不下：改成起/迄垂直顯示（各帶「起」「迄」標籤）
+const verticalTrigger = computed(() => isMobile.value && props.enableTime)
 
 const showType = computed<'popup' | 'dialog'>(() => {
   // auto：手機改用置中 modal（dialog），桌機用 popup

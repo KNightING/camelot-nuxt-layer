@@ -82,6 +82,18 @@
               />
             </template>
           </CamelotInternalCalendar>
+
+          <!-- 時間模式：手機 modal 需明確的關閉入口 -->
+          <div
+            v-if="enableTime"
+            class="flex justify-center border-t border-outline px-3 py-3"
+          >
+            <CamelotButton
+              label="確認"
+              :color="color"
+              @click="confirmTime"
+            />
+          </div>
         </div>
       </CamelotBaseDialogV2>
 
@@ -114,6 +126,18 @@
               />
             </template>
           </CamelotInternalCalendar>
+
+          <!-- 時間模式：提供明確的關閉入口（與 dialog 一致） -->
+          <div
+            v-if="enableTime"
+            class="flex justify-center border-t border-outline px-3 py-3"
+          >
+            <CamelotButton
+              label="確認"
+              :color="color"
+              @click="confirmTime"
+            />
+          </div>
         </div>
       </template>
     </CamelotPopupV2>
@@ -235,6 +259,11 @@ const togglePopup = () => {
   if (!props.disabled) {
     open.value = !open.value
   }
+}
+
+// 時間模式的「確認」：model 已即時更新，這裡負責關閉浮層作為明確完成入口
+const confirmTime = () => {
+  open.value = false
 }
 
 const onDateSelect = (date: Date | number | null | undefined) => {
