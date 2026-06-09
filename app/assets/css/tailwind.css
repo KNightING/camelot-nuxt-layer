@@ -58,6 +58,9 @@
   --color-on-surface-variant: var(--cml-c-m3-on-surface-variant);
   --color-outline: var(--cml-c-m3-outline);
   --color-outline-variant: var(--cml-c-m3-outline-variant);
+  /* 語意化邊框色 token（border-border 工具）：預設＝M3 outline-variant，
+     各主題可 per-theme 覆寫（aqua 走色調髮絲，見 :root[data-camelot-theme-mode="aqua"]） */
+  --color-border: var(--cml-c-m3-outline-variant);
 
   --color-error: var(--cml-c-m3-error);
   --color-error-container: var(--cml-c-m3-error-container);
@@ -202,6 +205,12 @@
   clip-path: inset(0px 0px 0px round 20px);
 }
 
+/* Aqua 主題的邊框 token：玻璃面板/軌道走色調髮絲（消費 --cml-color-current-color，
+   面板無角色色時回退 primary）。提高 specificity 以覆寫 @theme 的 :root 預設值。 */
+:root[data-camelot-theme-mode="aqua"] {
+  --color-border: color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 12%, transparent);
+}
+
 /* ===== Aqua Frosted Glass 風格共用 utility（消費 router 注入的 --cml-color-current-color） ===== */
 
 /* 玻璃面板：半透明 + backdrop blur + 髮絲白邊 + 柔和大範圍陰影 + 頂部內高光
@@ -210,7 +219,7 @@
   background-color: color-mix(in srgb, var(--color-surface, white) 72%, transparent);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 12%, transparent);
+  border: 1px solid var(--color-border);
   box-shadow:
     0 8px 40px -8px rgba(0, 0, 0, 0.18),
     inset 0 1px 0 0 color-mix(in srgb, white 18%, transparent);
@@ -231,7 +240,7 @@
 /* 軌道/未選態：髮絲級半透明（switch 軌道、input 底、未選背景）— 邊框刻意細而淡 */
 @utility aqua-track {
   background-color: color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 6%, transparent);
-  border: 1px solid color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 12%, transparent);
+  border: 1px solid var(--color-border);
 }
 
 /* 聚焦光暈（可加 focus: / focus-within: 變體）— ring 收細為 2px、淡化 */
