@@ -346,7 +346,7 @@ const popupShadowClass = computed(() => {
 const popupPanelShadowFix = computed(() => {
   switch (themeMode.value) {
     case 'aqua':
-      return 'shadow-[inset_0_1px_0_0_rgba(255,255,255,0.5)]!'
+      return 'shadow-[inset_0_1px_0_0_rgba(255,255,255,0.16)]!'
     case 'scifi':
       return 'shadow-none!'
     default:

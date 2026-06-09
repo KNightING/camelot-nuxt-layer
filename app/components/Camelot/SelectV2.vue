@@ -161,7 +161,7 @@
             roleColorClass,
             optionsContainerClass || (themeMode === 'aqua' ? 'aqua-glass' : 'bg-surface'),
             themeMode === 'cupertino' ? 'rounded-[12px] backdrop-blur-md' : '',
-            themeMode === 'aqua' ? 'aqua-options rounded-3xl p-1 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.5)]!' : '',
+            themeMode === 'aqua' ? 'aqua-options rounded-3xl p-1 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.16)]!' : '',
             themeMode === 'scifi' ? 'scifi-options-panel bg-transparent border-none shadow-none!' : '',
             themeMode === 'material' ? 'rounded-md' : '',
           ]"
