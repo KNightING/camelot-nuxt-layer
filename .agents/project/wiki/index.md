@@ -51,6 +51,7 @@
 | `IdxForm` | ✅ | 表單容器元件 | — |
 | `Image` | ✅ | 圖片元件 (v1) | — |
 | `ImageV2` | ✅ | 圖片元件 (v2，支援懶載入/動畫) | — |
+| `ImageDropzone` | ✅ | 圖片拖曳/選擇區（stacked / grid 多格、slot 驅動、max、四風格） | [詳情](./features/richtext-editor-image-dropzone.md) |
 | `Input` | ✅ | 通用輸入框元件 | — |
 | `Loading` | ✅ | 載入中動畫元件 | — |
 | `Material3Provider` | ✅ | Material Design 3 主題 Provider | — |
@@ -62,6 +63,7 @@
 | `RevealText` | ✅ | 文字揭示動畫元件 | — |
 | `RippleEffect` | ✅ | Material Design 漣漪點擊效果 | — |
 | `RippleTabs` | ✅ | 帶漣漪效果的 Tab 元件 | — |
+| `RichTextEditor` | ✅ | TipTap 富文本編輯器（四風格、可插拔上傳、resizable image/貼上清洗） | [詳情](./features/richtext-editor-image-dropzone.md) |
 | `Scrollbar` | ✅ | 自訂滾動條元件 | — |
 | `Select` | ✅ | 下拉選擇元件 (v1) | — |
 | `SelectV2` | ✅ | 下拉選擇元件 (v2，功能更完整) | — |
@@ -173,6 +175,7 @@ graph TD
 - [🧱 Drawer / Tree / Table / Menu](./features/layout-data-components.md)
 - [🗓️ Calendar / 日期選擇器](./features/calendar.md)
 - [🗓️🔔 DatePicker 時間/確認・Aqua 邊框 Token・Toast 動畫](./features/datepicker-time-aqua-toast.md)
+- [✍️🖼️ RichTextEditor（TipTap）與 ImageDropzone](./features/richtext-editor-image-dropzone.md)
 - [🎨 Color Scheme / 色彩主題](./features/color-scheme.md)
 - [⚙️ 環境變數](./environment.md)
 
