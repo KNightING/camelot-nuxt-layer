@@ -47,16 +47,17 @@
 | `Drawer` | ✅ | 側邊抽屜（左右、floating/fixed、四風格） | [詳情](./features/layout-data-components.md) |
 | `DropImage` | ✅ | 拖曳上傳圖片元件 | — |
 | `Expanded` | ✅ | 可展開/收合的內容區塊 | — |
+| `FieldLabel` | ✅ | 表單共通標籤（主題自動樣式、required 星號；各表單元件 `#label` slot 的 fallback） | [詳情](./features/field-label-and-form-controls.md) |
 | `Gpu` | ✅ | GPU 加速動畫容器 | — |
 | `IdxForm` | ✅ | 表單容器元件 | — |
 | `Image` | ✅ | 圖片元件 (v1) | — |
 | `ImageV2` | ✅ | 圖片元件 (v2，支援懶載入/動畫) | — |
 | `ImageDropzone` | ✅ | 圖片拖曳/選擇區（stacked / grid 多格、slot 驅動、max、四風格） | [詳情](./features/richtext-editor-image-dropzone.md) |
-| `Input` | ✅ | 通用輸入框元件 | — |
+| `Input` | ✅ | 通用輸入框元件（`#label` slot 帶 label 參數） | [詳情](./features/field-label-and-form-controls.md) |
 | `Loading` | ✅ | 載入中動畫元件 | — |
 | `Material3Provider` | ✅ | Material Design 3 主題 Provider | — |
 | `Menu` | ✅ | 多階層導覽選單（導引線/祖先變色、四風格） | [詳情](./features/layout-data-components.md) |
-| `NumberCounter` | ✅ | 數字計數動畫元件 | — |
+| `NumberCounter` | ✅ | 數字加減輸入（四風格、color/disabled/label） | [詳情](./features/field-label-and-form-controls.md) |
 | `Popup` | ✅ | 彈出層元件 (v1) | — |
 | `PopupV2` | ✅ | 彈出層元件 (v2，功能更完整) | — |
 | `RevealImage` | ✅ | 圖片揭示動畫元件 | — |
@@ -66,7 +67,10 @@
 | `RichTextEditor` | ✅ | TipTap 富文本編輯器（四風格、可插拔上傳、resizable image/貼上清洗） | [詳情](./features/richtext-editor-image-dropzone.md) |
 | `Scrollbar` | ✅ | 自訂滾動條元件 | — |
 | `Select` | ✅ | 下拉選擇元件 (v1) | — |
-| `SelectV2` | ✅ | 下拉選擇元件 (v2，功能更完整) | — |
+| `SelectV2` | ✅ | 下拉選擇元件 (v2；disabled 不可展開、`#label` slot) | [詳情](./features/field-label-and-form-controls.md) |
+| `Switch` | ✅ | 開關（四風格 40×22 / scifi 48×22、label 點擊切換） | [詳情](./features/field-label-and-form-controls.md) |
+| `Checkbox` | ✅ | 勾選框（四風格、indeterminate、label 由 wrapper 統一） | [詳情](./features/field-label-and-form-controls.md) |
+| `Textarea` | ✅ | 多行輸入（autosize、字數統計、`#label` slot） | [詳情](./features/field-label-and-form-controls.md) |
 | `Skeleton` | ✅ | 骨架屏 Loading 佔位元件 | — |
 | `SlideTransitionGroup` | ✅ | 滑動過場群組元件 | — |
 | `Steps` | ✅ | 步驟指示器元件 | — |
@@ -81,8 +85,9 @@
 | 元件 | 狀態 | 說明 | Wiki |
 | :--- | :---: | :--- | :--- |
 | `Calendar` | 🚧 | 日曆核心元件（DateV2/DateRangeV2 共用，四風格選中態） | [詳情](./features/calendar.md) |
-| `TreeNode` | ✅ | Tree 遞迴節點 | [詳情](./features/layout-data-components.md) |
+| `TreeNode` | ✅ | Tree 遞迴節點（checkable 點整行勾選） | [詳情](./features/layout-data-components.md) |
 | `MenuItem` | ✅ | Menu 遞迴項目 | [詳情](./features/layout-data-components.md) |
+| `TimeField` | ✅ | 時/分/秒欄位（下拉 Teleport 防裁切） | [詳情](./features/field-label-and-form-controls.md) |
 
 ---
 
@@ -178,6 +183,7 @@ graph TD
 - [🗓️🔔 DatePicker 時間/確認・Aqua 邊框 Token・Toast 動畫](./features/datepicker-time-aqua-toast.md)
 - [✍️🖼️ RichTextEditor（TipTap）與 ImageDropzone](./features/richtext-editor-image-dropzone.md)
 - [⏰ TimeV2 / 純時間選擇器](./features/time-picker.md)
+- [🏷️ FieldLabel 共通標籤與表單控制元件](./features/field-label-and-form-controls.md)
 - [🎨 Color Scheme / 色彩主題](./features/color-scheme.md)
 - [⚙️ 環境變數](./environment.md)
 
