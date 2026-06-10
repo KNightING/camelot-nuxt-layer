@@ -43,23 +43,41 @@
           >
             {{ item.content }}
           </div>
+          <img
+            v-if="item.image"
+            :src="item.image"
+            :alt="item.title ?? ''"
+            class="mt-2 max-w-full w-[200px] rounded-lg border border-outline-variant object-cover"
+            :class="{ 'ml-auto': !isHorizontal && sideFor(i) === 'before', 'mx-auto': isHorizontal }"
+          >
         </slot>
       </div>
 
       <!-- axis: node + connector（alternate 垂直時固定置中欄，避免被推到左側） -->
       <div
-        class="cml-tl-axis relative flex shrink-0 items-center justify-center"
+        class="cml-tl-axis relative flex shrink-0 items-center"
         :class="[
-          isHorizontal ? 'flex-row h-9 w-full' : 'flex-col w-9 self-stretch',
+          isHorizontal ? 'flex-row h-9 w-full justify-center' : 'flex-col w-9 self-stretch justify-start pt-1.5',
           side === 'alternate' ? (isHorizontal ? 'row-start-2' : 'col-start-2') : '',
         ]"
       >
-        <!-- connector to next item -->
-        <span
-          v-if="i < items.length - 1"
-          class="absolute bg-outline-variant"
-          :class="isHorizontal ? 'top-1/2 left-1/2 right-[-50%] h-px -translate-y-1/2' : 'left-1/2 top-1/2 bottom-[-100%] w-px -translate-x-1/2'"
-        />
+        <!-- connector（垂直改上下兩段，列高不一仍連續；圓點 pt-1.5 對齊標題行高中心 12px） -->
+        <template v-if="isHorizontal">
+          <span
+            v-if="i < items.length - 1"
+            class="absolute top-1/2 left-1/2 right-[-50%] h-px -translate-y-1/2 bg-outline-variant"
+          />
+        </template>
+        <template v-else>
+          <span
+            v-if="i > 0"
+            class="absolute left-1/2 top-0 h-3 w-px -translate-x-1/2 bg-outline-variant"
+          />
+          <span
+            v-if="i < items.length - 1"
+            class="absolute left-1/2 top-3 bottom-0 w-px -translate-x-1/2 bg-outline-variant"
+          />
+        </template>
         <slot
           name="node"
           :item="item"
@@ -103,6 +121,13 @@
           >
             {{ item.content }}
           </div>
+          <img
+            v-if="item.image"
+            :src="item.image"
+            :alt="item.title ?? ''"
+            class="mt-2 max-w-full w-[200px] rounded-lg border border-outline-variant object-cover"
+            :class="{ 'ml-auto': !isHorizontal && sideFor(i) === 'before', 'mx-auto': isHorizontal }"
+          >
         </slot>
       </div>
     </div>
@@ -113,6 +138,8 @@
 interface TimelineItem {
   title?: string
   content?: string
+  /** 內容圖片網址（渲染於文字下方，自訂 #content slot 時不套用） */
+  image?: string
   key?: string | number
 }
 

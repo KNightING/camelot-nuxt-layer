@@ -1301,6 +1301,7 @@ const timelineItems = [
   {
     title: '出貨',
     content: '已交付物流',
+    image: 'https://picsum.photos/seed/camelot-timeline/400/240',
   },
   {
     title: '送達',
