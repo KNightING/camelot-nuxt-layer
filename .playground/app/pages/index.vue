@@ -266,6 +266,50 @@
           </div>
         </div>
 
+        <!-- Radio & Checkbox Groups Card -->
+        <div :class="cardClass">
+          <h2 :class="cardTitleClass">
+            Radio & Checkbox Groups
+          </h2>
+
+          <span class="text-xs text-slate-400">RadioGroup 水平（「貨到付款」逐選項 disabled）</span>
+          <CamelotRadioGroup
+            v-model="radioGroupVal"
+            label="付款方式"
+            :options="paymentOptions"
+            :color="currentColorRole"
+          />
+
+          <span class="mt-2 text-xs text-slate-400">RadioGroup 垂直</span>
+          <CamelotRadioGroup
+            v-model="radioGroupVal"
+            direction="vertical"
+            :options="paymentOptions"
+            :color="currentColorRole"
+          />
+
+          <span class="mt-3 text-xs text-slate-400">CheckboxGroup 水平（「簡訊」逐選項 disabled）</span>
+          <CamelotCheckboxGroup
+            v-model="checkboxGroupVal"
+            label="通知管道"
+            :options="notifyOptions"
+            :color="currentColorRole"
+          />
+
+          <span class="mt-2 text-xs text-slate-400">CheckboxGroup 垂直</span>
+          <CamelotCheckboxGroup
+            v-model="checkboxGroupVal"
+            direction="vertical"
+            :options="notifyOptions"
+            :color="currentColorRole"
+          />
+
+          <div class="text-xs text-slate-400 mt-2 p-3 bg-slate-50 dark:bg-slate-900/50 rounded-lg">
+            Radio: {{ radioGroupVal }} <br>
+            Checkbox: {{ checkboxGroupVal }}
+          </div>
+        </div>
+
         <!-- Input & Textarea Card -->
         <div :class="cardClass">
           <h2 :class="cardTitleClass">
@@ -1300,6 +1344,48 @@ async function demoUpload(file: File): Promise<string> {
 // TimeV2 展示
 const timeVal = ref<string>('')
 const timeVal12 = ref<string>('14:30:00')
+
+// Radio / Checkbox Group 展示
+const radioGroupVal = ref<string | number>('credit')
+const checkboxGroupVal = ref<(string | number)[]>(['email'])
+const paymentOptions: CamelotGroupOption[] = [
+  {
+    label: '信用卡',
+    value: 'credit',
+  },
+  {
+    label: 'ATM 轉帳',
+    value: 'atm',
+  },
+  {
+    label: '貨到付款',
+    value: 'cod',
+    disabled: true,
+  },
+  {
+    label: '行動支付',
+    value: 'mobile',
+  },
+]
+const notifyOptions: CamelotGroupOption[] = [
+  {
+    label: 'Email',
+    value: 'email',
+  },
+  {
+    label: '簡訊',
+    value: 'sms',
+    disabled: true,
+  },
+  {
+    label: 'App 推播',
+    value: 'push',
+  },
+  {
+    label: 'LINE',
+    value: 'line',
+  },
+]
 
 // FileDropzone 展示
 const fileDropzoneFiles = ref<File[] | null>(null)
