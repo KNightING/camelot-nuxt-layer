@@ -35,6 +35,11 @@
 - 新增：`Radio.vue`、`RadioGroup.vue`、`CheckboxGroup.vue`、`Aqua|Material|Cupertino|Scifi/Radio.vue`
 - 修改：`Timeline.vue`、`shared/types/camelot.ts`、`.playground/app/pages/index.vue`
 
+## Iteration 2（2026-06-10）Radio deselectable
+- Radio / RadioGroup 新增 `deselectable?: boolean`（預設 false）：點擊已選取的選項可取消選取（非必填情境）；RadioGroup 取消時 `modelValue = undefined`。
+- 4 個 variant 增加 `deselectable` prop（控制點擊已選中時是否切換）；wrapper label 點擊同邏輯。
+- Playground 補 deselectable RadioGroup 展示。
+
 ## Git Completion Policy
 - After user-approved commits, completion will run `git rebase main` and update the remote work branch with `git push --force-with-lease`.
 - PR/archive order: Archive automatically triggered on PR request

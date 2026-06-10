@@ -288,6 +288,14 @@
             :color="currentColorRole"
           />
 
+          <span class="mt-2 text-xs text-slate-400">RadioGroup deselectable（點擊已選取項可取消，非必填情境）</span>
+          <CamelotRadioGroup
+            v-model="radioDeselectVal"
+            deselectable
+            :options="paymentOptions"
+            :color="currentColorRole"
+          />
+
           <span class="mt-3 text-xs text-slate-400">CheckboxGroup 水平（「簡訊」逐選項 disabled）</span>
           <CamelotCheckboxGroup
             v-model="checkboxGroupVal"
@@ -306,6 +314,7 @@
 
           <div class="text-xs text-slate-400 mt-2 p-3 bg-slate-50 dark:bg-slate-900/50 rounded-lg">
             Radio: {{ radioGroupVal }} <br>
+            Deselectable Radio: {{ radioDeselectVal ?? '（未選）' }} <br>
             Checkbox: {{ checkboxGroupVal }}
           </div>
         </div>
@@ -1347,6 +1356,7 @@ const timeVal12 = ref<string>('14:30:00')
 
 // Radio / Checkbox Group 展示
 const radioGroupVal = ref<string | number>('credit')
+const radioDeselectVal = ref<string | number | undefined>('atm')
 const checkboxGroupVal = ref<(string | number)[]>(['email'])
 const paymentOptions: CamelotGroupOption[] = [
   {

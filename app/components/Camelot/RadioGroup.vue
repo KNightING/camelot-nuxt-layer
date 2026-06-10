@@ -21,6 +21,7 @@
         :model-value="modelValue === opt.value"
         :label="opt.label"
         :disabled="disabled || opt.disabled"
+        :deselectable="deselectable"
         :color="color"
         @change="select(opt)"
       />
@@ -37,6 +38,8 @@ const props = withDefaults(
     color?: CamelotColorRole
     /** 整組停用；逐選項停用請用 option.disabled */
     disabled?: boolean
+    /** 點擊已選取項可取消選取（非必填情境），取消時 modelValue 為 undefined */
+    deselectable?: boolean
     label?: string
     required?: boolean
   }>(),
@@ -44,19 +47,27 @@ const props = withDefaults(
     direction: 'horizontal',
     color: 'primary',
     disabled: false,
+    deselectable: false,
     label: '',
     required: false,
   },
 )
 
 const emit = defineEmits<{
-  change: [option: CamelotGroupOption]
+  /** deselectable 取消選取時 option 為 undefined */
+  change: [option: CamelotGroupOption | undefined]
 }>()
 
-const modelValue = defineModel<string | number>()
+const modelValue = defineModel<string | number | undefined>()
 
 const select = (opt: CamelotGroupOption) => {
   if (props.disabled || opt.disabled) return
+  if (modelValue.value === opt.value) {
+    if (!props.deselectable) return
+    modelValue.value = undefined
+    emit('change', undefined)
+    return
+  }
   modelValue.value = opt.value
   emit('change', opt)
 }

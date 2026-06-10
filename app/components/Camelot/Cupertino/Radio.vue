@@ -21,9 +21,12 @@
 const props = withDefaults(
   defineProps<{
     disabled?: boolean
+    /** 點擊已選取項可取消選取（非必填情境） */
+    deselectable?: boolean
   }>(),
   {
     disabled: false,
+    deselectable: false,
   },
 )
 
@@ -34,8 +37,9 @@ const emit = defineEmits<{
 const modelValue = defineModel<boolean>({ default: false })
 
 const toggle = () => {
-  if (props.disabled || modelValue.value) return
-  modelValue.value = true
-  emit('change', true)
+  if (props.disabled) return
+  if (modelValue.value && !props.deselectable) return
+  modelValue.value = !modelValue.value
+  emit('change', modelValue.value)
 }
 </script>

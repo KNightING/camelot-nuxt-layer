@@ -7,6 +7,7 @@
       v-if="themeMode === 'scifi'"
       v-model="modelValue"
       :disabled="disabled"
+      :deselectable="deselectable"
       @change="emit('change', $event)"
     />
 
@@ -14,6 +15,7 @@
       v-else-if="themeMode === 'cupertino'"
       v-model="modelValue"
       :disabled="disabled"
+      :deselectable="deselectable"
       @change="emit('change', $event)"
     />
 
@@ -21,6 +23,7 @@
       v-else-if="themeMode === 'aqua'"
       v-model="modelValue"
       :disabled="disabled"
+      :deselectable="deselectable"
       @change="emit('change', $event)"
     />
 
@@ -28,6 +31,7 @@
       v-else
       v-model="modelValue"
       :disabled="disabled"
+      :deselectable="deselectable"
       @change="emit('change', $event)"
     />
 
@@ -55,12 +59,15 @@ const props = withDefaults(
   defineProps<{
     label?: string
     disabled?: boolean
+    /** 點擊已選取項可取消選取（非必填情境） */
+    deselectable?: boolean
     color?: CamelotColorRole
     isContainer?: boolean
   }>(),
   {
     label: '',
     disabled: false,
+    deselectable: false,
     color: 'primary',
     isContainer: false,
   },
@@ -77,8 +84,9 @@ const { themeMode } = useCamelotTheme()
 const roleColorClass = useCamelotRoleColorClass(() => props.color, () => props.isContainer)
 
 const selectByLabel = () => {
-  if (props.disabled || modelValue.value) return
-  modelValue.value = true
-  emit('change', true)
+  if (props.disabled) return
+  if (modelValue.value && !props.deselectable) return
+  modelValue.value = !modelValue.value
+  emit('change', modelValue.value)
 }
 </script>
