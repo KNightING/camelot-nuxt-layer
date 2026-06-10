@@ -8,15 +8,6 @@
     @dragleave.prevent="onDragLeave"
     @drop.prevent="onDrop"
   >
-    <input
-      ref="fileInput"
-      type="file"
-      :accept="accept"
-      :multiple="multiple || layout === 'grid'"
-      class="hidden"
-      @change="onInput"
-    >
-
     <!-- grid 多格：縮圖佔格，新增格在右側，達 max 隱藏 -->
     <div
       v-if="layout === 'grid'"
@@ -55,7 +46,7 @@
         v-if="!atMax"
         class="cml-dropzone-area flex aspect-square cursor-pointer flex-col items-center justify-center gap-1 border border-dashed px-2 text-center text-xs transition"
         :class="areaStateClass"
-        @click="pick"
+        @click="pick()"
       >
         <slot
           :drag-over="dragOver"
@@ -78,7 +69,7 @@
         class="cml-dropzone-area flex cursor-pointer flex-col items-center justify-center gap-1.5 border border-dashed px-3 py-4 text-center text-sm transition"
         :style="{ minHeight: height }"
         :class="areaStateClass"
-        @click="pick"
+        @click="pick()"
       >
         <slot
           :drag-over="dragOver"
@@ -173,15 +164,23 @@ const model = defineModel<File[] | null>({ default: null })
 const { themeMode } = useCamelotTheme()
 const roleColorClass = useCamelotRoleColorClass(() => props.color)
 
-const fileInput = useTemplateRef<HTMLInputElement>('fileInput')
-const dragOver = ref(false)
-const dragDepth = ref(0)
-const previews = ref<{ url: string, name: string }[]>([])
+// 共用核心（拖曳/accept/max/縮圖生命週期）：useCamelotFileDrop
+const {
+  dragOver, count, atMax, maxCount, entries, removeAt, pick, onDragOver, onDragLeave, onDrop,
+} = useCamelotFileDrop({
+  model,
+  accept: () => props.accept,
+  multiple: () => props.multiple || props.layout === 'grid',
+  max: () => props.max,
+  disabled: () => props.disabled,
+  thumbnails: () => props.preview || props.layout === 'grid',
+  onSelect: files => emit('select', files),
+})
 
-const maxCount = computed(() => (props.max && props.max > 0 ? props.max : Number.POSITIVE_INFINITY))
-const count = computed(() => (model.value ?? []).length)
-const atMax = computed(() => count.value >= maxCount.value)
-const showPreview = computed(() => props.preview || props.layout === 'grid')
+const previews = computed(() => entries.value.map(e => ({
+  url: e.url,
+  name: e.file.name,
+})))
 
 const areaStateClass = computed(() => [
   dragOver.value
@@ -189,76 +188,6 @@ const areaStateClass = computed(() => [
     : 'border-border text-on-surface-variant hover:border-[var(--cml-color-current-color)] hover:bg-surface-container',
   { 'pointer-events-none opacity-50': props.disabled },
 ])
-
-// previews 由 model 衍生（單一真相來源）；外部改 v-model 也會同步
-watch(model, (files) => {
-  for (const p of previews.value) URL.revokeObjectURL(p.url)
-  previews.value = showPreview.value
-    ? (files ?? []).map(f => ({
-        url: URL.createObjectURL(f),
-        name: f.name,
-      }))
-    : []
-}, { immediate: true })
-
-const accepts = (f: File) => {
-  const tokens = props.accept.split(',').map(s => s.trim()).filter(Boolean)
-  if (tokens.length === 0) return true
-  return tokens.some((tok) => {
-    if (tok === '*' || tok === '*/*') return true
-    if (tok.endsWith('/*')) return f.type.startsWith(tok.slice(0, -1))
-    if (tok.startsWith('.')) return f.name.toLowerCase().endsWith(tok.toLowerCase())
-    return f.type === tok
-  })
-}
-
-const setFiles = (list: File[]) => {
-  if (props.disabled) return
-  const valid = list.filter(accepts)
-  if (valid.length === 0) return
-  const accumulate = props.layout === 'grid' || props.multiple
-  let next = accumulate ? [...(model.value ?? []), ...valid] : valid.slice(0, 1)
-  if (Number.isFinite(maxCount.value)) next = next.slice(0, maxCount.value)
-  model.value = next
-  emit('select', next)
-}
-
-const removeAt = (i: number) => {
-  const files = (model.value ?? []).filter((_, idx) => idx !== i)
-  model.value = files
-  emit('select', files)
-}
-
-const pick = () => {
-  if (!props.disabled && !atMax.value) fileInput.value?.click()
-}
-
-const onInput = (e: Event) => {
-  const target = e.target as HTMLInputElement
-  const files = Array.from(target.files ?? [])
-  target.value = '' // 允許重複選同一檔
-  setFiles(files)
-}
-
-const onDragOver = () => {
-  if (props.disabled) return
-  dragDepth.value++
-  dragOver.value = true
-}
-const onDragLeave = () => {
-  dragDepth.value = Math.max(0, dragDepth.value - 1)
-  if (dragDepth.value === 0) dragOver.value = false
-}
-const onDrop = (e: DragEvent) => {
-  dragDepth.value = 0
-  dragOver.value = false
-  if (props.disabled) return
-  setFiles(Array.from(e.dataTransfer?.files ?? []))
-}
-
-onBeforeUnmount(() => {
-  for (const p of previews.value) URL.revokeObjectURL(p.url)
-})
 </script>
 
 <style scoped>
