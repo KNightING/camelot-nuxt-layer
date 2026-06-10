@@ -8,28 +8,33 @@
       type="text"
       inputmode="numeric"
       class="w-10 bg-transparent text-center outline-none font-medium tabular-nums text-[var(--cml-color-current-color)]"
-      @focus="open = true"
+      @focus="openList"
       @input="onInput"
       @keydown.enter="open = false"
       @keydown.up.prevent="step(1)"
       @keydown.down.prevent="step(-1)"
     >
-    <!-- 可選的下拉清單（向上展開：時間列位於日曆底部，向上不會被面板裁切） -->
-    <div
-      v-if="open"
-      class="absolute bottom-full left-1/2 z-[60] mb-1 max-h-40 w-12 -translate-x-1/2 overflow-y-auto rounded-lg border border-outline-variant bg-surface shadow-lg"
-    >
-      <button
-        v-for="v in options"
-        :key="v"
-        type="button"
-        class="block w-full px-2 py-1 text-center text-sm tabular-nums transition-colors hover:bg-surface-container"
-        :class="v === model ? 'bg-[color-mix(in_srgb,var(--cml-color-current-color)_14%,transparent)] font-semibold text-[var(--cml-color-current-color)]' : 'text-on-surface'"
-        @mousedown.prevent="select(v)"
+    <!-- 下拉清單以 Teleport 脫離 Popup 的 overflow-hidden 容器，避免超出彈窗時被裁切；
+         依 trigger 上下可用空間決定向上或向下展開 -->
+    <Teleport to="body">
+      <div
+        v-if="open"
+        ref="listRef"
+        class="fixed z-[1000] max-h-40 w-12 -translate-x-1/2 overflow-y-auto rounded-lg border border-outline-variant bg-surface shadow-lg"
+        :style="listStyle"
       >
-        {{ pad(v) }}
-      </button>
-    </div>
+        <button
+          v-for="v in options"
+          :key="v"
+          type="button"
+          class="block w-full px-2 py-1 text-center text-sm tabular-nums transition-colors hover:bg-surface-container"
+          :class="v === model ? 'bg-[color-mix(in_srgb,var(--cml-color-current-color)_14%,transparent)] font-semibold text-[var(--cml-color-current-color)]' : 'text-on-surface'"
+          @mousedown.prevent="select(v)"
+        >
+          {{ pad(v) }}
+        </button>
+      </div>
+    </Teleport>
   </div>
 </template>
 
@@ -45,11 +50,38 @@ const props = withDefaults(
 const model = defineModel<number>({ default: 0 })
 
 const root = useTemplateRef<HTMLElement>('root')
+const listRef = useTemplateRef<HTMLElement>('listRef')
 const open = ref(false)
+const listStyle = ref<Record<string, string>>({})
+
+// max-h-40 = 160px + 間距
+const LIST_MAX_HEIGHT = 168
+
+const openList = () => {
+  const el = root.value
+  if (!el) return
+  const rect = el.getBoundingClientRect()
+  const style: Record<string, string> = {
+    left: `${rect.left + rect.width / 2}px`,
+  }
+  if (rect.top >= LIST_MAX_HEIGHT) {
+    style.bottom = `${window.innerHeight - rect.top + 4}px`
+  }
+  else {
+    style.top = `${rect.bottom + 4}px`
+  }
+  // Teleport 至 body 後脫離 color role 注入範圍，將當前色帶入
+  const currentColor = getComputedStyle(el).getPropertyValue('--cml-color-current-color')
+  if (currentColor) {
+    style['--cml-color-current-color'] = currentColor
+  }
+  listStyle.value = style
+  open.value = true
+}
 
 onClickOutside(root, () => {
   open.value = false
-})
+}, { ignore: [listRef] })
 
 const pad = (v: number) => String(v).padStart(2, '0')
 

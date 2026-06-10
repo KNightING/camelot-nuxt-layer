@@ -1,18 +1,22 @@
 <template>
   <div
     class="flex w-full min-w-0 flex-col gap-1.5"
-    :class="roleColorClass"
+    :class="[roleColorClass, { 'cursor-not-allowed opacity-50': disabled }]"
   >
-    <span
-      v-if="label"
-      class="pl-1 text-sm font-medium text-on-surface"
-    >{{ label }}<span
-      v-if="required"
-      class="ml-0.5 text-error"
-    >*</span></span>
+    <slot
+      name="label"
+      :label="label"
+    >
+      <CamelotFieldLabel
+        :label="label"
+        :required="required"
+        class="pl-1"
+      />
+    </slot>
 
     <CamelotPopupV2
       v-model:open="open"
+      :disabled="disabled"
       :z-index="zIndex"
       :popup-width-mode="popupWidthMode"
       :disabled-close-when-scrolling="disabledCloseWhenScrolling"
@@ -47,7 +51,7 @@
               <button
                 v-if="open && searchValue"
                 type="button"
-                class="text-secondary-text hover:text-primary-text outline-none focus:outline-none transition-colors"
+                class="text-outline hover:text-[var(--cml-color-current-color)] outline-none focus:outline-none transition-colors"
                 @click.stop="searchValue = ''"
               >
                 ✕
@@ -69,7 +73,7 @@
           >
             <span
               class="flex-1 truncate"
-              :class="selectedData ? 'text-on-surface' : 'text-secondary-text'"
+              :class="selectedData ? 'text-on-surface' : 'text-on-surface-variant'"
             >{{ selectedData?.label ?? selectedData?.name ?? selectedData?.value ?? placeholder }}</span>
             <span
               class="text-[var(--cml-color-current-color)] text-xs transition-transform duration-200"
@@ -103,7 +107,7 @@
                       : 'border border-stroke rounded-lg px-4 py-2 focus:border-[var(--cml-color-current-color)]',
                 open && themeMode !== 'aqua' ? 'border-[var(--cml-color-current-color)]' : '',
                 open ? 'pointer-events-auto' : 'pointer-events-none',
-                disabled ? 'bg-gray-100! cursor-not-allowed text-secondary-text' : 'text-primary-text',
+                disabled ? 'text-on-surface-variant' : 'text-on-surface',
               ]"
               @input="(e: any) => handleSearchInput(e.target.value)"
             >
@@ -111,7 +115,7 @@
               <button
                 v-if="open && searchValue"
                 type="button"
-                class="text-secondary-text hover:text-primary-text outline-none focus:outline-none transition-colors"
+                class="text-outline hover:text-[var(--cml-color-current-color)] outline-none focus:outline-none transition-colors"
                 @click.stop="searchValue = ''"
               >
                 ✕
@@ -139,12 +143,12 @@
                     ? 'aqua-track rounded-full px-4 py-2.5 backdrop-blur-md'
                     : 'border border-stroke rounded-lg px-4 py-2',
               open && themeMode !== 'aqua' ? 'border-[var(--cml-color-current-color)]' : '',
-              disabled ? 'bg-gray-100! cursor-not-allowed text-secondary-text' : 'text-primary-text',
+              disabled ? 'text-on-surface-variant' : 'text-on-surface',
             ]"
           >
             <span
               class="flex-1 truncate"
-              :class="selectedData ? 'text-on-surface' : 'text-secondary-text'"
+              :class="selectedData ? 'text-on-surface' : 'text-on-surface-variant'"
             >{{ selectedData?.label ?? selectedData?.name ?? selectedData?.value ?? placeholder }}</span>
             <span
               class="text-[var(--cml-color-current-color)] text-xs transition-transform duration-200"

@@ -96,7 +96,11 @@ const isExpanded = computed(() => tree.isExpanded(props.node))
 
 const onRowClick = () => {
   if (props.node.disabled) return
-  if (hasChildren.value) {
+  if (tree.checkable) {
+    // 可勾選模式：點整行（含空白處）即切換勾選，展開交由 chevron 按鈕
+    tree.toggleCheck(props.node)
+  }
+  else if (hasChildren.value) {
     tree.toggleExpand(props.node)
   }
   tree.onNodeClick(props.node)
