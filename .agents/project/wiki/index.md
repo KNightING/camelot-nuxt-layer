@@ -47,12 +47,14 @@
 | `Drawer` | ✅ | 側邊抽屜（左右、floating/fixed、四風格） | [詳情](./features/layout-data-components.md) |
 | `DropImage` | ✅ | 拖曳上傳圖片元件 | — |
 | `Expanded` | ✅ | 可展開/收合的內容區塊 | — |
+| `FileChip` | ✅ | 附件晶片（縮圖/型別色塊 + 檔名 + 副檔名·大小 + 移除鈕） | [詳情](./features/file-drop.md) |
+| `FileDropzone` | ✅ | 任意檔案拖曳/選擇 + 附件晶片列 | [詳情](./features/file-drop.md) |
 | `FieldLabel` | ✅ | 表單共通標籤（主題自動樣式、required 星號；各表單元件 `#label` slot 的 fallback） | [詳情](./features/field-label-and-form-controls.md) |
 | `Gpu` | ✅ | GPU 加速動畫容器 | — |
 | `IdxForm` | ✅ | 表單容器元件 | — |
 | `Image` | ✅ | 圖片元件 (v1) | — |
 | `ImageV2` | ✅ | 圖片元件 (v2，支援懶載入/動畫) | — |
-| `ImageDropzone` | ✅ | 圖片拖曳/選擇區（stacked / grid 多格、slot 驅動、max、四風格） | [詳情](./features/richtext-editor-image-dropzone.md) |
+| `ImageDropzone` | ✅ | 圖片拖曳/選擇區（stacked / grid 多格、slot 驅動、max、四風格；核心共用 useCamelotFileDrop） | [詳情](./features/file-drop.md) |
 | `Input` | ✅ | 通用輸入框元件（`#label` slot 帶 label 參數） | [詳情](./features/field-label-and-form-controls.md) |
 | `Loading` | ✅ | 載入中動畫元件 | — |
 | `Material3Provider` | ✅ | Material Design 3 主題 Provider | — |
@@ -100,6 +102,7 @@
 | `useCamelotTheme` | ✅ | 主題切換狀態（themeMode / colorMode / 色彩方案，預設 aqua） |
 | `useCamelotRoleColorClass` | ✅ | 色彩角色 → 注入 `--cml-color-current-*` 的 Tailwind class |
 | `useCamelotPickerTheme` | ✅ | DatePicker 各風格 trigger/panel/選中態 class |
+| `useCamelotFileDrop` | ✅ | 檔案拖曳 headless 核心（任意元素變拖曳區；entries 含型別/大小/縮圖） |
 | `useCamelotRouter` | ✅ | 擴展 Vue Router，含歷史堆疊管理 |
 | `useCamelotToast` | ✅ | Toast 通知系統 |
 | `useColor` | ✅ | 顏色處理工具 |
@@ -186,6 +189,7 @@ graph TD
 - [⏰ TimeV2 / 純時間選擇器](./features/time-picker.md)
 - [🏷️ FieldLabel 共通標籤與表單控制元件](./features/field-label-and-form-controls.md)
 - [🕒 Timeline 時間軸](./features/timeline.md)
+- [📎 檔案拖曳系統（FileDropzone / FileChip / useCamelotFileDrop）](./features/file-drop.md)
 - [🎨 Color Scheme / 色彩主題](./features/color-scheme.md)
 - [⚙️ 環境變數](./environment.md)
 
