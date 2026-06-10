@@ -62,6 +62,9 @@
 | `NumberCounter` | ✅ | 數字加減輸入（四風格、color/disabled/label） | [詳情](./features/field-label-and-form-controls.md) |
 | `Popup` | ✅ | 彈出層元件 (v1) | — |
 | `PopupV2` | ✅ | 彈出層元件 (v2，功能更完整) | — |
+| `Radio` | ✅ | 單選（四風格、deselectable、滿版+scale 圓點防半像素偏移） | [詳情](./features/radio-and-groups.md) |
+| `RadioGroup` | ✅ | 單選群組（水平/垂直、整組/逐選項 disabled、deselectable） | [詳情](./features/radio-and-groups.md) |
+| `CheckboxGroup` | ✅ | 勾選群組（水平/垂直、整組/逐選項 disabled） | [詳情](./features/radio-and-groups.md) |
 | `RevealImage` | ✅ | 圖片揭示動畫元件 | — |
 | `RevealText` | ✅ | 文字揭示動畫元件 | — |
 | `RippleEffect` | ✅ | Material Design 漣漪點擊效果 | — |
@@ -190,6 +193,7 @@ graph TD
 - [🏷️ FieldLabel 共通標籤與表單控制元件](./features/field-label-and-form-controls.md)
 - [🕒 Timeline 時間軸](./features/timeline.md)
 - [📎 檔案拖曳系統（FileDropzone / FileChip / useCamelotFileDrop）](./features/file-drop.md)
+- [🔘 Radio 與選項群組（RadioGroup / CheckboxGroup）](./features/radio-and-groups.md)
 - [🎨 Color Scheme / 色彩主題](./features/color-scheme.md)
 - [⚙️ 環境變數](./environment.md)
 

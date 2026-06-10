@@ -184,8 +184,9 @@ const gridStyle = computed(() =>
 )
 
 const contentClass = (i: number, slotSide: 'before' | 'after') => {
+  // 水平：內容貼齊軸線（before 靠下、after 靠上），避免 1fr 軌被高列撐開時留下大片空白
   const pad = isHorizontal.value
-    ? (slotSide === 'before' ? 'pb-2 text-center' : 'pt-2 text-center')
+    ? (slotSide === 'before' ? 'pb-2 text-center self-end' : 'pt-2 text-center self-start')
     : (slotSide === 'before' ? 'pr-4 pb-6 text-right' : 'pl-4 pb-6')
   // alternate：把內容固定到對應的首/末軌（垂直=欄、水平=列）
   let track = ''

@@ -10,3 +10,10 @@ export type CamelotColorRole
     | 'info'
     | 'warning'
     | 'success'
+
+/** RadioGroup / CheckboxGroup 的選項（disabled 為逐選項停用） */
+export interface CamelotGroupOption {
+  label: string
+  value: string | number
+  disabled?: boolean
+}

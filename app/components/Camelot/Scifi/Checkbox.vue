@@ -54,18 +54,13 @@ const toggle = () => {
   font-family: inherit;
   --cml-scifi-color: var(--cml-color-current-color);
 }
+/* label 已移至 wrapper 統一渲染，容器只剩 18px 方框，移除舊整列 padding/min-height 以與 Radio 密度一致 */
 .checkbox-scifi-wrapper .container {
   display: flex;
   align-items: center;
-  padding: 6px 12px;
-  gap: 12px;
-  min-height: 36px;
   box-sizing: border-box;
   transition: all 0.2s;
   position: relative;
-}
-.checkbox-scifi-wrapper .container:hover:not(.disabled) {
-  background: color-mix(in srgb, var(--cml-scifi-color) 5%, transparent);
 }
 .checkbox-box {
   position: relative;
