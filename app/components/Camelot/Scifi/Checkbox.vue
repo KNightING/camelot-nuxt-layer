@@ -14,10 +14,6 @@
       <div class="checkbox-box">
         <div class="indicator" />
       </div>
-      <span
-        v-if="label"
-        class="label-text"
-      >{{ label }}</span>
     </div>
   </div>
 </template>
@@ -25,12 +21,10 @@
 <script setup lang="ts">
 const props = withDefaults(
   defineProps<{
-    label?: string
     disabled?: boolean
     indeterminate?: boolean
   }>(),
   {
-    label: '',
     disabled: false,
     indeterminate: false,
   },
@@ -131,18 +125,6 @@ const toggle = () => {
 @keyframes check-scan {
   0% { top: 0; }
   100% { top: 100%; }
-}
-.checkbox-scifi-wrapper .label-text {
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-size: 0.85rem;
-  color: var(--cml-c-m3-on-surface, #1c1b1f);
-  opacity: 0.8;
-  transition: all 0.2s;
-}
-.checked .label-text {
-  opacity: 1;
-  text-shadow: 0 0 5px var(--cml-scifi-color);
 }
 .disabled {
   opacity: 0.3;

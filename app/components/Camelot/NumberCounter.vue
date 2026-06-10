@@ -1,47 +1,71 @@
 <template>
   <div
-    class="container "
-    :class="{
-      'container-focus': isFocus,
-    }"
+    class="flex w-fit min-w-10 flex-col gap-1.5"
+    :class="[roleColorClass, { 'cursor-not-allowed opacity-50': disabled }]"
   >
-    <button
-      type="button"
-      class="outline-none"
-      @click="onMinusClick"
+    <slot
+      name="label"
+      :label="label"
     >
-      <slot name="minus">
-        <CamelotRippleEffect class="controller">
-          <span>-</span>
-        </CamelotRippleEffect>
-      </slot>
-    </button>
+      <CamelotFieldLabel
+        :label="label"
+        :required="required"
+        class="pl-1"
+      />
+    </slot>
 
-    <input
-      ref="input"
-      v-model="model"
-      type="number"
-      :placeholder="placeholder"
-      :step="step"
-      :min="min"
-      :max="max"
-      :inputmode="inputmode"
-      @blur="isFocus = false"
-      @focus="isFocus = true"
-      @click="onInputClick"
+    <div
+      class="flex h-8 min-w-fit items-center px-1 transition-colors"
+      :class="[containerThemeClass, { 'pointer-events-none': disabled }]"
     >
+      <button
+        type="button"
+        class="outline-none"
+        :disabled="disabled"
+        @click="onMinusClick"
+      >
+        <slot name="minus">
+          <CamelotRippleEffect
+            class="flex h-6 aspect-square flex-col items-center justify-center text-[var(--cml-color-current-color)]"
+            :class="themeMode === 'scifi' ? 'rounded-none' : 'rounded-full'"
+          >
+            <span class="text-base font-bold select-none">-</span>
+          </CamelotRippleEffect>
+        </slot>
+      </button>
 
-    <button
-      type="button"
-      class="outline-none"
-      @click="onPlusClick"
-    >
-      <slot name="plus">
-        <CamelotRippleEffect class="controller">
-          <span>+</span>
-        </CamelotRippleEffect>
-      </slot>
-    </button>
+      <input
+        ref="input"
+        v-model="model"
+        type="number"
+        class="m-0 min-w-[4ch] flex-1 appearance-none bg-transparent text-center text-on-surface caret-[var(--cml-color-current-color)] outline-none"
+        :placeholder="placeholder"
+        :step="step"
+        :min="min"
+        :max="max"
+        :disabled="disabled"
+        :inputmode="inputmode"
+        @blur="isFocus = false"
+        @focus="isFocus = true"
+        @click="onInputClick"
+      >
+
+      <button
+        type="button"
+        class="outline-none"
+        :disabled="disabled"
+        @click="onPlusClick"
+      >
+        <slot name="plus">
+          <CamelotRippleEffect
+            class="flex h-6 aspect-square flex-col items-center justify-center text-[var(--cml-color-current-color)]"
+            :class="themeMode === 'scifi' ? 'rounded-none' : 'rounded-full'"
+          >
+            <span class="text-base font-bold select-none">+</span>
+          </CamelotRippleEffect>
+        </slot>
+      </button>
+    </div>
   </div>
 </template>
 
@@ -51,6 +75,11 @@ const props = defineProps<{
   min?: number
   max?: number
   placeholder?: string
+  label?: string
+  required?: boolean
+  disabled?: boolean
+  color?: CamelotColorRole
+  isContainer?: boolean
   /**
    * 是否使用目前value的最小單位當成step, 如果有設定step會優先此設定
    * 例如目前值為0.2, step則會使用0.1
@@ -66,9 +95,40 @@ const props = defineProps<{
 
 const model = defineModel<number>({ default: 0 })
 
+const { themeMode } = useCamelotTheme()
+
+const roleColorClass = useCamelotRoleColorClass(() => props.color ?? 'primary', () => props.isContainer ?? false)
+
 const input = ref<HTMLInputElement>()
 
 const isFocus = ref(false)
+
+const containerThemeClass = computed(() => {
+  switch (themeMode.value) {
+    case 'aqua':
+      return [
+        'aqua-track rounded-full backdrop-blur-md',
+        isFocus.value ? 'aqua-glow' : '',
+      ]
+    case 'cupertino':
+      return [
+        'rounded-[10px] bg-surface-container-highest border',
+        isFocus.value ? 'border-[var(--cml-color-current-color)]' : 'border-outline-variant',
+      ]
+    case 'scifi':
+      return [
+        'bg-[color-mix(in_srgb,var(--cml-color-current-color)_5%,transparent)] border',
+        isFocus.value
+          ? 'border-[var(--cml-color-current-color)] shadow-[0_0_10px_color-mix(in_srgb,var(--cml-color-current-color)_20%,transparent)]'
+          : 'border-[color-mix(in_srgb,var(--cml-color-current-color)_30%,transparent)]',
+      ]
+    default:
+      return [
+        'rounded-full bg-surface border',
+        isFocus.value ? 'border-[var(--cml-color-current-color)]' : 'border-outline-variant',
+      ]
+  }
+})
 
 const inputmode = ref<'none' | 'text' | 'search' | 'email' | 'tel' | 'url' | 'numeric' | 'decimal' | undefined>('none')
 
@@ -84,18 +144,21 @@ watch(isFocus, (isFocus) => {
   }
 })
 
-const absStep = ref(0)
+const absStep = ref(1)
 
 watch(props, (props) => {
   if (props.step) {
     absStep.value = Math.abs(props.step)
+  }
+  else if (!props.minStepByValue) {
+    absStep.value = 1
   }
 
   if (props.minStepByValue) {
     const absValue = Math.abs(model.value)
     const stepString = absValue.toString()
     const dotIndex = stepString.indexOf('.')
-    const usedStep = absStep.value as number
+    const usedStep = absStep.value
 
     if (dotIndex > 0) {
       const calcStep = 1 / Math.pow(10, stepString.length - dotIndex - 1)
@@ -110,7 +173,6 @@ watch(props, (props) => {
       absStep.value = usedStep
     }
   }
-  absStep.value = 1
 }, { immediate: true })
 
 const calc = (value: number, isPlus: boolean) => {
@@ -141,36 +203,6 @@ const onPlusClick = () => {
 </script>
 
 <style scoped>
-.container {
-  display: flex;
-  padding-left: 0.25rem;
-  padding-right: 0.25rem;
-  align-items: center;
-  height: 28px;
-  border-radius: 9999px;
-  border-width: 1px;
-  min-width: fit-content;
-  background-color: #ffffff;
-}
-
-.container:active {
-  border-color: var(--cml-c-m3-primary);
-}
-
-.container-focus {
-  border-color: var(--cml-c-m3-primary);
-}
-
-input {
-  margin: 0;
-  flex: 1 1 0%;
-  outline-style: none;
-  text-align: center;
-  background-color: transparent;
-  appearance: none;
-  min-width: 4ch;
-}
-
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -181,21 +213,5 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type=number] {
   -moz-appearance: textfield;
-}
-
-.controller {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border-radius: 9999px;
-  height: 24px;
-  aspect-ratio: 1 / 1;
-}
-
-.controller span {
-  font-size: 1rem;
-  font-weight: 700;
-  user-select: none;
 }
 </style>

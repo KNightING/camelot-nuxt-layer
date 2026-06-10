@@ -11,7 +11,7 @@
         : 'border-outline'"
     >
       <span
-        class="absolute top-1/2 left-1/2 h-2 w-1 border-r-2 border-b-2 border-white transition-opacity duration-200 [transform:translate(-50%,-60%)_rotate(45deg)]"
+        class="absolute top-1/2 left-1/2 h-2.5 w-1.5 border-r-2 border-b-2 border-white transition-opacity duration-200 [transform:translate(-50%,-60%)_rotate(45deg)]"
         :class="modelValue ? 'opacity-100' : 'opacity-0'"
       />
       <span
@@ -19,22 +19,16 @@
         :class="(indeterminate && !modelValue) ? 'opacity-100' : 'opacity-0'"
       />
     </span>
-    <span
-      v-if="label"
-      class="text-sm text-on-surface"
-    >{{ label }}</span>
   </div>
 </template>
 
 <script setup lang="ts">
 const props = withDefaults(
   defineProps<{
-    label?: string
     disabled?: boolean
     indeterminate?: boolean
   }>(),
   {
-    label: '',
     disabled: false,
     indeterminate: false,
   },

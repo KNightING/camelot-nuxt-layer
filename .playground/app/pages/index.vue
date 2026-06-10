@@ -162,21 +162,17 @@
           </div>
 
           <div class="flex items-center gap-6 mt-2">
-            <div class="flex items-center gap-2">
-              <span class="text-xs text-slate-400">Switch:</span>
-              <CamelotSwitch
-                v-model="switchVal"
-                :color="currentColorRole"
-              />
-            </div>
-            <div class="flex items-center gap-2">
-              <span class="text-xs text-slate-400">Disabled:</span>
-              <CamelotSwitch
-                :model-value="true"
-                disabled
-                :color="currentColorRole"
-              />
-            </div>
+            <CamelotSwitch
+              v-model="switchVal"
+              label="Notifications"
+              :color="currentColorRole"
+            />
+            <CamelotSwitch
+              :model-value="true"
+              label="Disabled Switch"
+              disabled
+              :color="currentColorRole"
+            />
           </div>
 
           <div class="flex flex-col gap-2 mt-2">
@@ -194,10 +190,10 @@
           </div>
         </div>
 
-        <!-- Inputs and Select Card -->
+        <!-- Input & Textarea Card -->
         <div :class="cardClass">
           <h2 :class="cardTitleClass">
-            Form Inputs & Fields
+            Input & Textarea
           </h2>
 
           <CamelotInput
@@ -207,12 +203,23 @@
             :color="currentColorRole"
           />
 
-          <CamelotSelectV2
-            v-model="selectVal"
+          <CamelotInput
+            model-value="Read-only value"
+            label="Disabled Input"
+            disabled
             :color="currentColorRole"
-            label="Choose option"
-            :options="options"
           />
+
+          <CamelotInput
+            v-model="inputTextVal"
+            label="Custom Label Slot"
+            placeholder="label 由 #label slot 自定義"
+            :color="currentColorRole"
+          >
+            <template #label="{ label }">
+              <span class="pl-1 text-sm font-bold text-[var(--cml-color-current-color)]">★ {{ label }}</span>
+            </template>
+          </CamelotInput>
 
           <CamelotTextarea
             v-model="textareaVal"
@@ -225,19 +232,42 @@
             show-count
             :color="currentColorRole"
           />
+
+          <CamelotTextarea
+            model-value="Disabled textarea content"
+            label="Disabled Textarea"
+            disabled
+            :color="currentColorRole"
+          />
         </div>
 
-        <!-- SelectV2 Card -->
+        <!-- Select Card -->
         <div :class="cardClass">
           <h2 :class="cardTitleClass">
-            Searchable Selection
+            Select
           </h2>
+
+          <CamelotSelectV2
+            v-model="selectVal"
+            :color="currentColorRole"
+            label="Choose option"
+            :options="options"
+          />
 
           <CamelotSelectV2
             v-model="selectV2Val"
             :color="currentColorRole"
             label="Searchable selection"
             :options="options"
+            class="w-full"
+          />
+
+          <CamelotSelectV2
+            :model-value="options[0]?.value"
+            :color="currentColorRole"
+            label="Disabled select"
+            :options="options"
+            disabled
             class="w-full"
           />
 
@@ -931,12 +961,19 @@
           <h2 :class="cardTitleClass">
             Utilities (Counter / Expanded / Image / Popup)
           </h2>
-          <div class="flex items-center gap-3">
-            <span class="text-xs text-slate-400">Counter:</span>
+          <div class="flex items-start gap-4 flex-wrap">
             <CamelotNumberCounter
               v-model="v"
+              label="Counter"
               :max="10"
               :min="0"
+              :color="currentColorRole"
+            />
+            <CamelotNumberCounter
+              :model-value="5"
+              label="Disabled"
+              disabled
+              :color="currentColorRole"
             />
           </div>
           <div

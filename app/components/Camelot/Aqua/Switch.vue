@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative inline-block h-[31px] w-[51px] cursor-pointer rounded-full align-middle backdrop-blur-md transition-colors duration-300 ease-spring"
+    class="relative inline-block h-[22px] w-10 cursor-pointer rounded-full align-middle backdrop-blur-md transition-colors duration-300 ease-spring"
     :class="[
       modelValue ? 'aqua-fill' : 'aqua-track',
       { 'pointer-events-none cursor-not-allowed opacity-30 grayscale': disabled },
@@ -8,8 +8,8 @@
     @click="toggle"
   >
     <div
-      class="aqua-thumb absolute top-[2px] left-[2px] h-[27px] w-[27px] rounded-full transition-transform duration-300 ease-spring"
-      :class="{ 'translate-x-[20px]': modelValue }"
+      class="aqua-thumb absolute top-[2px] left-[2px] h-[18px] w-[18px] rounded-full transition-transform duration-300 ease-spring"
+      :class="{ 'translate-x-[18px]': modelValue }"
     />
   </div>
 </template>

@@ -5,19 +5,18 @@
     class="flex w-full min-w-10 flex-col gap-1.5"
     :class="[roleColorClass, { 'cursor-not-allowed opacity-60': disabled }]"
   >
-    <slot name="label">
-      <span
-        v-if="label"
-        class="pl-1 text-xs tracking-[0.1em] uppercase text-on-surface transition-all duration-200"
+    <slot
+      name="label"
+      :label="label"
+    >
+      <CamelotFieldLabel
+        :label="label"
+        :required="required"
+        class="pl-1 transition-all duration-200"
         :class="isFocused
           ? 'text-[var(--cml-color-current-color)] opacity-100 [text-shadow:0_0_8px_color-mix(in_srgb,var(--cml-color-current-color),transparent_50%)]'
           : 'opacity-80'"
-      >
-        {{ label }}<span
-          v-if="required"
-          class="text-app-error ml-0.5"
-        >*</span>
-      </span>
+      />
     </slot>
 
     <div
@@ -112,16 +111,15 @@
     class="flex w-full min-w-10 flex-col gap-1.5"
     :class="[roleColorClass, { 'cursor-not-allowed opacity-40': disabled }]"
   >
-    <slot name="label">
-      <span
-        v-if="label"
-        class="pl-0.5 text-sm text-on-surface"
-      >
-        {{ label }}<span
-          v-if="required"
-          class="text-app-error ml-0.5"
-        >*</span>
-      </span>
+    <slot
+      name="label"
+      :label="label"
+    >
+      <CamelotFieldLabel
+        :label="label"
+        :required="required"
+        class="pl-0.5"
+      />
     </slot>
 
     <div
@@ -216,16 +214,15 @@
     class="flex w-full min-w-10 flex-col gap-1.5"
     :class="[roleColorClass, { 'cursor-not-allowed opacity-40': disabled }]"
   >
-    <slot name="label">
-      <span
-        v-if="label"
-        class="pl-3 text-sm font-medium text-on-surface"
-      >
-        {{ label }}<span
-          v-if="required"
-          class="text-app-error ml-0.5"
-        >*</span>
-      </span>
+    <slot
+      name="label"
+      :label="label"
+    >
+      <CamelotFieldLabel
+        :label="label"
+        :required="required"
+        class="pl-3"
+      />
     </slot>
 
     <div

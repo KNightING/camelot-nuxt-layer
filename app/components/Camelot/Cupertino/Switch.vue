@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative inline-block h-[31px] w-[51px] cursor-pointer rounded-[15.5px] align-middle transition-colors duration-300"
+    class="relative inline-block h-[22px] w-10 cursor-pointer rounded-full align-middle transition-colors duration-300"
     :class="[
       modelValue ? 'bg-[var(--cml-color-current-color)]' : 'bg-[rgba(120,120,128,0.16)]',
       { 'cursor-not-allowed opacity-30 grayscale': disabled },
@@ -8,8 +8,8 @@
     @click="toggle"
   >
     <div
-      class="absolute top-0.5 left-0.5 h-[27px] w-[27px] rounded-full bg-white shadow-[0_3px_8px_rgba(0,0,0,0.15),0_3px_1px_rgba(0,0,0,0.06)] transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]"
-      :class="{ 'translate-x-5': modelValue }"
+      class="absolute top-0.5 left-0.5 h-[18px] w-[18px] rounded-full bg-white shadow-[0_3px_8px_rgba(0,0,0,0.15),0_3px_1px_rgba(0,0,0,0.06)] transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]"
+      :class="{ 'translate-x-[18px]': modelValue }"
     />
   </div>
 </template>

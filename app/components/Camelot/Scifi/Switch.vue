@@ -50,8 +50,8 @@ const toggle = () => {
 <style scoped>
 .switch-scifi {
   position: relative;
-  width: 60px;
-  height: 24px;
+  width: 48px;
+  height: 22px;
   background: color-mix(in srgb, var(--cml-color-current-color) 5%, transparent);
   border: 1px solid color-mix(in srgb, var(--cml-color-current-color) 30%, transparent);
   cursor: pointer;
@@ -98,7 +98,7 @@ const toggle = () => {
   z-index: 2;
 }
 .switch-scifi.checked .thumb {
-  left: 40px;
+  left: 28px;
   background-color: var(--cml-scifi-color);
   box-shadow: 0 0 15px var(--cml-scifi-color);
 }

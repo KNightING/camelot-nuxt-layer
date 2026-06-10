@@ -14,7 +14,7 @@
       ]"
     >
       <div
-        class="absolute top-1/2 left-1/2 h-1.5 w-2.5 border-b-2 border-l-2 border-white transition-opacity duration-200 [transform:translate(-50%,-65%)_rotate(-45deg)]"
+        class="absolute top-1/2 left-1/2 h-2 w-3 border-b-2 border-l-2 border-white transition-opacity duration-200 [transform:translate(-50%,-65%)_rotate(-45deg)]"
         :class="modelValue ? 'opacity-100' : 'opacity-0'"
       />
       <div
@@ -22,23 +22,17 @@
         :class="(indeterminate && !modelValue) ? 'opacity-100' : 'opacity-0'"
       />
     </div>
-    <span
-      v-if="label"
-      class="text-sm text-on-surface"
-    >{{ label }}</span>
   </div>
 </template>
 
 <script setup lang="ts">
 const props = withDefaults(
   defineProps<{
-    label?: string
     disabled?: boolean
     shape?: 'square' | 'circle'
     indeterminate?: boolean
   }>(),
   {
-    label: '',
     disabled: false,
     shape: 'square',
     indeterminate: false,

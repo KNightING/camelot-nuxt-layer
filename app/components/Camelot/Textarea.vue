@@ -3,15 +3,15 @@
     class="flex w-full min-w-10 flex-col gap-1.5"
     :class="[roleColorClass, { 'cursor-not-allowed opacity-50': disabled }]"
   >
-    <slot name="label">
-      <span
-        v-if="label"
-        class="pl-1 text-sm font-medium text-on-surface"
-        :class="themeMode === 'scifi' ? 'text-xs uppercase tracking-[0.1em]' : ''"
-      >{{ label }}<span
-        v-if="required"
-        class="ml-0.5 text-error"
-      >*</span></span>
+    <slot
+      name="label"
+      :label="label"
+    >
+      <CamelotFieldLabel
+        :label="label"
+        :required="required"
+        class="pl-1"
+      />
     </slot>
 
     <textarea

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative inline-block h-8 w-[52px] cursor-pointer rounded-2xl border-2 align-middle transition-all duration-200"
+    class="relative inline-block h-[22px] w-10 cursor-pointer rounded-full border-2 align-middle transition-all duration-200"
     :class="[
       modelValue
         ? 'border-[var(--cml-color-current-color)] bg-[var(--cml-color-current-color)]'
@@ -12,8 +12,8 @@
     <div
       class="absolute top-1/2 -translate-y-1/2 rounded-full transition-all duration-200 ease-[cubic-bezier(0.4,0,0.2,1)]"
       :class="modelValue
-        ? 'left-5 h-6 w-6 bg-[var(--cml-color-current-on-color)]'
-        : 'left-1 h-4 w-4 bg-outline'"
+        ? 'left-[18px] h-4 w-4 bg-[var(--cml-color-current-on-color)]'
+        : 'left-1 h-3 w-3 bg-outline'"
     />
   </div>
 </template>
