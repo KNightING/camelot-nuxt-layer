@@ -33,6 +33,7 @@
 
     <span
       v-if="label || $slots.label"
+      class="inline-flex items-center"
       :class="disabled ? 'cursor-not-allowed opacity-40' : 'cursor-pointer'"
       @click="toggleByLabel"
     >
@@ -40,7 +41,10 @@
         name="label"
         :label="label"
       >
-        <CamelotFieldLabel :label="label" />
+        <CamelotFieldLabel
+          :label="label"
+          class="leading-none"
+        />
       </slot>
     </span>
   </div>

@@ -138,6 +138,82 @@
           />
         </div>
 
+        <!-- File Dropzone Card -->
+        <div :class="cardClass">
+          <h2 :class="cardTitleClass">
+            File Dropzone (任意檔案・附件晶片)
+          </h2>
+          <span class="text-xs text-slate-400">拖曳任意檔案 → 晶片展示（圖片縮圖 / 型別色塊 icon + 檔名 + 型別標籤 + 角落移除）</span>
+          <CamelotFileDropzone
+            v-model="fileDropzoneFiles"
+            :color="currentColorRole"
+            class="mt-3"
+          />
+          <p class="mt-2 text-xs text-on-surface-variant">
+            已選 {{ fileDropzoneFiles?.length ?? 0 }} 個檔案
+          </p>
+
+          <span class="mt-4 block text-xs text-slate-400">Headless（useCamelotFileDrop）：下方整塊是自定義拖曳區，圖片自排 grid 縮圖（重現 ImageDropzone grid 樣式）、其他檔案用 CamelotFileChip</span>
+          <div
+            class="mt-2 flex min-h-28 cursor-pointer flex-col justify-center gap-3 rounded-2xl border-2 border-dashed p-4 transition-colors"
+            :class="[
+              headlessRoleClass,
+              headlessDragOver
+                ? 'border-[var(--cml-color-current-color)] bg-[color-mix(in_srgb,var(--cml-color-current-color)_10%,transparent)]'
+                : 'border-outline-variant hover:border-[var(--cml-color-current-color)]',
+            ]"
+            @dragover.prevent="headlessOnDragOver"
+            @dragenter.prevent="headlessOnDragOver"
+            @dragleave.prevent="headlessOnDragLeave"
+            @drop.prevent="headlessOnDrop"
+            @click="headlessPick()"
+          >
+            <p
+              v-if="!headlessEntries.length"
+              class="text-center text-sm text-on-surface-variant"
+            >
+              點擊或拖曳檔案到這個自定義區域
+            </p>
+            <div
+              v-if="headlessImageEntries.length"
+              class="grid grid-cols-6 gap-2"
+            >
+              <div
+                v-for="x in headlessImageEntries"
+                :key="x.e.key"
+                class="group relative aspect-square overflow-hidden rounded-lg border border-border"
+              >
+                <img
+                  :src="x.e.url"
+                  :alt="x.e.file.name"
+                  class="h-full w-full object-cover"
+                >
+                <button
+                  type="button"
+                  class="absolute right-1 top-1 hidden rounded-full bg-[var(--cml-color-current-color)] p-0.5 text-[var(--cml-color-current-on-color)] group-hover:block"
+                  @click.stop="headlessRemoveAt(x.i)"
+                >
+                  <IMaterialSymbolsCloseRounded class="h-3.5 w-3.5" />
+                </button>
+              </div>
+            </div>
+            <div
+              v-if="headlessOtherEntries.length"
+              class="flex flex-wrap gap-2"
+            >
+              <CamelotFileChip
+                v-for="x in headlessOtherEntries"
+                :key="x.e.key"
+                :file="x.e.file"
+                :color="currentColorRole"
+                removable
+                @click.stop
+                @remove="headlessRemoveAt(x.i)"
+              />
+            </div>
+          </div>
+        </div>
+
         <!-- Button & Switch & Checkbox Card -->
         <div :class="cardClass">
           <h2 :class="cardTitleClass">
@@ -1224,6 +1300,34 @@ async function demoUpload(file: File): Promise<string> {
 // TimeV2 展示
 const timeVal = ref<string>('')
 const timeVal12 = ref<string>('14:30:00')
+
+// FileDropzone 展示
+const fileDropzoneFiles = ref<File[] | null>(null)
+
+// Headless useCamelotFileDrop 展示：任意區域變拖曳區、展示全自定義
+const headlessFiles = ref<File[] | null>(null)
+const {
+  dragOver: headlessDragOver,
+  entries: headlessEntries,
+  removeAt: headlessRemoveAt,
+  pick: headlessPick,
+  onDragOver: headlessOnDragOver,
+  onDragLeave: headlessOnDragLeave,
+  onDrop: headlessOnDrop,
+} = useCamelotFileDrop({ model: headlessFiles })
+const headlessRoleClass = useCamelotRoleColorClass(() => currentColorRole.value)
+const headlessImageEntries = computed(() => headlessEntries.value
+  .map((e, i) => ({
+    e,
+    i,
+  }))
+  .filter(x => x.e.kind === 'image'))
+const headlessOtherEntries = computed(() => headlessEntries.value
+  .map((e, i) => ({
+    e,
+    i,
+  }))
+  .filter(x => x.e.kind !== 'image'))
 
 // ImageDropzone 展示
 const dropzoneFiles = ref<File[] | null>(null)
