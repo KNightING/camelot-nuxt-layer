@@ -66,6 +66,7 @@ Checkbox 打勾放大：Aqua/Material 8×4 → 10×6；Cupertino 6×10 → 8×12
 - **SelectV2 disabled**：`:disabled` 傳入 `CamelotPopupV2`（disabled 時不可展開）；樣式改根節點 `cursor-not-allowed opacity-50`（與 Input 一致）；修正失效 class `text-primary-text` / `text-secondary-text` → `text-on-surface` / `text-on-surface-variant`（theme 無 `--color-*-text` 定義，Tailwind v4 不會產生未知 utility）。
 - **Tree 整行點擊**：checkable 時點整行（含空白處）切換勾選，展開交由 chevron 按鈕；非 checkable 維持點行展開。
 - **TimeField 下拉防裁切**：時/分/秒下拉改 `Teleport to="body"` + fixed 定位（依 trigger 上方空間自動向上/向下展開）。Teleport 後脫離 color role CSS 變數注入範圍，故將 `--cml-color-current-color` 以 inline style 帶入；`onClickOutside` 設 `ignore: [listRef]` 避免點選項誤關。
+- **SelectV2 選項面板間距與寬度**（2026-06-11）：選項列表 wrapper `pb-2` → `py-2`，上下留白對稱（aqua 玻璃面板 `p-1` + `py-2` = 各 12px，單一選項時垂直置中）；`popupWidthMode` 預設 `same-target` → `min-target`（面板 `min-width` 同 trigger、`width: max-content` 隨內容加寬），長選項文字不再溢出 hover 背景貼到面板邊界。需鎖定同寬時個別傳 `popup-width-mode="same-target"`。
 
 ## References
 

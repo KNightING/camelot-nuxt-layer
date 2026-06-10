@@ -72,7 +72,7 @@
 | `RichTextEditor` | ✅ | TipTap 富文本編輯器（四風格、可插拔上傳、resizable image/貼上清洗） | [詳情](./features/richtext-editor-image-dropzone.md) |
 | `Scrollbar` | ✅ | 自訂滾動條元件 | — |
 | `Select` | ✅ | 下拉選擇元件 (v1) | — |
-| `SelectV2` | ✅ | 下拉選擇元件 (v2；disabled 不可展開、`#label` slot) | [詳情](./features/field-label-and-form-controls.md) |
+| `SelectV2` | ✅ | 下拉選擇元件 (v2；disabled 不可展開、`#label` slot、選項面板 min-target 寬度) | [詳情](./features/field-label-and-form-controls.md) |
 | `Switch` | ✅ | 開關（四風格 40×22 / scifi 48×22、label 點擊切換） | [詳情](./features/field-label-and-form-controls.md) |
 | `Checkbox` | ✅ | 勾選框（四風格、indeterminate、label 由 wrapper 統一） | [詳情](./features/field-label-and-form-controls.md) |
 | `Textarea` | ✅ | 多行輸入（autosize、字數統計、`#label` slot） | [詳情](./features/field-label-and-form-controls.md) |

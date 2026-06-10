@@ -228,7 +228,7 @@
               >
                 <div
                   v-bind="virtualWrapperProps"
-                  class="flex flex-col px-2 pb-2"
+                  class="flex flex-col px-2 py-2"
                 >
                   <template
                     v-for="{ data: option, index } in virtualList"
@@ -267,7 +267,7 @@
               </div>
               <div
                 v-else
-                class="flex-1 min-h-0 relative bg-transparent px-2 pb-2"
+                class="flex-1 min-h-0 relative bg-transparent px-2 py-2"
               >
                 <slot name="empty-options">
                   <div class="flex flex-col items-center justify-center text-on-surface-variant gap-2 py-2">
@@ -282,7 +282,7 @@
               v-else
               class="cml-options-scroll flex-1 min-h-0 relative overflow-y-auto bg-transparent"
             >
-              <div class="flex flex-col px-2 pb-2">
+              <div class="flex flex-col px-2 py-2">
                 <template v-if="filteredOptions && filteredOptions.length > 0">
                   <template
                     v-for="(option, index) in filteredOptions"
@@ -363,7 +363,7 @@ const props = withDefaults(defineProps<{
   default: true,
   searchable: true,
   searchPlaceholder: '搜尋...',
-  popupWidthMode: 'same-target',
+  popupWidthMode: 'min-target',
   placeholder: '請選擇...',
   virtualScroll: false,
   itemHeight: 36,
