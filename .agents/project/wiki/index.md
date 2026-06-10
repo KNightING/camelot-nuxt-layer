@@ -77,6 +77,7 @@
 | `Table` | ✅ | 資料表格（fixed header/columns/rows、雙色/hover、slot、泛型、四風格） | [詳情](./features/layout-data-components.md) |
 | `Tabs` | ✅ | 頁籤元件（四風格 + 滑動指示器） | [詳情](./features/theme-system.md) |
 | `TimeV2` | ✅ | 純時間選擇器（trigger + popup/dialog + TimeRow，v-model "HH:mm[:ss]"，四風格） | [詳情](./features/time-picker.md) |
+| `Timeline` | ✅ | 時間軸（垂直/水平、alternate、捲動淡入、圓點對齊標題行、image 內容） | [詳情](./features/timeline.md) |
 | `Toast` | ✅ | 吐司通知元件（透明玻璃、滑入漸入、8 方位、center 不跳動） | [詳情](./features/datepicker-time-aqua-toast.md) |
 | `Tree` | ✅ | 多階層樹（勾選連動 + indeterminate、四風格） | [詳情](./features/layout-data-components.md) |
 
@@ -184,6 +185,7 @@ graph TD
 - [✍️🖼️ RichTextEditor（TipTap）與 ImageDropzone](./features/richtext-editor-image-dropzone.md)
 - [⏰ TimeV2 / 純時間選擇器](./features/time-picker.md)
 - [🏷️ FieldLabel 共通標籤與表單控制元件](./features/field-label-and-form-controls.md)
+- [🕒 Timeline 時間軸](./features/timeline.md)
 - [🎨 Color Scheme / 色彩主題](./features/color-scheme.md)
 - [⚙️ 環境變數](./environment.md)
 
