@@ -73,7 +73,7 @@
 | `RichTextEditor` | ✅ | TipTap 富文本編輯器（四風格、可插拔上傳、resizable image/貼上清洗） | [詳情](./features/richtext-editor-image-dropzone.md) |
 | `Scrollbar` | ✅ | 自訂滾動條元件 | — |
 | `Select` | ✅ | 下拉選擇元件 (v1) | — |
-| `SelectV2` | ✅ | 下拉選擇元件 (v2；disabled 不可展開、`#label` slot、選項面板 min-target 寬度) | [詳情](./features/field-label-and-form-controls.md) |
+| `SelectV2` | ✅ | 下拉選擇元件 (v2；disabled 不可展開、`#label` slot、選項面板 min-target 寬度；選項選中/hover 效果與 `CascadeMenu` 共用 `useCamelotMenuItemTheme`) | [詳情](./features/field-label-and-form-controls.md) |
 | `Switch` | ✅ | 開關（四風格 40×22 / scifi 48×22、label 點擊切換） | [詳情](./features/field-label-and-form-controls.md) |
 | `Checkbox` | ✅ | 勾選框（四風格、indeterminate、label 由 wrapper 統一） | [詳情](./features/field-label-and-form-controls.md) |
 | `Textarea` | ✅ | 多行輸入（autosize、字數統計、`#label` slot） | [詳情](./features/field-label-and-form-controls.md) |
@@ -106,6 +106,7 @@
 | `useBaseApi` | ✅ | API 請求基礎封裝 (含串流支援) |
 | `useCamelotTheme` | ✅ | 主題切換狀態（themeMode / colorMode / 色彩方案，預設 aqua） |
 | `useCamelotRoleColorClass` | ✅ | 色彩角色 → 注入 `--cml-color-current-*` 的 Tailwind class |
+| `useCamelotMenuItemTheme` | ✅ | 選單/選項列四風格 active/hover 效果（`CascadeMenu` 與 `SelectV2` 選項共用，消費 CurrentColor） |
 | `useCamelotPickerTheme` | ✅ | DatePicker 各風格 trigger/panel/選中態 class |
 | `useCamelotFileDrop` | ✅ | 檔案拖曳 headless 核心（任意元素變拖曳區；entries 含型別/大小/縮圖） |
 | `useCamelotRouter` | ✅ | 擴展 Vue Router，含歷史堆疊管理 |

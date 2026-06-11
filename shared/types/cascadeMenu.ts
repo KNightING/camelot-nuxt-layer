@@ -22,6 +22,8 @@ export interface CamelotCascadeMenuContext {
   closeDelay: number
   /** 浮層基底 z-index，實際層級 = baseZIndex + level */
   baseZIndex: number
+  /** 單一面板選項區最大高度（CSS 長度，超過則內部捲動）；實際會再夾在視窗高度內 */
+  maxHeight: string
   /**
    * 取得 CurrentColor 注入用的 literal class。
    * 因每層面板皆 Teleport 至 body，CSS 變數繼承會中斷，故需逐面板套用此 class。

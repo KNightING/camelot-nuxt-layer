@@ -1780,6 +1780,38 @@ const cascadeMenuItems = ref<CamelotCascadeMenuItem[]>([
     ],
   },
   {
+    label: '語言與地區',
+    value: 'locale',
+    children: [
+      {
+        label: '時區（選項很多 → 可滾動）',
+        value: 'locale-tz',
+        children: Array.from({ length: 40 }).map((_, i) => ({
+          label: `UTC${i - 12 >= 0 ? '+' : ''}${i - 12}:00 區域 ${i + 1}`,
+          value: `tz-${i}`,
+        })),
+      },
+      {
+        label: '語言',
+        value: 'locale-lang',
+        children: [
+          {
+            label: '正體中文',
+            value: 'lang-zh-tw',
+          },
+          {
+            label: 'English',
+            value: 'lang-en',
+          },
+          {
+            label: '日本語',
+            value: 'lang-ja',
+          },
+        ],
+      },
+    ],
+  },
+  {
     divider: true,
     label: '',
     value: 'divider-1',

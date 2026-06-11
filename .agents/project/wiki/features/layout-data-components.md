@@ -73,6 +73,7 @@
 | `submenuTrigger: 'hover' \| 'click'` | `hover` | 子選單展開方式（根面板一律由觸發器點擊開啟） |
 | `openDelay` / `closeDelay` | `80` / `160` | hover 展開／收合延遲 (ms) |
 | `zIndex` | `50` | 浮層基底（實際 = base + level，逐層遞增） |
+| `maxHeight: number \| string` | `360` | 單一面板選項區最大高度（number 視為 px），超過內部捲動；實際夾在視窗高度內 |
 | `disabled` / `closeOnSelect` | `false` / `true` | 停用觸發器／點葉節點後關閉整棵 |
 | `v-model:open` | `false` | 根面板開關（可手動控制） |
 | `#default` slot | — | 觸發器內容（如「設定」按鈕） |
@@ -83,6 +84,8 @@
 - **子面板 `:key="openItem.value"`**：兄弟切換時重建乾淨實例，避免舊面板殘留並在淡出時飛到角落。
 - **hover 點擊**：hover 模式點含子項父項不收合、不關閉選單（展開交給滑入）；葉節點才 `select`。click 模式父項可點擊 toggle。
 - **CurrentColor（Teleport-safe）**：每層面板 Teleport 至 body 會中斷 CSS 變數繼承，故由 context 提供 `roleColorClass()` 並**逐面板套用**；四風格 active/hover/`aqua-fill` 全消費 `--cml-color-current-color`。
+- **選中/hover 效果共用**：四風格 active/hover class 抽至 `useCamelotMenuItemTheme`，與 `SelectV2` 下拉選項共用同一效果（單一真實來源）。
+- **過長可捲動**：單一面板選項區 `max-height = min(maxHeight, 100vh-16px)`（`maxHeight` prop 預設 360），超過則內部捲動；捲動容器置於內層、面板 `overflow-hidden`，捲動條貼齊面板內緣且不破壞圓角。
 - **四風格 surface**：aqua=`aqua-glass` 圓角玻璃；scifi=無圓角＋等寬字＋current/30% 邊＋內發光；cupertino=blur(24px) 半透明圓角；material=實色 surface＋陰影。
 
 ## 📌 References

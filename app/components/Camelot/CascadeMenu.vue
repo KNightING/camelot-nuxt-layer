@@ -32,6 +32,8 @@ const props = withDefaults(
     zIndex?: number
     disabled?: boolean
     closeOnSelect?: boolean
+    /** 單一面板選項區最大高度（number 視為 px），超過則該面板內部捲動。預設 360 */
+    maxHeight?: number | string
   }>(),
   {
     color: 'primary',
@@ -41,6 +43,7 @@ const props = withDefaults(
     zIndex: 50,
     disabled: false,
     closeOnSelect: true,
+    maxHeight: 360,
   },
 )
 
@@ -54,6 +57,10 @@ const triggerRef = useTemplateRef<HTMLElement>('triggerRef')
 const triggerEl = computed(() => triggerRef.value ?? null)
 
 const roleColorClass = useCamelotRoleColorClass(() => props.color)
+
+const maxHeightCss = computed(() =>
+  typeof props.maxHeight === 'number' ? `${props.maxHeight}px` : props.maxHeight,
+)
 
 // 各層 Teleport 後的面板根元素註冊表（供 click-outside 判定）
 const panelEls = ref<HTMLElement[]>([])
@@ -77,6 +84,7 @@ provide<CamelotCascadeMenuContext>(CAMELOT_CASCADE_MENU_KEY, {
   openDelay: props.openDelay,
   closeDelay: props.closeDelay,
   baseZIndex: props.zIndex,
+  maxHeight: maxHeightCss.value,
   roleColorClass: () => roleColorClass.value,
   select,
   closeAll,

@@ -195,8 +195,7 @@
                     v-for="(option, index) in filteredOptions"
                     :key="index"
                     type="button"
-                    class="option-btn scifi-option"
-                    :class="{ selected: model === option.value }"
+                    :class="optionButtonClass(model === option.value)"
                     @click="(e) => onItemClick(e, option.value)"
                   >
                     <slot
@@ -205,7 +204,7 @@
                       :data="option"
                       :is-selected="model === option.value"
                     >
-                      <span>{{ option.label ?? option.name }}</span>
+                      <span class="flex-1 truncate">{{ option.label ?? option.name }}</span>
                     </slot>
                   </button>
                 </template>
@@ -236,8 +235,7 @@
                   >
                     <button
                       type="button"
-                      class="option-btn"
-                      :class="{ selected: model === option.value }"
+                      :class="optionButtonClass(model === option.value)"
                       @click="(e) => onItemClick(e, option.value)"
                     >
                       <slot
@@ -252,13 +250,7 @@
                           :data="option"
                           :is-selected="model === option.value"
                         >
-                          <CamelotGpu class="option">
-                            <span class="w-5 text-[var(--cml-color-current-color)]">{{ model === option.value ? '✓' : '' }} </span>
-                            <span
-                              class="my-0.5 font-normal leading-normal select-none"
-                              :class="model === option.value ? 'text-[var(--cml-color-current-color)]' : 'text-on-surface'"
-                            >{{ option.label ?? option.name }}</span>
-                          </CamelotGpu>
+                          <span class="flex-1 truncate select-none">{{ option.label ?? option.name }}</span>
                         </slot>
                       </slot>
                     </button>
@@ -290,8 +282,7 @@
                   >
                     <button
                       type="button"
-                      class="option-btn"
-                      :class="{ selected: model === option.value }"
+                      :class="optionButtonClass(model === option.value)"
                       @click="(e) => onItemClick(e, option.value)"
                     >
                       <slot
@@ -306,13 +297,7 @@
                           :data="option"
                           :is-selected="model === option.value"
                         >
-                          <CamelotGpu class="option">
-                            <span class="w-5 text-[var(--cml-color-current-color)]">{{ model === option.value ? '✓' : '' }} </span>
-                            <span
-                              class="my-0.5 font-normal leading-normal select-none"
-                              :class="model === option.value ? 'text-[var(--cml-color-current-color)]' : 'text-on-surface'"
-                            >{{ option.label ?? option.name }}</span>
-                          </CamelotGpu>
+                          <span class="flex-1 truncate select-none">{{ option.label ?? option.name }}</span>
                         </slot>
                       </slot>
                     </button>
@@ -373,6 +358,13 @@ const props = withDefaults(defineProps<{
 })
 
 const roleColorClass = useCamelotRoleColorClass(() => props.color)
+
+// 選項列的選中／hover 效果與 CascadeMenu 共用同一核心（四風格、消費 CurrentColor）
+const {
+  activeClass: optionActiveClass, hoverClass: optionHoverClass,
+} = useCamelotMenuItemTheme()
+const OPTION_ROW_BASE = 'flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left min-h-[36px] transition-colors'
+const optionButtonClass = (isSelected: boolean) => [OPTION_ROW_BASE, isSelected ? optionActiveClass.value : optionHoverClass.value]
 
 const open = defineModel<boolean>('open', { default: false })
 
@@ -516,11 +508,6 @@ watch([() => props.options, () => props.default], ([options, isDefault]) => {
 </script>
 
 <style scoped>
-.option {
-  display: flex;
-  align-items: center;
-}
-
 /* aqua 玻璃面板四周有 4px padding，會使原生捲動條離右緣 4px。
    將捲動容器右緣外推貼齊面板（margin），再以 padding-right 把內容推離捲動條，維持左右對稱 */
 .aqua-options .cml-options-scroll {
@@ -528,50 +515,8 @@ watch([() => props.options, () => props.default], ([options, isDefault]) => {
   padding-right: 4px;
 }
 
-.option-btn {
-  width: 100%;
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  text-align: left;
-}
-
-.scifi-option {
-  padding: 10px 14px;
-  cursor: pointer;
-  font-family: inherit;
-  font-size: 0.85rem;
-  color: color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 70%, white);
-  border-left: 2px solid transparent;
-  transition: all 0.2s ease;
-}
-.scifi-option:hover {
-  background: var(--cml-color-current-color, var(--color-primary));
-  border-left-color: var(--cml-color-current-on-color, var(--color-on-primary));
-  color: var(--cml-color-current-on-color, var(--color-on-primary));
-}
-.scifi-option.selected {
-  background: color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 40%, transparent);
-  border-left-color: var(--cml-color-current-color, var(--color-primary));
-  color: var(--cml-color-current-on-color, var(--color-on-primary));
-}
-
 .options-list-inner {
   display: flex;
   flex-direction: column;
-}
-
-/* Aqua Frosted Glass 選項：圓角、留白、半透明 hover / selected */
-.aqua-options .option-btn {
-  border-radius: 12px;
-  padding: 8px 12px;
-  transition: background-color 0.15s ease;
-}
-.aqua-options .option-btn:hover {
-  background-color: color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 8%, transparent);
-}
-.aqua-options .option-btn.selected {
-  background-color: color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 14%, transparent);
 }
 </style>
