@@ -11,11 +11,14 @@
     >
       <div
         ref="panelRef"
-        class="fixed min-w-[184px] max-w-[300px] origin-top-left p-1.5 text-sm text-on-surface"
+        class="fixed min-w-[184px] max-w-[300px] origin-top-left overflow-hidden text-sm text-on-surface"
         :class="[roleColorClass, surfaceClass]"
         :style="panelStyle"
       >
-        <ul class="flex flex-col gap-0.5">
+        <ul
+          class="flex flex-col gap-0.5 overflow-x-hidden overflow-y-auto overscroll-contain p-1.5"
+          :style="{ maxHeight: scrollMaxHeight }"
+        >
           <template
             v-for="(item, idx) in items"
             :key="item.divider ? `divider-${idx}` : item.value"
@@ -66,7 +69,15 @@ const props = defineProps<{
 const ctx = inject<CamelotCascadeMenuContext>(CAMELOT_CASCADE_MENU_KEY)!
 const { themeMode } = useCamelotTheme()
 
+// 選中／hover 效果與 SelectV2 選項共用同一核心
+const {
+  activeClass: activeRowClass, hoverClass: hoverRowClass,
+} = useCamelotMenuItemTheme()
+
 const roleColorClass = computed(() => ctx.roleColorClass())
+
+// 選項區最大高度：取 prop 與「視窗高 - 16px」較小者，超過則內部捲動
+const scrollMaxHeight = computed(() => `min(${ctx.maxHeight}, calc(100vh - 16px))`)
 
 const panelRef = useTemplateRef<HTMLElement>('panelRef')
 
@@ -210,32 +221,6 @@ const surfaceClass = computed(() => {
       return 'rounded-xl border border-white/20 bg-surface/70 shadow-lg backdrop-blur-xl dark:border-white/10'
     default:
       return 'rounded-xl border border-outline-variant bg-surface shadow-lg'
-  }
-})
-
-const activeRowClass = computed(() => {
-  switch (themeMode.value) {
-    case 'aqua':
-      return 'aqua-fill text-[var(--cml-color-current-on-color)]'
-    case 'scifi':
-      return 'bg-[color-mix(in_srgb,var(--cml-color-current-color)_18%,transparent)] text-[var(--cml-color-current-color)] [text-shadow:0_0_8px_color-mix(in_srgb,var(--cml-color-current-color)_50%,transparent)]'
-    case 'cupertino':
-      return 'bg-[color-mix(in_srgb,var(--cml-color-current-color)_12%,transparent)] font-semibold text-[var(--cml-color-current-color)]'
-    default:
-      return 'bg-[color-mix(in_srgb,var(--cml-color-current-color)_12%,transparent)] font-medium text-[var(--cml-color-current-color)]'
-  }
-})
-
-const hoverRowClass = computed(() => {
-  switch (themeMode.value) {
-    case 'scifi':
-      return 'text-on-surface hover:bg-[color-mix(in_srgb,var(--cml-color-current-color)_10%,transparent)] hover:text-[var(--cml-color-current-color)]'
-    case 'cupertino':
-      return 'text-on-surface hover:bg-[color-mix(in_srgb,var(--cml-color-current-color)_8%,transparent)]'
-    case 'aqua':
-      return 'text-on-surface hover:bg-[color-mix(in_srgb,var(--cml-color-current-color)_12%,transparent)]'
-    default:
-      return 'text-on-surface hover:bg-[color-mix(in_srgb,var(--cml-color-current-color)_8%,transparent)]'
   }
 })
 
