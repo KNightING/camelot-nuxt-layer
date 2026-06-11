@@ -584,6 +584,42 @@
           </div>
         </div>
 
+        <!-- Cascade Menu Card（點擊觸發 → 子選單側邊飛出，無限階層） -->
+        <div :class="cardClass">
+          <h2 :class="cardTitleClass">
+            Cascade Menu (popup flyout, multi-level)
+          </h2>
+          <span class="text-xs text-slate-400">點「設定」按鈕展開，含子項的列向右飛出子選單（空間不足自動翻轉），四主題 + CurrentColor</span>
+          <div class="flex flex-wrap items-center gap-3">
+            <CamelotCascadeMenu
+              :items="cascadeMenuItems"
+              :color="currentColorRole"
+              @select="onCascadeSelect"
+            >
+              <CamelotButton
+                :color="currentColorRole"
+                label="設定 ▾"
+              />
+            </CamelotCascadeMenu>
+
+            <CamelotCascadeMenu
+              :items="cascadeMenuItems"
+              :color="currentColorRole"
+              submenu-trigger="click"
+              @select="onCascadeSelect"
+            >
+              <CamelotButton
+                :color="currentColorRole"
+                is-container
+                label="點擊展開模式 ▾"
+              />
+            </CamelotCascadeMenu>
+          </div>
+          <div class="mt-1 truncate text-xs text-slate-400">
+            Selected: {{ cascadeSelected ?? '—' }}
+          </div>
+        </div>
+
         <!-- Slider Card -->
         <div :class="cardClass">
           <h2 :class="cardTitleClass">
@@ -1673,6 +1709,99 @@ const menuItems = ref<CamelotMenuItem[]>([
     value: 'settings',
   },
 ])
+
+// Cascade Menu demo state（popup 飛出式多階層選單）
+const cascadeSelected = ref<string | number | null>(null)
+const cascadeMenuItems = ref<CamelotCascadeMenuItem[]>([
+  {
+    label: '帳號設定',
+    value: 'account',
+    children: [
+      {
+        label: '個人資料',
+        value: 'account-profile',
+      },
+      {
+        label: '安全性',
+        value: 'account-security',
+        children: [
+          {
+            label: '變更密碼',
+            value: 'account-security-pwd',
+          },
+          {
+            label: '兩步驟驗證',
+            value: 'account-security-2fa',
+            children: [
+              {
+                label: '簡訊驗證',
+                value: 'account-security-2fa-sms',
+              },
+              {
+                label: 'Authenticator App',
+                value: 'account-security-2fa-app',
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    label: '外觀',
+    value: 'appearance',
+    children: [
+      {
+        label: '主題',
+        value: 'appearance-theme',
+        children: [
+          {
+            label: 'Material',
+            value: 'appearance-theme-material',
+          },
+          {
+            label: 'Cupertino',
+            value: 'appearance-theme-cupertino',
+          },
+          {
+            label: 'Sci-Fi',
+            value: 'appearance-theme-scifi',
+          },
+          {
+            label: 'Aqua',
+            value: 'appearance-theme-aqua',
+          },
+        ],
+      },
+      {
+        label: '字級',
+        value: 'appearance-fontsize',
+      },
+    ],
+  },
+  {
+    divider: true,
+    label: '',
+    value: 'divider-1',
+  },
+  {
+    label: '通知',
+    value: 'notifications',
+  },
+  {
+    label: '說明與支援',
+    value: 'help',
+    disabled: true,
+  },
+  {
+    label: '登出',
+    value: 'logout',
+  },
+])
+const onCascadeSelect = (item: CamelotCascadeMenuItem) => {
+  cascadeSelected.value = item.value
+  useCamelotToast().open('已選擇：' + item.label)
+}
 
 // Progress demo state
 const progressVal = ref(65)

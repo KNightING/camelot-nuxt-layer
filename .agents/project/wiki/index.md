@@ -37,6 +37,7 @@
 | `BaseDialog` | ✅ | 通用對話框 (v1) | — |
 | `BaseDialogV2` | ✅ | 通用對話框 (v2，支援更多選項) | — |
 | `Breakpoints` | ✅ | 顯示當前斷點（開發工具用） | — |
+| `CascadeMenu` | ✅ | 點擊觸發、子選單向側邊飛出的多階層彈出選單（Teleport+fixed、掛載凍結定位、自動翻轉、四風格、CurrentColor；與行內手風琴式 `Menu` 區隔） | [詳情](./features/layout-data-components.md) |
 | `ColorSchemeProvider` | ✅ | 主題色彩 Provider | [詳情](./features/color-scheme.md) |
 | `Container` | ✅ | 通用容器元件 | — |
 | `CustomColorSchemeProvider` | ✅ | 自訂色彩方案 Provider | [詳情](./features/color-scheme.md) |
@@ -93,6 +94,7 @@
 | `Calendar` | 🚧 | 日曆核心元件（DateV2/DateRangeV2 共用，四風格選中態） | [詳情](./features/calendar.md) |
 | `TreeNode` | ✅ | Tree 遞迴節點（checkable 點整行勾選） | [詳情](./features/layout-data-components.md) |
 | `MenuItem` | ✅ | Menu 遞迴項目 | [詳情](./features/layout-data-components.md) |
+| `CascadeMenuPanel` | ✅ | CascadeMenu 遞迴飛出面板（Teleport+fixed 凍結定位、自動翻轉、四風格） | [詳情](./features/layout-data-components.md) |
 | `TimeField` | ✅ | 時/分/秒欄位（下拉 Teleport 防裁切） | [詳情](./features/field-label-and-form-controls.md) |
 
 ---
