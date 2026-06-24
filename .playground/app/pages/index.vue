@@ -714,11 +714,10 @@
             <CamelotTagGroup
               v-model="tagGroupValue"
               :color="currentColorRole"
-              :locked="['Vue']"
               :continuous-add="false"
             />
             <p class="mt-2 text-xs text-slate-400">
-              目前值：{{ tagGroupValue.join(', ') || '（空）' }}（Vue 已鎖定不可刪、單次新增）
+              逐項顏色 / variant，Vue 鎖定不可刪、單次新增；新增項用群組預設色（{{ currentColorRole }}）
             </p>
           </div>
         </div>
@@ -1521,7 +1520,22 @@ const colorRoles = ['primary', 'secondary', 'tertiary', 'error', 'warning', 'suc
 
 // Tag / Breadcrumb / Timeline / Notification demos
 const tags = ref(['Vue', 'Nuxt', 'Tailwind'])
-const tagGroupValue = ref(['Vue', 'Nuxt'])
+const tagGroupValue = ref<CamelotTagInput[]>([
+  {
+    label: 'Vue',
+    color: 'success',
+    locked: true,
+  },
+  {
+    label: 'Nuxt',
+    color: 'info',
+  },
+  {
+    label: 'Tailwind',
+    color: 'warning',
+    variant: 'outline',
+  },
+])
 const breadcrumbItems = [
   {
     label: '首頁',

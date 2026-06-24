@@ -4,13 +4,13 @@
     :class="roleColorClass"
   >
     <CamelotTag
-      v-for="(tag, index) in modelValue"
-      :key="`${tag}-${index}`"
-      :label="tag"
-      :color="color"
-      :variant="variant"
+      v-for="(tag, index) in normalizedTags"
+      :key="`${tag.label}-${index}`"
+      :label="tag.label"
+      :color="tag.color"
+      :variant="tag.variant"
       :size="size"
-      :closable="!disabled && !isLocked(tag)"
+      :closable="!disabled && !tag.locked"
       :disabled="disabled"
       @close="removeAt(index)"
     />
@@ -47,9 +47,10 @@
 <script setup lang="ts">
 const props = withDefaults(
   defineProps<{
+    /** 群組預設顏色；逐項可用物件 item.color 覆寫 */
     color?: CamelotColorRole
-    /** 傳遞給 Tag 的外觀：solid 實心 / soft 柔色（預設）/ outline 外框 */
-    variant?: 'solid' | 'soft' | 'outline'
+    /** 群組預設外觀；逐項可用物件 item.variant 覆寫 */
+    variant?: CamelotTagVariant
     size?: 'sm' | 'md'
     /** 整組停用：隱藏新增按鈕並移除刪除鈕 */
     disabled?: boolean
@@ -57,8 +58,6 @@ const props = withDefaults(
     addable?: boolean
     /** 是否允許重複值（預設 false） */
     allowDuplicate?: boolean
-    /** 鎖定（不可刪除）的標籤值，可與一般可刪除標籤混和 */
-    locked?: string[]
     /** 連續新增模式：true（預設）新增後維持輸入；false 新增一個即關閉輸入框 */
     continuousAdd?: boolean
     /** 最多可新增的標籤數，undefined 表示不限制 */
@@ -73,7 +72,6 @@ const props = withDefaults(
     disabled: false,
     addable: true,
     allowDuplicate: false,
-    locked: () => [],
     continuousAdd: true,
     placeholder: '新增標籤…',
   },
@@ -82,10 +80,10 @@ const props = withDefaults(
 const emit = defineEmits<{
   add: [value: string]
   remove: [value: string, index: number]
-  change: [values: string[]]
+  change: [values: CamelotTagInput[]]
 }>()
 
-const modelValue = defineModel<string[]>({ default: () => [] })
+const modelValue = defineModel<CamelotTagInput[]>({ default: () => [] })
 
 const { themeMode } = useCamelotTheme()
 const roleColorClass = useCamelotRoleColorClass(() => props.color)
@@ -94,9 +92,22 @@ const editing = ref(false)
 const draft = ref('')
 const addInputRef = useTemplateRef<HTMLInputElement>('add-input')
 
-const reachedMax = computed(() => props.max !== undefined && modelValue.value.length >= props.max)
+// 將純字串 / 物件項目統一成帶預設值的物件，逐項顏色 / variant / 鎖定皆由此解析
+const normalizedTags = computed(() =>
+  modelValue.value.map((item) => {
+    const obj = typeof item === 'string' ? { label: item } : item
+    return {
+      label: obj.label,
+      color: obj.color ?? props.color,
+      variant: obj.variant ?? props.variant,
+      locked: obj.locked ?? false,
+    }
+  }),
+)
 
-const isLocked = (tag: string) => props.locked.includes(tag)
+const labels = computed(() => normalizedTags.value.map(tag => tag.label))
+
+const reachedMax = computed(() => props.max !== undefined && modelValue.value.length >= props.max)
 
 const sizeClass = computed(() => (props.size === 'sm' ? 'text-xs px-2 py-0.5' : 'text-sm px-2.5 py-1'))
 
@@ -135,7 +146,7 @@ const commit = () => {
     cancel()
     return
   }
-  if (!props.allowDuplicate && modelValue.value.includes(value)) {
+  if (!props.allowDuplicate && labels.value.includes(value)) {
     draft.value = ''
     return
   }
@@ -157,15 +168,15 @@ const cancel = () => {
 
 const removeAt = (index: number) => {
   if (props.disabled) return
-  const removed = modelValue.value[index]
-  if (removed === undefined || isLocked(removed)) return
+  const target = normalizedTags.value[index]
+  if (!target || target.locked) return
   const next = modelValue.value.filter((_, i) => i !== index)
   modelValue.value = next
-  emit('remove', removed, index)
+  emit('remove', target.label, index)
   emit('change', next)
 }
 
-/** 輸入框為空時按 Backspace 移除最後一個標籤 */
+/** 輸入框為空時按 Backspace 移除最後一個標籤（鎖定項由 removeAt 守衛擋下） */
 const onBackspace = () => {
   if (draft.value !== '' || modelValue.value.length === 0) return
   removeAt(modelValue.value.length - 1)
