@@ -13,6 +13,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     IMaterialSymbolsAddPhotoAlternate: typeof import('~icons/material-symbols/add-photo-alternate')['default']
+    IMaterialSymbolsAddRounded: typeof import('~icons/material-symbols/add-rounded')['default']
     IMaterialSymbolsCalendarMonthRounded: typeof import('~icons/material-symbols/calendar-month-rounded')['default']
     IMaterialSymbolsChevronLeftRounded: typeof import('~icons/material-symbols/chevron-left-rounded')['default']
     IMaterialSymbolsChevronRightRounded: typeof import('~icons/material-symbols/chevron-right-rounded')['default']
@@ -49,6 +50,7 @@ declare module 'vue' {
 // For TSX support
 declare global {
   const IMaterialSymbolsAddPhotoAlternate: typeof import('~icons/material-symbols/add-photo-alternate')['default']
+  const IMaterialSymbolsAddRounded: typeof import('~icons/material-symbols/add-rounded')['default']
   const IMaterialSymbolsCalendarMonthRounded: typeof import('~icons/material-symbols/calendar-month-rounded')['default']
   const IMaterialSymbolsChevronLeftRounded: typeof import('~icons/material-symbols/chevron-left-rounded')['default']
   const IMaterialSymbolsChevronRightRounded: typeof import('~icons/material-symbols/chevron-right-rounded')['default']

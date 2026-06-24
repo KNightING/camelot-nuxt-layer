@@ -707,6 +707,20 @@
               {{ t }}
             </CamelotTag>
           </div>
+          <div class="mt-4">
+            <p class="mb-2 text-xs text-slate-400">
+              TagGroup (v-model / 動態新增)
+            </p>
+            <CamelotTagGroup
+              v-model="tagGroupValue"
+              :color="currentColorRole"
+              :locked="['Vue']"
+              :continuous-add="false"
+            />
+            <p class="mt-2 text-xs text-slate-400">
+              目前值：{{ tagGroupValue.join(', ') || '（空）' }}（Vue 已鎖定不可刪、單次新增）
+            </p>
+          </div>
         </div>
 
         <!-- Breadcrumb Card -->
@@ -1507,6 +1521,7 @@ const colorRoles = ['primary', 'secondary', 'tertiary', 'error', 'warning', 'suc
 
 // Tag / Breadcrumb / Timeline / Notification demos
 const tags = ref(['Vue', 'Nuxt', 'Tailwind'])
+const tagGroupValue = ref(['Vue', 'Nuxt'])
 const breadcrumbItems = [
   {
     label: '首頁',
