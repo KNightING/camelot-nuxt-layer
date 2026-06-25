@@ -59,6 +59,8 @@
 </template>
 
 <script setup lang="ts">
+import IMaterialSymbolsChevronRightRounded from '~icons/material-symbols/chevron-right-rounded'
+
 const props = defineProps<{
   items: CamelotCascadeMenuItem[]
   anchor: HTMLElement | null

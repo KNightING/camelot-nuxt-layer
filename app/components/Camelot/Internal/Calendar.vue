@@ -245,6 +245,8 @@
 </template>
 
 <script setup lang="ts">
+import IMaterialSymbolsChevronLeftRounded from '~icons/material-symbols/chevron-left-rounded'
+import IMaterialSymbolsChevronRightRounded from '~icons/material-symbols/chevron-right-rounded'
 import {
   startOfMonth,
   endOfMonth,

@@ -89,6 +89,9 @@
 </template>
 
 <script setup lang="ts">
+import IMaterialSymbolsChevronLeftRounded from '~icons/material-symbols/chevron-left-rounded'
+import IMaterialSymbolsChevronRightRounded from '~icons/material-symbols/chevron-right-rounded'
+
 const props = withDefaults(
   defineProps<{
     /** 總筆數（與 totalPages 擇一；兩者皆給時以 totalPages 為準） */

@@ -40,6 +40,8 @@
 </template>
 
 <script setup lang="ts">
+import IMaterialSymbolsChevronRightRounded from '~icons/material-symbols/chevron-right-rounded'
+
 const props = withDefaults(
   defineProps<{
     item: CamelotMenuItem

@@ -45,6 +45,8 @@
 </template>
 
 <script setup lang="ts">
+import IMaterialSymbolsAddRounded from '~icons/material-symbols/add-rounded'
+
 const props = withDefaults(
   defineProps<{
     /** 群組預設顏色；逐項可用物件 item.color 覆寫 */
