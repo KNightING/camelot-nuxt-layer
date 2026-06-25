@@ -122,6 +122,9 @@
 </template>
 
 <script setup lang="ts">
+import IMaterialSymbolsCloseRounded from '~icons/material-symbols/close-rounded'
+import IMaterialSymbolsAddPhotoAlternate from '~icons/material-symbols/add-photo-alternate'
+
 const props = withDefaults(defineProps<{
   color?: CamelotColorRole
   /** 接受的檔案型別（同 input accept）；預設只收圖片 */

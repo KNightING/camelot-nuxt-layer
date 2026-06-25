@@ -81,6 +81,8 @@
 </template>
 
 <script setup lang="ts">
+import IMaterialSymbolsCloseRounded from '~icons/material-symbols/close-rounded'
+
 withDefaults(defineProps<{ zIndex?: number }>(), { zIndex: 1000 })
 
 const {

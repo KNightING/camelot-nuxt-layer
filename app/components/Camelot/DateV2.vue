@@ -163,6 +163,7 @@
 </template>
 
 <script setup lang="ts">
+import IMaterialSymbolsCalendarMonthRounded from '~icons/material-symbols/calendar-month-rounded'
 import {
   format, setHours, setMinutes, setSeconds, getHours, getMinutes, getSeconds,
 } from 'date-fns'

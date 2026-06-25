@@ -19,6 +19,8 @@
 </template>
 
 <script setup lang="ts">
+import IMaterialSymbolsCloseRounded from '~icons/material-symbols/close-rounded'
+
 const props = withDefaults(
   defineProps<{
     label?: string

@@ -240,10 +240,11 @@
 </template>
 
 <script setup lang="ts">
-import { useEditor, EditorContent } from '@tiptap/vue-3'
-import StarterKit from '@tiptap/starter-kit'
-import Link from '@tiptap/extension-link'
-import Placeholder from '@tiptap/extension-placeholder'
+import IMaterialSymbolsLink from '~icons/material-symbols/link'
+import IMaterialSymbolsImage from '~icons/material-symbols/image'
+import IMaterialSymbolsContentPaste from '~icons/material-symbols/content-paste'
+import IMaterialSymbolsUndo from '~icons/material-symbols/undo'
+import IMaterialSymbolsRedo from '~icons/material-symbols/redo'
 import IMaterialSymbolsFormatBold from '~icons/material-symbols/format-bold'
 import IMaterialSymbolsFormatItalic from '~icons/material-symbols/format-italic'
 import IMaterialSymbolsStrikethroughS from '~icons/material-symbols/strikethrough-s'
@@ -253,6 +254,10 @@ import IMaterialSymbolsFormatListNumbered from '~icons/material-symbols/format-l
 import IMaterialSymbolsFormatQuote from '~icons/material-symbols/format-quote'
 import IMaterialSymbolsCodeBlocks from '~icons/material-symbols/code-blocks'
 import IMaterialSymbolsHorizontalRule from '~icons/material-symbols/horizontal-rule'
+import { useEditor, EditorContent } from '@tiptap/vue-3'
+import StarterKit from '@tiptap/starter-kit'
+import Link from '@tiptap/extension-link'
+import Placeholder from '@tiptap/extension-placeholder'
 import { ResizableImage } from './Internal/editor/resizable-image'
 import { PasteSanitize, sanitizePastedHtml } from './Internal/editor/paste-sanitize'
 import { TabIndent } from './Internal/editor/tab-indent'

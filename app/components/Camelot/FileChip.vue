@@ -69,6 +69,15 @@
 </template>
 
 <script setup lang="ts">
+import IMaterialSymbolsTableChart from '~icons/material-symbols/table-chart'
+import IMaterialSymbolsPictureAsPdf from '~icons/material-symbols/picture-as-pdf'
+import IMaterialSymbolsDescription from '~icons/material-symbols/description'
+import IMaterialSymbolsFolderZip from '~icons/material-symbols/folder-zip'
+import IMaterialSymbolsMusicNote from '~icons/material-symbols/music-note'
+import IMaterialSymbolsMovie from '~icons/material-symbols/movie'
+import IMaterialSymbolsDraft from '~icons/material-symbols/draft'
+import IMaterialSymbolsCloseRounded from '~icons/material-symbols/close-rounded'
+
 const props = withDefaults(defineProps<{
   file: File
   /** 圖片縮圖 objectURL；未提供且為圖片檔時自行產生（並負責回收） */

@@ -83,6 +83,9 @@
 </template>
 
 <script setup lang="ts" generic="T">
+import IMaterialSymbolsChevronLeftRounded from '~icons/material-symbols/chevron-left-rounded'
+import IMaterialSymbolsChevronRightRounded from '~icons/material-symbols/chevron-right-rounded'
+
 const props = withDefaults(
   defineProps<{
     items: T[]

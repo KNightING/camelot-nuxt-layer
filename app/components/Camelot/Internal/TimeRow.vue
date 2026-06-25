@@ -36,6 +36,8 @@
 </template>
 
 <script setup lang="ts">
+import IMaterialSymbolsScheduleRounded from '~icons/material-symbols/schedule-rounded'
+
 const props = withDefaults(
   defineProps<{
     precision?: 'hour' | 'minute' | 'second'

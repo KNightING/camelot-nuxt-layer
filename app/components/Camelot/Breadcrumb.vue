@@ -47,6 +47,8 @@
 </template>
 
 <script setup lang="ts">
+import IMaterialSymbolsChevronRightRounded from '~icons/material-symbols/chevron-right-rounded'
+
 interface BreadcrumbItem {
   label: string
   value?: string | number

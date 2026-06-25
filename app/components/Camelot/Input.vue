@@ -92,7 +92,7 @@
                     <div
                       class="text-app-secondary-gray flex w-full flex-col items-center justify-center gap-1 py-2 select-none"
                     >
-                      <i-material-symbols-error-circle-rounded class="text-2xl" />
+                      <IMaterialSymbolsErrorCircleRounded class="text-2xl" />
                       無選項
                     </div>
                   </slot>
@@ -195,7 +195,7 @@
                     <div
                       class="text-app-secondary-gray flex w-full flex-col items-center justify-center gap-1 py-2 select-none"
                     >
-                      <i-material-symbols-error-circle-rounded class="text-2xl" />
+                      <IMaterialSymbolsErrorCircleRounded class="text-2xl" />
                       無選項
                     </div>
                   </slot>
@@ -298,7 +298,7 @@
                     <div
                       class="text-app-secondary-gray flex w-full flex-col items-center justify-center gap-1 py-2 select-none"
                     >
-                      <i-material-symbols-error-circle-rounded class="text-2xl" />
+                      <IMaterialSymbolsErrorCircleRounded class="text-2xl" />
                       無選項
                     </div>
                   </slot>
@@ -392,7 +392,7 @@
                     <div
                       class="text-app-secondary-gray flex w-full flex-col items-center justify-center gap-1 py-2 select-none"
                     >
-                      <i-material-symbols-error-circle-rounded class="text-2xl" />
+                      <IMaterialSymbolsErrorCircleRounded class="text-2xl" />
                       無選項
                     </div>
                   </slot>
@@ -407,6 +407,7 @@
 </template>
 
 <script setup lang="ts" generic="T">
+import IMaterialSymbolsErrorCircleRounded from '~icons/material-symbols/error-circle-rounded'
 import { isClient } from '@vueuse/core'
 
 const props = withDefaults(defineProps<{

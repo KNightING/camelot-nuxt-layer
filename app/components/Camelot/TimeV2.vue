@@ -105,6 +105,7 @@
 </template>
 
 <script setup lang="ts">
+import IMaterialSymbolsScheduleRounded from '~icons/material-symbols/schedule-rounded'
 import {
   format, setHours, setMinutes, setSeconds,
 } from 'date-fns'

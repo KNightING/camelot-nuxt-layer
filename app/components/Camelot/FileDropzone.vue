@@ -58,6 +58,8 @@
 </template>
 
 <script setup lang="ts">
+import IMaterialSymbolsUploadFile from '~icons/material-symbols/upload-file'
+
 const props = withDefaults(defineProps<{
   color?: CamelotColorRole
   /** 接受的檔案型別（同 input accept）；預設不限 */
