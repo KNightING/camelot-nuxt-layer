@@ -103,6 +103,7 @@
 
 | Composable | 狀態 | 說明 |
 | :--- | :---: | :--- |
+| `useLocale` | ✅ | 語系格式正規化（`bcp47`/`cldr`/`l10n` 三格式、CLDR 11 語言查表、bcp47⇄cldr 雙向輸入）— [詳情](./features/locale.md) |
 | `useBaseApi` | ✅ | API 請求基礎封裝 (含串流支援) |
 | `useCamelotTheme` | ✅ | 主題切換狀態（themeMode / colorMode / 色彩方案，預設 aqua） |
 | `useCamelotRoleColorClass` | ✅ | 色彩角色 → 注入 `--cml-color-current-*` 的 Tailwind class |
@@ -198,6 +199,7 @@ graph TD
 - [📎 檔案拖曳系統（FileDropzone / FileChip / useCamelotFileDrop）](./features/file-drop.md)
 - [🔘 Radio 與選項群組（RadioGroup / CheckboxGroup）](./features/radio-and-groups.md)
 - [🎨 Color Scheme / 色彩主題](./features/color-scheme.md)
+- [🌐 useLocale / 語系格式正規化](./features/locale.md)
 - [⚙️ 環境變數](./environment.md)
 
 ---
