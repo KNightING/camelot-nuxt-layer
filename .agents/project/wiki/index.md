@@ -162,7 +162,7 @@ graph TD
     B --> D["Composables"]
     B --> E["Nuxt 模組"]
     B --> F["Server Plugins"]
-    B --> G["i18n (zh-Hant-TW / zh-Hans-CN / en-US + fallback)"]
+    B --> G["i18n 基底 (en / zh)；區域語系由消費端註冊"]
     B --> H["Tailwind CSS v4 主題"]
 
     C --> C1["表單元件 (Input, Select, Date...)"]
@@ -200,6 +200,7 @@ graph TD
 - [🔘 Radio 與選項群組（RadioGroup / CheckboxGroup）](./features/radio-and-groups.md)
 - [🎨 Color Scheme / 色彩主題](./features/color-scheme.md)
 - [🌐 useLocale / 語系格式正規化](./features/locale.md)
+- [🌐 i18n 語系系統（CLDR + Fallback 鏈 + Layer 分工）](./features/i18n-locales.md)
 - [⚙️ 環境變數](./environment.md)
 
 ---
