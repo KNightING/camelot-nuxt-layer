@@ -18,15 +18,12 @@ graph TD
     DateRangeV2["CamelotDateRangeV2\n(範圍選擇器)"]
     Calendar["Internal/Calendar\n(共用日曆核心)"]
     DateFns["date-fns\n(日期運算)"]
-    VuepicDatepicker["@vuepic/vue-datepicker\n(v1 依賴)"]
 
     User -->|v-model| DateV2
     User -->|v-model| DateRangeV2
     DateV2 -->|內嵌使用| Calendar
     DateRangeV2 -->|並排雙月份| Calendar
     Calendar --> DateFns
-
-    DateV1["CamelotDate (v1，舊版)"] --> VuepicDatepicker
 ```
 
 ---
