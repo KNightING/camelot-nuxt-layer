@@ -168,78 +168,24 @@ export default defineNuxtConfig({
   },
 
   i18n: {
-    // 語系代碼採含 script 子標籤的 CLDR 格式（lang-Script-Region）
-    // zh-Hant / zh-Hans 為繁／簡通用基底，區域語系缺 key 時 fallback 至基底（見 i18n/i18n.config.ts）
+    // Layer 只提供語言層級基底字典（zh 為繁體），會被消費端 app 繼承。
+    // 區域語系（如 zh-Hant-TW、zh-Hans-CN）由消費端註冊，
+    // 靠 vue-i18n 隱含階層 fallback（zh-Hant-TW → zh-Hant → zh）落回基底，範例見 .playground。
     locales: [
       {
         name: 'English',
-        code: 'en-US',
-        language: 'en-US',
-        file: 'en-US.json',
-      },
-      // 區域語系需排在通用基底之前：瀏覽器語系（如 zh-TW）以語言前綴比對時取清單中第一個命中者
-      {
-        name: '正體中文（台灣）',
-        code: 'zh-Hant-TW',
-        language: 'zh-Hant-TW',
-        file: 'zh-Hant-TW.json',
+        code: 'en',
+        language: 'en',
+        file: 'en.json',
       },
       {
-        name: '繁體中文（香港）',
-        code: 'zh-Hant-HK',
-        language: 'zh-Hant-HK',
-        file: 'zh-Hant-HK.json',
+        name: '中文',
+        code: 'zh',
+        language: 'zh',
+        file: 'zh.json',
       },
-      {
-        name: '繁體中文（澳門）',
-        code: 'zh-Hant-MO',
-        language: 'zh-Hant-MO',
-        file: 'zh-Hant-MO.json',
-      },
-      {
-        name: '正體中文',
-        code: 'zh-Hant',
-        language: 'zh-Hant',
-        file: 'zh-Hant.json',
-      },
-      {
-        name: '简体中文（中国大陆）',
-        code: 'zh-Hans-CN',
-        language: 'zh-Hans-CN',
-        file: 'zh-Hans-CN.json',
-      },
-      {
-        name: '简体中文（新加坡）',
-        code: 'zh-Hans-SG',
-        language: 'zh-Hans-SG',
-        file: 'zh-Hans-SG.json',
-      },
-      {
-        name: '简体中文（马来西亚）',
-        code: 'zh-Hans-MY',
-        language: 'zh-Hans-MY',
-        file: 'zh-Hans-MY.json',
-      },
-      {
-        name: '简体中文',
-        code: 'zh-Hans',
-        language: 'zh-Hans',
-        file: 'zh-Hans.json',
-      },
-      // {
-      //   name: '日本語',
-      //   code: 'ja-JP',
-      //   language: 'ja-JP',
-      //   file: 'ja-JP.json',
-      // },
-      // {
-      //   name: '한국어',
-      //   code: 'ko-KR',
-      //   language: 'ko-KR',
-      //   file: 'ko-KR.json',
-      // },
     ],
-    defaultLocale: 'zh-Hant-TW',
+    defaultLocale: 'zh',
     restructureDir: 'i18n',
     langDir: 'locales',
 

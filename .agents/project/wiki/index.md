@@ -19,7 +19,7 @@
 | **框架** | Nuxt 4 + Vue 3 (Composition API) |
 | **樣式** | Tailwind CSS v4 |
 | **狀態管理** | Pinia + pinia-plugin-persistedstate |
-| **多語系** | @nuxtjs/i18n (CLDR 代碼：繁體 zh-Hant-TW/HK/MO → zh-Hant、簡體 zh-Hans-CN/SG/MY → zh-Hans、en-US) |
+| **多語系** | @nuxtjs/i18n (Layer 基底 en / zh；區域語系由消費端註冊 fallback 至基底，範例見 .playground) |
 | **套件管理** | pnpm |
 
 ---

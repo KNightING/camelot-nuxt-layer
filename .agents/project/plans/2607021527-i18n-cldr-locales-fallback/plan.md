@@ -5,6 +5,32 @@
 - Branch: main(經使用者核准直接於 main 修改)
 - Status: Awaiting Archive
 
+## Iteration 3(2026-07-02)— Layer 只留語言層級語系,區域語系下放 playground
+
+**動機**:Layer 的 `i18n.locales` 會被消費端 app 繼承,九個區域語系不該全數強加給消費端。
+
+### Layer(根目錄)
+
+- `i18n/locales/` 只留兩檔:`en.json`(由 `en-US.json` 改名)、`zh.json`(由 `zh-Hant.json` 改名,內容為繁體)。
+- `nuxt.config.ts` locales 只註冊 `en` 與 `zh`,`defaultLocale: 'zh'`;移除 ja/ko 註解區塊。
+- `i18n/i18n.config.ts` fallback 精簡為:`{ 'en-US': ['en'], 'default': ['zh'] }`
+  (vue-i18n 對 `zh-Hant-TW` → `zh-Hant` → `zh` 本就有隱含階層 fallback,layer 只需保證終點存在)。
+
+### Playground(`.playground/`)
+
+- 新增 `.playground/i18n/locales/`:`zh-Hant.json`(空,退到 zh)、`zh-Hant-TW/HK/MO.json`、
+  `zh-Hans.json`(簡體完整字典)、`zh-Hans-CN/SG/MY.json`、`en-US.json`(空,退到 en)、
+  `ja-JP.json` / `ko-KR.json`(自 layer 搬移)。
+- `.playground/nuxt.config.ts` 註冊上述區域語系(與 layer 的 en/zh 合併繼承),`defaultLocale: 'zh-Hant-TW'`。
+- 新增 `.playground/i18n/i18n.config.ts`:完整區域 fallback 鏈
+  (`zh-Hant-*` → `['zh-Hant', 'zh']`、`zh-Hans-*` → `['zh-Hans', 'zh']`、`en-US` → `['en']`)。
+  @nuxtjs/i18n 會合併各 layer 的 vueI18n 設定(專案層優先),實測驗證。
+
+### 驗證
+
+- Playground:availableLocales 含 layer 的 en/zh + 全部區域語系;初始語系 `zh-Hant-TW`;
+  各區域語系 fallback 正確;fallbackLocale 為合併後 map;無 missing key 警告。
+
 ## Iteration 2(2026-07-02)
 
 新增香港/澳門/新加坡/馬來西亞中文語系,覆寫檔為空物件、直接 fallback 至繁/簡基底:
