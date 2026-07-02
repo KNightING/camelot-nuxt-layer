@@ -11,7 +11,7 @@
 - **框架**: Nuxt 4 + Vue 3 (Composition API, `<script setup>`)
 - **樣式**: Tailwind CSS v4 (主題定義於 `app/assets/css/tailwind.css`)
 - **狀態管理**: Pinia + pinia-plugin-persistedstate
-- **多語系**: @nuxtjs/i18n (CLDR 語系代碼，預設 `zh-Hant-TW`；繁體 TW/HK/MO → `zh-Hant`、簡體 CN/SG/MY → `zh-Hans` fallback，另支援 `en-US`，fallback 鏈見 `i18n/i18n.config.ts`)
+- **多語系**: @nuxtjs/i18n。Layer 僅提供語言層級基底 `en` / `zh`（繁體，預設）供消費端繼承；區域語系（CLDR 代碼如 `zh-Hant-TW`、`zh-Hans-CN`）由消費端註冊並 fallback 至基底，完整範例見 `.playground/i18n/`
 - **日期處理**: date-fns
 - **圖示**: unplugin-icons (Material Symbols)
 - **工具集**: @vueuse/core, @vueuse/nuxt
@@ -30,7 +30,7 @@ camelot-nuxt-layer/
 │   ├── composables/         # 共用 Composables（40+ 個）
 │   ├── middleware/          # Nuxt Middleware
 │   └── plugins/             # Nuxt Client Plugins
-├── i18n/locales/            # 語言包 (zh-Hant 系 TW/HK/MO、zh-Hans 系 CN/SG/MY、en-US)
+├── i18n/locales/            # 語言包基底 (en, zh)；區域語系範例在 .playground/i18n/locales/
 ├── modules/                 # 自訂 Nuxt 模組 (tappay, googleFont...)
 ├── server/
 │   ├── api/                 # Nitro API Endpoints

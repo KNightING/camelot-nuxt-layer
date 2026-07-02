@@ -43,7 +43,8 @@ flowchart TD
 - 實作：`app/composables/useLocale.ts`
 - 計畫歸檔：`.agents/project/archive/2606261225-use-locale-cldr-l10n.md`
 - 對照表資料來源：使用者提供之 CLDR locale → script/region 清單
+- 專案 i18n 語系註冊與 fallback 鏈：[[i18n-locales]]([i18n 語系系統](./i18n-locales.md))
 
 ---
 
-[🏷️ 表單控制元件](./field-label-and-form-controls.md) | [🎨 主題系統](./theme-system.md) | [🏠 Wiki](../index.md)
+[🌐 i18n 語系系統](./i18n-locales.md) | [🏷️ 表單控制元件](./field-label-and-form-controls.md) | [🎨 主題系統](./theme-system.md) | [🏠 Wiki](../index.md)
