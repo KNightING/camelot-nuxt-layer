@@ -19,7 +19,7 @@
 | **框架** | Nuxt 4 + Vue 3 (Composition API) |
 | **樣式** | Tailwind CSS v4 |
 | **狀態管理** | Pinia + pinia-plugin-persistedstate |
-| **多語系** | @nuxtjs/i18n (zh-TW, en-US) |
+| **多語系** | @nuxtjs/i18n (CLDR 代碼：繁體 zh-Hant-TW/HK/MO → zh-Hant、簡體 zh-Hans-CN/SG/MY → zh-Hans、en-US) |
 | **套件管理** | pnpm |
 
 ---
@@ -162,7 +162,7 @@ graph TD
     B --> D["Composables"]
     B --> E["Nuxt 模組"]
     B --> F["Server Plugins"]
-    B --> G["i18n (zh-TW / en-US)"]
+    B --> G["i18n (zh-Hant-TW / zh-Hans-CN / en-US + fallback)"]
     B --> H["Tailwind CSS v4 主題"]
 
     C --> C1["表單元件 (Input, Select, Date...)"]
