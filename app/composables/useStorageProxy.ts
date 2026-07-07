@@ -30,7 +30,10 @@ class StorageProxy<T> {
   }
 
   public patch = (newValue: T) => {
-    this.storage.value = { ...this.storage.value, ...newValue }
+    this.storage.value = {
+      ...this.storage.value,
+      ...newValue,
+    }
   }
 
   public del = () => {

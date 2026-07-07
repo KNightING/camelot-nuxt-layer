@@ -1,5 +1,3 @@
-import type { PromisifyFn } from '@vueuse/core'
-
 type UseFetchStreamReturn<T> = T & Promise<T>
 
 export const useFetchStream = (
@@ -79,7 +77,9 @@ export const useFetchStream = (
       const reader = response.body.getReader()
 
       while (true) {
-        const { done, value } = await reader.read()
+        const {
+          done, value,
+        } = await reader.read()
 
         if (done) {
           await onFinish?.(data.value) // 串流結束時觸發回呼

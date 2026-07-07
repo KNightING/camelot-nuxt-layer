@@ -6,10 +6,16 @@ export const useRouteWrapper = (path: string) => {
 
   return {
     to: (options?: RouteLocationAsRelativeGeneric | RouteLocationAsPathGeneric) => {
-      return router.push({ path, ...(options ?? {}) })
+      return router.push({
+        path,
+        ...(options ?? {}),
+      })
     },
     replace: (options?: RouteLocationAsRelativeGeneric | RouteLocationAsPathGeneric) => {
-      return router.replace({ path, ...(options ?? {}) })
+      return router.replace({
+        path,
+        ...(options ?? {}),
+      })
     },
     path,
   }

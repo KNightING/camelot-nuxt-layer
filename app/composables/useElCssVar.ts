@@ -1,5 +1,4 @@
 import { computed, ref, watch } from 'vue-demi'
-import type { MaybeRefOrGetter } from '@vueuse/shared'
 import { defaultWindow } from '@vueuse/core'
 import type { ConfigurableWindow, MaybeElementRef } from '@vueuse/core'
 

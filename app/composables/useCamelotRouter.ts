@@ -49,12 +49,18 @@ export class CamelotPath {
   }
 
   public async to(queryAndHash?: RouteQueryAndHash) {
-    return await navigateTo({ path: this._path, ...queryAndHash })
+    return await navigateTo({
+      path: this._path,
+      ...queryAndHash,
+    })
   }
 
   public async replace(queryAndHash?: RouteQueryAndHash) {
     return await navigateTo(
-      { path: this._path, ...queryAndHash },
+      {
+        path: this._path,
+        ...queryAndHash,
+      },
       { replace: true },
     )
   }
@@ -63,7 +69,10 @@ export class CamelotPath {
     queryAndHash?: RouteQueryAndHash
   }) {
     const { single } = useCamelotRouter()
-    return await single({ path: this._path, ...options?.queryAndHash }, { ...options })
+    return await single({
+      path: this._path,
+      ...options?.queryAndHash,
+    }, { ...options })
   }
 
   public append(path: string) {

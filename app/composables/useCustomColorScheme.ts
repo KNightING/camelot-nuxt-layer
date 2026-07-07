@@ -21,7 +21,9 @@ export type CustomColorScheme<T = any> = Material3ColorSchemePartial
 const getCssVar = (key: string, target?: MaybeElementRef) =>
   useElCssVar(`${key}`, target, { inherit: false })
 
-const { system, store } = useColorMode()
+const {
+  system, store,
+} = useColorMode()
 
 const defaultCamelotLightColorScheme: CamelotColorScheme = {
   rippleColor: '#111827',
@@ -33,9 +35,15 @@ const defaultCamelotDarkColorScheme: CamelotColorScheme = {
   maskColor: '#111827',
 }
 
-const globalLightColorScheme = ref<CustomColorScheme<any>>({ ...defaultColorScheme, ...defaultCamelotLightColorScheme })
+const globalLightColorScheme = ref<CustomColorScheme<any>>({
+  ...defaultColorScheme,
+  ...defaultCamelotLightColorScheme,
+})
 
-const globalDarkColorScheme = ref<CustomColorScheme<any>>({ ...defaultDarkColorScheme, ...defaultCamelotDarkColorScheme })
+const globalDarkColorScheme = ref<CustomColorScheme<any>>({
+  ...defaultDarkColorScheme,
+  ...defaultCamelotDarkColorScheme,
+})
 
 /**
  *
@@ -58,7 +66,12 @@ export const useCustomColorScheme = <T>(
     const darkColorScheme = globalDarkColorScheme
     const usedColorScheme = globalDarkColorScheme
 
-    return { mode: store, lightColorScheme, darkColorScheme, usedColorScheme }
+    return {
+      mode: store,
+      lightColorScheme,
+      darkColorScheme,
+      usedColorScheme,
+    }
   }
 
   const isGlobal = targetRef === document.documentElement
@@ -152,5 +165,10 @@ export const useCustomColorScheme = <T>(
     }
   })
 
-  return { mode: store, lightColorScheme, darkColorScheme, usedColorScheme }
+  return {
+    mode: store,
+    lightColorScheme,
+    darkColorScheme,
+    usedColorScheme,
+  }
 }

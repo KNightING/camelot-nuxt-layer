@@ -192,7 +192,9 @@ type Material3ColorSchemeConfig = {
   editMode?: boolean
 }
 
-const { system, store } = useColorMode()
+const {
+  system, store,
+} = useColorMode()
 
 const getCssVar = (key: string, target?: MaybeElementRef) =>
   useElCssVar(`--cml-c-m3-${key}`, target, { inherit: false })
@@ -294,5 +296,10 @@ export const useMaterial3ColorScheme = (
     }
   }
 
-  return { mode: store, lightColorScheme, darkColorScheme, usedColorScheme }
+  return {
+    mode: store,
+    lightColorScheme,
+    darkColorScheme,
+    usedColorScheme,
+  }
 }

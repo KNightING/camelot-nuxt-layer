@@ -77,7 +77,10 @@ export const useInputValidationController = () => {
     })
 
     if (firstElement) {
-      firstElement.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      firstElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      })
     }
 
     return hasError

@@ -7,5 +7,8 @@ export const useRandomCatImg = () => {
     url.value = `https://cataas.com/cat?${randomCode}`
   }
   newCat()
-  return { url, newCat }
+  return {
+    url,
+    newCat,
+  }
 }

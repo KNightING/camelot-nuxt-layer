@@ -22,7 +22,10 @@ class CookieProxy<T> {
   }
 
   public patch = (newValue: T) => {
-    this.cookie.value = { ...this.cookie.value, ...newValue }
+    this.cookie.value = {
+      ...this.cookie.value,
+      ...newValue,
+    }
   }
 
   public del = () => {

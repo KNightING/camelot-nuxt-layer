@@ -132,7 +132,13 @@ const isUndefined = (obj: any) => {
 const isNotUndefined = (obj: any) => !isUndefined(obj)
 
 export const useObject = () => {
-  return { diff, isDate, deepClone, isUndefined, isNotUndefined }
+  return {
+    diff,
+    isDate,
+    deepClone,
+    isUndefined,
+    isNotUndefined,
+  }
 }
 
 // const timestamp1 = 1616608200000; // example timestamp
