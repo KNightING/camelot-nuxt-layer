@@ -43,6 +43,10 @@ export const useLoading = () => {
     return state.value.tags.length > 0
   })
 
+  const isOpen = (tag: string) => {
+    return state.value.tags.includes(tag)
+  }
+
   const run = async <R = void>(
     tag: string,
     fn: () => Promise<R | undefined>,
@@ -99,6 +103,7 @@ export const useLoading = () => {
     open,
     close,
     isOpening,
+    isOpen,
     run,
     watch: watcher,
   }
