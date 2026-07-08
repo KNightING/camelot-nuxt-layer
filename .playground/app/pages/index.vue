@@ -898,7 +898,7 @@
             :pinned-top-rows="tablePinned"
             row-key="id"
             stripe
-            max-height="240px"
+            height="480px"
           >
             <template #cell-status="{ value }">
               <span

@@ -6,7 +6,7 @@
     <div
       ref="scrollContainerRef"
       class="w-full overflow-auto"
-      :style="maxHeight ? { maxHeight } : undefined"
+      :style="scrollStyle"
     >
       <table class="w-full min-w-max border-separate border-spacing-0 text-sm text-on-surface">
         <colgroup>
@@ -137,9 +137,12 @@ const props = withDefaults(
     rowKey?: string | ((row: T) => string | number)
     stripe?: boolean
     hover?: boolean
+    /** 固定高度（如 "480px"）：容器維持此高度，內容少時保留空白、多時內部捲動 */
+    height?: string
+    /** 高度上限（如 "480px"）：僅設上限，內容少於上限時容器會縮短 */
     maxHeight?: string
     pinnedTopRows?: T[]
-    /** 虛擬滾動（預設開啟；支援可變列高，需搭配 maxHeight 限制高度才有效益） */
+    /** 虛擬滾動（預設開啟；支援可變列高，需搭配 height 或 maxHeight 限制高度才有效益） */
     virtual?: boolean
     /** 預估列高（px），尚未量測的列以此估算 */
     estimatedRowHeight?: number
@@ -159,6 +162,14 @@ const headRowRef = useTemplateRef<HTMLElement>('headRowRef')
 const { height: headerHeight } = useElementBounding(headRowRef)
 
 const scrollContainerRef = useTemplateRef<HTMLElement>('scrollContainerRef')
+
+// 固定高度（height）優先於高度上限（maxHeight）；兩者皆為選填，未給則容器隨內容伸縮
+const scrollStyle = computed(() => {
+  const style: Record<string, string> = {}
+  if (props.height) style.height = props.height
+  if (props.maxHeight) style.maxHeight = props.maxHeight
+  return style
+})
 
 // 虛擬視窗：sticky header + pinned 列佔據資料列前的固定偏移
 const headerOffset = computed(() => headerHeight.value + props.pinnedTopRows.length * props.estimatedRowHeight)
