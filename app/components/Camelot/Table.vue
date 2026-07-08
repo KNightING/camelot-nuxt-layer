@@ -138,7 +138,6 @@
       :container="scrollContainerRef"
       orientation="vertical"
       :color="color"
-      :start-inset="headerHeight"
     />
   </div>
 </template>
@@ -164,6 +163,10 @@ const props = withDefaults(
     virtual?: boolean
     /** 預估列高（px），尚未量測的列以此估算 */
     estimatedRowHeight?: number
+    /** 是否為垂直捲軸保留固定空間（gutter）；關閉則捲軸直接覆蓋於表格上 */
+    reserveVerticalScrollbar?: boolean
+    /** 是否為水平捲軸保留固定空間（gutter）；關閉則捲軸直接覆蓋於表格上 */
+    reserveHorizontalScrollbar?: boolean
   }>(),
   {
     stripe: false,
@@ -173,6 +176,8 @@ const props = withDefaults(
     pinnedTopRows: () => [],
     virtual: true,
     estimatedRowHeight: 44,
+    reserveVerticalScrollbar: true,
+    reserveHorizontalScrollbar: true,
   },
 )
 
@@ -190,11 +195,10 @@ const scrollContainerRef = useTemplateRef<HTMLElement>('scrollContainerRef')
 // 以「透明 border」（非 padding）保留右/底捲軸空間：overflow 裁切在 padding box（border 之內），
 // 內容不會進到 border 區 → gutter 乾淨、不會漏出捲動內容；固定欄/列也停在 padding box 邊緣。
 const scrollStyle = computed(() => {
-  const style: Record<string, string> = {
-    boxSizing: 'border-box',
-    borderRight: '16px solid transparent',
-    borderBottom: '16px solid transparent',
-  }
+  const style: Record<string, string> = { boxSizing: 'border-box' }
+  // 保留空間關閉時不加 border → 捲軸直接覆蓋於表格上
+  if (props.reserveVerticalScrollbar) style.borderRight = '12px solid transparent'
+  if (props.reserveHorizontalScrollbar) style.borderBottom = '12px solid transparent'
   if (props.height) style.height = props.height
   if (props.maxHeight) style.maxHeight = props.maxHeight
   return style

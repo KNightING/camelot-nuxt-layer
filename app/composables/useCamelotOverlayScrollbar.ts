@@ -4,10 +4,10 @@ export type CamelotScrollbarOrientation = 'horizontal' | 'vertical'
 const MIN_THUMB_SIZE = 40
 
 /** 主軸兩端內縮（px）：捲軸不貼齊起訖邊界 */
-const MAIN_INSET = 8
+const MAIN_INSET = 6
 
 /** 交叉軸內縮（px）：水平→距容器底；垂直→距容器右 */
-const CROSS_INSET = 4
+const CROSS_INSET = 3
 
 /** 水平浮動時距視窗底的間距（px） */
 const VIEWPORT_GAP = 6

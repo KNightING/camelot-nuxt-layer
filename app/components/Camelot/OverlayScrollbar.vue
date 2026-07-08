@@ -86,11 +86,11 @@ const {
 }
 
 .cml-overlay-scrollbar.horizontal {
-  height: 14px;
+  height: 10px;
 }
 
 .cml-overlay-scrollbar.vertical {
-  width: 14px;
+  width: 10px;
 }
 
 /* thumb：命中區（較大好抓取）；主軸尺寸/位移由 composable inline 驅動 */
@@ -102,12 +102,12 @@ const {
 
 .cml-overlay-scrollbar.horizontal .cml-overlay-scrollbar__thumb {
   bottom: 0;
-  height: 14px;
+  height: 10px;
 }
 
 .cml-overlay-scrollbar.vertical .cml-overlay-scrollbar__thumb {
   right: 0;
-  width: 14px;
+  width: 10px;
 }
 
 /* bar：視覺膠囊；固定 12px，放大以 transform 動畫（水平 scaleY 往上、垂直 scaleX 往右）。
@@ -122,7 +122,7 @@ const {
   left: 0;
   right: 0;
   bottom: 0;
-  height: 12px;
+  height: 8px;
   transform-origin: center bottom;
 }
 
@@ -130,7 +130,7 @@ const {
   top: 0;
   bottom: 0;
   right: 0;
-  width: 12px;
+  width: 8px;
   transform-origin: center right; /* 靠右、往左長 */
 }
 </style>

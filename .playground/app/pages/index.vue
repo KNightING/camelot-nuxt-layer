@@ -892,10 +892,20 @@
           <h2 :class="cardTitleClass">
             Table (Fixed header / columns / rows, zebra, hover)
           </h2>
-          <div class="mb-3 flex items-center gap-6">
+          <div class="mb-3 flex flex-wrap items-center gap-6">
             <CamelotSwitch
               v-model="tableFloatingScrollbar"
               label="浮動水平捲軸"
+              :color="currentColorRole"
+            />
+            <CamelotSwitch
+              v-model="tableReserveVertical"
+              label="保留垂直捲軸空間"
+              :color="currentColorRole"
+            />
+            <CamelotSwitch
+              v-model="tableReserveHorizontal"
+              label="保留水平捲軸空間"
               :color="currentColorRole"
             />
           </div>
@@ -908,6 +918,8 @@
             height="480px"
             :color="currentColorRole"
             :floating-scrollbar="tableFloatingScrollbar"
+            :reserve-vertical-scrollbar="tableReserveVertical"
+            :reserve-horizontal-scrollbar="tableReserveHorizontal"
           >
             <template #cell-status="{ value }">
               <span
@@ -1881,6 +1893,8 @@ const stageTotal = ref(8)
 
 // Table demo state
 const tableFloatingScrollbar = ref(true)
+const tableReserveVertical = ref(true)
+const tableReserveHorizontal = ref(true)
 const tableColumns = ref<CamelotTableColumn[]>([
   {
     key: 'id',
