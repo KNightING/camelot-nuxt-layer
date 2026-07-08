@@ -892,6 +892,13 @@
           <h2 :class="cardTitleClass">
             Table (Fixed header / columns / rows, zebra, hover)
           </h2>
+          <div class="mb-3 flex items-center gap-6">
+            <CamelotSwitch
+              v-model="tableFloatingScrollbar"
+              label="浮動水平捲軸"
+              :color="currentColorRole"
+            />
+          </div>
           <CamelotTable
             :columns="tableColumns"
             :data="pagedTableData"
@@ -899,6 +906,8 @@
             row-key="id"
             stripe
             height="480px"
+            :color="currentColorRole"
+            :floating-scrollbar="tableFloatingScrollbar"
           >
             <template #cell-status="{ value }">
               <span
@@ -1871,6 +1880,7 @@ const stageCurrent = ref(3)
 const stageTotal = ref(8)
 
 // Table demo state
+const tableFloatingScrollbar = ref(true)
 const tableColumns = ref<CamelotTableColumn[]>([
   {
     key: 'id',
@@ -1912,6 +1922,31 @@ const tableColumns = ref<CamelotTableColumn[]>([
     width: '170px',
   },
   {
+    key: 'address',
+    title: '地址',
+    width: '280px',
+  },
+  {
+    key: 'email',
+    title: 'Email',
+    width: '240px',
+  },
+  {
+    key: 'hours',
+    title: '營業時間',
+    width: '180px',
+  },
+  {
+    key: 'manager',
+    title: '店長',
+    width: '140px',
+  },
+  {
+    key: 'note',
+    title: '備註',
+    width: '200px',
+  },
+  {
     key: 'status',
     title: '狀態',
     width: '110px',
@@ -1929,6 +1964,11 @@ const tablePinned = ref([
     rating: '4.9',
     price: '$$$',
     phone: '02-0000-0000',
+    address: '台北市中正區重慶南路一段 1 號',
+    email: 'featured@example.com',
+    hours: '10:00–22:00',
+    manager: '總監',
+    note: '精選店家',
     status: 'active',
   },
 ])
@@ -1942,6 +1982,11 @@ const tableData = ref(
     rating: (3 + (i % 20) / 10).toFixed(1),
     price: `$${100 + i * 15}`,
     phone: `02-1234-${1000 + i}`,
+    address: `台北市信義區松壽路 ${i + 1} 號 ${(i % 12) + 1} 樓`,
+    email: `store${i + 1}@example.com`,
+    hours: ['11:00–21:00', '10:30–22:00', '12:00–20:30'][i % 3] ?? '',
+    manager: `${['王', '李', '陳', '林'][i % 4]}經理`,
+    note: `近期評論 ${i * 3 + 5} 則`,
     status: i % 3 === 0 ? 'inactive' : 'active',
   })),
 )

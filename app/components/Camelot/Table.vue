@@ -1,12 +1,13 @@
 <template>
   <div
     class="relative w-full overflow-hidden"
-    :class="containerClass"
+    :class="[containerClass, roleColorClass]"
   >
     <div
       ref="scrollContainerRef"
-      class="w-full overflow-auto"
+      class="cml-table-scroll w-full overflow-x-hidden overflow-y-auto"
       :style="scrollStyle"
+      @wheel="onWheelHorizontal"
     >
       <table class="w-full min-w-max border-separate border-spacing-0 text-sm text-on-surface">
         <colgroup>
@@ -22,7 +23,7 @@
             <th
               v-for="col in columns"
               :key="col.key"
-              class="border-b border-outline-variant px-4 py-2.5 font-medium whitespace-nowrap"
+              class="border-b-2 px-4 py-2.5 font-medium whitespace-nowrap"
               :class="[headerCellClass, alignClass(col), fixedShadowClass(col)]"
               :style="headCellStyle(col)"
             >
@@ -126,6 +127,35 @@
         </tbody>
       </table>
     </div>
+
+    <!-- 水平捲軸：docked 時保留在容器內（被圓角裁切、左右內縮）；需浮動時才 Teleport 至 body 固定視窗底 -->
+    <Teleport
+      to="body"
+      :disabled="!floatingBarFloating"
+    >
+      <div
+        v-if="floatingVisible"
+        class="cml-floating-scrollbar"
+        :class="{ 'cml-floating-scrollbar--floating': floatingBarFloating }"
+        :style="floatingTrackStyle"
+      >
+        <div
+          class="cml-floating-scrollbar__thumb"
+          :style="floatingThumbStyle"
+          @pointerdown="floatingOnThumbDown"
+          @pointermove="floatingOnThumbMove"
+          @pointerup="floatingOnThumbUp"
+          @pointercancel="floatingOnThumbUp"
+          @pointerenter="floatingOnThumbEnter"
+          @pointerleave="floatingOnThumbLeave"
+        >
+          <div
+            class="cml-floating-scrollbar__bar"
+            :style="floatingBarStyle"
+          />
+        </div>
+      </div>
+    </Teleport>
   </div>
 </template>
 
@@ -137,10 +167,14 @@ const props = withDefaults(
     rowKey?: string | ((row: T) => string | number)
     stripe?: boolean
     hover?: boolean
+    /** 色彩角色：套用於捲軸、列 hover 底色、表頭底線等強調處 */
+    color?: CamelotColorRole
     /** 固定高度（如 "480px"）：容器維持此高度，內容少時保留空白、多時內部捲動 */
     height?: string
     /** 高度上限（如 "480px"）：僅設上限，內容少於上限時容器會縮短 */
     maxHeight?: string
+    /** 浮動水平捲軸（預設開啟）：表格底部落在視窗外時，於視窗底浮現一條與表格同步的水平捲軸 */
+    floatingScrollbar?: boolean
     pinnedTopRows?: T[]
     /** 虛擬滾動（預設開啟；支援可變列高，需搭配 height 或 maxHeight 限制高度才有效益） */
     virtual?: boolean
@@ -150,6 +184,8 @@ const props = withDefaults(
   {
     stripe: false,
     hover: true,
+    color: 'primary',
+    floatingScrollbar: true,
     pinnedTopRows: () => [],
     virtual: true,
     estimatedRowHeight: 44,
@@ -158,10 +194,24 @@ const props = withDefaults(
 
 const { themeMode } = useCamelotTheme()
 
+// 色彩角色 → 設定 --cml-color-current-color 的 class（套在根元素，供表頭/列取用）
+const roleColorClass = useCamelotRoleColorClass(() => props.color)
+
 const headRowRef = useTemplateRef<HTMLElement>('headRowRef')
 const { height: headerHeight } = useElementBounding(headRowRef)
 
 const scrollContainerRef = useTemplateRef<HTMLElement>('scrollContainerRef')
+
+// overflow-x: hidden 會關閉使用者水平捲動，故以 wheel handler 補回觸控板水平滑動 / shift+滾輪
+const onWheelHorizontal = (e: WheelEvent) => {
+  const el = scrollContainerRef.value
+  if (!el || el.scrollWidth <= el.clientWidth) return
+  const dx = e.deltaX !== 0 ? e.deltaX : (e.shiftKey ? e.deltaY : 0)
+  if (dx === 0) return
+  // 設定 scrollLeft 會觸發容器 scroll 事件，composable 會據以更新捲軸 thumb 位置
+  el.scrollLeft += dx
+  e.preventDefault()
+}
 
 // 固定高度（height）優先於高度上限（maxHeight）；兩者皆為選填，未給則容器隨內容伸縮
 const scrollStyle = computed(() => {
@@ -170,6 +220,25 @@ const scrollStyle = computed(() => {
   if (props.maxHeight) style.maxHeight = props.maxHeight
   return style
 })
+
+// 浮動水平捲軸（表格底在視窗外時於視窗底附近浮現，自訂可拖曳 thumb 與容器同步）
+const {
+  visible: floatingVisible,
+  floating: floatingBarFloating,
+  trackStyle: floatingTrackStyle,
+  thumbStyle: floatingThumbStyle,
+  barStyle: floatingBarStyle,
+  onThumbDown: floatingOnThumbDown,
+  onThumbMove: floatingOnThumbMove,
+  onThumbUp: floatingOnThumbUp,
+  onThumbEnter: floatingOnThumbEnter,
+  onThumbLeave: floatingOnThumbLeave,
+} = useCamelotFloatingScrollbar(
+  scrollContainerRef,
+  () => props.floatingScrollbar,
+  // 浮動軸 Teleport 至 body，改以全域角色色變數 var(--color-{role}) 上色
+  () => `var(--color-${props.color})`,
+)
 
 // 虛擬視窗：sticky header + pinned 列佔據資料列前的固定偏移
 const headerOffset = computed(() => headerHeight.value + props.pinnedTopRows.length * props.estimatedRowHeight)
@@ -280,6 +349,8 @@ const headCellStyle = (col: CamelotTableColumn<T>) => ({
   position: 'sticky' as const,
   top: '0px',
   zIndex: col.fixed ? 30 : 20,
+  // 表頭底線走色彩角色（inline 確定生效，避免 Tailwind arbitrary border-color 未產生）
+  borderBottomColor: `var(--color-${props.color})`,
   ...stickyXStyle(col),
 })
 
@@ -330,7 +401,9 @@ const rowBgClass = (index: number) => {
   return index % 2 === 0 ? 'bg-surface' : 'bg-surface-container-low'
 }
 
-const hoverClass = computed(() => (props.hover ? 'group-hover:bg-surface-container-highest' : ''))
+// hover 底色以 scoped CSS（.cml-row-hover）驅動，走 --cml-color-current-color；
+// 避免 Tailwind 未生成 color-mix arbitrary utility 的問題。
+const hoverClass = computed(() => (props.hover ? 'cml-row-hover' : ''))
 
 const containerClass = computed(() => {
   switch (themeMode.value) {
@@ -356,3 +429,72 @@ const getRowKey = (row: T, index: number): string | number => {
   return index
 }
 </script>
+
+<style scoped>
+/* 表格容器：水平方向 overflow-x hidden（不顯示原生橫軸、改用自訂 .cml-floating-scrollbar，
+   水平捲動由 wheel handler + 自訂軸拖曳驅動）；垂直方向保留原生捲軸並加粗、圓角、走主題色。
+   註：不設標準的 scrollbar-width / scrollbar-color——在現代 Chrome 設了會關閉 ::-webkit-scrollbar
+   自訂並改用較細的標準捲軸；此處以 webkit 偽元素取得 12px 加粗捲軸（Windows/Chrome 主要對象）。 */
+.cml-table-scroll::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+.cml-table-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.cml-table-scroll::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--cml-c-m3-on-surface-variant) 60%, transparent);
+  border-radius: 9999px;
+  /* 透明邊 + padding-box 讓 thumb 內縮成膠囊狀 */
+  border: 3px solid transparent;
+  background-clip: padding-box;
+}
+
+.cml-table-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--cml-c-m3-on-surface);
+  background-clip: padding-box;
+}
+
+/* 列 hover 底色：走色彩角色（--cml-color-current-color 由根元素 roleColorClass 注入並向下繼承）。
+   必須「不透明」（與 surface 混色，而非 transparent），否則固定欄位 sticky 儲存格 hover 時會透出底下捲動的內容。 */
+.cml-table-scroll tbody tr:hover td.cml-row-hover {
+  background-color: color-mix(in srgb, var(--cml-color-current-color) 14%, var(--color-surface-container-highest));
+}
+
+/* 自訂水平捲軸：定位(position/left/right/bottom)由 composable 依 docked/浮動 態 inline 給值。
+   docked 態在容器內（被圓角 overflow 裁切）；浮動態 Teleport 至 body 固定視窗底。
+   僅 thumb 可互動，不攔截其餘點擊。 */
+.cml-floating-scrollbar {
+  z-index: 35;
+  height: 14px;
+  pointer-events: none;
+}
+
+.cml-floating-scrollbar--floating {
+  z-index: 40;
+}
+
+/* thumb：命中區（較高好抓取）；定位/cursor 由 composable inline 驅動 */
+.cml-floating-scrollbar__thumb {
+  position: absolute;
+  bottom: 0;
+  height: 14px;
+  pointer-events: auto;
+  touch-action: none;
+}
+
+/* bar：視覺膠囊；固定 12px，放大以 transform: scaleY 動畫（origin 底部，往上長）。
+   顏色/淡邊由 composable inline 驅動。 */
+.cml-floating-scrollbar__bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 12px;
+  transform-origin: center bottom;
+  border-radius: 9999px;
+  transition: transform 150ms ease, background-color 150ms ease, box-shadow 150ms ease;
+}
+</style>
