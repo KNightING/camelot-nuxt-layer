@@ -5,9 +5,8 @@
   >
     <div
       ref="scrollContainerRef"
-      class="cml-table-scroll w-full overflow-x-hidden overflow-y-auto"
+      class="cml-table-scroll w-full overflow-auto"
       :style="scrollStyle"
-      @wheel="onWheelHorizontal"
     >
       <table class="w-full min-w-max border-separate border-spacing-0 text-sm text-on-surface">
         <colgroup>
@@ -128,34 +127,19 @@
       </table>
     </div>
 
-    <!-- 水平捲軸：docked 時保留在容器內（被圓角裁切、左右內縮）；需浮動時才 Teleport 至 body 固定視窗底 -->
-    <Teleport
-      to="body"
-      :disabled="!floatingBarFloating"
-    >
-      <div
-        v-if="floatingVisible"
-        class="cml-floating-scrollbar"
-        :class="{ 'cml-floating-scrollbar--floating': floatingBarFloating }"
-        :style="floatingTrackStyle"
-      >
-        <div
-          class="cml-floating-scrollbar__thumb"
-          :style="floatingThumbStyle"
-          @pointerdown="floatingOnThumbDown"
-          @pointermove="floatingOnThumbMove"
-          @pointerup="floatingOnThumbUp"
-          @pointercancel="floatingOnThumbUp"
-          @pointerenter="floatingOnThumbEnter"
-          @pointerleave="floatingOnThumbLeave"
-        >
-          <div
-            class="cml-floating-scrollbar__bar"
-            :style="floatingBarStyle"
-          />
-        </div>
-      </div>
-    </Teleport>
+    <!-- 自訂 overlay 捲軸：水平（docked/可浮動）與垂直（右側 docked），皆走色彩角色 -->
+    <CamelotOverlayScrollbar
+      :container="scrollContainerRef"
+      orientation="horizontal"
+      :floating-enabled="floatingScrollbar"
+      :color="color"
+    />
+    <CamelotOverlayScrollbar
+      :container="scrollContainerRef"
+      orientation="vertical"
+      :color="color"
+      :start-inset="headerHeight"
+    />
   </div>
 </template>
 
@@ -202,43 +186,19 @@ const { height: headerHeight } = useElementBounding(headRowRef)
 
 const scrollContainerRef = useTemplateRef<HTMLElement>('scrollContainerRef')
 
-// overflow-x: hidden 會關閉使用者水平捲動，故以 wheel handler 補回觸控板水平滑動 / shift+滾輪
-const onWheelHorizontal = (e: WheelEvent) => {
-  const el = scrollContainerRef.value
-  if (!el || el.scrollWidth <= el.clientWidth) return
-  const dx = e.deltaX !== 0 ? e.deltaX : (e.shiftKey ? e.deltaY : 0)
-  if (dx === 0) return
-  // 設定 scrollLeft 會觸發容器 scroll 事件，composable 會據以更新捲軸 thumb 位置
-  el.scrollLeft += dx
-  e.preventDefault()
-}
-
-// 固定高度（height）優先於高度上限（maxHeight）；兩者皆為選填，未給則容器隨內容伸縮
+// 固定高度（height）優先於高度上限（maxHeight）；兩者皆為選填，未給則容器隨內容伸縮。
+// 以「透明 border」（非 padding）保留右/底捲軸空間：overflow 裁切在 padding box（border 之內），
+// 內容不會進到 border 區 → gutter 乾淨、不會漏出捲動內容；固定欄/列也停在 padding box 邊緣。
 const scrollStyle = computed(() => {
-  const style: Record<string, string> = {}
+  const style: Record<string, string> = {
+    boxSizing: 'border-box',
+    borderRight: '16px solid transparent',
+    borderBottom: '16px solid transparent',
+  }
   if (props.height) style.height = props.height
   if (props.maxHeight) style.maxHeight = props.maxHeight
   return style
 })
-
-// 浮動水平捲軸（表格底在視窗外時於視窗底附近浮現，自訂可拖曳 thumb 與容器同步）
-const {
-  visible: floatingVisible,
-  floating: floatingBarFloating,
-  trackStyle: floatingTrackStyle,
-  thumbStyle: floatingThumbStyle,
-  barStyle: floatingBarStyle,
-  onThumbDown: floatingOnThumbDown,
-  onThumbMove: floatingOnThumbMove,
-  onThumbUp: floatingOnThumbUp,
-  onThumbEnter: floatingOnThumbEnter,
-  onThumbLeave: floatingOnThumbLeave,
-} = useCamelotFloatingScrollbar(
-  scrollContainerRef,
-  () => props.floatingScrollbar,
-  // 浮動軸 Teleport 至 body，改以全域角色色變數 var(--color-{role}) 上色
-  () => `var(--color-${props.color})`,
-)
 
 // 虛擬視窗：sticky header + pinned 列佔據資料列前的固定偏移
 const headerOffset = computed(() => headerHeight.value + props.pinnedTopRows.length * props.estimatedRowHeight)
@@ -431,70 +391,19 @@ const getRowKey = (row: T, index: number): string | number => {
 </script>
 
 <style scoped>
-/* 表格容器：水平方向 overflow-x hidden（不顯示原生橫軸、改用自訂 .cml-floating-scrollbar，
-   水平捲動由 wheel handler + 自訂軸拖曳驅動）；垂直方向保留原生捲軸並加粗、圓角、走主題色。
-   註：不設標準的 scrollbar-width / scrollbar-color——在現代 Chrome 設了會關閉 ::-webkit-scrollbar
-   自訂並改用較細的標準捲軸；此處以 webkit 偽元素取得 12px 加粗捲軸（Windows/Chrome 主要對象）。 */
+/* 表格容器：overflow:auto 保留原生捲動行為（滾輪/觸控/鍵盤），但隱藏原生捲軸——
+   兩軸皆改由自訂 CamelotOverlayScrollbar 呈現。 */
+.cml-table-scroll {
+  scrollbar-width: none; /* Firefox */
+}
+
 .cml-table-scroll::-webkit-scrollbar {
-  width: 12px;
-  height: 12px;
-}
-
-.cml-table-scroll::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.cml-table-scroll::-webkit-scrollbar-thumb {
-  background: color-mix(in srgb, var(--cml-c-m3-on-surface-variant) 60%, transparent);
-  border-radius: 9999px;
-  /* 透明邊 + padding-box 讓 thumb 內縮成膠囊狀 */
-  border: 3px solid transparent;
-  background-clip: padding-box;
-}
-
-.cml-table-scroll::-webkit-scrollbar-thumb:hover {
-  background: var(--cml-c-m3-on-surface);
-  background-clip: padding-box;
+  display: none; /* Chrome / Safari */
 }
 
 /* 列 hover 底色：走色彩角色（--cml-color-current-color 由根元素 roleColorClass 注入並向下繼承）。
    必須「不透明」（與 surface 混色，而非 transparent），否則固定欄位 sticky 儲存格 hover 時會透出底下捲動的內容。 */
 .cml-table-scroll tbody tr:hover td.cml-row-hover {
   background-color: color-mix(in srgb, var(--cml-color-current-color) 14%, var(--color-surface-container-highest));
-}
-
-/* 自訂水平捲軸：定位(position/left/right/bottom)由 composable 依 docked/浮動 態 inline 給值。
-   docked 態在容器內（被圓角 overflow 裁切）；浮動態 Teleport 至 body 固定視窗底。
-   僅 thumb 可互動，不攔截其餘點擊。 */
-.cml-floating-scrollbar {
-  z-index: 35;
-  height: 14px;
-  pointer-events: none;
-}
-
-.cml-floating-scrollbar--floating {
-  z-index: 40;
-}
-
-/* thumb：命中區（較高好抓取）；定位/cursor 由 composable inline 驅動 */
-.cml-floating-scrollbar__thumb {
-  position: absolute;
-  bottom: 0;
-  height: 14px;
-  pointer-events: auto;
-  touch-action: none;
-}
-
-/* bar：視覺膠囊；固定 12px，放大以 transform: scaleY 動畫（origin 底部，往上長）。
-   顏色/淡邊由 composable inline 驅動。 */
-.cml-floating-scrollbar__bar {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 12px;
-  transform-origin: center bottom;
-  border-radius: 9999px;
-  transition: transform 150ms ease, background-color 150ms ease, box-shadow 150ms ease;
 }
 </style>
