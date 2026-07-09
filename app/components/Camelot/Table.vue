@@ -196,9 +196,10 @@ const scrollContainerRef = useTemplateRef<HTMLElement>('scrollContainerRef')
 // 內容不會進到 border 區 → gutter 乾淨、不會漏出捲動內容；固定欄/列也停在 padding box 邊緣。
 const scrollStyle = computed(() => {
   const style: Record<string, string> = { boxSizing: 'border-box' }
-  // 保留空間關閉時不加 border → 捲軸直接覆蓋於表格上
-  if (props.reserveVerticalScrollbar) style.borderRight = '12px solid transparent'
-  if (props.reserveHorizontalScrollbar) style.borderBottom = '12px solid transparent'
+  // 保留空間關閉時不加 border → 捲軸直接覆蓋於表格上。
+  // gutter 寬度 = CROSS_INSET(2) + 未 hover bar(4) = 6px，與未 hover 捲軸一致。
+  if (props.reserveVerticalScrollbar) style.borderRight = '6px solid transparent'
+  if (props.reserveHorizontalScrollbar) style.borderBottom = '6px solid transparent'
   if (props.height) style.height = props.height
   if (props.maxHeight) style.maxHeight = props.maxHeight
   return style

@@ -7,7 +7,7 @@ const MIN_THUMB_SIZE = 40
 const MAIN_INSET = 6
 
 /** 交叉軸內縮（px）：水平→距容器底；垂直→距容器右 */
-const CROSS_INSET = 3
+const CROSS_INSET = 2
 
 /** 水平浮動時距視窗底的間距（px） */
 const VIEWPORT_GAP = 6
