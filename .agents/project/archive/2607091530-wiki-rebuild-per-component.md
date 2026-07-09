@@ -1,10 +1,10 @@
 <!-- REMINDER: Relative Paths Only! -->
 # Plan: 2607091530 - Wiki 重建：每個 component/composable 獨立 API 頁 + 矩陣索引
 
-- Created: 2026-07-09
+- Created: 2026-07-09 15:30
 - Branch: main
-- Status: In Progress
-- Completed: [Wait for Finish]
+- Status: Done
+- Completed: 2026-07-09 16:10
 
 ## Goals
 
@@ -21,6 +21,14 @@
 ## Verification
 
 - 抽查數頁 props/emits/v-model 與原始碼一致；矩陣連結不斷。
+
+## Outcome
+
+- 產生 89 元件頁 + 48 composable 頁，共 137 個獨立 API 頁。
+- 新增 `wiki/components.md`、`wiki/composables.md` 分類矩陣索引。
+- `wiki/index.md` 改為 hub（內嵌大矩陣改指向兩矩陣頁，保留模組/server/架構/主題頁）。
+- 抽查 `Table.md`、`useCamelotToast.md` props/回傳/型別與原始碼一致。
+- Commit `7ea118b`，已推送 main（142 files changed）。
 
 ## References
 
