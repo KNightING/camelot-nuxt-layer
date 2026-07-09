@@ -29,7 +29,7 @@
 - 新增：`app/components/Camelot/ProgressBar.vue`、`ProgressCircle.vue`、`ProgressStage.vue`
 - 修改：`app/assets/css/tailwind.css`、`.playground/app/pages/index.vue`
 - 附帶：`app/components/Camelot/SelectV2.vue`、`DateV2.vue`、`DateRangeV2.vue`
-- Wiki：`.agents/project/wiki/features/progress-components.md`
+- Wiki：`.kn-project/wiki/features/progress-components.md`
 
 ## 元件 API（最終）
 

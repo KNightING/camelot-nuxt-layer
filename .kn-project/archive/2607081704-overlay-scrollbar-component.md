@@ -53,7 +53,7 @@
 | `app/components/Camelot/OverlayScrollbar.vue` | 新增呈現元件 |
 | `app/components/Camelot/Table.vue` | 改用兩個 OverlayScrollbar;容器改 overflow:auto + 隱藏雙軸原生;移除 wheel workaround |
 | `.playground/app/pages/index.vue` | demo 視需要展示垂直捲軸 |
-| `.agents/project/wiki/features/layout-data-components.md` | Phase 5 補元件說明 |
+| `.kn-project/wiki/features/layout-data-components.md` | Phase 5 補元件說明 |
 
 ## Open Decisions（請確認）
 

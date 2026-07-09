@@ -62,8 +62,8 @@
 - [x] wiki 功能矩陣 + layout-data-components 節點
 
 ## References
-- 主題系統：`.agents/project/wiki/features/theme-system.md`
-- 版面/資料元件：`.agents/project/wiki/features/layout-data-components.md`
+- 主題系統：`.kn-project/wiki/features/theme-system.md`
+- 版面/資料元件：`.kn-project/wiki/features/layout-data-components.md`
 - 定位/浮層既有實作參考：`app/components/Camelot/PopupV2.vue`
 - CurrentColor：`app/composables/useCamelotRoleColorClass.ts`、`app/assets/css/tailwind.css`（`aqua-*` utility）
 - 既有 Menu：`app/components/Camelot/Menu.vue`、`app/components/Camelot/Internal/MenuItem.vue`、`shared/types/menu.ts`

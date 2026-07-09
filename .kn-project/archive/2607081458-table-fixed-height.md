@@ -40,7 +40,7 @@
 | :--- | :--- |
 | `app/components/Camelot/Table.vue` | 新增 `height` prop + `scrollStyle` computed,模板 `:style` 改用之 |
 | `.playground/app/pages/index.vue` | demo 由 `max-height` 改 `height` 示範固定高度 |
-| `.agents/project/wiki/features/layout-data-components.md` | 補 Table `height` prop 說明(Phase 5 歸檔時) |
+| `.kn-project/wiki/features/layout-data-components.md` | 補 Table `height` prop 說明(Phase 5 歸檔時) |
 
 ## Verification
 
@@ -58,7 +58,7 @@
 
 ## References
 
-- 相關 Wiki:`.agents/project/wiki/features/layout-data-components.md`(Table 元件)
+- 相關 Wiki:`.kn-project/wiki/features/layout-data-components.md`(Table 元件)
 
 ## Tasks (完成)
 

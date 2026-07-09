@@ -119,7 +119,7 @@ export const useCamelotFloatingScrollbar = (
 | `app/composables/useCamelotFloatingScrollbar.ts` | 新增 composable |
 | `app/components/Camelot/Table.vue` | 新增 `floatingScrollbar` prop、Teleport 代理捲軸、scoped 樣式 |
 | `.playground/app/pages/index.vue` | demo 啟用 `floating-scrollbar` 示範 |
-| `.agents/project/wiki/features/layout-data-components.md` | 補說明(Phase 5 歸檔) |
+| `.kn-project/wiki/features/layout-data-components.md` | 補說明(Phase 5 歸檔) |
 
 ## Verification
 
@@ -138,7 +138,7 @@ export const useCamelotFloatingScrollbar = (
 ## References
 
 - 模式別名:sticky / floating / overlay horizontal scrollbar(proxy scrollbar）
-- 相關 Wiki:`.agents/project/wiki/features/layout-data-components.md`(Table)
+- 相關 Wiki:`.kn-project/wiki/features/layout-data-components.md`(Table)
 - 前置功能:計畫 `2607081458`(Table `height` prop)
 
 ## Tasks (完成)

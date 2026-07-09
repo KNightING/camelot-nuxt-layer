@@ -1,6 +1,6 @@
 # AI Agents 治理與協作指南 (AGENTS.md)
 
-這個資料夾 `.agents` 用於存放由 AI Agents 產生的開發文件，協助追蹤專案進度、設計決策與技術規格。
+這個資料夾 `.kn-project` 用於存放由 AI Agents 產生的開發文件，協助追蹤專案進度、設計決策與技術規格。
 
 ## 強制技能調度：kn:project:precision-workflow-manager
 
@@ -9,7 +9,7 @@
 ### 1. 技能啟動條件 (Skill Activation)
 當 Agent 接收到包含以下指令或意圖時，**必須主動讀取並調用** `kn:project:precision-workflow-manager`：
 - **關鍵行為**：`build`, `create`, `modify`, `fix`, `add`, `implement`, `refactor`, `setup`, `optimize`, `change`, `rework`, `debug`.
-- **檔案變更**：涉及 `.vue`, `.ts`, `.js`, `.py`, `.rs`, `.go` 等邏輯檔案，或 `.agents/` 目錄下的文件。
+- **檔案變更**：涉及 `.vue`, `.ts`, `.js`, `.py`, `.rs`, `.go` 等邏輯檔案，或 `.kn-project/` 目錄下的文件。
 
 ### 2. 治理審核閘口 (Governance Gates)
 啟動技能後，Agent 必須遵循技能規範中的審核點：
@@ -18,16 +18,14 @@
 
 ---
 
-## 📂 目錄結構
+## 📂 目錄結構 (`.kn-project/`)
 
-- `project/`: 專案核心文件。
-  - `project.md`: 專案入口 (Portal)，提供 Wiki 快速導覽。
-  - `governance.md`: 專案治理與 Git 操作規範。
-  - `wiki/`: 專案百科 (Graph 關聯系統)，收錄架構、技術棧與功能細節。
-  - `plans.md`: 當前執行中的計畫索引。
-  - `archive.md`: 已完成計畫的歷史紀錄。
-  - `plans/`: 存放各個開發計畫的細節（`plan.md`, `tasks.md`）。
-  - `archive/`: 存放已歸檔的計畫文件。
+- `project.md`: 專案入口 (Portal)，提供 Wiki 快速導覽與核心大腦。
+- `wiki/`: 專案百科 (Graph 關聯系統)，收錄架構、技術棧與功能細節。
+- `plans.md`: 當前執行中的計畫索引。
+- `archive.md`: 已完成計畫的歷史紀錄。
+- `plans/`: 存放各個開發計畫的細節（`plan.md`, `tasks.md`）。
+- `archive/`: 存放已歸檔的計畫文件。
 
 ---
-[📈 專案入口](./.agents/project/project.md) | [⚖️ 治理規範](./.agents/project/governance.md)
+[📈 專案入口](./.kn-project/project.md) | [📚 Wiki](./.kn-project/wiki/index.md)

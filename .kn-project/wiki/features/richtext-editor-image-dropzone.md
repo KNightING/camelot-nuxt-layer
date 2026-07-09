@@ -29,7 +29,7 @@ TipTap 驅動的 WYSIWYG 編輯器。
 ## References
 - 來源（私有）：https://github.com/sl-digital-lwd/sld-official-website-webapp — `app/components/operator/RichTextEditor.vue` 及 `editor/*`
 - TipTap v3：https://tiptap.dev
-- 計畫歸檔：`.agents/project/archive/2606091129-richtext-editor-image-dropzone.md`
+- 計畫歸檔：`.kn-project/archive/2606091129-richtext-editor-image-dropzone.md`
 - 相關：[主題系統](./theme-system.md)（`--color-border` token）
 
 ---

@@ -3,7 +3,7 @@
 本頁記錄 Camelot Nuxt Layer 中日期選擇器家族的架構、Props 規格與互動流程。
 
 > [!WARNING]
-> `DateV2` 與 `DateRangeV2` 元件正在**重構進行中 (🚧)**，相關計畫請見 `.agents/project/plans/`。
+> `DateV2` 與 `DateRangeV2` 元件正在**重構進行中 (🚧)**，相關計畫請見 `.kn-project/plans/`。
 
 ---
 

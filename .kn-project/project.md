@@ -36,7 +36,7 @@ camelot-nuxt-layer/
 │   ├── api/                 # Nitro API Endpoints
 │   └── plugins/             # Nitro Server Plugins (securityPlugin)
 ├── shared/types/            # 共用型別
-└── .agents/project/         # AI 治理文件
+└── .kn-project/         # AI 治理文件
 ```
 
 ---

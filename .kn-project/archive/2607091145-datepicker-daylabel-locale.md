@@ -56,7 +56,7 @@
 | `app/components/Camelot/DateV2.vue` | 轉發三個新 prop |
 | `app/components/Camelot/DateRangeV2.vue` | 轉發三個新 prop |
 | `.playground/app/pages/index.vue` | 語系切換 + 緊湊版 demo |
-| `.agents/project/wiki/features/calendar.md` | Phase 5 補 props 說明 |
+| `.kn-project/wiki/features/calendar.md` | Phase 5 補 props 說明 |
 
 ## 已定案決定（依使用者）
 
@@ -83,7 +83,7 @@
 
 - 既有：`Internal/Calendar.vue`（getDayAttributes / CalendarDayAttributes / weekDays / monthNames）
 - MDN：`Intl.DateTimeFormat`、`Intl.Locale.weekInfo`
-- 相關 Wiki：`.agents/project/wiki/features/calendar.md`
+- 相關 Wiki：`.kn-project/wiki/features/calendar.md`
 
 ## Tasks (完成)
 

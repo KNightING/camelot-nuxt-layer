@@ -41,7 +41,7 @@ flowchart TD
 
 ## References
 - 實作：`app/composables/useLocale.ts`
-- 計畫歸檔：`.agents/project/archive/2606261225-use-locale-cldr-l10n.md`
+- 計畫歸檔：`.kn-project/archive/2606261225-use-locale-cldr-l10n.md`
 - 對照表資料來源：使用者提供之 CLDR locale → script/region 清單
 - 專案 i18n 語系註冊與 fallback 鏈：[[i18n-locales]]([i18n 語系系統](./i18n-locales.md))
 

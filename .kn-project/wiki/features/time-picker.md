@@ -25,7 +25,7 @@
 
 ## References
 - 參考：`app/components/Camelot/DateV2.vue`、`Internal/TimeRow.vue`
-- 計畫歸檔：`.agents/project/archive/2606092138-time-picker-component.md`
+- 計畫歸檔：`.kn-project/archive/2606092138-time-picker-component.md`
 
 ---
 

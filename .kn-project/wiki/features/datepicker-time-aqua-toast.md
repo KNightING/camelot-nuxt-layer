@@ -24,7 +24,7 @@
 - **center 不跳動**：center 堆疊移除 `-translate-y-1/2`，改頂端錨點由中心往下堆疊，新增通知不再瞬間重新置中／推擠既有通知。
 
 ## References
-- 計畫：`.agents/project/archive/2606082359-daterange-time-aqua-toast.md`
+- 計畫：`.kn-project/archive/2606082359-daterange-time-aqua-toast.md`
 - 相關 Wiki：[Calendar](./calendar.md)、[主題系統](./theme-system.md)、[Pagination/Virtual/Carousel 批次](./pagination-virtualscroll-carousel.md)
 - 浮層落影裁切前例：[[popup-shadow-clip-pattern]]
 

@@ -60,7 +60,7 @@
 - 既有 aqua 參考實作：`app/components/Camelot/Tabs.vue`（aqua-pill-indicator / aqua-tab）
 - 主題管理：`app/composables/useCamelotTheme.ts`（`CamelotThemeMode = 'material' | 'cupertino' | 'scifi' | 'aqua'`）
 - 色彩 token：`app/assets/css/tailwind.css`、`app/composables/useCustomColorScheme.ts`
-- 歸檔參考：`.agents/project/archive/2606051746-implement-cyber-style.md`（被 aqua 取代之風格）
+- 歸檔參考：`.kn-project/archive/2606051746-implement-cyber-style.md`（被 aqua 取代之風格）
 
 ---
 
