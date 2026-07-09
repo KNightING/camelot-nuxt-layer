@@ -71,6 +71,12 @@
             :time-precision="timePrecision"
             :hour-format="hourFormat"
             :get-day-attributes="getDayAttributes"
+            :show-day-label="showDayLabel"
+            :locale="locale"
+            :week-starts-on="weekStartsOn"
+            :weekday-formatter="weekdayFormatter"
+            :month-formatter="monthFormatter"
+            :year-formatter="yearFormatter"
             @update:model-value="onDateSelect"
           >
             <template
@@ -124,6 +130,12 @@
             :time-precision="timePrecision"
             :hour-format="hourFormat"
             :get-day-attributes="getDayAttributes"
+            :show-day-label="showDayLabel"
+            :locale="locale"
+            :week-starts-on="weekStartsOn"
+            :weekday-formatter="weekdayFormatter"
+            :month-formatter="monthFormatter"
+            :year-formatter="yearFormatter"
             @update:model-value="onDateSelect"
           >
             <template
@@ -188,6 +200,18 @@ const props = withDefaults(defineProps<{
   label?: string
   required?: boolean
   getDayAttributes?: (date: Date, dayOfWeek: number) => CalendarDayAttributes | undefined | null
+  /** 是否顯示日期下方 label；關閉則不渲染、格高緊湊 */
+  showDayLabel?: boolean
+  /** BCP47 語系（未給→預設中文；給了走 Intl 產生週/月/年月名） */
+  locale?: string
+  /** 週起始：0=週日、1=週一 */
+  weekStartsOn?: 0 | 1
+  /** 自訂週名（覆蓋 locale/預設） */
+  weekdayFormatter?: (date: Date, index: number) => string
+  /** 自訂月名 */
+  monthFormatter?: (monthIndex: number) => string
+  /** 自訂年標題 */
+  yearFormatter?: (year: number) => string
 }>(), {
   showType: 'auto',
   placeholder: 'YYYY-MM-DD',
@@ -195,6 +219,8 @@ const props = withDefaults(defineProps<{
   timePrecision: 'second',
   hourFormat: '24',
   color: 'primary',
+  showDayLabel: true,
+  weekStartsOn: 0,
 })
 
 const roleColorClass = useCamelotRoleColorClass(() => props.color)

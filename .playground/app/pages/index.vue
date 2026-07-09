@@ -1140,6 +1140,42 @@
               time-precision="hour"
               placeholder="YYYY-MM-DD HH"
             />
+
+            <span class="text-xs text-slate-400 mt-2">各國語系（週名 / 月名 / 年月標題走 Intl；泰文為佛曆年）</span>
+            <div class="flex flex-wrap gap-2">
+              <CamelotButton
+                v-for="loc in dateLocales"
+                :key="loc.value ?? 'default'"
+                :is-container="dateLocale !== loc.value"
+                :class="dateLocale === loc.value ? '' : 'opacity-50'"
+                :label="loc.label"
+                @click="dateLocale = loc.value"
+              />
+            </div>
+            <CamelotSwitch
+              v-model="dateWeekMonday"
+              label="週一為每週起始"
+              :color="currentColorRole"
+            />
+            <CamelotDateV2
+              :color="currentColorRole"
+              label="語系日期"
+              :locale="dateLocale"
+              :week-starts-on="dateWeekMonday ? 1 : 0"
+            />
+
+            <span class="text-xs text-slate-400 mt-2">緊湊模式（關閉節日 label，不保留文字空間）</span>
+            <CamelotSwitch
+              v-model="dateShowDayLabel"
+              label="顯示日期 label"
+              :color="currentColorRole"
+            />
+            <CamelotDateV2
+              :color="currentColorRole"
+              label="緊湊日期"
+              :get-day-attributes="getDayAttributes"
+              :show-day-label="dateShowDayLabel"
+            />
           </div>
         </div>
 
@@ -1376,7 +1412,12 @@ import { isToday } from 'date-fns'
 
 const getDayAttributes = (date: Date) => {
   if (isToday(date)) {
-    return { label: '行憲紀念日' }
+    return { isHoliday: true, label: '今天' }
+  }
+  const day = date.getDay()
+  // 週末標為假日並帶 label（讓「顯示日期 label」切換時整片高度差異明顯）
+  if (day === 0 || day === 6) {
+    return { isHoliday: true, label: '假日' }
   }
 }
 
@@ -2121,6 +2162,21 @@ const dateTimeSec = ref(new Date())
 const dateTime12 = ref(new Date())
 const dateTimeHour = ref(new Date())
 const dateRangeTimeVal = ref<[Date, Date] | null>(null)
+
+// DatePicker 語系 / 緊湊 demo
+const dateLocales: { label: string, value: string | undefined }[] = [
+  { label: '預設(中文)', value: undefined },
+  { label: '繁中', value: 'zh-Hant-TW' },
+  { label: '簡中', value: 'zh-Hans-CN' },
+  { label: '英文', value: 'en-US' },
+  { label: '日文', value: 'ja-JP' },
+  { label: '韓文', value: 'ko-KR' },
+  { label: '泰文(佛曆)', value: 'th-TH' },
+  { label: '阿拉伯(RTL文字)', value: 'ar' },
+]
+const dateLocale = ref<string | undefined>(undefined)
+const dateWeekMonday = ref(false)
+const dateShowDayLabel = ref(true)
 
 // Slider demo
 const sliderVal = ref(40)

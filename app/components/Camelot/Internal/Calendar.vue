@@ -33,7 +33,7 @@
             :view-date="viewDate"
             :year="viewDate.getFullYear()"
           >
-            {{ format(viewDate, 'yyyy') }}年
+            {{ yearLabel }}
           </slot>
         </button>
         <button
@@ -46,7 +46,7 @@
             :view-date="viewDate"
             :month="viewDate.getMonth()"
           >
-            {{ format(viewDate, 'MM') }}月
+            {{ monthLabel }}
           </slot>
         </button>
       </div>
@@ -78,7 +78,7 @@
         <!-- Weekday Headers -->
         <div
           v-for="(day, wi) in weekDays"
-          :key="day"
+          :key="wi"
           class="w-10 aspect-square flex items-center justify-center text-sm font-medium text-outline"
         >
           <slot
@@ -94,8 +94,9 @@
         <div
           v-for="{ date, isVisible, isSelected, isInRange, isToday, isDisabled, isRangeStart, isRangeEnd, dayLabel, dayLabelClass, isDot, dotColor, customClass, dayColorClass } in calendarDays"
           :key="date.toISOString()"
-          class="relative h-[52px] w-10 p-0.5 flex flex-col items-center justify-start cursor-pointer group rounded-lg"
+          class="relative w-10 p-0.5 flex flex-col items-center justify-start cursor-pointer group rounded-lg"
           :class="[
+            showDayLabel ? 'min-h-[52px]' : 'min-h-9',
             (!isDisabled && isVisible) && 'hover:bg-surface-container',
             (isDisabled && isVisible) && 'cursor-not-allowed opacity-30',
             (isInRange && !isSelected && isVisible) && 'bg-[color-mix(in_srgb,var(--cml-color-current-color,var(--color-primary))_10%,transparent)]',
@@ -123,7 +124,7 @@
             >{{ format(date, 'd') }}</slot>
           </span>
           <span
-            v-if="isVisible && dayLabel"
+            v-if="isVisible && dayLabel && showDayLabel"
             class="text-[10px] items-center justify-center leading-[1.1] line-clamp-2 break-all text-center shrink-0"
             :class="dayLabelClass"
           >
@@ -303,6 +304,18 @@ const props = withDefaults(defineProps<{
   hidePrevArrow?: boolean
   hideNextArrow?: boolean
   getDayAttributes?: (date: Date, dayOfWeek: number) => CalendarDayAttributes | undefined | null
+  /** 是否顯示日期下方的 label（節日名等）；關閉則不渲染、格高隨內容緊湊 */
+  showDayLabel?: boolean
+  /** BCP47 語系（如 en-US / ja-JP）；未給 → 預設中文。給了以 Intl 產生週/月/年月名 */
+  locale?: string
+  /** 週起始：0=週日、1=週一 */
+  weekStartsOn?: 0 | 1
+  /** 自訂週名（最高優先，覆蓋 locale/預設） */
+  weekdayFormatter?: (date: Date, index: number) => string
+  /** 自訂月名（月份選擇格 + 月標題） */
+  monthFormatter?: (monthIndex: number) => string
+  /** 自訂年標題 */
+  yearFormatter?: (year: number) => string
 }>(), {
   hidePrevMonth: false,
   hideNextMonth: false,
@@ -311,6 +324,8 @@ const props = withDefaults(defineProps<{
   hourFormat: '24',
   hidePrevArrow: false,
   hideNextArrow: false,
+  showDayLabel: true,
+  weekStartsOn: 0,
 })
 
 const modelValue = defineModel<Date | number | null>('modelValue')
@@ -319,8 +334,49 @@ const viewDate = defineModel<Date>('viewDate', { required: true })
 
 const pickerMode = defineModel<'calendar' | 'month' | 'year'>('pickerMode', { default: 'calendar' })
 const yearPage = ref(0)
-const weekDays = ['日', '一', '二', '三', '四', '五', '六']
-const monthNames = ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
+
+// 預設中文（未給 locale 時）
+const DEFAULT_WEEKDAYS = ['日', '一', '二', '三', '四', '五', '六']
+const DEFAULT_MONTHS = ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
+
+// 參考週：2024-01-07 為週日（dayIndex 0），加 n 天即得對應星期的日期
+const WEEKDAY_REF_SUNDAY = new Date(2024, 0, 7)
+
+// 是否走 Intl：有 locale 且非中文。中文（含繁/簡）一律用預設中文格式
+// （日一二…、一月…、yyyy年/MM月），避免 Intl 中文週名帶「週/周」等前綴。預設中文即繁中。
+const useIntl = computed(() => !!props.locale && !props.locale.toLowerCase().startsWith('zh'))
+
+// 週名（優先序：自訂 fn > Intl(非中文) > 預設中文），依 weekStartsOn 旋轉
+const weekDays = computed(() =>
+  Array.from({ length: 7 }).map((_, i) => {
+    const dayIndex = (props.weekStartsOn + i) % 7
+    const refDate = addDays(WEEKDAY_REF_SUNDAY, dayIndex)
+    if (props.weekdayFormatter) return props.weekdayFormatter(refDate, i)
+    if (useIntl.value) return new Intl.DateTimeFormat(props.locale, { weekday: 'short' }).format(refDate)
+    return DEFAULT_WEEKDAYS[dayIndex] as string
+  }),
+)
+
+// 月名（月份選擇格 + 月標題）
+const monthNames = computed(() =>
+  Array.from({ length: 12 }).map((_, i) => {
+    if (props.monthFormatter) return props.monthFormatter(i)
+    if (useIntl.value) return new Intl.DateTimeFormat(props.locale, { month: 'long' }).format(new Date(2024, i, 1))
+    return DEFAULT_MONTHS[i] as string
+  }),
+)
+
+// 年 / 月標題
+const yearLabel = computed(() => {
+  const year = viewDate.value.getFullYear()
+  if (props.yearFormatter) return props.yearFormatter(year)
+  if (useIntl.value) return new Intl.DateTimeFormat(props.locale, { year: 'numeric' }).format(viewDate.value)
+  return `${format(viewDate.value, 'yyyy')}年`
+})
+const monthLabel = computed(() => {
+  if (props.monthFormatter || useIntl.value) return monthNames.value[viewDate.value.getMonth()] ?? ''
+  return `${format(viewDate.value, 'MM')}月`
+})
 
 // 各風格的「選中態」表面樣式（日期、月份、年份共用）
 const { selectedSurfaceClass } = useCamelotPickerTheme()
@@ -373,7 +429,7 @@ const yearsRange = computed(() => {
 const calendarDays = computed(() => {
   const monthStart = startOfMonth(viewDate.value)
   const monthEnd = endOfMonth(viewDate.value)
-  const start = startOfWeek(monthStart)
+  const start = startOfWeek(monthStart, { weekStartsOn: props.weekStartsOn })
   const days = Array.from({ length: 42 }).map((_, i) => addDays(start, i))
 
   const rangeStart = rangeValue.value?.[0] ? startOfDay(new Date(rangeValue.value[0])) : null
