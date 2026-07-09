@@ -82,7 +82,15 @@ const open = defineModel<boolean>('open', { default: false })
 const dialogRef = useTemplateRef('dialog')
 
 const onDialogClick = (e: PointerEvent) => {
-  if (props.closeByMask && e.target === dialogRef.value) {
+  if (!props.closeByMask) return
+  const target = e.target as Node | null
+  // 預設 wrapper 以全螢幕容器置中內容，點空白處的 target 會是該容器（非 <dialog> 本身），
+  // 故改判斷「點在 .dialog-content-box 之外」即關閉；自訂 wrapper（無 content box）則沿用 e.target===dialog。
+  const contentBox = dialogRef.value?.querySelector('.dialog-content-box') ?? null
+  const clickedOutsideContent = contentBox
+    ? !!target && !contentBox.contains(target)
+    : target === dialogRef.value
+  if (clickedOutsideContent) {
     open.value = false
     emits('cancel')
   }
