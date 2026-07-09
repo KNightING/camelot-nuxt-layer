@@ -927,6 +927,22 @@
                 :class="value === 'active' ? 'bg-success/15 text-success' : 'bg-error/15 text-error'"
               >{{ value }}</span>
             </template>
+            <template #cell-actions="{ row }">
+              <div class="flex items-center justify-center gap-2">
+                <button
+                  class="rounded-md px-2 py-1 text-xs text-primary hover:bg-primary/10"
+                  @click="showRowDetail(row)"
+                >
+                  明細
+                </button>
+                <button
+                  class="rounded-md px-2 py-1 text-xs text-error hover:bg-error/10"
+                  @click="askDeleteRow(row)"
+                >
+                  刪除
+                </button>
+              </div>
+            </template>
           </CamelotTable>
 
           <div class="mt-3 flex justify-end">
@@ -940,6 +956,33 @@
               :page-size-options="[5, 10, 20]"
             />
           </div>
+
+          <!-- 刪除確認 dialog -->
+          <CamelotBaseDialogV2
+            v-model:open="deleteDialogOpen"
+            :close-by-mask="true"
+          >
+            <div class="flex flex-col gap-4 min-w-[280px]">
+              <h3 class="text-lg font-bold">
+                確認刪除
+              </h3>
+              <p class="text-sm opacity-80">
+                確定要刪除「{{ pendingDeleteRow?.name }}」嗎？此操作無法復原。
+              </p>
+              <div class="flex justify-end gap-2">
+                <CamelotButton
+                  is-container
+                  label="取消"
+                  @click="deleteDialogOpen = false"
+                />
+                <CamelotButton
+                  color="error"
+                  label="刪除"
+                  @click="doDeleteRow"
+                />
+              </div>
+            </div>
+          </CamelotBaseDialogV2>
         </div>
 
         <!-- Progress Card -->
@@ -1967,6 +2010,13 @@ const tableColumns = ref<CamelotTableColumn[]>([
     fixed: 'right',
     align: 'center',
   },
+  {
+    key: 'actions',
+    title: '操作',
+    width: '170px',
+    fixed: 'right',
+    align: 'center',
+  },
 ])
 
 const tablePinned = ref([
@@ -2004,6 +2054,45 @@ const tableData = ref(
     status: i % 3 === 0 ? 'inactive' : 'active',
   })),
 )
+
+type TableRow = typeof tableData.value[number]
+
+// 操作欄：明細 → 跳 notify；刪除 → 先跳確認 dialog，確認後才移除
+const showRowDetail = (row: TableRow) => {
+  useCamelotToast().open({
+    title: `明細 - ${row.name}`,
+    message: `分類：${row.category}｜城市：${row.city}｜評分：${row.rating}｜電話：${row.phone}`,
+    type: 'info',
+    position: 'top-right',
+    duration: 4000,
+  })
+}
+
+const deleteDialogOpen = ref(false)
+const pendingDeleteRow = ref<TableRow | null>(null)
+
+const askDeleteRow = (row: TableRow) => {
+  pendingDeleteRow.value = row
+  deleteDialogOpen.value = true
+}
+
+const doDeleteRow = () => {
+  const row = pendingDeleteRow.value
+  if (!row) {
+    return
+  }
+  const index = tableData.value.findIndex(r => r.id === row.id)
+  if (index !== -1) {
+    tableData.value.splice(index, 1)
+  }
+  deleteDialogOpen.value = false
+  pendingDeleteRow.value = null
+  useCamelotToast().open({
+    message: `已刪除 ${row.name}`,
+    type: 'success',
+    position: 'top-right',
+  })
+}
 
 // Carousel demo
 const carouselEffects = ['slide', 'fade', 'zoom', 'coverflow', 'cardStack', 'flip'] as const
