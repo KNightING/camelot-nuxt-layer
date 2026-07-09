@@ -202,7 +202,12 @@ export const useCamelotOverlayScrollbar = (
   useEventListener(container, 'scroll', onContainerScroll, { passive: true })
   useEventListener(window, 'scroll', measure, { passive: true, capture: true })
   useEventListener(window, 'resize', measure)
+  // 觀察容器自身 box（如高度 prop 變動）
   useResizeObserver(container, measure)
+  // 亦觀察「內容元素」的尺寸：換頁/資料變動時容器 box 不變、但內容(scrollHeight/Width)改變，
+  // 需重算捲軸是否出現與 thumb 尺寸（否則需捲動一次才更新）
+  const contentEl = computed(() => (container.value?.firstElementChild as HTMLElement | null) ?? null)
+  useResizeObserver(contentEl, measure)
 
   watch([floatingEnabled, orientation, mainStartInset], measure)
   onMounted(() => nextTick(measure))

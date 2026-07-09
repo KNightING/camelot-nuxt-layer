@@ -12,3 +12,4 @@
 - [x] 驗證:可視 bar 在 border gutter 內(H/V idleBarInGutter true、無內容在後)、垂直覆蓋固定列(bar 頂 200 ≤ 固定列底 233)且不蓋 header、水平不蓋最後列、無錯誤
 - [x] 調整(依使用者):(1) 垂直軸改覆蓋 header(startInset 0);(2) Table 新增 `reserveVerticalScrollbar`/`reserveHorizontalScrollbar` 開關(關→無 border gutter、捲軸直接覆蓋)+ demo 兩個 switch;(3) bar 縮小 idle 4/hover 8、命中區 10、gutter 12、CROSS_INSET 3/MAIN_INSET 6
 - [x] 驗證:bar idle 4/命中 10/gutter 12、垂直覆蓋 header、開關關閉→border 0(覆蓋)開啟→12、無錯誤
+- [x] 修 bug:換頁/資料變動時容器 box 不變、內容(scrollHeight)改變 → 原本需捲動才重算捲軸。加 `useResizeObserver(contentEl)` 觀察內容元素(容器 firstElementChild),內容變高即重算。實測換 20/頁不滾動即出現垂直軸
