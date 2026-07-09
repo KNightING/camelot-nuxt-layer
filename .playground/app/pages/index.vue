@@ -381,6 +381,7 @@
             :color="currentColorRole"
             label="Choose option"
             :options="options"
+            :searchable="false"
           />
 
           <CamelotSelectV2
@@ -388,6 +389,7 @@
             :color="currentColorRole"
             label="Searchable selection"
             :options="options"
+            :searchable="true"
             class="w-full"
           />
 
