@@ -2,4 +2,4 @@
 
 | Plan | Status | Affected Components | Summary |
 | :--- | :--- | :--- | :--- |
-| _(目前無進行中計畫)_ | — | — | — |
+| [2607091530-wiki-rebuild-per-component](plans/2607091530-wiki-rebuild-per-component/plan.md) | In Progress | wiki | 每個 component/composable 各寫一頁詳細 API + 矩陣索引 |
