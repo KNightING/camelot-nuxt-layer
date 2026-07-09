@@ -3,8 +3,8 @@
 
 - Created: 2026-07-08
 - Branch: main(經使用者核准直接於 main 修改)
-- Status: Awaiting Archive
-- Completed: [Wait for Finish]
+- Status: Archived
+- Completed: 2026-07-09 15:01
 
 ## Goals
 
@@ -59,3 +59,13 @@
 ## References
 
 - 相關 Wiki:`.agents/project/wiki/features/layout-data-components.md`(Table 元件)
+
+## Tasks (完成)
+
+# Tasks for 2607081458
+
+- [x] 分析 Table.vue 現有高度處理(maxHeight)與 demo
+- [x] Table.vue 新增 `height` prop + `scrollStyle` computed,模板套用
+- [x] 補虛擬滾動註解(height 同樣有效)
+- [x] playground demo 改用 `height="480px"` 示範固定高度
+- [x] 驗證:固定高度不隨筆數縮小(5 筆內容約 287px,容器仍 480px)、捲動正常、無錯誤

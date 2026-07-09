@@ -71,7 +71,8 @@
 | `RippleEffect` | ✅ | Material Design 漣漪點擊效果 | — |
 | `RippleTabs` | ✅ | 帶漣漪效果的 Tab 元件 | — |
 | `RichTextEditor` | ✅ | TipTap 富文本編輯器（四風格、可插拔上傳、resizable image/貼上清洗） | [詳情](./features/richtext-editor-image-dropzone.md) |
-| `Scrollbar` | ✅ | 自訂滾動條元件 | — |
+| `Scrollbar` | ✅ | 自訂滾動條（包裝式：自建捲動容器 + slot，H/V prop） | — |
+| `OverlayScrollbar` | ✅ | 附著既有容器的自訂 overlay 捲軸（H/V、docking/浮動、可拖曳、放大淡邊、色彩角色）；Table 兩軸採用 | [詳情](./features/overlay-scrollbar.md) |
 | `Select` | ✅ | 下拉選擇元件 (v1) | — |
 | `SelectV2` | ✅ | 下拉選擇元件 (v2；disabled 不可展開、`#label` slot、選項面板 min-target 寬度；選項選中/hover 效果與 `CascadeMenu` 共用 `useCamelotMenuItemTheme`) | [詳情](./features/field-label-and-form-controls.md) |
 | `Switch` | ✅ | 開關（四風格 40×22 / scifi 48×22、label 點擊切換） | [詳情](./features/field-label-and-form-controls.md) |
@@ -80,7 +81,7 @@
 | `Skeleton` | ✅ | 骨架屏 Loading 佔位元件 | — |
 | `SlideTransitionGroup` | ✅ | 滑動過場群組元件 | — |
 | `Steps` | ✅ | 步驟指示器元件 | — |
-| `Table` | ✅ | 資料表格（fixed header/columns/rows、雙色/hover、slot、泛型、四風格） | [詳情](./features/layout-data-components.md) |
+| `Table` | ✅ | 資料表格（fixed header/columns/rows、雙色/hover、slot、泛型、四風格、`height`/`maxHeight`、`color` 角色、雙軸自訂 overlay 捲軸+可開關 gutter） | [詳情](./features/layout-data-components.md) |
 | `Tabs` | ✅ | 頁籤元件（四風格 + 滑動指示器） | [詳情](./features/theme-system.md) |
 | `TimeV2` | ✅ | 純時間選擇器（trigger + popup/dialog + TimeRow，v-model "HH:mm[:ss]"，四風格） | [詳情](./features/time-picker.md) |
 | `Timeline` | ✅ | 時間軸（垂直/水平、alternate、捲動淡入、圓點對齊標題行、image 內容） | [詳情](./features/timeline.md) |
@@ -190,7 +191,8 @@ graph TD
 
 - [🎨 Theme System / 主題系統（四風格 + Aqua）](./features/theme-system.md)
 - [🧱 Drawer / Tree / Table / Menu](./features/layout-data-components.md)
-- [🗓️ Calendar / 日期選擇器](./features/calendar.md)
+- [📜 OverlayScrollbar / 自訂捲軸系統](./features/overlay-scrollbar.md)
+- [🗓️ Calendar / 日期選擇器（含節日/語系/緊湊）](./features/calendar.md)
 - [🗓️🔔 DatePicker 時間/確認・Aqua 邊框 Token・Toast 動畫](./features/datepicker-time-aqua-toast.md)
 - [✍️🖼️ RichTextEditor（TipTap）與 ImageDropzone](./features/richtext-editor-image-dropzone.md)
 - [⏰ TimeV2 / 純時間選擇器](./features/time-picker.md)

@@ -24,7 +24,10 @@ graph TD
     DateV2 -->|內嵌使用| Calendar
     DateRangeV2 -->|並排雙月份| Calendar
     Calendar --> DateFns
+    Calendar --> Intl["Intl.DateTimeFormat\n(各國語系週/月/年月)"]
 ```
+
+> DateV2 / DateRangeV2 皆轉發 `showDayLabel` / `locale` / `weekStartsOn` / `weekdayFormatter` / `monthFormatter` / `yearFormatter` 給 Calendar。
 
 ---
 
@@ -46,7 +49,13 @@ graph TD
 | `enableTime` | `boolean` | `false` | 是否顯示時間選擇器 |
 | `hidePrevArrow` | `boolean` | `false` | 是否隱藏上個月箭頭 |
 | `hideNextArrow` | `boolean` | `false` | 是否隱藏下個月箭頭 |
-| `getDayAttributes` | `(date: Date, dayOfWeek: number) => CalendarDayAttributes \| null` | — | 自訂每日屬性回調 |
+| `getDayAttributes` | `(date: Date, dayOfWeek: number) => CalendarDayAttributes \| null` | — | 自訂每日屬性回調（節日/label/dot…） |
+| `showDayLabel` | `boolean` | `true` | 是否顯示日期下方 label；關閉則不渲染、格高緊湊（開 `min-h-[52px]`／關 `min-h-9`） |
+| `locale` | `string`（BCP47） | —（預設中文） | 語系。未給→預設中文（繁中）；給了以 `Intl` 產生週/月/年月名。**中文（含繁/簡 `zh-*`）一律用預設 `日一二`/`一月`/`yyyy年` 格式**，避免 Intl 中文週名帶「週」 |
+| `weekStartsOn` | `0 \| 1` | `0` | 每週起始：0=週日、1=週一 |
+| `weekdayFormatter` | `(date, index) => string` | — | 自訂週名（優先序最高，覆蓋 locale/預設） |
+| `monthFormatter` | `(monthIndex) => string` | — | 自訂月名（月份選擇格＋月標題） |
+| `yearFormatter` | `(year) => string` | — | 自訂年標題 |
 
 #### defineModel (雙向綁定)
 
@@ -91,6 +100,29 @@ stateDiagram-v2
 | 範圍內 | `bg-primary/10` (淡主色背景) |
 | 其他當月日期 | `text-on-surface` |
 | 相鄰月份日期 | `text-outline opacity-50` |
+
+---
+
+## 節日標記 / 各國語系 / 緊湊模式
+
+### 節日（`getDayAttributes`）
+
+`isHoliday` 與 `label` **解耦**，可獨立配置：
+- `{ isHoliday: true }`：僅標紅字（放假色），不顯示名稱。
+- `{ label: '國慶' }`：僅顯示節日名（不變紅）→ 「有節日但不放假」。
+- `{ isHoliday: true, label: '春節' }`：紅字＋名稱。
+
+### 緊湊模式（`showDayLabel`）
+
+日期與 label 為兩個獨立元素；`showDayLabel: false` 不渲染 label，格高由 `min-h-[52px]`（開）降為 `min-h-9`（關）→ 不需 label 時無多餘空間。
+
+### 各國語系（`locale` / `weekStartsOn` / formatters）
+
+- 週名/月名/年月標題以 `Intl.DateTimeFormat` 產生（週名 `weekday: 'short'`、月名 `month: 'long'`）。
+- **未給 `locale` → 預設中文（繁中）**；`zh-*`（繁/簡）一律走預設中文格式（`日一二`、`一月`、`yyyy年`），避免 Intl 中文週名帶「週/周」。
+- `weekStartsOn` 對齊 `startOfWeek` 與週名旋轉；`th-TH` 由 Intl 顯示佛曆年。
+- 優先序：**自訂 formatter > Intl（非中文）> 預設中文**。
+- 註：**RTL 版面未支援**（文字用 Intl、佈局維持 LTR）。
 
 ---
 
@@ -147,6 +179,8 @@ sequenceDiagram
 
 - [date-fns 官方文件](https://date-fns.org/)
 - [Vue 3 defineModel RFC](https://vuejs.org/guide/components/v-model)
+- [MDN Intl.DateTimeFormat](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat)
+- 計畫歸檔：`../../archive/2607091145-datepicker-daylabel-locale.md`（locale / showDayLabel / formatter）
 
 ---
 
