@@ -160,100 +160,24 @@ const onAction = (t: CamelotToast) => {
   removeToast(t.id)
 }
 
-// 入場/退場動畫（JS hooks）：
-// 用 transform 做滑入+淡入（GPU 流暢），但 transform 期間 backdrop-filter 會失效，
-// 故滑入結束、transform 移除後，再把毛玻璃模糊 0→目標值「漸入」，避免玻璃在結尾瞬間閃出。
-const SLIDE_PX = 10
+// 入場/退場動畫（JS hooks）：純透明度淡入/淡出，不使用 transform。
+// 關鍵：opacity 套在「有 backdrop-filter 的 box 元素自身」，而非其祖先 wrap——
+// 因為 opacity<1（與 transform 相同）會建立 backdrop root 隔離，若放在祖先上，
+// 淡入期間 box 的毛玻璃會取樣到空白、結尾才突然出現（斷裂）。放在 box 自身時，
+// 其 backdrop-filter 正常取樣真實背景、再整體套 opacity → 毛玻璃隨透明度連續淡入。
+const ENTER_MS = 300
+const LEAVE_MS = 260
 
-// 各主題玻璃的目標 backdrop-filter；非玻璃主題回傳 null（不做漸入）
-const glassTarget = (): string | null => {
-  switch (themeMode.value) {
-    case 'aqua':
-      return 'blur(20px) saturate(180%)'
-    case 'cupertino':
-      return 'blur(24px)'
-    default:
-      return null
-  }
-}
-
-const setBackdrop = (box: HTMLElement, v: string) => {
-  box.style.backdropFilter = v
-  box.style.setProperty('-webkit-backdrop-filter', v)
-}
-const clearBackdrop = (box: HTMLElement) => {
-  box.style.transition = ''
-  box.style.backdropFilter = ''
-  box.style.removeProperty('-webkit-backdrop-filter')
-}
-
-const onEnter = (el: Element, done: () => void) => {
+const boxOf = (el: Element): HTMLElement => {
   const wrap = el as HTMLElement
-  const box = wrap.querySelector('.cml-toast-box') as HTMLElement | null
-  const target = glassTarget()
-
-  wrap.style.opacity = '0'
-  wrap.style.transform = `translateY(${SLIDE_PX}px) scale(0.97)`
-  if (box && target) setBackdrop(box, target.replace(/blur\([^)]*\)/, 'blur(0px)'))
-  void wrap.offsetWidth // reflow
-
-  wrap.style.transition = 'opacity 0.3s ease, transform 0.3s ease'
-  wrap.style.opacity = '1'
-  wrap.style.transform = 'translateY(0px) scale(1)'
-
-  let slid = false
-  const afterSlide = () => {
-    wrap.style.transition = ''
-    wrap.style.transform = 'none' // identity→none：讓 backdrop-filter 重新生效
-    if (!box || !target) {
-      done()
-      return
-    }
-    void box.offsetWidth
-    box.style.transition = 'backdrop-filter 0.25s ease, -webkit-backdrop-filter 0.25s ease'
-    setBackdrop(box, target)
-    let ramped = false
-    const finish = () => {
-      if (ramped) return
-      ramped = true
-      clearBackdrop(box)
-      done()
-    }
-    const onRamp = (e: TransitionEvent) => {
-      if (e.target !== box) return
-      box.removeEventListener('transitionend', onRamp)
-      finish()
-    }
-    box.addEventListener('transitionend', onRamp)
-    setTimeout(finish, 320)
-  }
-  const onSlide = (e: TransitionEvent) => {
-    if (e.target !== wrap || e.propertyName !== 'transform') return
-    wrap.removeEventListener('transitionend', onSlide)
-    if (!slid) {
-      slid = true
-      afterSlide()
-    }
-  }
-  wrap.addEventListener('transitionend', onSlide)
-  setTimeout(() => {
-    if (!slid) {
-      slid = true
-      wrap.removeEventListener('transitionend', onSlide)
-      afterSlide()
-    }
-  }, 380)
+  return (wrap.querySelector('.cml-toast-box') as HTMLElement | null) ?? wrap
 }
 
-const onLeave = (el: Element, done: () => void) => {
-  const wrap = el as HTMLElement
-  // 抽離流外，避免離場時其餘通知瞬間補位
-  wrap.style.position = 'absolute'
-  wrap.style.width = `${wrap.offsetWidth}px`
-  void wrap.offsetWidth
-  wrap.style.transition = 'opacity 0.28s ease, transform 0.28s ease'
-  wrap.style.opacity = '0'
-  wrap.style.transform = `translateY(${SLIDE_PX}px) scale(0.97)`
+const fade = (target: HTMLElement, from: string, to: string, ms: number, done: () => void) => {
+  target.style.opacity = from
+  void target.offsetWidth // reflow
+  target.style.transition = `opacity ${ms}ms ease`
+  target.style.opacity = to
   let ended = false
   const fin = () => {
     if (ended) return
@@ -261,12 +185,29 @@ const onLeave = (el: Element, done: () => void) => {
     done()
   }
   const onEnd = (e: TransitionEvent) => {
-    if (e.target !== wrap) return
-    wrap.removeEventListener('transitionend', onEnd)
+    if (e.target !== target) return
+    target.removeEventListener('transitionend', onEnd)
     fin()
   }
-  wrap.addEventListener('transitionend', onEnd)
-  setTimeout(fin, 340)
+  target.addEventListener('transitionend', onEnd)
+  setTimeout(fin, ms + 60)
+}
+
+const onEnter = (el: Element, done: () => void) => {
+  fade(boxOf(el), '0', '1', ENTER_MS, () => {
+    boxOf(el).style.transition = ''
+    done()
+  })
+}
+
+const onLeave = (el: Element, done: () => void) => {
+  const wrap = el as HTMLElement
+  // 先量寬度，再抽離流外（避免變 absolute 後量到內容寬導致寬度瞬間跳動）；
+  // 抽離流外可避免離場時其餘通知瞬間補位。
+  const width = wrap.offsetWidth
+  wrap.style.width = `${width}px`
+  wrap.style.position = 'absolute'
+  fade(boxOf(el), '1', '0', LEAVE_MS, done)
 }
 </script>
 
