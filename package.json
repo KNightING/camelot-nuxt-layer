@@ -1,7 +1,7 @@
 {
   "name": "camelot-nuxt3-layer",
   "type": "module",
-  "version": "4.4.8.0",
+  "version": "4.5.0.0",
   "main": "./nuxt.config.ts",
   "types": "./types/index.d.ts",
   "scripts": {
@@ -17,23 +17,23 @@
   },
   "devDependencies": {
     "@nuxt/eslint": "^1.16.0",
-    "@nuxtjs/i18n": "10.4.0",
-    "@pinia/nuxt": "0.11.3",
-    "@types/node": "^26.1.0",
-    "@vue/compiler-sfc": "3.5.39",
+    "@nuxtjs/i18n": "10.4.1",
+    "@pinia/nuxt": "1.0.1",
+    "@types/node": "^26.1.1",
+    "@vue/compiler-sfc": "3.5.40",
     "@vueuse/core": "^14.3.0",
     "@vueuse/nuxt": "^14.3.0",
     "eslint": "10.0.3",
     "typescript": "5.9.3",
     "unplugin-icons": "^23.0.1",
     "unplugin-vue-components": "^32.1.0",
-    "vitest": "^4.1.9",
-    "vue-tsc": "^3.3.6"
+    "vitest": "^4.1.10",
+    "vue-tsc": "^3.3.7"
   },
   "dependencies": {
     "@iconify-json/ic": "^1.2.4",
     "@iconify-json/material-symbols": "^1.2.82",
-    "@tailwindcss/vite": "^4.3.2",
+    "@tailwindcss/vite": "^4.3.3",
     "@tiptap/core": "^3.27.1",
     "@tiptap/extension-image": "^3.27.1",
     "@tiptap/extension-link": "^3.27.1",
@@ -45,10 +45,10 @@
     "@vueuse/integrations": "^14.3.0",
     "change-case": "^5.4.4",
     "date-fns": "^4.4.0",
-    "nuxt": "4.4.8",
-    "pinia": "^3.0.4",
+    "nuxt": "4.5.0",
+    "pinia": "^4.0.2",
     "pinia-plugin-persistedstate": "^4.7.1",
-    "tailwindcss": "^4.3.2"
+    "tailwindcss": "^4.3.3"
   },
   "pnpm": {
     "onlyBuiltDependencies": [

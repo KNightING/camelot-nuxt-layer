@@ -29,6 +29,13 @@ export default defineNuxtConfig({
 
   compatibilityDate: '2024-11-16',
 
+  eslint: {
+    config: {
+      // Use the generated ESLint config for lint root project as well
+      rootDir: fileURLToPath(new URL('..', import.meta.url)),
+    },
+  },
+
   // 區域語系範例：與 layer 繼承的 en / zh 基底合併，
   // 缺 key 時依 i18n/i18n.config.ts 的 fallback 鏈退回 zh-Hant / zh-Hans，最終落到 zh。
   i18n: {
@@ -103,12 +110,5 @@ export default defineNuxtConfig({
     ],
     defaultLocale: 'zh-Hant-TW',
     vueI18n: './i18n.config.ts',
-  },
-
-  eslint: {
-    config: {
-      // Use the generated ESLint config for lint root project as well
-      rootDir: fileURLToPath(new URL('..', import.meta.url)),
-    },
   },
 })

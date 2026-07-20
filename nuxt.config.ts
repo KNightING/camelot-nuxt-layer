@@ -148,14 +148,32 @@ export default defineNuxtConfig({
       }),
       Icons({ autoInstall: true }),
     ],
-    esbuild: {
-      drop: dropCode
-        ? ['console', 'debugger']
-        : [],
-      dropLabels: dropCode
-        ? ['DEV']
-        : [],
+
+    build: {
+      // 1. 確保啟用 Oxc 壓縮
+      minify: 'oxc',
+
+      // 2. Oxc / Rolldown 的具體配置
+      rolldownOptions: {
+        // 【移轉 drop: ['console']】
+        // Oxc 的移除 console 行為屬於 "壓縮 (Compress)" 階段
+        output: {
+          minify: {
+            compress: {
+              // 對應 esbuild 的 drop: ['console']
+              dropConsole: dropCode,
+              // Oxc 預設就會移除 debugger，通常不需額外設定
+              dropDebugger: dropCode,
+
+              dropLabels: dropCode
+                ? ['DEV']
+                : [],
+            },
+          },
+        },
+      },
     },
+
     optimizeDeps: {
       exclude: isMac ? ['fsevents'] : [],
     },
