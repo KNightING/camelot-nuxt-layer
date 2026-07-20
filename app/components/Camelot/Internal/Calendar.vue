@@ -4,7 +4,7 @@
     :class="pickerExpand && pickerMode !== 'calendar' ? 'w-full flex flex-col items-center' : 'w-fit min-w-[280px]'"
   >
     <!-- Month/Year Picker Header -->
-    <div class="flex items-center justify-between mb-4 px-1">
+    <div class="flex items-center justify-between mb-2 px-1">
       <div
         v-if="pickerMode === 'calendar' && !hidePrevArrow"
         class="flex items-center gap-1 group"
@@ -74,7 +74,7 @@
       v-if="pickerMode === 'calendar'"
       class="calendar-view animate-in fade-in duration-200"
     >
-      <div class="grid grid-cols-7 gap-1 text-center">
+      <div class="grid grid-cols-7 gap-0 text-center">
         <!-- Weekday Headers -->
         <div
           v-for="(day, wi) in weekDays"
@@ -92,50 +92,56 @@
 
         <!-- Days -->
         <div
-          v-for="{ date, isVisible, isSelected, isInRange, isToday, isDisabled, isRangeStart, isRangeEnd, dayLabel, dayLabelClass, isDot, dotColor, customClass, dayColorClass } in calendarDays"
+          v-for="{ date, isVisible, isSelected, isInRange, isToday, isDisabled, dayLabel, dayLabelClass, isDot, dotColor, customClass, dayColorClass } in calendarDays"
           :key="date.toISOString()"
-          class="relative w-10 p-0.5 flex flex-col items-center justify-start cursor-pointer group rounded-lg"
+          class="w-10 px-0.5 flex cursor-pointer group"
           :class="[
             showDayLabel ? 'min-h-[52px]' : 'min-h-9',
-            (!isDisabled && isVisible) && 'hover:bg-surface-container',
             (isDisabled && isVisible) && 'cursor-not-allowed opacity-30',
-            (isInRange && !isSelected && isVisible) && 'bg-[color-mix(in_srgb,var(--cml-color-current-color,var(--color-primary))_10%,transparent)]',
-            (isRangeStart && isVisible) && 'bg-[color-mix(in_srgb,var(--cml-color-current-color,var(--color-primary))_10%,transparent)]',
-            (isRangeEnd && isVisible) && 'bg-[color-mix(in_srgb,var(--cml-color-current-color,var(--color-primary))_10%,transparent)]',
-            dayColorClass,
-            customClass,
           ]"
           @click="(!isDisabled && isVisible) && selectDate(date)"
         >
-          <span
+          <!-- 內層填滿整格：選中/區間端點為實色、區間中段為淡底；左右由外層 px-0.5 內縮 -->
+          <div
             v-if="isVisible"
-            class="h-6 aspect-square flex items-center justify-center text-sm transition-all rounded-full shrink-0"
+            class="relative w-full flex flex-col items-center rounded-lg transition-colors"
             :class="[
-              { 'font-bold': (isToday && !isSelected) || isSelected },
-              isSelected ? selectedSurfaceClass : '',
+              showDayLabel ? 'justify-start' : 'justify-center',
+              (!isDisabled && !isSelected && !isInRange) && 'group-hover:bg-surface-container',
+              (isInRange && !isSelected) && 'bg-[color-mix(in_srgb,var(--cml-color-current-color,var(--color-primary))_10%,transparent)]',
+              isSelected ? selectedSurfaceClass : dayColorClass,
+              customClass,
             ]"
           >
-            <slot
-              name="day"
-              :date="date"
-              :day="Number(format(date, 'd'))"
-              :is-selected="isSelected"
-              :is-today="isToday"
-            >{{ format(date, 'd') }}</slot>
-          </span>
-          <span
-            v-if="isVisible && dayLabel && showDayLabel"
-            class="text-[10px] items-center justify-center leading-[1.1] line-clamp-2 break-all text-center shrink-0"
-            :class="dayLabelClass"
-          >
-            {{ dayLabel }}
-          </span>
-          <div
-            v-if="isVisible && isDot"
-            class="absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full"
-            :class="{ 'bg-[var(--cml-color-current-on-color)]': isSelected, 'bg-[var(--cml-color-current-color)]': !isSelected && !dotColor }"
-            :style="dotColor ? { backgroundColor: dotColor } : {}"
-          />
+            <span
+              class="aspect-square flex items-center justify-center transition-all shrink-0"
+              :class="[
+                showDayLabel ? 'h-6 text-sm' : 'h-9 text-base',
+                { 'font-bold': isToday || isSelected },
+              ]"
+            >
+              <slot
+                name="day"
+                :date="date"
+                :day="Number(format(date, 'd'))"
+                :is-selected="isSelected"
+                :is-today="isToday"
+              >{{ format(date, 'd') }}</slot>
+            </span>
+            <span
+              v-if="dayLabel && showDayLabel"
+              class="text-[10px] items-center justify-center leading-[1.1] line-clamp-2 break-all text-center shrink-0"
+              :class="!isSelected ? dayLabelClass : ''"
+            >
+              {{ dayLabel }}
+            </span>
+            <div
+              v-if="isDot || isToday"
+              class="absolute top-1 left-1 w-1 h-1 rounded-full"
+              :class="{ 'bg-[var(--cml-color-current-on-color)]': isSelected && !dotColor, 'bg-[var(--cml-color-current-color)]': !isSelected && !dotColor }"
+              :style="dotColor ? { backgroundColor: dotColor } : {}"
+            />
+          </div>
         </div>
       </div>
 
@@ -570,7 +576,8 @@ const toggleMonthPicker = () => {
 
 const selectYear = (year: number) => {
   viewDate.value = setYear(viewDate.value, year)
-  pickerMode.value = 'calendar'
+  // 選完年後主動進入月份選擇
+  pickerMode.value = 'month'
 }
 
 const selectMonth = (month: number) => {

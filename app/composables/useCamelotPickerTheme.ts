@@ -39,11 +39,11 @@ export const useCamelotPickerTheme = () => {
       case 'aqua':
         return 'aqua-fill text-[var(--cml-color-current-on-color)]'
       case 'scifi':
-        return 'bg-[color-mix(in_srgb,var(--color-primary)_85%,transparent)] text-white shadow-[0_0_8px_color-mix(in_srgb,var(--color-primary)_60%,transparent)]'
+        return 'bg-[color-mix(in_srgb,var(--cml-color-current-color,var(--color-primary))_85%,transparent)] text-[var(--cml-color-current-on-color,var(--color-on-primary))] shadow-[0_0_8px_color-mix(in_srgb,var(--cml-color-current-color,var(--color-primary))_60%,transparent)]'
       case 'cupertino':
-        return 'bg-primary text-on-primary'
+        return 'bg-[var(--cml-color-current-color,var(--color-primary))] text-[var(--cml-color-current-on-color,var(--color-on-primary))]'
       default:
-        return 'bg-primary text-on-primary shadow-sm'
+        return 'bg-[var(--cml-color-current-color,var(--color-primary))] text-[var(--cml-color-current-on-color,var(--color-on-primary))] shadow-sm'
     }
   })
 

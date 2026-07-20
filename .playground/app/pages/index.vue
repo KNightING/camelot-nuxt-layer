@@ -1104,6 +1104,15 @@
               :get-day-attributes="getDayAttributes"
             />
 
+            <span class="text-xs text-slate-400">區間・緊湊模式（關閉節日 label）</span>
+            <CamelotDateRangeV2
+              :color="currentColorRole"
+              label="活動區間（無 label）"
+              :multi-calendars="true"
+              :get-day-attributes="getDayAttributes"
+              :show-day-label="false"
+            />
+
             <span class="text-xs text-slate-400">區間含時間（24H・到分・起迄各自設定）</span>
             <CamelotDateRangeV2
               v-model="dateRangeTimeVal"
@@ -1412,7 +1421,7 @@ import { isToday } from 'date-fns'
 
 const getDayAttributes = (date: Date) => {
   if (isToday(date)) {
-    return { isHoliday: true, label: '今天' }
+    return { isHoliday: true, label: '我是今天啦' }
   }
   const day = date.getDay()
   // 週末標為假日並帶 label（讓「顯示日期 label」切換時整片高度差異明顯）
