@@ -190,18 +190,6 @@ export default defineNuxtConfig({
     // 區域語系（如 zh-Hant-TW、zh-Hans-CN）由消費端註冊，
     // 靠 vue-i18n 隱含階層 fallback（zh-Hant-TW → zh-Hant → zh）落回基底，範例見 .playground。
     locales: [
-      {
-        name: 'English',
-        code: 'en',
-        language: 'en',
-        file: 'en.json',
-      },
-      {
-        name: '中文',
-        code: 'zh',
-        language: 'zh',
-        file: 'zh.json',
-      },
     ],
     defaultLocale: 'zh',
     restructureDir: 'i18n',
