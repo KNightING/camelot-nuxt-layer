@@ -50,7 +50,7 @@
 
 ## 備註
 - 依 `themeMode` 分別渲染 `CamelotScifiInput` / `CamelotCupertinoInput` / `CamelotAquaInput` / `CamelotMaterialInput`。
-- 選單依 `target` 底部位置與視窗高度自動判斷向上或向下展開。
+- 選單依 `target` 底部位置與視窗高度自動判斷向上或向下展開；該位置只在選單展開期間追蹤（展開當下量測一次，並於展開期間才掛載 window 的 scroll／resize 監聽），收合後不留任何監聽。
 - 使用 `onClickOutside` 於點擊外部時關閉選單。
 - 選取選項時將 `model` 設為 `option.label` 並關閉選單。
 

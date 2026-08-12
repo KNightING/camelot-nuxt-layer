@@ -57,6 +57,9 @@ const { visibleIndices, topPad, bottomPad, setSize } = useCamelotVirtual(
 
 ## 備註
 - `sizes` 長度隨 `count` 同步，新項目以 `estimate` 填入；`offsets` 為前綴和，`findIndex` 以二分搜尋定位。
+- `sizes` 是**非響應式**的內部陣列，`setSize` 原地寫入為 O(1)；響應式訊號由獨立的版本計數承擔，同一輪渲染內的多次 `setSize` 以 microtask 合併成一次遞增。呼叫端每渲染一輪會對每個可視項各呼叫一次 `setSize`，若複製整條陣列，單次捲動即為 O(可視項 × 總項數)。
+- 前綴和採**增量重算**：以最小受影響索引為界，只重算其後的區間，前段沿用快取。
+- 前綴和刻意不是 `computed`——computed 以 `Object.is` 比對新舊值，而快取重用同一個陣列參照，回傳相同參照會讓下游停止更新；改為一般函式，由各 computed 自行讀取版本計數建立相依。
 - `watch(scrollEl)`（immediate）掛載 `scroll` 事件監聽與 `ResizeObserver`，並於 cleanup 時移除；`window` 未定義時不執行。
 
 ---

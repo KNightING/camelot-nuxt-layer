@@ -63,6 +63,7 @@ const {
 - 主軸溢出量 `<= client + 1`，或容器完全在視窗外時 `visible` 為 `false`。
 - `barStyle` 與 `thumbStyle` 定位拆開，使拖曳期間 bar 物件參照不變，避免 Vue 重繪重啟 CSS transition。
 - 監聽：容器 `scroll`、`window` 的 `scroll`（capture，以收到祖先捲動）與 `resize`；並以 `useResizeObserver` 觀察容器與其第一個子元素（內容尺寸變動，如換頁）。
+- 上述四個來源觸發的 `measure()` 皆走 `scheduleMeasure()`：以單一 pending `requestAnimationFrame` 合併，每幀最多量測一次（`measure()` 含 `getBoundingClientRect()` 等強制 layout 的讀取，而 capture 監聽會收到頁面上任何容器的捲動）。掛載時的首次量測與 props 變動觸發的量測為直接呼叫，不經排程；scope 結束時取消尚未執行的 frame。
 - `onMounted` 時 `nextTick(measure)`；`floatingEnabled/orientation/mainStartInset` 變動亦重新量測。
 
 ---

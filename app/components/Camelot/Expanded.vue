@@ -24,9 +24,14 @@ const expanded = defineModel<boolean>('expanded', {
 
 const contentRef = useTemplateRef('contentRef')
 
+// 對外只提供尺寸，尺寸變化由內建的 ResizeObserver 涵蓋；
+// window scroll/resize 只影響座標，對本元件無用，關掉可省下每個實例的常駐監聽。
 const {
   height: contentHeight, width: contentWidth,
-} = useElementBounding(contentRef)
+} = useElementBounding(contentRef, {
+  windowScroll: false,
+  windowResize: false,
+})
 
 defineExpose({
   contentHeight,

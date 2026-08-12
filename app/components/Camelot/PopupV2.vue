@@ -195,11 +195,31 @@ onUpdated(() => {
   }
 })
 
-const updateOnRequestAnimationFrame = () => {
-  requestAnimationFrame(() => {
-    update()
-    updateOnRequestAnimationFrame()
-  })
+/**
+ * 目標位置以每幀輪詢追蹤（目標可能因祖先動畫、版面重排而位移，無單一事件可攔）。
+ * 但輪詢只在浮層開啟期間有意義——關閉時算出的座標無人讀取，卸載後更會連同元件 scope 一起洩漏。
+ */
+let trackingFrameId: number | null = null
+
+const trackTargetBounding = () => {
+  update()
+  trackingFrameId = requestAnimationFrame(trackTargetBounding)
+}
+
+const startTracking = () => {
+  // watch 為 immediate，初始 open 即為 true 時會在 SSR 期間跑到這裡，該環境沒有 rAF
+  if (!isClient || trackingFrameId !== null) {
+    return
+  }
+  trackTargetBounding()
+}
+
+const stopTracking = () => {
+  if (trackingFrameId === null) {
+    return
+  }
+  cancelAnimationFrame(trackingFrameId)
+  trackingFrameId = null
 }
 
 const parentIsDialog = computed(() => {
@@ -230,25 +250,29 @@ const vvOffsetY = ref(0)
 
 let updateViewportOffset: (() => void) | null = null
 
-watch(targetRef, (targetRef) => {
-  if (targetRef && targetRef instanceof HTMLElement) {
-    const scrollParent = useScrollParent(targetRef)
+const scrollParent = useScrollParent(targetRef)
 
-    if (scrollParent.value) {
-      // console.log(scrollParent.value)
-      scrollParent.value.addEventListener('scroll', () => {
-        // 在dialog中 關閉popup， 目前顯示有問題
-        if (!props.disabledCloseWhenScrolling || parentIsDialog.value) {
-          open.value = false
-        }
-      })
-    }
+useEventListener(scrollParent, 'scroll', () => {
+  // 在dialog中 關閉popup， 目前顯示有問題
+  if (!props.disabledCloseWhenScrolling || parentIsDialog.value) {
+    open.value = false
   }
+}, { passive: true })
+
+watchImmediate(open, (isOpen) => {
+  if (isOpen) {
+    // 開啟當下先同步量測一次，避免第一幀套用到上次關閉前的舊座標
+    update()
+    startTracking()
+    return
+  }
+
+  stopTracking()
+  vvOffsetX.value = 0
+  vvOffsetY.value = 0
 })
 
 onMounted(() => {
-  updateOnRequestAnimationFrame()
-
   if (typeof window !== 'undefined' && window.visualViewport) {
     updateViewportOffset = () => {
       const offset = window.visualViewport
@@ -279,20 +303,8 @@ onMounted(() => {
   }
 })
 
-watch(open, (isOpen) => {
-  if (!isOpen) {
-    vvOffsetX.value = 0
-    vvOffsetY.value = 0
-  }
-})
-
 // Native Hover Trigger Mode Implementation
-const isTargetHovered = ref(false)
-const isPopupHovered = ref(false)
 let hoverTimeout: ReturnType<typeof setTimeout> | null = null
-
-const targetListeners: { event: string, handler: any }[] = []
-const popupListeners: { event: string, handler: any }[] = []
 
 const startHoverOpen = () => {
   if (props.disabled || props.triggerMode !== 'hover') return
@@ -312,65 +324,23 @@ const startHoverClose = () => {
   }, props.hoverDelay ?? 200)
 }
 
-watch(targetRef, (el) => {
-  if (el && el instanceof HTMLElement) {
-    const enter = () => {
-      isTargetHovered.value = true
-      startHoverOpen()
-    }
-    const leave = () => {
-      isTargetHovered.value = false
-      startHoverClose()
-    }
-    el.addEventListener('mouseenter', enter)
-    el.addEventListener('mouseleave', leave)
-    targetListeners.push({
-      event: 'mouseenter',
-      handler: enter,
-    }, {
-      event: 'mouseleave',
-      handler: leave,
-    })
-  }
-})
+// 觸發器與浮層各自監聽 hover：改由 useEventListener 綁定，目標元素更換時會自動解掛舊的，
+// 不會像先前手動 addEventListener 那樣在 ref 每次變動時疊加一份新的監聽。
+const popupEl = computed(() => popupRef.value?.$el as HTMLElement | undefined)
 
-watch(popupRef, (component) => {
-  const el = component?.$el
-  if (el && el instanceof HTMLElement) {
-    const enter = () => {
-      isPopupHovered.value = true
-      startHoverOpen()
-    }
-    const leave = () => {
-      isPopupHovered.value = false
-      startHoverClose()
-    }
-    el.addEventListener('mouseenter', enter)
-    el.addEventListener('mouseleave', leave)
-    popupListeners.push({
-      event: 'mouseenter',
-      handler: enter,
-    }, {
-      event: 'mouseleave',
-      handler: leave,
-    })
-  }
-})
+useEventListener(targetRef, 'mouseenter', startHoverOpen)
+useEventListener(targetRef, 'mouseleave', startHoverClose)
+useEventListener(popupEl, 'mouseenter', startHoverOpen)
+useEventListener(popupEl, 'mouseleave', startHoverClose)
 
 onBeforeUnmount(() => {
+  stopTracking()
+
   if (typeof window !== 'undefined' && window.visualViewport && updateViewportOffset) {
     window.visualViewport.removeEventListener('scroll', updateViewportOffset)
     window.visualViewport.removeEventListener('resize', updateViewportOffset)
   }
 
-  // Cleanup hover event listeners
-  if (targetRef.value instanceof HTMLElement) {
-    targetListeners.forEach(l => targetRef.value?.removeEventListener(l.event, l.handler))
-  }
-  const popupEl = popupRef.value?.$el
-  if (popupEl instanceof HTMLElement) {
-    popupListeners.forEach(l => popupEl.removeEventListener(l.event, l.handler))
-  }
   if (hoverTimeout) {
     clearTimeout(hoverTimeout)
   }
