@@ -68,9 +68,10 @@ useCustomColorScheme(document.documentElement, { /* ... */ })
 
 ## 備註
 - 建議自訂顏色時 light / dark 兩種模式都要設定，因為切換主題不會刪除已設定過的變數，只會以覆蓋方式更新。
-- 屬於 `Material3ColorSchemeKeys` 的鍵會寫入 `--cml-c-m3-<kebab>`；其餘鍵寫入 `--cml-c-<kebab>`。
-- 因 Tailwind V4 會將變數放到 `:root` 導致無法覆蓋，故對每個鍵另外設定 `--color-<kebab>: var(<cssVarKey>)` 以覆蓋 Tailwind。
-- CSS 變數以 `inherit: false` 讀取（僅讀 inline style）。
+- 變數寫入委派給 [`applyColorSchemeCssVars`](./useColorSchemeCssVars.md)：屬於 `Material3ColorSchemeKeys` 的鍵寫入 `--cml-c-m3-<kebab>`，其餘鍵寫入 `--cml-c-<kebab>`；並對每個鍵另設 `--color-<kebab>: var(<cssVarKey>)` 以覆蓋 Tailwind v4 放在 `:root` 的同名變數。
+- **全域路徑（`targetRef === document.documentElement`）共用單一模組層 watcher**。因為所有全域呼叫端寫的都是同一個 `<html>`，watcher 只註冊一次；非全域目標各有自己的元素，仍逐實例註冊。
+- 承上，`config.editable` **僅對非全域目標生效**。全域目標是共用的 `<html>`，單一呼叫端的唯讀意圖不足以代表其餘呼叫端。
+- 深淺色來源為共用的 [`useCamelotColorMode`](./useCamelotColorMode.md)，非各自建立的 `useColorMode`。
 - 非客戶端（SSR）情況下回傳的三個 scheme 皆為 `globalDarkColorScheme`，且不進行任何 DOM 寫入。
 - `CamelotColorSchemeKeys` 由 `CamelotColorScheme` 的鍵推導而得。
 
