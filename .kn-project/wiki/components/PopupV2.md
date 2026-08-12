@@ -7,7 +7,7 @@
 ## Props
 | Prop | 型別 | 預設 | 說明 |
 | :--- | :--- | :---: | :--- |
-| `zIndex` | `number` | — | 彈出層 z-index（預設回退為 `10`） |
+| `zIndex` | `number` | `var(--cml-z-popup)` | 彈出層 z-index；未指定時採用[疊層刻度](../features/layering.md)的 popup 層級。以 `??` 判空，故傳入 `0` 視為有效值 |
 | `disabled` | `boolean` | — | 是否停用觸發 |
 | `disabledShadow` | `boolean` | — | 關閉陰影 |
 | `disabledCloseWhenScrolling` | `boolean` | — | 關閉「window 滑動時自動關閉 popup」 |
@@ -35,6 +35,8 @@
 
 ## 備註
 - 使用 `fixed` 定位並透過 `Teleport` 掛載；若目標祖先為 `<dialog>`，會 Teleport 至該 dialog 以避免 top layer 的 z-index 問題。
+- **浮層容器帶有 `data-camelot-popup` 屬性。** Teleport 進 `<dialog>` 後，浮層會落在 `.dialog-content-box` 之外，[BaseDialogV2](./BaseDialogV2.md) 靠此標記把它與真正的遮罩區分開；少了標記，點選單選項會被誤判成點遮罩而關閉對話框。自訂容器若要複製此行為，需一併帶上該屬性。
+- 預設層級高於 Drawer 與 BottomSheet（見[疊層刻度](../features/layering.md)），因為 Teleport 進 `<dialog>` 後三者互為同層兄弟節點。
 - 因使用 `fixed` 定位，父元素若設定 `transform`、`perspective`、`filter`、`will-change` 等屬性可能導致定位失效。
 - 位置計算依 `useElementBounding` 與 `useWindowSize`；`isBottom`／`isRight` 判斷是否超出視窗以自動翻轉方向。
 - 透過 `requestAnimationFrame` 持續更新目標位置；監聽 `visualViewport` 的 scroll／resize 以處理鍵盤彈出等偏移。

@@ -34,3 +34,15 @@ export interface CamelotTagItem {
 
 /** TagGroup v-model 的項目：純字串沿用群組預設，物件可逐項覆寫顏色 / variant / 鎖定 */
 export type CamelotTagInput = string | CamelotTagItem
+
+/**
+ * ConfirmDialog 的按鈕角色。
+ * positive 正向（確認 / 送出）、neutral 中立（稍後 / 其他選擇）、negative 反向（刪除 / 取消）。
+ */
+export type CamelotConfirmAction = 'positive' | 'neutral' | 'negative'
+
+/** Dialog 以網址 query 控制開闔時的鍵值對 */
+export interface CamelotDialogQuery {
+  key: string
+  value: string
+}

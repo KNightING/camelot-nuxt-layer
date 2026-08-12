@@ -432,6 +432,56 @@
               @click="demoSheetOpen = true"
             />
           </div>
+
+          <div class="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700 flex flex-col gap-2">
+            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+              Scoped colors ・ URL-driven ・ shared state
+            </span>
+            <p class="text-xs text-slate-400">
+              下列兩者只覆寫 <code>primary</code> 與自訂鍵 <code>test</code>，其餘色票仍繼承全域主題；
+              開啟後網址會帶上 query，可直接分享或用上一頁關閉；兩者共用同一組值。
+            </p>
+            <div class="flex flex-wrap gap-4">
+              <CamelotButton
+                :color="currentColorRole"
+                is-container
+                label="Open Scoped Dialog"
+                @click="scopedDialogOpen = true"
+              />
+              <CamelotButton
+                :color="currentColorRole"
+                is-container
+                label="Open Scoped Sheet"
+                @click="scopedSheetOpen = true"
+              />
+            </div>
+            <span class="text-xs text-slate-400">
+              Shared: {{ overlaySharedCount }} ・ {{ overlaySharedOption }}
+            </span>
+          </div>
+
+          <div class="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700 flex flex-col gap-2">
+            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+              ConfirmDialog
+            </span>
+            <p class="text-xs text-slate-400">
+              最多三顆按鈕（反向 / 中立 / 正向），依 label 是否設定決定顯示；預設只有確認鈕且點擊即關閉。
+            </p>
+            <div class="flex flex-wrap gap-4">
+              <CamelotButton
+                :color="currentColorRole"
+                label="三顆按鈕"
+                @click="confirmThreeOpen = true"
+              />
+              <CamelotButton
+                :color="currentColorRole"
+                is-container
+                label="僅預設確認鈕"
+                @click="confirmDefaultOpen = true"
+              />
+            </div>
+            <span class="text-xs text-slate-400">Last action: {{ confirmResult }}</span>
+          </div>
         </div>
 
         <!-- Tabs & Steps Card -->
@@ -1326,8 +1376,8 @@
             <CamelotButton
               :color="currentColorRole"
               is-container
-              label="go to /dialog"
-              @click="toPath('/dialog').to()"
+              label="開啟 scoped dialog（帶 query）"
+              @click="toPath('/').to({ query: { overlay: 'scoped-dialog', isDialog: 'true' } })"
             />
           </div>
         </div>
@@ -1369,6 +1419,83 @@
           />
         </div>
       </CamelotBaseBottomSheetV2>
+
+      <!--
+        Scoped overlays：Provider 只覆寫 primary 與自訂鍵 test，其餘色票繼承全域主題。
+        內容只放內容，不自帶盒子、不用 w-screen —— 外框與寬度由 Base 元件負責。
+      -->
+      <CamelotCustomColorSchemeProvider
+        :light-color-scheme="scopedOverlayLightColorScheme"
+        :dark-color-scheme="scopedOverlayDarkColorScheme"
+      >
+        <CamelotBaseDialogV2
+          v-model:open="scopedDialogOpen"
+          :query="{ key: 'overlay', value: 'scoped-dialog' }"
+        >
+          <div class="flex flex-col gap-4">
+            <div class="flex items-start justify-between gap-4">
+              <h3 class="text-lg font-bold">
+                Scoped Dialog
+              </h3>
+              <CamelotButton
+                is-container
+                label="關閉"
+                @click="scopedDialogOpen = false"
+              />
+            </div>
+
+            <OverlaySharedFields
+              v-model:count="overlaySharedCount"
+              v-model:option="overlaySharedOption"
+              :options="options"
+            />
+          </div>
+        </CamelotBaseDialogV2>
+
+        <CamelotBaseBottomSheetV2
+          v-model:open="scopedSheetOpen"
+          tag="scoped-sheet"
+        >
+          <div class="flex flex-col gap-4">
+            <div class="flex items-start justify-between gap-4">
+              <h3 class="text-lg font-bold">
+                Scoped Sheet
+              </h3>
+              <CamelotButton
+                is-container
+                label="關閉"
+                @click="scopedSheetOpen = false"
+              />
+            </div>
+
+            <OverlaySharedFields
+              v-model:count="overlaySharedCount"
+              v-model:option="overlaySharedOption"
+              :options="options"
+            />
+          </div>
+        </CamelotBaseBottomSheetV2>
+      </CamelotCustomColorSchemeProvider>
+
+      <CamelotConfirmDialog
+        v-model:open="confirmThreeOpen"
+        title="刪除這筆資料？"
+        message="刪除後無法復原，確定要繼續嗎？"
+        positive-label="刪除"
+        positive-color="error"
+        neutral-label="稍後再說"
+        negative-label="取消"
+        @positive="onConfirmAction('positive')"
+        @neutral="onConfirmAction('neutral')"
+        @negative="onConfirmAction('negative')"
+      />
+
+      <CamelotConfirmDialog
+        v-model:open="confirmDefaultOpen"
+        title="已儲存"
+        message="設定已套用至目前的主題。"
+        @positive="onConfirmAction('positive')"
+      />
 
       <!-- Floating drawers -->
       <CamelotDrawer
@@ -1723,6 +1850,33 @@ const selectV2Val = ref('港式餐廳')
 
 const demoDialogOpen = ref(false)
 const demoSheetOpen = ref(false)
+
+// Scoped Overlay 展示：只覆寫 primary 與自訂鍵 test，其餘色票（surface / on-surface / outline…）
+// 不設定，因此仍繼承全域主題與深淺色。
+const scopedOverlayLightColorScheme: CustomColorScheme<{ test: string }> = {
+  primary: '#140fF1',
+  test: '#FFEA00',
+}
+const scopedOverlayDarkColorScheme: CustomColorScheme<{ test: string }> = {
+  primary: '#FFEA00',
+  test: '#140fF1',
+}
+
+const scopedDialogOpen = ref(false)
+const scopedSheetOpen = ref(false)
+
+// Dialog 與 Sheet 共用同一組值：任一側修改，另一側即時反映
+const overlaySharedCount = ref(3)
+const overlaySharedOption = ref('韓式餐廳')
+
+// ConfirmDialog 展示
+const confirmThreeOpen = ref(false)
+const confirmDefaultOpen = ref(false)
+const confirmResult = ref('（尚未操作）')
+
+const onConfirmAction = (action: CamelotConfirmAction) => {
+  confirmResult.value = `收到 ${action} 事件`
+}
 const demoStepsList = ref(['Init', 'Verify', 'Deploy', 'Success'])
 const demoActiveStep = ref(1)
 const demoTabsOptions = ref([

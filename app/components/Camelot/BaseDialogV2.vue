@@ -63,10 +63,7 @@ const props = withDefaults(
     closeByMask?: boolean
     tag?: string
     zIndex?: number
-    query?: {
-      key: string
-      value: string
-    }
+    query?: CamelotDialogQuery
   }>(),
   {
     closeByMask: true,
@@ -84,6 +81,15 @@ const dialogRef = useTemplateRef('dialog')
 const onDialogClick = (e: PointerEvent) => {
   if (!props.closeByMask) return
   const target = e.target as Node | null
+
+  // PopupV2 會把浮層 teleport 進本 <dialog>（繞開 top layer 的 z-index 限制），
+  // 位置落在 .dialog-content-box 之外。不先排除的話，點選單選項會被下方的判斷
+  // 誤認為點擊遮罩而關閉對話框，選項也就永遠選不到。
+  const targetElement = target instanceof Element ? target : target?.parentElement ?? null
+  if (targetElement?.closest('[data-camelot-popup]')) {
+    return
+  }
+
   // 預設 wrapper 以全螢幕容器置中內容，點空白處的 target 會是該容器（非 <dialog> 本身），
   // 故改判斷「點在 .dialog-content-box 之外」即關閉；自訂 wrapper（無 content box）則沿用 e.target===dialog。
   const contentBox = dialogRef.value?.querySelector('.dialog-content-box') ?? null
