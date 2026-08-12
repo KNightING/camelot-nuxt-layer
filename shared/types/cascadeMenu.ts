@@ -20,8 +20,12 @@ export interface CamelotCascadeMenuContext {
   openDelay: number
   /** hover 模式收合延遲 (ms) */
   closeDelay: number
-  /** 浮層基底 z-index，實際層級 = baseZIndex + level */
-  baseZIndex: number
+  /**
+   * 浮層基底 z-index，實際層級 = baseZIndex + level。
+   * 未指定時回落到疊層刻度的 `--cml-z-popup`（見 wiki `features/layering.md`），
+   * 以免在此重複硬編一次數值。
+   */
+  baseZIndex?: number
   /** 單一面板選項區最大高度（CSS 長度，超過則內部捲動）；實際會再夾在視窗高度內 */
   maxHeight: string
   /**

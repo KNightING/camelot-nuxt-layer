@@ -12,7 +12,7 @@
 | `submenuTrigger` | `'hover' \| 'click'` | `'hover'` | 子選單展開方式。 |
 | `openDelay` | `number` | `80` | 展開延遲（ms）。 |
 | `closeDelay` | `number` | `160` | 關閉延遲（ms）。 |
-| `zIndex` | `number` | `50` | 面板基底 z-index。 |
+| `zIndex` | `number` | — | 面板基底 z-index，實際層級 = 基底 + level。未指定時回落 `calc(var(--cml-z-popup) + level)`（見[疊層刻度](../features/layering.md)）。 |
 | `disabled` | `boolean` | `false` | 是否停用。 |
 | `closeOnSelect` | `boolean` | `true` | 選取後是否關閉整組選單。 |
 | `maxHeight` | `number \| string` | `360` | 單一面板選項區最大高度（number 視為 px），超過則該面板內部捲動。 |
@@ -36,6 +36,8 @@
 - 透過 `provide(CAMELOT_CASCADE_MENU_KEY, ...)` 向各層 `CamelotInternalCascadeMenuPanel` 提供設定、`select`、`closeAll` 與面板註冊函式。
 - 點擊觸發器與所有面板之外、按 Esc、視窗捲動時皆會關閉；`disabled` 於 `onUpdated` 時強制關閉。
 - 配色由 `useCamelotRoleColorClass(color)` 提供。
+- 各層面板經由 [useCamelotTeleportTarget](../composables/useCamelotTeleportTarget.md) Teleport 至最近的 `<dialog>`（沒有則 `body`），因此在 Dialog / Sheet 內可正常顯示與點擊。
+- 面板脫離原本的 DOM 位置後 CSS 變數繼承會中斷，故逐面板套用 `roleColorClass` 補回色彩角色變數。
 
 ---
 [🏠 Wiki](../index.md)
