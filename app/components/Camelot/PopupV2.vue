@@ -9,10 +9,15 @@
     <Teleport
       :to="teleportTo"
     >
+      <!--
+        data-camelot-popup：浮層 teleport 進 <dialog> 後會落在 .dialog-content-box 之外，
+        BaseDialogV2 需靠此標記把它與真正的遮罩區分開，否則點選單選項會被誤判成點遮罩而關閉對話框。
+      -->
       <CamelotGpu
+        data-camelot-popup
         class="fixed pointer-events-none"
         :style="{
-          zIndex: zIndex || 10,
+          zIndex: zIndex ?? 'var(--cml-z-popup)',
           width: `${width}px`,
           height: `${height}px`,
           top: `${y}px`,

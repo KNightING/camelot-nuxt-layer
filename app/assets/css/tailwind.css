@@ -3,6 +3,20 @@
 
 @variant dark (&:where(.dark, .dark *));
 
+/*
+ * 疊層刻度（單一事實來源）。
+ * PopupV2 會把浮層 teleport 進最近的 <dialog>，與 Drawer / BottomSheet 成為同層兄弟節點，
+ * 因此 popup 必須高於兩者，否則選單會被面板蓋住。各元件一律引用這些變數，不要就地寫死數字。
+ *
+ * 刻意放在一般 :root 而非 @theme —— @theme 會把沒被引用的變數 tree-shake 掉，
+ * 那樣「預留刻度」在首次被引用前都不存在，反而製造隱性斷點。
+ */
+:root {
+  --cml-z-drawer: 50;
+  --cml-z-sheet: 60;
+  --cml-z-popup: 70;
+}
+
 @theme {
   /* These values are added in addition to the defaults */
   /* https://tailwindcss.com/docs/v4-beta#namespace-reference */
