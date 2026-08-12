@@ -25,6 +25,7 @@
 | `useCamelotToast` | Toast 通知系統 | [詳情](./composables/useCamelotToast.md) |
 | `useCamelotVirtual` | 虛擬滾動核心（可變列高） | [詳情](./composables/useCamelotVirtual.md) |
 | `useCamelotOverlayScrollbar` | 自訂 overlay 捲軸核心（方向感知） | [詳情](./composables/useCamelotOverlayScrollbar.md) |
+| `useCamelotTeleportTarget` | 浮層 Teleport 目標判定（最近 `<dialog>`，否則 `body`） | [詳情](./composables/useCamelotTeleportTarget.md) |
 | `useCamelotFileDrop` | 檔案拖曳 headless 核心 | [詳情](./composables/useCamelotFileDrop.md) |
 | `useCamelotRouter` | 擴展 Vue Router（歷史堆疊） | [詳情](./composables/useCamelotRouter.md) |
 | `useLocale` | 語系格式正規化（bcp47/cldr/l10n） | [詳情](./composables/useLocale.md) |
