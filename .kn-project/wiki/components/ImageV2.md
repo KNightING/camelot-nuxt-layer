@@ -37,6 +37,7 @@
 - 透過 `useLazyImage` 管理載入狀態；以 `useIntersectionObserver`（threshold 0.5）在進入視窗時觸發載入，載入後停止觀察。
 - 載入中顯示 `CamelotSkeleton`，錯誤時渲染 `error` 插槽，成功時渲染 `img` 並套用 `$attrs`。
 - 懸停大圖以 `Teleport` 至 `body`，位置依 `useElementBounding` 計算並夾在視窗範圍內；懸停延遲約 400ms 顯示、離開約 100ms 隱藏。
+- 位置追蹤只在大圖顯示期間掛載 window 的 scroll／resize 監聽（顯示當下先量測一次），隱藏後不留任何監聽。
 - 未帶 `src` 的 `img` 由 `$attrs` 透傳（`inheritAttrs` 未特別設定）。
 
 ---

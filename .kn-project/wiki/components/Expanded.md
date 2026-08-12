@@ -24,6 +24,7 @@
 
 ## 備註
 - 展開動畫透過 `grid-rows-[1fr]` 與 `grid-rows-[0fr]` 切換，搭配 500ms 的 cubic-bezier 過場。
+- `useElementBounding` 關閉 `windowScroll` / `windowResize`：對外只提供尺寸，變化由內建的 ResizeObserver 涵蓋，不需要為座標掛 window 監聽。
 
 ---
 [🏠 Wiki](../index.md)

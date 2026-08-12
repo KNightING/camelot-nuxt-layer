@@ -16,7 +16,8 @@
 
 ## 備註
 - `@pointerdown` 於點擊座標建立 `.ripple` 元素，650ms 後移除。
-- ripple 尺寸依容器對角線計算（`sqrt(h² + w²) × 2`）並寫入 CSS 變數 `--ripple-size`。
+- 容器矩形於 `pointerdown` 當下以 `getBoundingClientRect()` 就地量測一次，不做常駐追蹤——本元件會被 Button／Tabs／NumberCounter 使用，單頁可達數十個實例。
+- ripple 尺寸依該次量測的容器對角線計算（`sqrt(h² + w²) × 2`），直接寫入元素的 `--ripple-size`。
 - 顏色於 `onUpdated` 時將 `rippleColor` 轉為 `--cml-c-ripple-color`（`r,g,b` 字串）。
 - 容器為 `position: relative; overflow: hidden`，水波紋不接收指標事件。
 

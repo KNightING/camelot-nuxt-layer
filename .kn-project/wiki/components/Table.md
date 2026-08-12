@@ -34,7 +34,7 @@
 ## 備註
 - 欄位（`CamelotTableColumn`）常用屬性：`key`、`title`、`width`、`align`（`left`/`center`/`right`）、`fixed`（`left`/`right`）、`accessor(row)`。
 - 固定欄以 `position: sticky` + 累計偏移實作，最後一個左固定欄與第一個右固定欄帶陰影分隔。
-- 虛擬滾動：僅渲染可視窗格（保留真實 `rowIndex` 供斑馬紋/插槽使用），並以 `ResizeObserver` 量測實際列高。
+- 虛擬滾動：僅渲染可視窗格（保留真實 `rowIndex` 供斑馬紋/插槽使用），並以 `ResizeObserver` 量測實際列高；已納入觀察的列以 `WeakSet` 記錄，捲動時不重複 `observe`。
 - 原生捲軸隱藏，改由兩個 `CamelotOverlayScrollbar`（水平可浮動、垂直 docked）呈現，皆走色彩角色。
 - 儲存格取值：優先 `col.accessor(row)`，否則 `row[col.key]`。
 

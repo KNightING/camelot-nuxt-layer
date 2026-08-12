@@ -24,7 +24,7 @@
 - 原生捲軸以 `scrollbar-width: none` 與 `::-webkit-scrollbar { display: none }` 隱藏。
 - 捲動時捲軸淡入，停止捲動 1 秒後自動淡出。
 - thumb 可用滑鼠拖曳，拖曳時同步更新 `scrollLeft` / `scrollTop`。
-- 掛載與 `resize` 時重新計算 thumb 尺寸與位置。
+- 捲動與 `resize` 觸發的量測以單一 pending `requestAnimationFrame` 合併，每幀最多重算一次 thumb 尺寸與位置；捲動監聽為 passive。掛載時的首次量測為同步呼叫，不經排程。
 
 ---
 [🏠 Wiki](../index.md)

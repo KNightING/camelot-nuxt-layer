@@ -39,9 +39,10 @@
 - 預設層級高於 Drawer 與 BottomSheet（見[疊層刻度](../features/layering.md)），因為 Teleport 進 `<dialog>` 後三者互為同層兄弟節點。
 - 因使用 `fixed` 定位，父元素若設定 `transform`、`perspective`、`filter`、`will-change` 等屬性可能導致定位失效。
 - 位置計算依 `useElementBounding` 與 `useWindowSize`；`isBottom`／`isRight` 判斷是否超出視窗以自動翻轉方向。
-- 透過 `requestAnimationFrame` 持續更新目標位置；監聽 `visualViewport` 的 scroll／resize 以處理鍵盤彈出等偏移。
-- 監聽捲動父層與 window 捲動，於未關閉相關設定時自動關閉 popup。
-- hover 模式以原生 `mouseenter`／`mouseleave` 事件實作，並於卸載時清理監聽器與計時器。
+- 目標位置以 `requestAnimationFrame` 逐幀追蹤，但**僅在浮層開啟期間執行**：開啟當下先同步量測一次再啟動迴圈，關閉與卸載時皆 `cancelAnimationFrame`。關閉狀態下不做任何位置量測。
+- 監聽 `visualViewport` 的 scroll／resize 以處理鍵盤彈出等偏移。
+- 監聽捲動父層與 window 捲動，於未關閉相關設定時自動關閉 popup；捲動父層的監聽為 passive。
+- hover 模式以原生 `mouseenter`／`mouseleave` 事件實作，透過 `useEventListener` 綁定，目標元素更換時自動解掛舊監聽；計時器於卸載時清除。
 - 內容以 `CamelotExpanded` 包裹以取得 `contentWidth`／`contentHeight` 供定位計算。
 
 ---

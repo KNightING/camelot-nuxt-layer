@@ -51,7 +51,7 @@
 ## 備註
 - 使用 `<script setup lang="ts" generic="T">` 泛型；選項顯示文字依序取 `label ?? name ?? value`。
 - 搜尋：有 `filterFunction` 時採用之，否則以小寫比對 `value / label / name`。
-- 虛擬滾動採 `@vueuse/core` 的 `useVirtualList`；開啟浮層時會多次派發 `resize` 以校正尺寸。
+- 虛擬滾動採 `@vueuse/core` 的 `useVirtualList`；其可視範圍由容器的 `ResizeObserver`（`useElementSize`）驅動，會隨浮層展開動畫自行重算。開啟浮層時僅 `scrollTo(0)` 回到清單頂端。
 - `default` 為真且 `modelValue` 未定義時，自動選取第一個選項（`immediate` watch）。
 - 觸發器樣式依 `themeMode`（scifi / cupertino / material / aqua / 預設）切換；浮層基於 `CamelotPopupV2`。
 
