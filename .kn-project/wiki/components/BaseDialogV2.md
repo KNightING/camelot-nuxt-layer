@@ -10,7 +10,7 @@
 | `closeByMask` | `boolean` | `true` | 點擊遮罩（內容框之外）或按 Esc 是否關閉 |
 | `tag` | `string` | - | 對話框 id；亦作為預設的網址查詢字串 key（值為此 tag） |
 | `zIndex` | `number` | - | 對話框 z-index |
-| `query` | `{ key: string, value: string }` | - | 自訂網址查詢字串同步設定（優先於 `tag`） |
+| `query` | `CamelotDialogQuery` | - | 自訂網址查詢字串同步設定（優先於 `tag`） |
 
 ## Emits
 | 事件 | 參數 | 說明 |
@@ -31,7 +31,9 @@
 ## 備註
 - 依 `themeMode` 呈現四種內容框：`scifi`（`CamelotScifiFrame` 四角框）、`cupertino`、`aqua`（毛玻璃）、預設 Material。
 - 使用原生 `dialog.showModal()` 產生背景遮罩；關閉時延遲 400ms 再 `close()` 以配合淡出動畫。
-- 遮罩點擊判斷：點在 `.dialog-content-box` 之外即關閉。
+- 遮罩點擊判斷：點在 `.dialog-content-box` 之外即關閉，但**會先排除 `[data-camelot-popup]` 內的點擊**。[PopupV2](./PopupV2.md) 會把浮層 Teleport 進本 `<dialog>`，位置落在內容框之外；不排除的話，點選單選項會被誤判成點遮罩而關閉對話框。
+- `closeByMask: false` 會**連帶停用 Esc 關閉**，這是刻意設計，用於強制決策的 modal。此時元件不提供任何內建關閉 UI，使用端必須自行提供關閉途徑（可改用 [ConfirmDialog](./ConfirmDialog.md)）。
+- 本元件**不提供內建關閉按鈕**：四種版面皆只渲染 `<slot />`，關閉 UI 由使用端負責。需要標準按鈕列時請改用 [ConfirmDialog](./ConfirmDialog.md)。
 - 網址同步：設定 `tag` 或 `query` 後，開啟會 push 查詢字串（含 `isDialog=true`），關閉會 back 或移除查詢字串；並監聽路由變化反向同步 `open`。
 - 開啟時鎖定 `body` 捲動。
 
