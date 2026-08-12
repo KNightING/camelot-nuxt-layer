@@ -63,10 +63,7 @@ const props = withDefaults(
     closeByMask?: boolean
     tag?: string
     zIndex?: number
-    query?: {
-      key: string
-      value: string
-    }
+    query?: CamelotDialogQuery
   }>(),
   {
     closeByMask: true,
