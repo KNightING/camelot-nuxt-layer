@@ -9,11 +9,13 @@
 | Composable | 說明 | 詳情 |
 | :--- | :--- | :--- |
 | `useCamelotTheme` | 主題切換狀態（themeMode / colorMode / 色彩方案） | [詳情](./composables/useCamelotTheme.md) |
+| `useCamelotColorMode` | 全站共用的深淺色模式單一實例（勿直接用 `useColorMode`） | [詳情](./composables/useCamelotColorMode.md) |
 | `useCamelotRoleColorClass` | 色彩角色 → 注入 `--cml-color-current-*` 的 class | [詳情](./composables/useCamelotRoleColorClass.md) |
 | `useCamelotPickerTheme` | DatePicker 各風格 class | [詳情](./composables/useCamelotPickerTheme.md) |
 | `useCamelotMenuItemTheme` | 選單/選項列各風格 active/hover | [詳情](./composables/useCamelotMenuItemTheme.md) |
 | `useMaterial3ColorScheme` | Material 3 色彩方案生成 | [詳情](./composables/useMaterial3ColorScheme.md) |
 | `useCustomColorScheme` | 自訂色彩方案管理 | [詳情](./composables/useCustomColorScheme.md) |
+| `useColorSchemeCssVars` | 色彩方案 CSS 變數單向寫入器 | [詳情](./composables/useColorSchemeCssVars.md) |
 | `useColor` | 顏色處理工具 | [詳情](./composables/useColor.md) |
 
 ## 🧩 元件相關

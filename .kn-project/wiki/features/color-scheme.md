@@ -1,6 +1,8 @@
 # 🎨 Color Scheme / 色彩主題系統
 
-本頁記錄 Camelot Nuxt Layer 的色彩主題架構，涵蓋 Material Design 3 色彩系統、客製化方案與暗黑模式支援。
+## Summary
+
+Camelot 的色彩系統把 Material Design 3 色票（含 Camelot 額外色）轉成 CSS 變數注入 DOM，並隨深淺色模式自動切換。採雙變數策略以覆蓋 Tailwind v4 的 `:root` 主題色。全域色彩狀態與其副作用皆為**模組層單例**，區域覆蓋則由 Provider 綁定自身元素。
 
 ---
 
@@ -8,17 +10,45 @@
 
 ```mermaid
 graph TD
-    Provider["ColorSchemeProvider\n或 CustomColorSchemeProvider"]
+    ColorMode["useCamelotColorMode()\n(模組層單例)"]
+    GlobalProvider["ColorSchemeProvider\n(target = documentElement)"]
+    ScopedProvider["CustomColorSchemeProvider\n(target = 自身元素)"]
     useCustom["useCustomColorScheme()"]
-    useM3["useMaterial3ColorScheme()"]
-    CSS["CSS 變數注入\n(:root / 元素 scope)"]
-    Tailwind["Tailwind CSS v4\n主題 (tailwind.css)"]
+    GlobalWatcher["全域單例 watcher"]
+    ScopedWatcher["per-instance watcher"]
+    Writer["applyColorSchemeCssVars()\n單向寫入"]
+    Html["&lt;html&gt; inline style"]
+    El["Provider 元素 inline style"]
+    Tailwind["Tailwind CSS v4\n(tailwind.css)"]
 
-    Provider --> useCustom
-    useCustom --> useM3
-    useCustom --> CSS
-    CSS --> Tailwind
+    GlobalProvider --> useCustom
+    ScopedProvider --> useCustom
+    ColorMode --> useCustom
+    useCustom --> GlobalWatcher
+    useCustom --> ScopedWatcher
+    GlobalWatcher --> Writer
+    ScopedWatcher --> Writer
+    Writer --> Html
+    Writer --> El
+    Html --> Tailwind
 ```
+
+`useMaterial3ColorScheme` 是獨立的並行路徑（值為 `r,g,b` 三元組），不在 `useCustomColorScheme` 之下。
+
+---
+
+## 訂閱模型（重要）
+
+`useCamelotTheme()` 被 35 個 Camelot 元件檔呼叫，單頁可達數百個實例。因此下列狀態與副作用**一律收斂為模組層單例**，否則切換一次深淺色會產生數百份重複工作：
+
+| 項目 | 位置 | 說明 |
+| :--- | :--- | :--- |
+| `useColorMode` 實例 | [useCamelotColorMode](../composables/useCamelotColorMode.md) | VueUse 每個實例都會註冊一份往 `<html>` 寫 class 的 watcher |
+| `themeMode` storage ref | `useCamelotTheme` | 同分頁兩個 `useStorage` 實例不會互相同步，必須共用同一個 ref |
+| 主題屬性 / 漸變過場 watcher | `useCamelotTheme` | 掛在 `globalThemeScope`（`effectScope(true)`） |
+| 全域色彩方案 watcher | `useCustomColorScheme` | 所有全域呼叫端寫的都是同一個 `<html>` |
+
+CSS 變數寫入本身是**單向**動作，由 [useColorSchemeCssVars](../composables/useColorSchemeCssVars.md) 直接 `setProperty`，不為每個變數建立響應式 ref。
 
 ---
 
@@ -35,7 +65,7 @@ graph TD
 | `targetRef` | `MaybeElementRef` | 目標 DOM 元素；傳入 `document.documentElement` 時視為全域設定 |
 | `config.lightColorScheme` | `CustomColorScheme<T>` | 亮色模式色彩方案 |
 | `config.darkColorScheme` | `CustomColorScheme<T>` | 暗色模式色彩方案 |
-| `config.editable` | `boolean` | 預設 `true`；設為 `false` 時不更新 CSS 變數（唯讀模式） |
+| `config.editable` | `boolean` | 預設 `true`；設為 `false` 時不更新 CSS 變數（唯讀模式）。**僅對非全域目標生效**——全域目標是共用的 `<html>`，單一呼叫端的唯讀意圖不足以代表其餘呼叫端 |
 
 **回傳值**：
 
@@ -131,6 +161,8 @@ type CamelotColorScheme = {
 | :--- | :--- |
 | [app/composables/useCustomColorScheme.ts](../../../app/composables/useCustomColorScheme.ts) | 色彩方案核心 Composable |
 | [app/composables/useMaterial3ColorScheme.ts](../../../app/composables/useMaterial3ColorScheme.ts) | Material Design 3 色彩生成工具 |
+| [app/composables/useCamelotColorMode.ts](../../../app/composables/useCamelotColorMode.ts) | 全站共用的深淺色模式單一實例 |
+| [app/composables/useColorSchemeCssVars.ts](../../../app/composables/useColorSchemeCssVars.ts) | CSS 變數單向寫入器 |
 | [app/assets/css/tailwind.css](../../../app/assets/css/tailwind.css) | Tailwind v4 主題變數定義 |
 | [app/components/Camelot/ColorSchemeProvider.vue](../../../app/components/Camelot/ColorSchemeProvider.vue) | 全域 Provider 元件 |
 | [app/components/Camelot/CustomColorSchemeProvider.vue](../../../app/components/Camelot/CustomColorSchemeProvider.vue) | 區域 Provider 元件 |

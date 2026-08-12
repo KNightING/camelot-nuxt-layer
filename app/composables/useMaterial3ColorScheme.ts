@@ -1,5 +1,4 @@
 import type { MaybeElementRef } from '@vueuse/core'
-import { useChangeCase } from '@vueuse/integrations/useChangeCase'
 
 export type Material3ColorScheme = {
   primary: string
@@ -194,10 +193,7 @@ type Material3ColorSchemeConfig = {
 
 const {
   system, store,
-} = useColorMode()
-
-const getCssVar = (key: string, target?: MaybeElementRef) =>
-  useElCssVar(`--cml-c-m3-${key}`, target, { inherit: false })
+} = useCamelotColorMode()
 
 const globalLightColorScheme
   = ref<Material3ColorSchemePartial>(defaultColorScheme)
@@ -206,18 +202,13 @@ const globalDarkColorScheme = ref<Material3ColorSchemePartial>(
   defaultDarkColorScheme,
 )
 
-const globalUsedColorScheme = computed(() => {
-  let isDark = true
-  if (store.value === 'auto') {
-    isDark = system.value === 'dark'
-  }
-  else {
-    isDark = store.value === 'dark'
-  }
-  return {
-    ...(isDark ? globalDarkColorScheme.value : globalLightColorScheme.value),
-  }
-})
+const isDarkMode = computed(() =>
+  store.value === 'auto' ? system.value === 'dark' : store.value === 'dark',
+)
+
+const globalUsedColorScheme = computed(() => ({
+  ...(isDarkMode.value ? globalDarkColorScheme.value : globalLightColorScheme.value),
+}))
 
 export const useGlobalMaterial3ColorScheme = (
   config?: Material3ColorSchemeConfig,
@@ -253,37 +244,16 @@ export const useMaterial3ColorScheme = (
     config?.darkColorScheme ?? globalDarkColorScheme.value,
   )
 
-  const usedColorScheme = computed(() => {
-    let isDark = true
-    if (store.value === 'auto') {
-      isDark = system.value === 'dark'
-    }
-    else {
-      isDark = store.value === 'dark'
-    }
-    return { ...(isDark ? darkColorScheme.value : lightColorScheme.value) }
-  })
+  const usedColorScheme = computed(() => ({
+    ...(isDarkMode.value ? darkColorScheme.value : lightColorScheme.value),
+  }))
 
-  const changeCase = useChangeCase('', 'kebabCase')
-
-  watchImmediate(usedColorScheme, (nV: any) => {
+  watchImmediate([usedColorScheme, () => unrefElement(target)], ([colorScheme, targetEl]) => {
     if (config?.editMode === false) {
       return
     }
 
-    for (const key in nV) {
-      if (useIsValidKey(key, nV)) {
-        changeCase.value = key
-        const cssVar = getCssVar(changeCase.value, target)
-        const rbga = useColor().hexToRgbaArray(nV[key])
-        if (!rbga) {
-          cssVar.value = nV[key]
-        }
-        else {
-          cssVar.value = `${rbga[0]},${rbga[1]},${rbga[2]}`
-        }
-      }
-    }
+    applyMaterial3CssVars(targetEl, colorScheme)
   })
 
   if (config) {

@@ -41,7 +41,11 @@ console.log(primary.value) // 讀取目前值
 
 ## 備註
 - 內部對 `[elRef, prop]` 變化 immediate 監聽以更新 ref；並監聽 ref 變化寫回元素 `style`。
-- `inherit: false` 時僅讀 inline style，適合搭配需要精準覆蓋的情境（如自訂色彩配置）。
+- `inherit: false` 時僅讀 inline style，適合搭配需要精準覆蓋的情境。
+
+> [!WARNING]
+> **只在 setup 期建立，切勿在 watcher 或迴圈內建立實例。** 每個實例會建立一個 ref、一個 computed 與兩個常駐 `watch`；在 watcher callback 內建立時不屬於任何 effect scope，**永遠不會被回收**。
+> 需要一次寫入多個變數（如整組色彩方案）時，請改用單向寫入的 [`useColorSchemeCssVars`](./useColorSchemeCssVars.md)——寫入不需要響應式 ref。
 
 ---
 [🏠 Wiki](../index.md)

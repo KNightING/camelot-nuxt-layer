@@ -65,8 +65,10 @@ useMaterial3ColorScheme(el, { lightColorScheme: { primary: '#005ac1' } })
 ```
 
 ## 備註
-- 寫入時會用 `useColor().hexToRgbaArray` 將 hex 轉為 `r,g,b`（無法解析時直接寫入原值）；CSS 變數為 `--cml-c-m3-<kebab-case-key>`（`inherit: false`）。
+- 變數寫入委派給 [`applyMaterial3CssVars`](./useColorSchemeCssVars.md)：以 `useColor().hexToRgbaArray` 將 hex 轉為 `r,g,b` 三元組（無法解析時直接寫入原值），寫入 `--cml-c-m3-<kebab-case-key>`。
+    - 此格式**與 `useCustomColorScheme` 的原始色值格式不同**，故兩者各用一支寫入函式，僅共用鍵名轉換快取。三元組供 `rgb(var(--cml-c-m3-x) / <alpha>)` 這類需要調整透明度的用法。
 - 有 `target` 時，`light/darkColorScheme` 初始取 `config` 或全域值；`config` 存在時再覆蓋一次。
+- 深淺色來源為共用的 [`useCamelotColorMode`](./useCamelotColorMode.md)，非各自建立的 `useColorMode`。
 - `useGlobalMaterial3ColorScheme` 直接更新模組層級的全域 ref，供整站共用。
 
 ---
