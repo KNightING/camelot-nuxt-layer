@@ -40,7 +40,6 @@ const props = withDefaults(
     submenuTrigger: 'hover',
     openDelay: 80,
     closeDelay: 160,
-    zIndex: 50,
     disabled: false,
     closeOnSelect: true,
     maxHeight: 360,

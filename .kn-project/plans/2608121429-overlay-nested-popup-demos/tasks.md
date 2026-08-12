@@ -33,8 +33,30 @@
 - [x] C5. `eslint` 對變更檔案零錯誤
 - [ ] C6. Wiki 記錄浮層檢查點與兩個已知失效元件（Phase 5 由 wikification 處理）
 
-## 後續（各自另開計畫）
-- `Internal/CascadeMenuPanel.vue` 與 `Internal/TimeField.vue` 改以 `PopupV2` 為基底（結構性重構）
+## Phase R2 — CascadeMenu 修復（使用者追加，於本計畫完成）
+- [x] R2-1. 判定：真正的缺陷在 **teleport 目標**而非定位。`CascadeMenuPanel` 的 root/submenu 錨定、翻轉與多層遞迴屬專門邏輯，整個換成 `PopupV2` 是大改寫且無對應語意；改為**抽出兩者共用的判定**，落實「popup 概念共用同一基底」的原則
+- [x] R2-2. 新增 `app/composables/useCamelotTeleportTarget.ts`：回傳最近的 `<dialog>` 祖先，否則 `body`
+- [x] R2-3. `CascadeMenuPanel` 的 `Teleport to="body"` 改為 `:to="teleportTarget"`
+- [x] R2-4. `CamelotCascadeMenuContext.baseZIndex` 改為可選；未指定時面板層級回落 `calc(var(--cml-z-popup) + level)`，移除 `CascadeMenu` 的 `zIndex: 50` 硬編預設
+- [x] R2-5. 驗證（Dialog）：面板 `inDialog: true`、`z: 70`，hit-test 命中面板內的「外觀」→ **可見且可點**
+- [x] R2-6. 驗證（子選單）：`z: 71`（`calc` 生效）、`inDialog: true`，多層層級正確
+- [x] R2-7. 驗證（選取）：點葉節點後選單關閉、**對話框保持開啟**
+- [x] R2-8. 驗證（Sheet）：面板 `inSheetDialog: true`、`z: 70` > sheet 的 `60`
+- [x] R2-9. 回歸（非 overlay 情境）：頁面上的 CascadeMenu 仍 teleport 至 `body`、`z: 70`，運作正常
+- [x] R2-10. `eslint` 零新增錯誤（`closeTimer` 的 `no-unassigned-vars` 為分支基底既有）；乾淨重載後 runtime 錯誤為 0
+
+## Phase R3 — TimeField 修復（使用者追加，於本計畫完成）
+- [x] R3-1. `Internal/TimeField.vue` 的 `Teleport to="body"` 改為 `:to="teleportTarget"`，共用 `useCamelotTeleportTarget`
+- [x] R3-2. 清單層級由硬編的 `z-[1000]` 改為 `calc(var(--cml-z-popup) + 1)`，確定性地疊在其所屬 TimeV2 浮層（70）之上
+- [x] R3-3. 驗證：清單 `inDialog: true`、`parentIsBody: false`、`z: 71`
+- [x] R3-4. 驗證（行為）：24 個選項、選取 `07` 後輸入值由 `00` → `07`、對話框保持開啟
+- [x] R3-5. 更新展示頁標註：兩個「已知失效」皆已修復，改為說明檢查點用途
+- [x] R3-6. 全面回歸：點內容不關、Select 可選（`日式餐廳`）、CascadeMenu `z: 70` 在 dialog 內、巢狀 dialog 點空白後外層保持開啟、遮罩點擊仍關閉
+
+## 環境限制（重要）
+- **本環境無法驗證任何浮層的「位置」**：Browser 面板恆為隱藏 → rAF 凍結 → PopupV2 的 `updateOnRequestAnimationFrame` 不執行，浮層座標停在過時值（實測 TimeField root 落在 `y: 8977`）。已用 fixed 探針確認 dialog 內的 containing block 仍為視窗（`(0,0)`），故定位機制本身未被改動影響。
+- 可驗證且已驗證：teleport 目標、z-index、DOM 從屬關係、點擊與選取行為。
+- **位置與視覺疊層需使用者在正常視窗確認。**
 - `PopupV2` 的 teleport 目標由 `body` 改為「最近的 scope root」（色彩方案 Provider → `<dialog>` → `body`），以修復 CSS 自訂屬性無法穿透 Teleport 的問題
 
 ## 備註

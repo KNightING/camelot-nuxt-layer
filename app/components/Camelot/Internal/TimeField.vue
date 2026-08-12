@@ -15,13 +15,15 @@
       @keydown.down.prevent="step(-1)"
     >
     <!-- 下拉清單以 Teleport 脫離 Popup 的 overflow-hidden 容器，避免超出彈窗時被裁切；
-         依 trigger 上下可用空間決定向上或向下展開 -->
-    <Teleport to="body">
+         依 trigger 上下可用空間決定向上或向下展開。
+         目標與 PopupV2 / CascadeMenuPanel 共用同一套判定：祖先有 <dialog> 時必須
+         teleport 進該對話框，否則會落在其 top layer 之下而看不見、點不到。 -->
+    <Teleport :to="teleportTarget">
       <div
         v-if="open"
         ref="listRef"
-        class="fixed z-[1000] max-h-40 w-12 -translate-x-1/2 overflow-y-auto rounded-lg border border-outline-variant bg-surface shadow-lg"
-        :style="listStyle"
+        class="fixed max-h-40 w-12 -translate-x-1/2 overflow-y-auto rounded-lg border border-outline-variant bg-surface shadow-lg"
+        :style="[listStyle, { zIndex: 'calc(var(--cml-z-popup) + 1)' }]"
       >
         <button
           v-for="v in options"
@@ -51,6 +53,8 @@ const model = defineModel<number>({ default: 0 })
 
 const root = useTemplateRef<HTMLElement>('root')
 const listRef = useTemplateRef<HTMLElement>('listRef')
+
+const { teleportTarget } = useCamelotTeleportTarget(root)
 const open = ref(false)
 const listStyle = ref<Record<string, string>>({})
 

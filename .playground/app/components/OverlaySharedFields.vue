@@ -30,10 +30,8 @@
         浮層檢查點
       </span>
       <p class="text-xs opacity-70">
-        驗證各種浮層在 Dialog / Sheet 內是否可用。
-        <strong class="text-error">已知失效</strong>：時間欄位的內層時分秒清單與階層選單目前以
-        <code>Teleport to="body"</code> 實作，會落在 <code>&lt;dialog&gt;</code> 的 top layer
-        之下而看不見；待改以 <code>PopupV2</code> 為基底後修復。
+        驗證各種浮層在 Dialog / Sheet 內是否可用：能開啟、疊在面板之上、點選項不會誤關 overlay。
+        全部使用元件預設值，不傳任何迴避用的 prop——這樣一旦有元件回歸，這裡就會直接壞給你看。
       </p>
 
       <CamelotDateV2

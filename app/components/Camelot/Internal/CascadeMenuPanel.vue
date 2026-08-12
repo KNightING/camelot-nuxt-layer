@@ -1,5 +1,9 @@
 <template>
-  <Teleport to="body">
+  <!--
+    Teleport 目標與 PopupV2 共用同一套判定：若祖先有 <dialog>，必須 teleport 進該對話框，
+    否則面板會落在其 top layer 之下，z-index 再高也看不見、點不到。
+  -->
+  <Teleport :to="teleportTarget">
     <Transition
       appear
       enter-active-class="transition duration-150 ease-out"
@@ -82,6 +86,8 @@ const roleColorClass = computed(() => ctx.roleColorClass())
 const scrollMaxHeight = computed(() => `min(${ctx.maxHeight}, calc(100vh - 16px))`)
 
 const panelRef = useTemplateRef<HTMLElement>('panelRef')
+
+const { teleportTarget } = useCamelotTeleportTarget(() => props.anchor)
 
 const hasChildren = (item: CamelotCascadeMenuItem) => !!item.children?.length
 
@@ -181,7 +187,10 @@ const computePosition = () => {
 }
 
 const panelStyle = computed(() => {
-  const z = ctx.baseZIndex + props.level
+  // 未指定 baseZIndex 時回落到疊層刻度，避免在此重複硬編數值
+  const z = ctx.baseZIndex === undefined
+    ? `calc(var(--cml-z-popup) + ${props.level})`
+    : ctx.baseZIndex + props.level
   // 尚未定位前隱藏（仍佔版面可量測），避免 (0,0) 錯誤幀
   if (!pos.value) {
     return {
