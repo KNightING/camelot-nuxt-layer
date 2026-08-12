@@ -187,11 +187,9 @@ export default defineNuxtConfig({
 
   i18n: {
     // Layer 只提供語言層級基底字典（zh 為繁體），會被消費端 app 繼承。
-    // 區域語系（如 zh-Hant-TW、zh-Hans-CN）由消費端註冊，
-    // 靠 vue-i18n 隱含階層 fallback（zh-Hant-TW → zh-Hant → zh）落回基底，範例見 .playground。
     locales: [
     ],
-    defaultLocale: 'zh',
+    defaultLocale: undefined, // 由消費端 app 決定，通常為 zh 或 en
     restructureDir: 'i18n',
     langDir: 'locales',
 
