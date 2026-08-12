@@ -19,12 +19,71 @@ export const triggerThemeTransition = () => {
   }, 360)
 }
 
-export const useCamelotTheme = () => {
-  const themeMode = useLocalStorage<CamelotThemeMode>('cml-theme-mode', 'aqua', {
+const createThemeModeStorage = () =>
+  useLocalStorage<CamelotThemeMode>('cml-theme-mode', 'aqua', {
     initOnMounted: true,
   })
 
-  const { store: colorMode } = useColorMode()
+/**
+ * 主題風格是全站單一狀態，但 `useCamelotTheme()` 被每個 Camelot 元件呼叫。
+ * 先前每個呼叫端各建一個 `useLocalStorage` 實例（單頁可達數百份），彼此只能靠 storage
+ * 事件同步；改為模組層共用同一個 ref (issue #17)。
+ *
+ * 以獨立 scope 建立：`getCurrentInstance()` 仍是首個呼叫端的元件，故 `initOnMounted`
+ * 照常在 mount 後才讀 localStorage（避免 hydration 不一致），但內部的事件監聽改掛在此
+ * scope 上，不會隨著偶然第一個掛載的元件卸載而失效。
+ */
+const globalThemeScope = effectScope(true)
+
+let themeModeStorage: ReturnType<typeof createThemeModeStorage> | undefined
+
+const useThemeModeStorage = () => {
+  if (themeModeStorage) {
+    return themeModeStorage
+  }
+
+  const created = globalThemeScope.run(createThemeModeStorage)
+  if (!created) {
+    throw new Error('cml-theme-mode storage 初始化失敗：effectScope 已停止')
+  }
+
+  themeModeStorage = created
+  return created
+}
+
+/**
+ * 主題風格與深淺色的副作用（寫入 `<html>` 屬性、觸發顏色過場）對全站只需各發生一次，
+ * 但 `useCamelotTheme()` 被每個 Camelot 元件呼叫，單頁可達數百個呼叫端。
+ * watcher 因此以模組層單例註冊一次，避免數百份 watcher 重複做同一件事 (issue #17)。
+ */
+let hasGlobalThemeWatchers = false
+
+const ensureGlobalThemeWatchers = () => {
+  if (hasGlobalThemeWatchers || typeof document === 'undefined') {
+    return
+  }
+
+  hasGlobalThemeWatchers = true
+
+  // 同樣掛在 globalThemeScope 上：這些副作用屬於模組，不屬於偶然第一個掛載的元件。
+  globalThemeScope.run(() => {
+    const themeMode = useThemeModeStorage()
+    const { store: colorMode } = useCamelotColorMode()
+
+    watchImmediate(themeMode, (newMode) => {
+      document.documentElement.style.setProperty('--cml-active-ui-style', `"${newMode}"`)
+      document.documentElement.setAttribute('data-camelot-theme-mode', newMode)
+    })
+
+    // 主題風格 / 深淺色切換 → 顏色漸變過場（非 immediate，避免初次載入閃動）
+    watch([themeMode, colorMode], () => triggerThemeTransition())
+  })
+}
+
+export const useCamelotTheme = () => {
+  const themeMode = useThemeModeStorage()
+
+  const { store: colorMode } = useCamelotColorMode()
 
   // Get global color scheme refs (safely for SSR/client)
   const isClient = typeof document !== 'undefined'
@@ -55,19 +114,7 @@ export const useCamelotTheme = () => {
     setThemeColor('primary', lightColor, darkColor)
   }
 
-  watch(
-    themeMode,
-    (newMode) => {
-      if (isClient) {
-        document.documentElement.style.setProperty('--cml-active-ui-style', `"${newMode}"`)
-        document.documentElement.setAttribute('data-camelot-theme-mode', newMode)
-      }
-    },
-    { immediate: true },
-  )
-
-  // 主題風格 / 深淺色切換 → 顏色漸變過場（非 immediate，避免初次載入閃動）
-  watch([themeMode, colorMode], () => triggerThemeTransition())
+  ensureGlobalThemeWatchers()
 
   return {
     themeMode,

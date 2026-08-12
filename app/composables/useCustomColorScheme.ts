@@ -1,6 +1,4 @@
 import { isClient, type MaybeElementRef } from '@vueuse/core'
-import { useChangeCase } from '@vueuse/integrations/useChangeCase'
-import { Material3ColorSchemeKeys } from './useMaterial3ColorScheme'
 
 type CamelotColorScheme = {
   rippleColor: string
@@ -18,12 +16,9 @@ export type CustomColorScheme<T = any> = Material3ColorSchemePartial
   & Partial<CamelotColorScheme>
   & Partial<T>
 
-const getCssVar = (key: string, target?: MaybeElementRef) =>
-  useElCssVar(`${key}`, target, { inherit: false })
-
 const {
   system, store,
-} = useColorMode()
+} = useCamelotColorMode()
 
 const defaultCamelotLightColorScheme: CamelotColorScheme = {
   rippleColor: '#111827',
@@ -44,6 +39,40 @@ const globalDarkColorScheme = ref<CustomColorScheme<any>>({
   ...defaultDarkColorScheme,
   ...defaultCamelotDarkColorScheme,
 })
+
+const isDarkMode = computed(() =>
+  store.value === 'auto' ? system.value === 'dark' : store.value === 'dark',
+)
+
+const globalUsedColorScheme = computed<CustomColorScheme<any>>(() =>
+  isDarkMode.value ? globalDarkColorScheme.value : globalLightColorScheme.value,
+)
+
+/**
+ * 全域方案寫的永遠是同一個 `<html>`，但 `useCamelotTheme()` 被每個 Camelot 元件呼叫，
+ * 單頁可達數百個呼叫端。watcher 因此以模組層單例註冊一次供所有呼叫端共享——先前每個
+ * 呼叫端各註冊一份，切換一次色彩模式會有數百份 watcher 對同一個元素重複寫入同一組變數 (issue #17)。
+ *
+ * 承上，全域路徑不受 `config.editable` 影響：目標元素為共用的 `<html>`，
+ * 單一呼叫端的唯讀意圖不足以代表其餘數百個呼叫端。該旗標僅對綁定自身元素的目標生效。
+ */
+let hasGlobalCssVarsWatcher = false
+
+const ensureGlobalCssVarsWatcher = () => {
+  if (hasGlobalCssVarsWatcher) {
+    return
+  }
+
+  hasGlobalCssVarsWatcher = true
+
+  // 首個呼叫端是某個元件的 setup，若沿用其 scope，該元件卸載時全站色彩就不再更新。
+  // 以獨立 scope 承載，讓生命週期跟著模組而非跟著偶然第一個掛載的元件。
+  effectScope(true).run(() => {
+    watchImmediate(globalUsedColorScheme, (colorScheme) => {
+      applyColorSchemeCssVars(document.documentElement, colorScheme)
+    })
+  })
+}
 
 /**
  *
@@ -110,60 +139,23 @@ export const useCustomColorScheme = <T>(
         },
       )
 
-  const usedColorScheme = computed<CustomColorScheme<T>>(() => {
-    let isDark = true
-    if (store.value === 'auto') {
-      isDark = system.value === 'dark'
-    }
-    else {
-      isDark = store.value === 'dark'
-    }
+  const usedColorScheme = computed<CustomColorScheme<T>>(() =>
+    isDarkMode.value ? darkColorScheme.value : lightColorScheme.value,
+  )
 
-    const cs = <CustomColorScheme<T>>(
-        (isDark ? darkColorScheme.value : lightColorScheme.value)
-      )
-    return cs
-  })
-
-  const changeCase = useChangeCase('', 'kebabCase')
-
-  watchImmediate([usedColorScheme, () => unrefElement(targetRef)], ([colorScheme, target]) => {
-    if (!target) {
-      return
-    }
-
-    if (config?.editable === false) {
-      return
-    }
-
-    for (const key in colorScheme) {
-      if (useIsValidKey(key, colorScheme)) {
-        changeCase.value = key
-        let cssVarKey = changeCase.value
-
-        // 因為tailwind V4 會將 變數放到 :root 導致無法覆蓋 所以需要多一個變數重新設定
-        let cssVarOverrideTailwindKey = changeCase.value
-        if (Material3ColorSchemeKeys.includes(key)) {
-          cssVarOverrideTailwindKey = `--color-${cssVarOverrideTailwindKey}`
-          cssVarKey = `--cml-c-m3-${cssVarKey}`
-        }
-        // else if (CamelotColorSchemeKeys.includes(key)) {
-        //   cssVarOverrideTailwindKey = `--color-${cssVarOverrideTailwindKey}`
-        //   cssVarKey = `--cml-c-${cssVarKey}`
-        // }
-        else {
-          cssVarOverrideTailwindKey = `--color-${cssVarOverrideTailwindKey}`
-          cssVarKey = `--cml-c-${cssVarKey}`
-        }
-        const cssVar = getCssVar(cssVarKey, targetRef)
-        const cssVarOverrideTailwind = getCssVar(cssVarOverrideTailwindKey, target)
-
-        cssVar.value = colorScheme[key]
-
-        cssVarOverrideTailwind.value = `var(${cssVarKey})`
+  if (isGlobal) {
+    ensureGlobalCssVarsWatcher()
+  }
+  else {
+    // 非全域目標各有自己的元素，watcher 必須逐實例註冊
+    watchImmediate([usedColorScheme, () => unrefElement(targetRef)], ([colorScheme, target]) => {
+      if (config?.editable === false) {
+        return
       }
-    }
-  })
+
+      applyColorSchemeCssVars(target, colorScheme)
+    })
+  }
 
   return {
     mode: store,
