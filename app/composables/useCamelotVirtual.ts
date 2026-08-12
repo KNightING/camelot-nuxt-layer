@@ -24,39 +24,86 @@ export const useCamelotVirtual = (
     headerOffset?: MaybeRefOrGetter<number>
   } = {},
 ) => {
-  const sizes = ref<number[]>([])
+  /**
+   * sizes 刻意不是 ref：呼叫端每渲染一輪會對每個可視項各呼叫一次 setSize，
+   * 若每次都複製整條陣列，單次捲動的成本就是 O(可視項 × 總項數)。
+   * 改為原地寫入純陣列，另以 sizesVersion 當響應式訊號通知下游重算。
+   */
+  const sizes: number[] = []
+  const sizesVersion = ref(0)
   const scrollOffset = ref(0)
   const viewport = ref(0)
+
+  // 前綴和快取與其失效起點：只有 dirtyFrom 之後的區間需要重算，前段沿用上一輪結果
+  const offsetsCache: number[] = [0]
+  let dirtyFrom = 0
+
+  const markDirty = (index: number) => {
+    dirtyFrom = Math.min(dirtyFrom, index)
+  }
+
+  // 同一輪渲染內的多次 setSize 合併成一次版本遞增，避免逐項觸發下游 computed
+  let versionBumpScheduled = false
+
+  const scheduleVersionBump = () => {
+    if (versionBumpScheduled) {
+      return
+    }
+
+    versionBumpScheduled = true
+    queueMicrotask(() => {
+      versionBumpScheduled = false
+      sizesVersion.value++
+    })
+  }
 
   // 維持 sizes 長度與 count 一致（新項目以 estimate 填入）
   watchEffect(() => {
     const n = toValue(count)
     const est = toValue(estimate)
-    const arr = sizes.value
-    if (arr.length < n) {
-      for (let i = arr.length; i < n; i++) arr.push(est)
-      sizes.value = arr.slice()
+    if (sizes.length === n) {
+      return
     }
-    else if (arr.length > n) {
-      arr.length = n
-      sizes.value = arr.slice()
+
+    markDirty(Math.min(sizes.length, n))
+    if (sizes.length < n) {
+      for (let i = sizes.length; i < n; i++) sizes.push(est)
     }
+    else {
+      sizes.length = n
+    }
+    sizesVersion.value++
   })
 
-  // 前綴和：offsets[i] = 第 i 項在虛擬區內的起始位置
-  const offsets = computed(() => {
-    const arr = sizes.value
-    const out = new Array<number>(arr.length + 1)
-    out[0] = 0
-    for (let i = 0; i < arr.length; i++) out[i + 1] = out[i] + (arr[i] || 0)
-    return out
-  })
+  /**
+   * 前綴和：offsets[i] = 第 i 項在虛擬區內的起始位置。
+   *
+   * 刻意不做成 computed：computed 會以 Object.is 比對新舊值，而快取重用的是同一個陣列參照，
+   * 回傳相同參照會讓下游停止更新。改為一般函式，由各呼叫端自行讀取 sizesVersion 建立相依。
+   */
+  const readOffsets = () => {
+    if (dirtyFrom < offsetsCache.length) {
+      offsetsCache.length = dirtyFrom + 1
+    }
 
-  const totalSize = computed(() => offsets.value[offsets.value.length - 1] ?? 0)
+    for (let i = offsetsCache.length - 1; i < sizes.length; i++) {
+      offsetsCache[i + 1] = (offsetsCache[i] ?? 0) + (sizes[i] || 0)
+    }
+    offsetsCache.length = sizes.length + 1
+    dirtyFrom = sizes.length
+
+    return offsetsCache
+  }
+
+  const totalSize = computed(() => {
+    void sizesVersion.value
+    const offsets = readOffsets()
+    return offsets[offsets.length - 1] ?? 0
+  })
 
   // 二分搜尋：找出第一個 offsets[i+1] > target 的 i
   const findIndex = (target: number) => {
-    const o = offsets.value
+    const o = readOffsets()
     let lo = 0
     let hi = o.length - 1
     while (lo < hi) {
@@ -68,6 +115,7 @@ export const useCamelotVirtual = (
   }
 
   const range = computed(() => {
+    void sizesVersion.value
     const n = toValue(count)
     if (n === 0) return {
       start: 0,
@@ -85,8 +133,15 @@ export const useCamelotVirtual = (
     }
   })
 
-  const topPad = computed(() => offsets.value[range.value.start] ?? 0)
-  const bottomPad = computed(() => Math.max(0, totalSize.value - (offsets.value[range.value.end] ?? 0)))
+  const topPad = computed(() => {
+    void sizesVersion.value
+    return readOffsets()[range.value.start] ?? 0
+  })
+
+  const bottomPad = computed(() => {
+    void sizesVersion.value
+    return Math.max(0, totalSize.value - (readOffsets()[range.value.end] ?? 0))
+  })
 
   const visibleIndices = computed(() => {
     const {
@@ -107,18 +162,18 @@ export const useCamelotVirtual = (
 
   // 呼叫端在每個渲染項回報實際尺寸
   const setSize = (index: number, size: number) => {
-    if (size > 0 && sizes.value[index] !== size) {
-      const next = sizes.value.slice()
-      next[index] = size
-      sizes.value = next
-    }
+    if (size <= 0 || sizes[index] === size || index >= sizes.length) return
+
+    sizes[index] = size
+    markDirty(index)
+    scheduleVersionBump()
   }
 
   const scrollToIndex = (index: number) => {
     const el = scrollEl.value
     if (!el) return
     const head = toValue(options.headerOffset) ?? 0
-    const pos = (offsets.value[index] ?? 0) + head
+    const pos = (readOffsets()[index] ?? 0) + head
     if (toValue(options.horizontal)) el.scrollLeft = pos
     else el.scrollTop = pos
   }

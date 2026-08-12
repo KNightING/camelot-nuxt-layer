@@ -450,7 +450,14 @@ const isBottom = computed(() => {
   return false
 })
 
-const { bottom } = useElementBounding(target)
+// bottom 只供 isBottom 判斷下拉方向，未展開時算出來無人讀取；
+// 故關掉常駐的 window 監聽，改由下方在展開期間才掛載（見 trackedWindowWhileOpen）。
+const {
+  bottom, update: updateBounding,
+} = useElementBounding(target, {
+  windowScroll: false,
+  windowResize: false,
+})
 
 const inputEl = useTemplateRef('input')
 
@@ -469,6 +476,20 @@ const isSelectMode = computed(() => {
 })
 
 const isOpen = defineModel<boolean>('isOpen', { default: false })
+
+// 目標為 null 時 useEventListener 不會掛載任何監聽，展開／收合即自動掛上與解除
+const trackedWindowWhileOpen = computed(() => (isClient && isOpen.value ? window : null))
+
+useEventListener(trackedWindowWhileOpen, 'scroll', updateBounding, {
+  passive: true,
+  capture: true,
+})
+useEventListener(trackedWindowWhileOpen, 'resize', updateBounding, { passive: true })
+
+watch(isOpen, (opened) => {
+  // 展開當下先量一次，方向判斷才不會沿用上次收合前的位置
+  if (opened) updateBounding()
+})
 
 const toggle = () => {
   if (props.disabled) {

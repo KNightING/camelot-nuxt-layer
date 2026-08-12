@@ -63,6 +63,8 @@
 </template>
 
 <script setup lang="ts">
+import { isClient } from '@vueuse/core'
+
 const target = ref(null)
 
 const props = withDefaults(defineProps<{
@@ -107,14 +109,22 @@ const { stop } = useIntersectionObserver(containerRef, ([entry], observerElement
   threshold: 0.5,
 })
 
+// 這兩組座標只在預覽浮層顯示期間被讀取，故關掉常駐的 window 監聽，
+// 改由下方在顯示期間才掛載（見 trackedWindowWhileShown）。
 const {
-  top, bottom, right, left, height: imgHeight,
-} = useElementBounding(imgRef)
+  top, bottom, right, left, height: imgHeight, update: updateImgBounding,
+} = useElementBounding(imgRef, {
+  windowScroll: false,
+  windowResize: false,
+})
 
 const imgPopupEl = useTemplateRef('imgPopupEl')
 const {
-  width: popupWidth, height: popupHeight, bottom: popupBottom,
-} = useElementBounding(imgPopupEl)
+  width: popupWidth, height: popupHeight, bottom: popupBottom, update: updatePopupBounding,
+} = useElementBounding(imgPopupEl, {
+  windowScroll: false,
+  windowResize: false,
+})
 
 const popupTop = computed(() => {
   const result = top.value + (imgHeight.value / 2) - (popupHeight.value / 2)
@@ -133,6 +143,26 @@ const popupLeft = computed(() => {
 })
 
 const showFullImage = ref(false)
+
+const updateBounding = () => {
+  updateImgBounding()
+  updatePopupBounding()
+}
+
+// 目標為 null 時 useEventListener 不會掛載任何監聽，浮層顯示／隱藏即自動掛上與解除
+const trackedWindowWhileShown = computed(() => (isClient && showFullImage.value ? window : null))
+
+useEventListener(trackedWindowWhileShown, 'scroll', updateBounding, {
+  passive: true,
+  capture: true,
+})
+useEventListener(trackedWindowWhileShown, 'resize', updateBounding, { passive: true })
+
+watch(showFullImage, (shown) => {
+  // 顯示當下先量一次，避免沿用上次隱藏前的座標
+  if (shown) updateBounding()
+})
+
 let timeoutId: NodeJS.Timeout | string | number | undefined
 const abortController = ref(null)
 

@@ -420,32 +420,18 @@ const popupShadowClass = computed(() => {
 })
 
 watch(open, (isOpen) => {
-  if (isOpen) {
-    if (props.virtualScroll) {
-      nextTick(() => {
-        if (typeof window !== 'undefined') {
-          window.dispatchEvent(new Event('resize'))
-        }
-
-        const timer = setInterval(() => {
-          if (typeof window !== 'undefined') {
-            window.dispatchEvent(new Event('resize'))
-            scrollTo(0)
-          }
-        }, 100)
-
-        setTimeout(() => {
-          clearInterval(timer)
-          if (typeof window !== 'undefined') {
-            window.dispatchEvent(new Event('resize'))
-          }
-        }, 600)
-      })
-    }
-  }
-  else {
+  if (!isOpen) {
     searchValue.value = ''
+    return
   }
+
+  if (!props.virtualScroll) {
+    return
+  }
+
+  // 展開後回到清單頂端即可：useVirtualList 的可視範圍由容器的 ResizeObserver 驅動，
+  // 會隨展開動畫自行重算——先前為此派發全域 resize 事件對它無效，只會讓全站監聽者空轉。
+  nextTick(() => scrollTo(0))
 })
 
 const model = defineModel<string | number>()

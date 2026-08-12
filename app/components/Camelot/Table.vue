@@ -235,13 +235,19 @@ const renderRows = computed(() =>
 
 // 量測已渲染列的實際高度
 let rowRo: ResizeObserver | null = null
+// 已納入 ResizeObserver 的列：捲動時同一批 <tr> 會被重複走訪，避免每次都重下 observe
+const observedRows = new WeakSet<Element>()
+
 const measureRows = () => {
   const root = scrollContainerRef.value
   if (!root) return
   for (const el of root.querySelectorAll('tr[data-vrow]')) {
     const idx = Number((el as HTMLElement).dataset.vrow)
-    if (!Number.isNaN(idx)) {
-      setSize(idx, (el as HTMLElement).offsetHeight)
+    if (Number.isNaN(idx)) continue
+
+    setSize(idx, (el as HTMLElement).offsetHeight)
+    if (!observedRows.has(el)) {
+      observedRows.add(el)
       rowRo?.observe(el)
     }
   }

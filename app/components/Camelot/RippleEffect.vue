@@ -14,31 +14,30 @@ const props = defineProps<{ rippleColor?: string }>()
 
 const container = useTemplateRef('container')
 
-// let size: number | undefined = undefined;
-
-const { height, width, x, y } = useElementBounding(container)
-
-const rippleSizeCss = useElCssVar('--ripple-size', container)
-
 const rippleColorCss = useElCssVar('--cml-c-ripple-color', container, { inherit: false })
 
-watch([height, width], (nV) => {
-  const height = nV[0]
-  const width = nV[1]
+/**
+ * 容器矩形只在點擊當下需要，故就地量測一次。
+ * 先前以 useElementBounding 常駐追蹤，等於每個 Ripple 實例都掛著 window scroll/resize 監聽——
+ * 而本元件會被 Button / Tabs / NumberCounter 使用，單頁可達數十個實例。
+ */
+const onPointerDown = (e: PointerEvent) => {
+  const el = container.value
+  if (!el) return
+
+  const rect = el.getBoundingClientRect()
 
   // 斜邊長 = 圓的半徑
   // 但是size需要設定成直徑所以要*2
-  const size = Math.sqrt(Math.pow(height, 2) + Math.pow(width, 2)) * 2
-  rippleSizeCss.value = `${size}px`
-})
+  const size = Math.sqrt(Math.pow(rect.height, 2) + Math.pow(rect.width, 2)) * 2
+  el.style.setProperty('--ripple-size', `${size}px`)
 
-const onPointerDown = (e: MouseEvent) => {
   const ripples = document.createElement('span')
   ripples.className = 'ripple'
-  ripples.style.left = `${e.clientX - x.value}px`
-  ripples.style.top = `${e.clientY - y.value}px`
+  ripples.style.left = `${e.clientX - rect.left}px`
+  ripples.style.top = `${e.clientY - rect.top}px`
 
-  container.value?.appendChild(ripples)
+  el.appendChild(ripples)
 
   setTimeout(() => {
     ripples.remove()

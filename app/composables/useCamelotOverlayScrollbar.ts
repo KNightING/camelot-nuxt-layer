@@ -116,8 +116,16 @@ export const useCamelotOverlayScrollbar = (
 
   const readMain = (el: HTMLElement) =>
     isHorizontal()
-      ? { scroll: el.scrollLeft, size: el.scrollWidth, client: el.clientWidth }
-      : { scroll: el.scrollTop, size: el.scrollHeight, client: el.clientHeight }
+      ? {
+          scroll: el.scrollLeft,
+          size: el.scrollWidth,
+          client: el.clientWidth,
+        }
+      : {
+          scroll: el.scrollTop,
+          size: el.scrollHeight,
+          client: el.clientHeight,
+        }
 
   const measure = () => {
     const el = container.value
@@ -152,6 +160,32 @@ export const useCamelotOverlayScrollbar = (
     if (shouldFloat) floatMainStart.value = rect.left + MAIN_INSET
 
     visible.value = true
+  }
+
+  /**
+   * window 捲動以 capture 監聽 → 頁面上任何容器捲動都會打到這裡，而 measure() 內含
+   * getBoundingClientRect() 等強制 layout 的讀取。以單一 pending frame 合併同一幀內的
+   * 多次請求，讓每幀最多量測一次（時間窗節流會與畫面更新錯開，故不用 useThrottleFn）。
+   */
+  let pendingMeasureFrameId: number | null = null
+
+  const scheduleMeasure = () => {
+    if (pendingMeasureFrameId !== null) {
+      return
+    }
+
+    pendingMeasureFrameId = requestAnimationFrame(() => {
+      pendingMeasureFrameId = null
+      measure()
+    })
+  }
+
+  const cancelScheduledMeasure = () => {
+    if (pendingMeasureFrameId === null) {
+      return
+    }
+    cancelAnimationFrame(pendingMeasureFrameId)
+    pendingMeasureFrameId = null
   }
 
   const onContainerScroll = () => {
@@ -200,17 +234,21 @@ export const useCamelotOverlayScrollbar = (
 
   // window scroll 以 capture 監聽，才能收到任何祖先捲動容器（scroll 不冒泡）
   useEventListener(container, 'scroll', onContainerScroll, { passive: true })
-  useEventListener(window, 'scroll', measure, { passive: true, capture: true })
-  useEventListener(window, 'resize', measure)
+  useEventListener(window, 'scroll', scheduleMeasure, {
+    passive: true,
+    capture: true,
+  })
+  useEventListener(window, 'resize', scheduleMeasure)
   // 觀察容器自身 box（如高度 prop 變動）
-  useResizeObserver(container, measure)
+  useResizeObserver(container, scheduleMeasure)
   // 亦觀察「內容元素」的尺寸：換頁/資料變動時容器 box 不變、但內容(scrollHeight/Width)改變，
   // 需重算捲軸是否出現與 thumb 尺寸（否則需捲動一次才更新）
   const contentEl = computed(() => (container.value?.firstElementChild as HTMLElement | null) ?? null)
-  useResizeObserver(contentEl, measure)
+  useResizeObserver(contentEl, scheduleMeasure)
 
   watch([floatingEnabled, orientation, mainStartInset], measure)
   onMounted(() => nextTick(measure))
+  onScopeDispose(cancelScheduledMeasure)
 
   return {
     visible,
