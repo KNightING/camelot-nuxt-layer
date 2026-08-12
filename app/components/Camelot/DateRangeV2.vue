@@ -454,14 +454,11 @@ onClickOutside(triggerRef, () => {
 })
 
 // Sync internal value and viewDate when model changes externally
-watch(model, (newVal) => {
-  if (newVal) {
-    internalValue.value = [newVal[0], newVal[1]]
-  }
-  else {
-    internalValue.value = [null, null]
-  }
-}, { deep: true })
+// model 為 [Date, Date] | null 的淺結構，逐元素監聽即可涵蓋所有變動，
+// 不需要 deep 走訪 Date 物件內部
+watch(() => [model.value?.[0], model.value?.[1]], ([start, end]) => {
+  internalValue.value = start && end ? [start, end] : [null, null]
+})
 
 // Sync viewDate when popup opens
 watch(open, (isOpen) => {

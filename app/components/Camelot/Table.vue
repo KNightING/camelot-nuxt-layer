@@ -354,8 +354,11 @@ const alignClass = (col: CamelotTableColumn<T>) => {
 
 const headerCellClass = computed(() => {
   switch (themeMode.value) {
+    // 表頭底色刻意不透明：半透明 + backdrop-blur 會讓每一個 <th> 各自成為
+    // backdrop root 與合成層，欄數越多成本越高；aqua 的玻璃質感由容器層的
+    // aqua-glass（圓角與高光）承擔即可。
     case 'aqua':
-      return 'bg-surface-container/90 text-on-surface backdrop-blur-md'
+      return 'bg-surface-container text-on-surface'
     case 'scifi':
       return 'bg-surface-container text-primary uppercase tracking-wider'
     case 'cupertino':
