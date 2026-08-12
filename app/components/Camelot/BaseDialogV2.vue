@@ -90,9 +90,26 @@ const onDialogClick = (e: PointerEvent) => {
     return
   }
 
+  // 巢狀 <dialog>（如 DateV2 的 dialog 模式）以 v-if 渲染：選取後內層先從 DOM 移除，
+  // 本 pointerup 才輪到執行，此時 target 已脫離文件，下方的 contains() 必然回傳 false
+  // 而被誤判成點遮罩，連帶把外層對話框一起關掉。
+  if (targetElement && !targetElement.isConnected) {
+    return
+  }
+
+  // 點在巢狀 <dialog> 內時，由該內層對話框自行處理遮罩與關閉，外層一律不介入。
+  if (targetElement?.closest('dialog') !== dialogRef.value) {
+    return
+  }
+
   // 預設 wrapper 以全螢幕容器置中內容，點空白處的 target 會是該容器（非 <dialog> 本身），
   // 故改判斷「點在 .dialog-content-box 之外」即關閉；自訂 wrapper（無 content box）則沿用 e.target===dialog。
-  const contentBox = dialogRef.value?.querySelector('.dialog-content-box') ?? null
+  //
+  // 只認「屬於本對話框」的內容框：querySelector 會一併撈到巢狀 <dialog> 的內容框，
+  // 而 BottomSheet 以自訂 wrapper 渲染、本身沒有內容框，一旦內層對話框開啟就會
+  // 誤把對方的內容框當成自己的，導致點面板空白處連整個 Sheet 一起關掉。
+  const contentBox = [...(dialogRef.value?.querySelectorAll('.dialog-content-box') ?? [])]
+    .find(el => el.closest('dialog') === dialogRef.value) ?? null
   const clickedOutsideContent = contentBox
     ? !!target && !contentBox.contains(target)
     : target === dialogRef.value
