@@ -3,6 +3,8 @@ import { defineNuxtModule } from 'nuxt/kit'
 export default defineNuxtModule({
   setup(options, nuxt) {
     const config = nuxt.options.runtimeConfig
+    if (config.googleFont.disabled) return
+
     nuxt.options.app.head.link = [
       ...(nuxt.options.app.head.link ?? []),
       {

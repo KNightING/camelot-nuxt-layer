@@ -99,6 +99,9 @@ export default defineNuxtConfig({
     googlePay: {
       addScript: false,
     },
+    googleFont: {
+      disabled: false,
+    },
 
     securityPlugin: {
       enabled: true,
