@@ -61,6 +61,7 @@ const detail = await api.post<Detail>('/detail', { body: { id } }).fetch()
 
 ## 備註
 - 同一個 `refreshTokenHandler` 參考共用一把鎖（模組層 `Map`），同一伺服器的多個請求同時需要 refresh 時只會觸發一次；不同 handler 互不影響。
+- **與全域錯誤機制的分工**：可自動回復的 401 在此就地刷新並重送，不會進入 [useCamelotError](./useCamelotError.md) 的管線；刷新也失敗、已無法回復的錯誤才交由該機制提示（見 [錯誤處理系統](../features/error-handling.md)）。
 - 其他匯出：`useBasicToken(account, pwd)`（回傳 Base64）、`useBasicTokenRequest`、`useBearerTokenRequest`、`secureHeaderRequest`，以及類別 `BaseApi`（建構子接收 `baseOptions`，`api` 屬性為 `useBaseApi` 之結果）。
 - `transDateKeys` 會設定 `transform`，對陣列逐項或單一物件套用日期還原。
 

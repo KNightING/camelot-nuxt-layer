@@ -23,6 +23,7 @@
 | Composable | 說明 | 詳情 |
 | :--- | :--- | :--- |
 | `useCamelotToast` | Toast 通知系統 | [詳情](./composables/useCamelotToast.md) |
+| `useCamelotError` | 全域錯誤佇列（轉換器 / 攔截器） | [詳情](./composables/useCamelotError.md) |
 | `useCamelotVirtual` | 虛擬滾動核心（可變列高） | [詳情](./composables/useCamelotVirtual.md) |
 | `useCamelotOverlayScrollbar` | 自訂 overlay 捲軸核心（方向感知） | [詳情](./composables/useCamelotOverlayScrollbar.md) |
 | `useCamelotTeleportTarget` | 浮層 Teleport 目標判定（最近 `<dialog>`，否則 `body`） | [詳情](./composables/useCamelotTeleportTarget.md) |
@@ -98,7 +99,7 @@
 | `useNumberThousandsSeparators` | 千分位 | [詳情](./composables/useNumberThousandsSeparators.md) |
 | `useRandom` | 隨機 | [詳情](./composables/useRandom.md) |
 | `useDelay` | 延遲 | [詳情](./composables/useDelay.md) |
-| `useErrorRef` | 錯誤狀態封裝 | [詳情](./composables/useErrorRef.md) |
+| `useErrorRef` | 錯誤 ref 匯總（不含佇列/顯示，全域錯誤請見 `useCamelotError`） | [詳情](./composables/useErrorRef.md) |
 
 ---
 

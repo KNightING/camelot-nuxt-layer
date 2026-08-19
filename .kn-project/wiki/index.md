@@ -105,6 +105,7 @@ graph TD
 - [📎 檔案拖曳系統（FileDropzone / FileChip / useCamelotFileDrop）](./features/file-drop.md)
 - [🔘 Radio 與選項群組（RadioGroup / CheckboxGroup）](./features/radio-and-groups.md)
 - [🎨 Color Scheme / 色彩主題](./features/color-scheme.md)
+- [🚨 錯誤處理系統（佇列 + 轉換器 + 攔截器）](./features/error-handling.md)
 - [🧱 Layering / 疊層刻度（z-index）](./features/layering.md)
 - [🌐 useLocale / 語系格式正規化](./features/locale.md)
 - [📦 Layer 整合與必裝依賴（消費端前提）](./features/layer-integration.md)

@@ -63,6 +63,7 @@ camelot-nuxt-layer/
 | 🧱 Drawer/Tree/Table/Menu | [wiki/features/layout-data-components.md](./wiki/features/layout-data-components.md) |
 | 🗓️ 日期選擇器系統 | [wiki/features/calendar.md](./wiki/features/calendar.md) |
 | 🎨 色彩主題系統 | [wiki/features/color-scheme.md](./wiki/features/color-scheme.md) |
+| 🚨 錯誤處理系統（佇列 + 轉換器） | [wiki/features/error-handling.md](./wiki/features/error-handling.md) |
 | 📦 Layer 整合與必裝依賴 | [wiki/features/layer-integration.md](./wiki/features/layer-integration.md) |
 | ⚙️ 環境變數 | [wiki/environment.md](./wiki/environment.md) |
 
