@@ -1,9 +1,9 @@
 # 🗓️ Calendar / 日期選擇器系統
 
-本頁記錄 Camelot Nuxt Layer 中日期選擇器家族的架構、Props 規格與互動流程。
+## Summary
 
-> [!WARNING]
-> `DateV2` 與 `DateRangeV2` 元件正在**重構進行中 (🚧)**，相關計畫請見 `.kn-project/plans/`。
+日期選擇器家族由 `CamelotDateV2`（單日）、`CamelotDateRangeV2`（範圍）與共用的 `Internal/Calendar` 核心組成，日期運算走 date-fns、語系文字走 `Intl.DateTimeFormat`。
+支援節日標記（`getDayAttributes`）、緊湊模式（`showDayLabel`）、各國語系與自訂 formatter。RTL 版面未支援。
 
 ---
 
@@ -163,15 +163,15 @@ sequenceDiagram
 
 ---
 
-## 相關計畫
+## 相關計畫（已歸檔）
 
 | 計畫 | 狀態 | 說明 |
 | :--- | :--- | :--- |
-| [2604131355-refactor-calendar-define-model](../plans/2604131355-refactor-calendar-define-model/plan.md) | 🚧 進行中 | 將 Calendar 改為 `defineModel` |
-| [2604131417-propagate-calendar-updates](../plans/2604131417-propagate-calendar-updates/plan.md) | 🚧 進行中 | 傳播 `getDayAttributes` 更新 |
-| [2604131437-fix-calendar-type-errors](../plans/2604131437-fix-calendar-type-errors/plan.md) | 🚧 進行中 | 修復 TypeScript 型別問題 |
-| [2604131441-unify-calendar-colors-and-2-line-label](../plans/2604131441-unify-calendar-colors-and-2-line-label/plan.md) | 🚧 進行中 | 統一顏色控制與換行 Label |
-| [2604131510-refactor-daterange-separate-inputs](../plans/2604131510-refactor-daterange-separate-inputs/plan.md) | 🚧 進行中 | DateRangeV2 改為雙獨立 Input |
+| [2604131355-refactor-calendar-define-model](../../archive/2604131355-refactor-calendar-define-model.md) | ✅ 已歸檔 | 將 Calendar 改為 `defineModel` |
+| [2604131417-propagate-calendar-updates](../../archive/2604131417-propagate-calendar-updates.md) | ✅ 已歸檔 | 傳播 `getDayAttributes` 更新 |
+| [2604131437-fix-calendar-type-errors](../../archive/2604131437-fix-calendar-type-errors.md) | ✅ 已歸檔 | 修復 TypeScript 型別問題 |
+| [2604131441-unify-calendar-colors-and-2-line-label](../../archive/2604131441-unify-calendar-colors-and-2-line-label.md) | ✅ 已歸檔 | 統一顏色控制與換行 Label |
+| [2604131510-refactor-daterange-separate-inputs](../../archive/2604131510-refactor-daterange-separate-inputs.md) | ✅ 已歸檔 | DateRangeV2 改為雙獨立 Input |
 
 ---
 
