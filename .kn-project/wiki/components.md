@@ -52,6 +52,7 @@ Camelot Nuxt Layer 全部元件，每個連結為獨立 API 頁（Props / Emits 
 | :--- | :--- | :--- |
 | `BaseDialogV2` | 對話框（mask 點空白關閉） | [詳情](./components/BaseDialogV2.md) |
 | `ConfirmDialog` | 確認對話框（最多三顆按鈕，預設一顆確認） | [詳情](./components/ConfirmDialog.md) |
+| `ErrorDialog` | 全域錯誤對話框（綁定 `useCamelotError` 佇列，逐一顯示） | [詳情](./components/ErrorDialog.md) |
 | `BaseBottomSheetV2` | 底部彈出面板 | [詳情](./components/BaseBottomSheetV2.md) |
 | `PopupV2` | 彈出層 | [詳情](./components/PopupV2.md) |
 | `Toast` | 吐司通知（玻璃淡入、8 方位） | [詳情](./components/Toast.md) |

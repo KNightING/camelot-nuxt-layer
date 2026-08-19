@@ -510,6 +510,46 @@
           </div>
         </div>
 
+        <!-- Global Error Queue Card -->
+        <div :class="cardClass">
+          <h2 :class="cardTitleClass">
+            Global Error Queue
+          </h2>
+          <p class="text-xs text-slate-400">
+            錯誤會累積成佇列並逐一顯示；轉換器負責格式轉換，攔截器負責副作用。
+          </p>
+          <div class="flex flex-wrap gap-4">
+            <CamelotButton
+              :color="currentColorRole"
+              label="Push 3 Errors"
+              @click="pushErrorQueue"
+            />
+            <CamelotButton
+              :color="currentColorRole"
+              label="Custom API Error"
+              @click="pushCustomApiError"
+            />
+            <CamelotButton
+              :color="currentColorRole"
+              label="Simulate 401"
+              @click="pushUnauthorizedError"
+            />
+            <CamelotButton
+              :color="currentColorRole"
+              label="Retry / Close"
+              @click="startRetryDemo"
+            />
+            <CamelotButton
+              :color="currentColorRole"
+              label="Page onConfirm"
+              @click="pushPageControlledError"
+            />
+          </div>
+          <p class="text-xs text-slate-400">
+            佇列中：{{ camelotErrors.length }} 筆
+          </p>
+        </div>
+
         <!-- Feedbacks, Skeletons & Spinner Card -->
         <div :class="cardClass">
           <h2 :class="cardTitleClass">
@@ -2389,6 +2429,150 @@ const cardTitleClass = computed(() => {
 
 const triggerToast = () => {
   useCamelotToast().open('Global Toast active in ' + themeMode.value + ' style theme!')
+}
+
+// ---- Global Error Queue Demo ----
+
+/** 模擬某個後端的自訂錯誤格式，用來示範「換了 API 格式只要註冊轉換器」 */
+interface DemoApiErrorPayload {
+  errorCode: string
+  errorMessage: string
+}
+
+const {
+  errors: camelotErrors,
+  push: pushError,
+  handle: handleError,
+  dismiss: dismissError,
+} = useCamelotError()
+
+const isDemoApiErrorPayload = (raw: unknown): raw is DemoApiErrorPayload =>
+  typeof raw === 'object' && raw !== null && 'errorCode' in raw && 'errorMessage' in raw
+
+// 轉換器只做純轉換，副作用交給攔截器
+registerErrorResolver<DemoApiErrorPayload>({
+  name: 'demo:api-error',
+  priority: 100,
+  resolve: (raw) => {
+    if (!isDemoApiErrorPayload(raw)) {
+      return undefined
+    }
+
+    return {
+      code: raw.errorCode,
+      message: raw.errorMessage,
+      data: raw,
+    }
+  },
+})
+
+// 401 的三段式處理：轉換 → 攔截（清權限 + 掛導頁）→ 入列顯示
+registerErrorResolver({
+  name: 'demo:unauthorized',
+  priority: 200,
+  resolve: (raw) => {
+    if (!(raw instanceof Response) || raw.status !== 401) {
+      return undefined
+    }
+
+    return {
+      code: 401,
+      message: '登入逾期，請重新登入',
+    }
+  },
+})
+
+registerErrorInterceptor({
+  name: 'demo:unauthorized',
+  intercept: (error) => {
+    if (error.code !== 401) {
+      return
+    }
+
+    // 真實專案在此清除權限狀態；demo 僅以 toast 表示已執行
+    useCamelotToast().open('已清除登入狀態')
+    error.onConfirm = () => useCamelotToast().open('導向登入頁')
+  },
+})
+
+const pushErrorQueue = () => {
+  pushError({
+    title: '第 1 則',
+    message: '佇列中的第一則錯誤。',
+    level: 'error',
+  })
+  pushError({
+    title: '第 2 則',
+    message: '關閉上一則後才會顯示這一則。',
+    level: 'warning',
+  })
+  pushError({
+    title: '第 3 則',
+    message: '佇列清空後對話框才會關閉。',
+    level: 'info',
+  })
+}
+
+const pushCustomApiError = () => {
+  handleError({
+    errorCode: 'E_QUOTA',
+    errorMessage: '額度不足，請聯絡管理員。',
+  })
+}
+
+const pushUnauthorizedError = () => {
+  handleError(new Response(null, {
+    status: 401,
+  }))
+}
+
+const demoRetryCount = ref(0)
+
+const retryMessage = computed(() => demoRetryCount.value <= 0
+  ? '無法取得資料，請稍後再試。'
+  : '無法取得資料，請稍後再試。（已重試 ' + demoRetryCount.value + ' 次）')
+
+/** 模擬一直失敗的重試：關閉對話框 → 轉 3 秒 → 錯誤再次入列 */
+const retryDemoRequest = async () => {
+  // close: false 的用途：由呼叫端自行決定關閉時機，
+  // 這裡先關掉對話框，loading 才不會被它蓋住
+  dismissError()
+
+  const closeLoading = useLoading().open('重新連線中...')
+  await useDelay(3000)
+  closeLoading()
+
+  demoRetryCount.value += 1
+  pushRetryableError()
+}
+
+const pushRetryableError = () => {
+  pushError({
+    title: '連線失敗',
+    message: retryMessage.value,
+    positive: {
+      label: '重試',
+      close: false,
+      handler: retryDemoRequest,
+    },
+    negative: {
+      label: '關閉',
+    },
+  })
+}
+
+const startRetryDemo = () => {
+  demoRetryCount.value = 0
+  pushRetryableError()
+}
+
+const pushPageControlledError = () => {
+  handleError({
+    errorCode: 'E_FORM',
+    errorMessage: '表單送出失敗。',
+  }, {
+    onConfirm: () => useCamelotToast().open('由 page 指定的 confirm 處理'),
+  })
 }
 
 const triggerLoading = async () => {

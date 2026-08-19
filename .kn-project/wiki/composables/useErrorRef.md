@@ -32,6 +32,7 @@ watch([fetchAError, fetchBError])
 ## 備註
 - 內部對每個來源以 `{ immediate: true }` 建立 watch，立即同步初始值。
 - 多個來源共用同一個 `error`，後觸發者會覆寫先前的值。
+- **僅負責匯總**：不含佇列、格式轉換與顯示。需要「多筆錯誤累積並逐一彈窗」請改用 [useCamelotError](./useCamelotError.md)（見 [錯誤處理系統](../features/error-handling.md)）。
 
 ---
 [🏠 Wiki](../index.md)

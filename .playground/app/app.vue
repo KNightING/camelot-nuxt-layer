@@ -9,6 +9,7 @@
           <NuxtPage />
         </NuxtLayout>
         <CamelotToast />
+        <CamelotErrorDialog />
         <CamelotLoading />
       </div>
     </CamelotColorSchemeProvider>
