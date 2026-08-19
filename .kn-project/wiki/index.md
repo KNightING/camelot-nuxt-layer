@@ -15,11 +15,11 @@
 | 項目 | 說明 |
 | :--- | :--- |
 | **套件名稱** | `camelot-nuxt3-layer` |
-| **版本** | `4.3.1.12` |
+| **版本** | 以 `package.json` 為準（撰寫時為 `4.5.2.0`） |
 | **框架** | Nuxt 4 + Vue 3 (Composition API) |
 | **樣式** | Tailwind CSS v4 |
 | **狀態管理** | Pinia + pinia-plugin-persistedstate |
-| **多語系** | @nuxtjs/i18n (Layer 基底 en / zh；區域語系由消費端註冊 fallback 至基底，範例見 .playground) |
+| **多語系** | @nuxtjs/i18n（語系**全部由消費端註冊**；Layer 的 `en` / `zh` 基底字典目前未生效，見 [i18n 語系系統](./features/i18n-locales.md)） |
 | **套件管理** | pnpm |
 
 ---
@@ -65,7 +65,7 @@ graph TD
     B --> D["Composables"]
     B --> E["Nuxt 模組"]
     B --> F["Server Plugins"]
-    B --> G["i18n 基底 (en / zh)；區域語系由消費端註冊"]
+    B --> G["i18n fallback 設定；語系由消費端註冊"]
     B --> H["Tailwind CSS v4 主題"]
 
     C --> C1["表單元件 (Input, Select, Date...)"]
@@ -107,6 +107,7 @@ graph TD
 - [🎨 Color Scheme / 色彩主題](./features/color-scheme.md)
 - [🧱 Layering / 疊層刻度（z-index）](./features/layering.md)
 - [🌐 useLocale / 語系格式正規化](./features/locale.md)
+- [📦 Layer 整合與必裝依賴（消費端前提）](./features/layer-integration.md)
 - [🌐 i18n 語系系統（CLDR + Fallback 鏈 + Layer 分工）](./features/i18n-locales.md)
 - [⚙️ 環境變數](./environment.md)
 

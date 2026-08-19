@@ -1,16 +1,21 @@
 # 🌐 i18n 語系系統(CLDR 代碼 + Fallback 鏈 + Layer/消費端分工)
 
-> Layer 只提供**語言層級**基底字典(`en` / `zh`),區域語系由消費端註冊並透過 fallback 鏈落回基底。
-> 對應計畫 `2607021527`。
+## Summary
+
+本專案的多語系採 CLDR 區域代碼 + vue-i18n fallback 鏈，語系註冊**全部由消費端負責**：Layer 的 `nuxt.config.ts` 宣告 `locales: []`、`defaultLocale: undefined`，只提供 `i18n/i18n.config.ts` 的 fallback 設定。
+Layer 目錄下雖有 `i18n/locales/{en,zh}.json` 基底字典，但**目前不會被註冊**（見下方「已知缺陷」），消費端必須自帶完整詞條。
 
 ## 分工原則
 
-Layer 的 `i18n.locales` 會被消費端 app **繼承合併**,因此:
+@nuxtjs/i18n 會合併各 layer 的 `locales` 與 vueI18n 設定(專案層優先),因此:
 
 | 層 | 職責 | 語系 |
 | :--- | :--- | :--- |
-| **Layer**(`i18n/`) | 語言層級基底字典,保證 fallback 終點存在 | `en`、`zh`(繁體,defaultLocale) |
-| **消費端**(範例:`.playground/i18n/`) | 註冊區域語系(CLDR 代碼)與自己的 fallback 鏈 | `zh-Hant-TW/HK/MO`、`zh-Hans-CN/SG/MY`、`zh-Hant`/`zh-Hans` 基底、`en-US` |
+| **Layer**(`i18n/`) | 提供 `i18n.config.ts` 的 fallback 設定。`nuxt.config.ts` 的 `locales` 為**空陣列**、`defaultLocale` 為 `undefined`,不註冊任何語系。目錄下的 `en.json` / `zh.json` 因此**未生效**(見「已知缺陷」) | 無(實際註冊數為 0) |
+| **消費端**(範例:`.playground/i18n/`) | 註冊**全部**語系(區域 + 語言基底)、決定 `defaultLocale`、提供完整詞條與自己的 fallback 鏈 | `zh-Hant-TW/HK/MO`、`zh-Hans-CN/SG/MY`、`zh-Hant`/`zh-Hans`、`en-US` 等 |
+
+> [!IMPORTANT]
+> 設計意圖是「Layer 提供 `en` / `zh` 語言層級基底,保證 fallback 終點存在」,但該意圖**目前未實現**。消費端不可假設基底字典存在,fallback 鏈的終點詞條必須自己備齊。
 
 ## Fallback 鏈
 
@@ -25,7 +30,7 @@ graph LR
         MY["zh-Hans-MY"] --> Hans
         ENUS["en-US"]
     end
-    subgraph Layer 基底
+    subgraph 終點基底(須由消費端提供)
         Hant --> ZH["zh(繁體字典)"]
         Hans --> ZH
         ENUS --> EN["en"]
@@ -34,7 +39,7 @@ graph LR
 
 - 每個 locale 對應**單一檔案**,fallback 由 vue-i18n 於執行期解析(非 `files` 合併)。
 - 區域覆寫檔只放該地區的差異 key(如 `zh-Hant-TW.json` 只有 `login`),其餘 key 逐層退回。
-- 簡體完整字典在消費端的 `zh-Hans.json`;Layer 的 `zh` 為繁體,簡體鏈終點僅為最後保險。
+- 簡體完整字典在消費端的 `zh-Hans.json`。鏈的終點 `zh` / `en` **也必須由消費端註冊**——Layer 同名檔案不會被載入。
 
 ## 關鍵設定
 
@@ -53,6 +58,23 @@ vue-i18n 對 `zh-Hant-TW` → `zh-Hant` → `zh` 有**隱含階層 fallback**,La
 
 顯式列出完整鏈(終點補 `'zh'`):`zh-Hant-*` → `['zh-Hant', 'zh']`、`zh-Hans-*` → `['zh-Hans', 'zh']`、`en-US` → `['en']`。
 
+## 已知缺陷:Layer 基底字典永不註冊
+
+`i18n/locales/en.json` 與 `zh.json` 存在於 Layer,但**不會進入任何消費端的語系表**。
+
+**成因**——@nuxtjs/i18n 的跨 layer 合併有兩個限制:
+
+| 機制 | 位置 | 後果 |
+| :--- | :--- | :--- |
+| `mergeConfigLocales` 逐 config 迭代 `config.locales ?? []`,以 `locale.code` 為 Map 鍵累積 `files` | `node_modules/@nuxtjs/i18n/dist/module.mjs:232` | Layer 宣告 `locales: []` → 不貢獻任何 code → 兩份字典永不進入合併結果 |
+| `resolveRelativeLocales` 以 `resolve(config.langDir, file.path)` 解析,`langDir` 取**該 config 自己的** | 同檔 `:226` | 消費端寫 `files: ['zh.json', ...]` 想疊加 Layer 字典時,路徑會以**消費端的** `langDir` 解析 → ENOENT |
+
+**這是 Layer 端缺陷,消費端無法繞過。**
+
+- **現況因應**:消費端自帶完整詞條,不依賴 Layer 基底字典。
+- **修法**:在 Layer 的 `nuxt.config.ts:186-189` 補回 `{ code: 'zh', file: 'zh.json' }` 與 `{ code: 'en', file: 'en.json' }`。
+- **未修原因**:修復會使 `zh` / `en` 突然開始註冊並改變既有消費端的 fallback 鏈,屬公開契約的行為變更,需獨立驗證。詳見 `../../archive/2608190042-readme-refresh-and-wiki-links.md`。
+
 ## 陷阱與實測結論
 
 1. **`restructureDir: 'i18n'` 後,`vueI18n` 路徑以 `i18n/` 目錄為基準**——設定檔放專案根目錄不會被載入(`nuxt prepare` 只給 WARN 就跳過),`fallbackLocale` 形同虛設。
@@ -65,8 +87,10 @@ vue-i18n 對 `zh-Hant-TW` → `zh-Hant` → `zh` 有**隱含階層 fallback**,La
 - [vue-i18n Fallbacking](https://vue-i18n.intlify.dev/guide/essentials/fallback.html)
 - [@nuxtjs/i18n locales 選項](https://i18n.nuxtjs.org/docs/api/options#locales)
 - 計畫歸檔:`../../archive/2607021527-i18n-cldr-locales-fallback.md`
+- 缺陷紀錄:`../../archive/2608190042-readme-refresh-and-wiki-links.md`
+- Layer 整合前提:[Layer 整合與必裝依賴](./layer-integration.md)
 - 語系格式正規化 composable:[[locale]]([useLocale](./locale.md))
 
 ---
 
-[🌐 useLocale](./locale.md) | [🏠 Wiki](../index.md)
+[🌐 useLocale](./locale.md) | [📦 Layer 整合](./layer-integration.md) | [🏠 Wiki](../index.md)

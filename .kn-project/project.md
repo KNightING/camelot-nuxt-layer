@@ -3,7 +3,7 @@
 ## Overview
 **Camelot Nuxt Layer** 是一個以 Nuxt Layer 形式封裝的 UI 元件函式庫，提供可複用的 Vue 3 元件、Composables、Pinia Stores 及 Nuxt 模組，供各類 Nuxt 4 應用程式作為 Base Layer 使用。
 
-**套件名稱**: `camelot-nuxt3-layer` v`4.3.1.12`
+**套件名稱**: `camelot-nuxt3-layer`（版本以 `../package.json` 為準，撰寫時為 `4.5.2.0`）
 
 ---
 
@@ -11,7 +11,7 @@
 - **框架**: Nuxt 4 + Vue 3 (Composition API, `<script setup>`)
 - **樣式**: Tailwind CSS v4 (主題定義於 `app/assets/css/tailwind.css`)
 - **狀態管理**: Pinia + pinia-plugin-persistedstate
-- **多語系**: @nuxtjs/i18n。Layer 僅提供語言層級基底 `en` / `zh`（繁體，預設）供消費端繼承；區域語系（CLDR 代碼如 `zh-Hant-TW`、`zh-Hans-CN`）由消費端註冊並 fallback 至基底，完整範例見 `.playground/i18n/`
+- **多語系**: @nuxtjs/i18n。Layer 的 `nuxt.config.ts` 宣告 `locales: []`，**語系全部由消費端註冊**（CLDR 代碼如 `zh-Hant-TW`、`zh-Hans-CN`），完整範例見 `.playground/i18n/`。Layer 目錄下的 `en` / `zh` 基底字典目前不會被註冊，詳見 [i18n wiki](./wiki/features/i18n-locales.md)
 - **日期處理**: date-fns
 - **圖示**: unplugin-icons (Material Symbols)
 - **工具集**: @vueuse/core, @vueuse/nuxt
@@ -63,6 +63,7 @@ camelot-nuxt-layer/
 | 🧱 Drawer/Tree/Table/Menu | [wiki/features/layout-data-components.md](./wiki/features/layout-data-components.md) |
 | 🗓️ 日期選擇器系統 | [wiki/features/calendar.md](./wiki/features/calendar.md) |
 | 🎨 色彩主題系統 | [wiki/features/color-scheme.md](./wiki/features/color-scheme.md) |
+| 📦 Layer 整合與必裝依賴 | [wiki/features/layer-integration.md](./wiki/features/layer-integration.md) |
 | ⚙️ 環境變數 | [wiki/environment.md](./wiki/environment.md) |
 
 ---
