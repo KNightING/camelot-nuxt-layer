@@ -16,3 +16,11 @@
 - [x] `.playground/app/pages/index.vue` 新增示範：一次推入多筆錯誤、註冊自訂轉換器、401 攔截情境
 - [x] 執行 lint（`pnpm lint`）與型別檢查
 - [x] 於 playground 實際驗證逐一顯示行為
+
+## Phase 4 — Iteration 1：呼叫端控制 confirm 與多按鈕
+- [x] `CamelotErrorAction` 型別，`CamelotErrorType` 追加 positive / neutral / negative
+- [x] `CamelotErrorOptions` 追加 `onConfirm` 與三個動作覆寫，`push` / `handle` / `watch` 共用
+- [x] `dismiss()` 依串接順序執行 onConfirm
+- [x] `ErrorDialog.vue` 綁定三個動作槽，處理 `close: false`
+- [x] playground 新增「重試 / 關閉」與 page 端 onConfirm 示範
+- [x] lint 維持基準、瀏覽器實測

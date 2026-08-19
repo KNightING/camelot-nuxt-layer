@@ -146,6 +146,40 @@ Layer 內建 **通用**轉換器（非專案專屬），確保開箱可用：
 ### 5. 顯示元件
 新增 `CamelotErrorDialog.vue`，包一層既有的 `CamelotConfirmDialog`（`app/components/Camelot/ConfirmDialog.vue:1`），監看 `currentError` 開關；關閉即 `dismiss()`，佇列若還有下一筆則自動接續顯示。文字（標題／按鈕）以 props 傳入預設值，**不在 Layer 內硬綁 i18n 詞條**——Layer 的 `nuxt.config.ts` 宣告 `locales: []`、語系全由消費端註冊（見 `.kn-project/wiki/features/i18n-locales.md`）。
 
+### 6. 迭代：呼叫端控制 confirm 與多按鈕（Iteration 1）
+原設計中 `onConfirm` 只能由轉換器／攔截器掛上，觸發錯誤的 page 無法就地決定「按下確認後要做什麼」；且對話框固定只有一顆確認鈕，無法表達「重試 / 關閉」這類雙動作。本次迭代補上兩者。
+
+#### 6.1 動作按鈕（沿用 ConfirmDialog 既有的三角色）
+`CamelotConfirmDialog` 已提供 positive / neutral / negative 三個按鈕槽與固定的排列順序（`ConfirmDialog.vue:32-55`），直接沿用其詞彙，不另發明陣列結構：
+
+```ts
+export interface CamelotErrorAction {
+  label: string
+  color?: CamelotColorRole
+  /** 執行 handler 後是否關閉此錯誤；未指定為 true */
+  close?: boolean
+  handler?: () => void
+}
+```
+`CamelotErrorType` 增加 `positive?` / `neutral?` / `negative?` 三個選用欄位。未指定 `positive` 時，對話框沿用 props 的預設確認鈕（維持既有行為，不破壞既有呼叫端）。
+
+「重試 / 關閉」即：`positive: { label: '重試', handler: retry, close: false }`、`negative: { label: '關閉' }`。
+
+#### 6.2 呼叫端補掛回呼
+`CamelotErrorOptions` 增加 `onConfirm` 與三個動作覆寫，`push` / `handle` / `watch` 三個入口共用同一組選項：
+
+```ts
+export interface CamelotErrorOptions {
+  only?: boolean
+  onConfirm?: () => void
+  positive?: CamelotErrorAction
+  neutral?: CamelotErrorAction
+  negative?: CamelotErrorAction
+}
+```
+- 動作欄位為**覆寫**：呼叫端指定即蓋掉轉換器產出的同名動作（page 比轉換器更貼近當下情境）。
+- `onConfirm` 為**串接**而非覆寫：**呼叫端的先跑，錯誤自帶的（攔截器掛上的系統級行為，例如導向登入）後跑**。理由是導頁屬於終結性動作，一旦執行後續邏輯就沒有意義，必須排在最後。
+
 ## Cross-Repo Scope
 無（單一 repo）。
 
@@ -155,6 +189,8 @@ Layer 內建 **通用**轉換器（非專案專屬），確保開箱可用：
 - `app/composables/useCamelotToast.ts:1-7,16` (`useCamelotToast` / `toastState`) — **不修改**，作為 lazy 單例 + `useState` 佇列的既有樣板參照。
 - `app/composables/useErrorRef.ts:9-19` (`watchToggle` / `watcher`) — **不修改**，作為 `watch(errors)` 的既有樣板參照。
 - `app/components/Camelot/ConfirmDialog.vue:1-58` — **不修改**，ErrorDialog 直接複用它（DRY，universal rule 2）。
+- `app/composables/useCamelotError.ts`（Iteration 1）— 追加 `CamelotErrorAction`、`CamelotErrorType` 的三個動作欄位、`CamelotErrorOptions` 的 `onConfirm` 與動作覆寫。
+- `app/components/Camelot/ErrorDialog.vue`（Iteration 1）— 綁定三個動作槽至 `CamelotConfirmDialog`（`ConfirmDialog.vue:32-55`）。
 - `.playground/app/pages/index.vue` — 新增示範區塊，驗證佇列累積、逐一顯示與自訂轉換器。
 - `components.d.ts` — 元件型別宣告檔，新增元件後需同步（由 Nuxt 產生／檢查）。
 
@@ -189,6 +225,18 @@ Layer 內建 **通用**轉換器（非專案專屬），確保開箱可用：
 - **決議**：A　狀態：✅ 已確認
 
 
+### Q6. 多按鈕的表達方式 — 影響範圍：`app/composables/useCamelotError.ts`、`app/components/Camelot/ErrorDialog.vue`
+- [x] A：沿用 `CamelotConfirmDialog` 既有的 positive / neutral / negative 三角色　(建議，理由：與 Layer 既有詞彙 `CamelotConfirmAction` 一致，直接對映既有的按鈕槽與排列順序，不必自行處理排版；上限三顆對錯誤對話框足夠)
+- [ ] B：`actions: CamelotErrorAction[]` 陣列，數量不限（需自行決定排列與樣式，且與既有 ConfirmDialog 詞彙脫節）
+- **決議**：A　狀態：✅ 已確認
+
+### Q7. 呼叫端的 `onConfirm` 與錯誤自帶的 `onConfirm` 衝突時 — 影響範圍：`app/composables/useCamelotError.ts`
+- [x] A：串接，**呼叫端先跑、錯誤自帶的後跑**　(建議，理由：攔截器掛的通常是導頁這類終結性動作，排最後才不會讓呼叫端的邏輯被跳過)
+- [ ] B：呼叫端覆寫錯誤自帶的（攔截器掛的導頁會被靜默吃掉）
+- [ ] C：錯誤自帶的優先，呼叫端的忽略
+- **決議**：A　狀態：✅ 已確認
+
+
 ## Key Decisions
 - **[規劃]** Nuxt 內建 `useError` 不採用，改走 `useCamelotError` — 理由：`useError` 只承載單一 `NuxtError`、`showError` 會切換到錯誤頁，與「多筆累積、非致命、逐一提示」的需求本質衝突（見 `## Goals`）。
 - **[Q1]** 一併實作 `CamelotErrorDialog.vue` — 理由：沒有顯示層無法驗收「逐一顯示」核心需求。
@@ -196,6 +244,8 @@ Layer 內建 **通用**轉換器（非專案專屬），確保開箱可用：
 - **[Q3]** 佇列不去重，另提供 `only` 選項 — 理由：與 `useCamelotToast` 的 `options.only` API 一致；去重規則因專案而異，不由 Layer 決定。
 - **[Q4]** 型別隨 composable 定義於 `useCamelotError.ts` — 理由：比照最相近的既有案例 `useCamelotToast.ts:69-96`。
 - **[Q5]** 新增與轉換器分離的攔截器（interceptor）階段 — 理由：resolver 若兼做副作用，「只想轉格式」的情境會意外觸發清權限／導頁；分兩段後職責單一，且 interceptor 回傳 `true` 可支援靜默處理（不彈窗）。同時解掉參考專案 `useAppError` 中 `setTimeout(..., 1000)` 的時序 hack。
+- **[Q6]** 多按鈕沿用 ConfirmDialog 既有的 positive / neutral / negative 三角色 — 理由：對映既有按鈕槽與排列順序，與 `CamelotConfirmAction` 詞彙一致，不必自行處理排版。
+- **[Q7]** 呼叫端與錯誤自帶的 `onConfirm` 採串接，呼叫端先跑 — 理由：攔截器掛的多為導頁這類終結性動作，排最後才不會讓呼叫端邏輯被跳過。
 - **[執行中]** `CamelotErrorDialog` 的關閉路徑統一收斂到 `open` 的 computed setter，不另接 `@cancel` — 理由：`BaseDialogV2.vue:116-118,203-206` 的遮罩／ESC 關閉一律會先寫回 open model，再接 cancel 會造成重複 `dismiss()`（把佇列中的下一則一併吃掉）。同理 `:auto-close="false"`，改由 `@positive` 單一路徑觸發。
 - **[執行中]** 內建 FetchError 轉換器採 duck-typing（檢查 `statusCode` 欄位）而非 `instanceof FetchError` — 理由：避免 ofetch 跨 bundle 多實例時 `instanceof` 誤判，也免去在 Layer 引入執行期相依。
 - **[規劃]** 轉換器註冊表採模組層單例而非 `useState` — 理由：resolver 是函式，無法通過 SSR 序列化（呼應 TypeScript 規範第 3 條「無狀態相依以模組級單例提供」）。

@@ -534,6 +534,16 @@
               label="Simulate 401"
               @click="pushUnauthorizedError"
             />
+            <CamelotButton
+              :color="currentColorRole"
+              label="Retry / Close"
+              @click="pushRetryableError"
+            />
+            <CamelotButton
+              :color="currentColorRole"
+              label="Page onConfirm"
+              @click="pushPageControlledError"
+            />
           </div>
           <p class="text-xs text-slate-400">
             佇列中：{{ camelotErrors.length }} 筆
@@ -2513,6 +2523,38 @@ const pushUnauthorizedError = () => {
   handleError(new Response(null, {
     status: 401,
   }))
+}
+
+/** 重試次數僅供 demo 觀察 close: false 時對話框不關閉的行為 */
+const demoRetryCount = ref(0)
+
+const pushRetryableError = () => {
+  demoRetryCount.value = 0
+  pushError({
+    title: '連線失敗',
+    message: '無法取得資料，請稍後再試。',
+    positive: {
+      label: '重試',
+      // close: false 讓對話框留著，由呼叫端自行決定何時關閉
+      close: false,
+      handler: () => {
+        demoRetryCount.value += 1
+        useCamelotToast().open('重試第 ' + demoRetryCount.value + ' 次')
+      },
+    },
+    negative: {
+      label: '關閉',
+    },
+  })
+}
+
+const pushPageControlledError = () => {
+  handleError({
+    errorCode: 'E_FORM',
+    errorMessage: '表單送出失敗。',
+  }, {
+    onConfirm: () => useCamelotToast().open('由 page 指定的 confirm 處理'),
+  })
 }
 
 const triggerLoading = async () => {

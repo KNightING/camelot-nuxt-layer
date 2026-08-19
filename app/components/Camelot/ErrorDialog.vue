@@ -2,12 +2,18 @@
   <CamelotConfirmDialog
     v-model:open="open"
     :title="currentError?.title ?? title"
-    :positive-label="positiveLabel"
-    :positive-color="color"
+    :positive-label="currentError?.positive?.label ?? positiveLabel"
+    :positive-color="currentError?.positive?.color ?? color"
+    :neutral-label="currentError?.neutral?.label"
+    :neutral-color="currentError?.neutral?.color ?? color"
+    :negative-label="currentError?.negative?.label"
+    :negative-color="currentError?.negative?.color ?? color"
     :close-by-mask="closeByMask"
     :auto-close="false"
     :z-index="currentError?.zIndex ?? zIndex"
-    @positive="onConfirm"
+    @positive="onAction('positive')"
+    @neutral="onAction('neutral')"
+    @negative="onAction('negative')"
   >
     <!-- messageHtml 僅由自家轉換器產出，型別文件已載明內容必須來自可信來源 -->
     <!-- eslint-disable vue/no-v-html -->
@@ -53,6 +59,7 @@ withDefaults(
 const {
   currentError,
   dismiss,
+  runAction,
 } = useCamelotError()
 
 /**
@@ -73,7 +80,17 @@ const open = computed({
 
 const color = computed<CamelotColorRole>(() => currentError.value?.level ?? DEFAULT_LEVEL)
 
-const onConfirm = () => {
-  dismiss()
+/**
+ * 錯誤未指定該角色的動作時（例如只給預設確認鈕），退回單純關閉。
+ * 指定了才交給 runAction 處理 handler 與 close 旗標。
+ */
+const onAction = (role: CamelotConfirmAction) => {
+  const action = currentError.value?.[role]
+  if (!action) {
+    dismiss()
+    return
+  }
+
+  runAction(action, currentError.value?.id)
 }
 </script>

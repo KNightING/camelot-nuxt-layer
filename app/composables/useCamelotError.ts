@@ -11,6 +11,19 @@
 export type CamelotErrorLevel = 'error' | 'warning' | 'info'
 
 /**
+ * 錯誤對話框上的一顆動作按鈕。
+ * 角色沿用 {@link CamelotConfirmAction}，直接對映 CamelotConfirmDialog 的三個按鈕槽。
+ */
+export interface CamelotErrorAction {
+  label: string
+  /** 未指定時沿用顯示層依 level 推導的色彩角色 */
+  color?: CamelotColorRole
+  /** 執行 handler 後是否關閉此錯誤；未指定為 true。需自行控制關閉時機（例如重試）時設為 false */
+  close?: boolean
+  handler?: () => void
+}
+
+/**
  * Camelot 的統一錯誤模型。
  * `TData` 為原始 payload 的型別，由轉換器決定要帶什麼進來。
  */
@@ -29,6 +42,12 @@ export interface CamelotErrorType<TData = unknown> {
   data?: TData
   /** 使用者關閉此錯誤後執行；攔截器可於此掛上導頁等後續動作 */
   onConfirm?: () => void
+  /** 正向動作；未指定時顯示層沿用其 props 的預設確認鈕 */
+  positive?: CamelotErrorAction
+  /** 中立動作；未指定則不顯示該按鈕 */
+  neutral?: CamelotErrorAction
+  /** 反向動作；未指定則不顯示該按鈕 */
+  negative?: CamelotErrorAction
   zIndex?: number
 }
 
@@ -58,10 +77,22 @@ export interface CamelotErrorInterceptor<TData = unknown> {
   intercept: (error: CamelotErrorType<TData>) => boolean | undefined
 }
 
-/** {@link push} 的選項 */
+/**
+ * 呼叫端（通常是觸發錯誤的 page）補掛的選項，
+ * `push` / `handle` / `watch` 三個入口共用。
+ */
 export interface CamelotErrorOptions {
   /** 為 true 時先清空佇列，只保留這一筆 */
   only?: boolean
+  /**
+   * 呼叫端的關閉後回呼。與錯誤自帶的 onConfirm **串接**而非覆寫：
+   * 呼叫端的先跑，錯誤自帶的（攔截器掛上的導頁等終結性動作）後跑。
+   */
+  onConfirm?: () => void
+  /** 覆寫錯誤自帶的同名動作；page 比轉換器更貼近當下情境 */
+  positive?: CamelotErrorAction
+  neutral?: CamelotErrorAction
+  negative?: CamelotErrorAction
 }
 
 /** 內建轉換器的優先權；設為最低，確保消費端註冊的一律先試 */
@@ -205,6 +236,38 @@ const resolveError = (raw: unknown): CamelotErrorType => {
 const interceptError = (error: CamelotErrorType): boolean =>
   getSortedInterceptors().some(interceptor => interceptor.intercept(error) === true)
 
+/**
+ * 把呼叫端的選項併入錯誤本體。
+ * 動作為覆寫（page 比轉換器更貼近當下情境）；
+ * onConfirm 為串接，呼叫端的先跑、錯誤自帶的後跑——
+ * 攔截器掛上的多為導頁這類終結性動作，執行後續邏輯已無意義，必須排在最後。
+ */
+const mergeOptions = (error: CamelotErrorType, options?: CamelotErrorOptions): CamelotErrorType => {
+  if (!options) {
+    return error
+  }
+
+  const merged: CamelotErrorType = {
+    ...error,
+    positive: options.positive ?? error.positive,
+    neutral: options.neutral ?? error.neutral,
+    negative: options.negative ?? error.negative,
+  }
+
+  const callerOnConfirm = options.onConfirm
+  if (!callerOnConfirm) {
+    return merged
+  }
+
+  const ownOnConfirm = error.onConfirm
+  merged.onConfirm = () => {
+    callerOnConfirm()
+    ownOnConfirm?.()
+  }
+
+  return merged
+}
+
 let camelotError: ReturnType<typeof CreateCamelotError> | null = null
 
 export const useCamelotError = () => {
@@ -231,7 +294,7 @@ const CreateCamelotError = () => {
   const push = (error: CamelotErrorType, options?: CamelotErrorOptions): string => {
     const clone: CamelotErrorType = {
       id: Math.random().toString(36).substring(2, 11),
-      ...error,
+      ...mergeOptions(error, options),
     }
 
     if (options?.only) {
@@ -273,22 +336,33 @@ const CreateCamelotError = () => {
     target.onConfirm?.()
   }
 
-  const watchToggle = (errorRef: Ref<unknown>) => watch(errorRef, (raw) => {
+  /** 執行動作按鈕：先跑 handler，除非 close 明確為 false，否則一併關閉該錯誤 */
+  const runAction = (action: CamelotErrorAction, id?: string) => {
+    action.handler?.()
+
+    if (action.close === false) {
+      return
+    }
+
+    dismiss(id)
+  }
+
+  const watchToggle = (errorRef: Ref<unknown>, options?: CamelotErrorOptions) => watch(errorRef, (raw) => {
     if (!raw) {
       return
     }
 
-    handle(raw)
+    handle(raw, options)
   }, { immediate: true })
 
   /** 監看 useFetch 回傳的 error ref（單個或多個），非空即送進 handle */
-  const watcher = (errors: Ref<unknown> | Ref<unknown>[]) => {
+  const watcher = (errors: Ref<unknown> | Ref<unknown>[], options?: CamelotErrorOptions) => {
     if (Array.isArray(errors)) {
-      errors.forEach(error => watchToggle(error))
+      errors.forEach(error => watchToggle(error, options))
       return
     }
 
-    watchToggle(errors)
+    watchToggle(errors, options)
   }
 
   return {
@@ -297,6 +371,7 @@ const CreateCamelotError = () => {
     push,
     handle,
     dismiss,
+    runAction,
     clear,
     registerErrorResolver,
     registerErrorInterceptor,
