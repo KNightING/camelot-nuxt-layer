@@ -537,7 +537,7 @@
             <CamelotButton
               :color="currentColorRole"
               label="Retry / Close"
-              @click="pushRetryableError"
+              @click="startRetryDemo"
             />
             <CamelotButton
               :color="currentColorRole"
@@ -2443,6 +2443,7 @@ const {
   errors: camelotErrors,
   push: pushError,
   handle: handleError,
+  dismiss: dismissError,
 } = useCamelotError()
 
 const isDemoApiErrorPayload = (raw: unknown): raw is DemoApiErrorPayload =>
@@ -2525,27 +2526,44 @@ const pushUnauthorizedError = () => {
   }))
 }
 
-/** 重試次數僅供 demo 觀察 close: false 時對話框不關閉的行為 */
 const demoRetryCount = ref(0)
 
+const retryMessage = computed(() => demoRetryCount.value <= 0
+  ? '無法取得資料，請稍後再試。'
+  : '無法取得資料，請稍後再試。（已重試 ' + demoRetryCount.value + ' 次）')
+
+/** 模擬一直失敗的重試：關閉對話框 → 轉 3 秒 → 錯誤再次入列 */
+const retryDemoRequest = async () => {
+  // close: false 的用途：由呼叫端自行決定關閉時機，
+  // 這裡先關掉對話框，loading 才不會被它蓋住
+  dismissError()
+
+  const closeLoading = useLoading().open('重新連線中...')
+  await useDelay(3000)
+  closeLoading()
+
+  demoRetryCount.value += 1
+  pushRetryableError()
+}
+
 const pushRetryableError = () => {
-  demoRetryCount.value = 0
   pushError({
     title: '連線失敗',
-    message: '無法取得資料，請稍後再試。',
+    message: retryMessage.value,
     positive: {
       label: '重試',
-      // close: false 讓對話框留著，由呼叫端自行決定何時關閉
       close: false,
-      handler: () => {
-        demoRetryCount.value += 1
-        useCamelotToast().open('重試第 ' + demoRetryCount.value + ' 次')
-      },
+      handler: retryDemoRequest,
     },
     negative: {
       label: '關閉',
     },
   })
+}
+
+const startRetryDemo = () => {
+  demoRetryCount.value = 0
+  pushRetryableError()
 }
 
 const pushPageControlledError = () => {

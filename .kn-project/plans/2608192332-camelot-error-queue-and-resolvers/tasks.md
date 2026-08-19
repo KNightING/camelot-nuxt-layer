@@ -24,3 +24,7 @@
 - [x] `ErrorDialog.vue` 綁定三個動作槽，處理 `close: false`
 - [x] playground 新增「重試 / 關閉」與 page 端 onConfirm 示範
 - [x] lint 維持基準、瀏覽器實測
+
+## Phase 5 — Iteration 2：重試示範改為真實的失敗循環（playground）
+- [x] 重試 handler 改為：自行 `dismiss()` → `useLoading().open()` → `useDelay(3000)` → 關閉 loading → 重新 push 同一錯誤（帶重試次數）
+- [x] 瀏覽器實測：loading 轉 3 秒後錯誤再次出現，次數遞增

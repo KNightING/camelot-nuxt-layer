@@ -244,6 +244,7 @@ export interface CamelotErrorOptions {
 - **[Q3]** 佇列不去重，另提供 `only` 選項 — 理由：與 `useCamelotToast` 的 `options.only` API 一致；去重規則因專案而異，不由 Layer 決定。
 - **[Q4]** 型別隨 composable 定義於 `useCamelotError.ts` — 理由：比照最相近的既有案例 `useCamelotToast.ts:69-96`。
 - **[Q5]** 新增與轉換器分離的攔截器（interceptor）階段 — 理由：resolver 若兼做副作用，「只想轉格式」的情境會意外觸發清權限／導頁；分兩段後職責單一，且 interceptor 回傳 `true` 可支援靜默處理（不彈窗）。同時解掉參考專案 `useAppError` 中 `setTimeout(..., 1000)` 的時序 hack。
+- **[Iteration 2]** playground 的重試示範改為「自行 dismiss → loading 3 秒 → 重新入列」的真實失敗循環 — 理由：原本只跳 toast，無法展示 `close: false` 的真正用途（呼叫端自行控制關閉時機）；改成非同步重試後這個旗標的存在意義才成立。
 - **[Q6]** 多按鈕沿用 ConfirmDialog 既有的 positive / neutral / negative 三角色 — 理由：對映既有按鈕槽與排列順序，與 `CamelotConfirmAction` 詞彙一致，不必自行處理排版。
 - **[Q7]** 呼叫端與錯誤自帶的 `onConfirm` 採串接，呼叫端先跑 — 理由：攔截器掛的多為導頁這類終結性動作，排最後才不會讓呼叫端邏輯被跳過。
 - **[執行中]** `CamelotErrorDialog` 的關閉路徑統一收斂到 `open` 的 computed setter，不另接 `@cancel` — 理由：`BaseDialogV2.vue:116-118,203-206` 的遮罩／ESC 關閉一律會先寫回 open model，再接 cancel 會造成重複 `dismiss()`（把佇列中的下一則一併吃掉）。同理 `:auto-close="false"`，改由 `@positive` 單一路徑觸發。
