@@ -30,8 +30,8 @@
 
 | 矩陣 | 內容 |
 | :--- | :--- |
-| **[🧩 元件清單矩陣](./components.md)** | 全部 ~89 元件（表單 / 版面 / 覆蓋層 / 回饋 / 媒體 / 主題變體 / 內部），每個一頁 |
-| **[🪝 Composable 清單矩陣](./composables.md)** | 全部 ~48 composable（主題 / 元件相關 / API / 驗證 / 儲存 / 路由 / DOM / 工具），每個一頁 |
+| **[🧩 元件清單矩陣](./features/components.md)** | 全部 ~89 元件（表單 / 版面 / 覆蓋層 / 回饋 / 媒體 / 主題變體 / 內部），每個一頁 |
+| **[🪝 Composable 清單矩陣](./features/composables.md)** | 全部 ~48 composable（主題 / 元件相關 / API / 驗證 / 儲存 / 路由 / DOM / 工具），每個一頁 |
 
 > 元件為 Nuxt 自動匯入 `Camelot<Name>`；主題子元件（Aqua/Material/Cupertino/Scifi）與 `Internal/` 為實作細節，由公開元件自動選用。
 
@@ -114,4 +114,4 @@ graph TD
 
 ---
 
-[🧩 元件清單](./components.md) | [🪝 Composable 清單](./composables.md) | [⚙️ 環境變數](./environment.md) | [🏠 Wiki](index.md)
+[🧩 元件清單](./features/components.md) | [🪝 Composable 清單](./features/composables.md) | [⚙️ 環境變數](./environment.md) | [🏠 Wiki](index.md)

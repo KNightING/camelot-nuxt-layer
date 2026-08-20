@@ -63,4 +63,4 @@ const { teleportTarget } = useCamelotTeleportTarget(root)
 - 浮層脫離原本的 DOM 位置後，**CSS 自訂屬性的繼承會中斷**（CSS 繼承跟著 DOM 樹，不跟元件樹；Vue 的 `provide`/`inject` 則不受影響）。目前各元件以逐面板套用色彩角色 class 補回。
 
 ---
-[🧱 疊層刻度](../features/layering.md) ・ [🪝 Composables](../composables.md) ・ [🏠 Wiki](../index.md)
+[🧱 疊層刻度](../features/layering.md) ・ [🪝 Composables](../features/composables.md) ・ [🏠 Wiki](../index.md)

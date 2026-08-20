@@ -45,4 +45,4 @@ graph TD
 - [PopupV2](../components/PopupV2.md) ・ [BaseBottomSheetV2](../components/BaseBottomSheetV2.md) ・ [BaseDialogV2](../components/BaseDialogV2.md)
 
 ---
-[🗂️ 元件清單](../components.md) ・ [🏠 Wiki](../index.md)
+[🗂️ 元件清單](./components.md) ・ [🏠 Wiki](../index.md)

@@ -81,4 +81,4 @@
 - 內容請只放內容：外框與內距已由 `BaseDialogV2` 負責。
 
 ---
-[🗂️ 元件清單](../components.md) ・ [🏠 Wiki](../index.md)
+[🗂️ 元件清單](../features/components.md) ・ [🏠 Wiki](../index.md)

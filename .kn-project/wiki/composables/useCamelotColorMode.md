@@ -39,4 +39,4 @@ VueUse 的 `useColorMode` 每建立一個實例，就會註冊一份 watcher 在
 | [app/composables/useMaterial3ColorScheme.ts](../../../app/composables/useMaterial3ColorScheme.ts) | 同上 |
 
 ---
-[🎨 色彩主題系統](../features/color-scheme.md) ・ [🪝 Composables](../composables.md) ・ [🏠 Wiki](../index.md)
+[🎨 色彩主題系統](../features/color-scheme.md) ・ [🪝 Composables](../features/composables.md) ・ [🏠 Wiki](../index.md)
