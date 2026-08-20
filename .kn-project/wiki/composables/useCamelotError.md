@@ -92,4 +92,4 @@ watch(error, { onConfirm: () => router.back() })
 - 與 Nuxt 內建 `useError` 互補：`useError` 只承載單一 `NuxtError` 且 `showError()` 會切換到錯誤頁，適合致命錯誤；本 composable 處理非致命、可逐一提示的錯誤。
 
 ---
-[🪝 Composable 清單](../composables.md) ・ [🏠 Wiki](../index.md)
+[🪝 Composable 清單](../features/composables.md) ・ [🏠 Wiki](../index.md)

@@ -55,4 +55,4 @@
 - `messageHtml` 以 `v-html` 渲染，內容必須來自可信來源。
 
 ---
-[🗂️ 元件清單](../components.md) ・ [🏠 Wiki](../index.md)
+[🗂️ 元件清單](../features/components.md) ・ [🏠 Wiki](../index.md)

@@ -125,4 +125,4 @@ const retry = async () => {
 - 示範程式碼：`.playground/app/pages/index.vue` 的 Global Error Queue 卡片
 
 ---
-[🧩 元件清單](../components.md) ・ [🪝 Composable 清單](../composables.md) ・ [🏠 Wiki](../index.md)
+[🧩 元件清單](./components.md) ・ [🪝 Composable 清單](./composables.md) ・ [🏠 Wiki](../index.md)

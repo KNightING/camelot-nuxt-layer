@@ -192,8 +192,8 @@ Layer 定義了 `tappay`、`googlePay`、`googleFont`、`securityPlugin` 以及 
 | 入口 | 內容 |
 | :--- | :--- |
 | [🏠 Wiki 首頁](./.kn-project/wiki/index.md) | 架構圖、主題頁清單、模組總覽 |
-| [🧩 元件清單矩陣](./.kn-project/wiki/components.md) | 全部元件，每個一頁（Props / Emits / v-model / Slots / Exposed） |
-| [🪝 Composable 清單矩陣](./.kn-project/wiki/composables.md) | 全部 composables，每個一頁（簽章 / 回傳） |
+| [🧩 元件清單矩陣](./.kn-project/wiki/features/components.md) | 全部元件，每個一頁（Props / Emits / v-model / Slots / Exposed） |
+| [🪝 Composable 清單矩陣](./.kn-project/wiki/features/composables.md) | 全部 composables，每個一頁（簽章 / 回傳） |
 | [⚙️ 環境變數](./.kn-project/wiki/environment.md) | 全部 Runtime Config 與 `NUXT_*` 對照 |
 
 > 主題頁（Calendar、OverlayScrollbar、FileDropzone、Timeline…）的完整清單由 [Wiki 首頁](./.kn-project/wiki/index.md) 維護，此處不重複列出以免失同步。

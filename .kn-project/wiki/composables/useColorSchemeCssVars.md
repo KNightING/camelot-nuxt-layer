@@ -37,4 +37,4 @@ applyColorSchemeCssVars(el, { primary: '#6750a4', rippleColor: '#111827' })
 - 非字串值一律略過。
 
 ---
-[🎨 色彩主題系統](../features/color-scheme.md) ・ [🪝 Composables](../composables.md) ・ [🏠 Wiki](../index.md)
+[🎨 色彩主題系統](../features/color-scheme.md) ・ [🪝 Composables](../features/composables.md) ・ [🏠 Wiki](../index.md)
