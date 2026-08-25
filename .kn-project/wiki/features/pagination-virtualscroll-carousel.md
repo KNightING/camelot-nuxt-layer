@@ -1,6 +1,8 @@
 # 🧩 Pagination / VirtualScroll / Carousel + 主題色彩批次
 
-> 一個批次：Tabs/Steps 色彩角色、主題顏色漸變、三個新元件（Pagination / VirtualScroll / Carousel）、Table 預設虛擬滾動、DatePicker 手機 modal、Playground 重構。皆四主題（material/cupertino/scifi/aqua）+ color role。
+## Summary
+
+一個批次：Tabs/Steps 色彩角色、主題顏色漸變、三個新元件（Pagination / VirtualScroll / Carousel）、Table 預設虛擬滾動、DatePicker 手機 modal、Playground 重構。皆四主題（material/cupertino/scifi/aqua）+ color role。
 
 ## 🎨 Tabs / Steps / RippleTabs 色彩角色
 - 三者新增 `color?: CamelotColorRole`（預設 `primary`），以 `useCamelotRoleColorClass` 注入 `--cml-color-current-color` / `--cml-color-current-on-color`。

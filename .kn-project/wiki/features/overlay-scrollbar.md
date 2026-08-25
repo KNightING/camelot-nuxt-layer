@@ -1,5 +1,9 @@
 # 📜 OverlayScrollbar / 自訂捲軸系統
 
+## Summary
+
+`CamelotOverlayScrollbar` 是附著在既有捲動容器上的自訂 overlay 捲軸（不自建容器），以 `orientation` 切換水平／垂直，Table 兩軸皆用它取代原生捲軸。與自建容器的 `CamelotScrollbar` 定位不同，兩者並存。
+
 `CamelotOverlayScrollbar` 是**附著在既有捲動容器上**的自訂 overlay 捲軸（不自建容器），以 `orientation` prop 切換水平/垂直。Table 兩軸皆改用此元件取代原生捲軸。
 
 > 與既有 `CamelotScrollbar`（**包裝式**，自建捲動容器 + slot，用於 Container/playground）定位不同，兩者並存。

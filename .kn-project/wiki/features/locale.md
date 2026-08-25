@@ -1,6 +1,8 @@
 # 🌐 useLocale（語系格式正規化）
 
-> 將單一 locale 字串正規化為三種國際化格式表示：`bcp47`、`cldr`、`l10n`。輸入可為 **bcp47 或 cldr 格式**、大小寫不敏感、`_`/`-` 分隔皆可。對應計畫 `2606261225`。
+## Summary
+
+將單一 locale 字串正規化為三種國際化格式表示：`bcp47`、`cldr`、`l10n`。輸入可為 **bcp47 或 cldr 格式**、大小寫不敏感、`_`/`-` 分隔皆可。對應計畫 `2606261225`。
 
 ## 概要
 - **入參**：`useLocale(locale: MaybeRefOrGetter<string | undefined>)`；回傳三個 `computed`。

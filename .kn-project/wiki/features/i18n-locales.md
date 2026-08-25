@@ -89,7 +89,7 @@ vue-i18n 對 `zh-Hant-TW` → `zh-Hant` → `zh` 有**隱含階層 fallback**,La
 - 計畫歸檔:`../../archive/2607021527-i18n-cldr-locales-fallback.md`
 - 缺陷紀錄:`../../archive/2608190042-readme-refresh-and-wiki-links.md`
 - Layer 整合前提:[Layer 整合與必裝依賴](./layer-integration.md)
-- 語系格式正規化 composable:[[locale]]([useLocale](./locale.md))
+- 語系格式正規化 composable：[useLocale](./locale.md)
 
 ---
 

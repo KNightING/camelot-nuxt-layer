@@ -1,5 +1,9 @@
 # 📎 檔案拖曳系統（FileDropzone / FileChip / useCamelotFileDrop）
 
+## Summary
+
+檔案拖曳分三層：headless 核心 `useCamelotFileDrop`、全包元件 `CamelotImageDropzone`（圖片縮圖格）與 `CamelotFileDropzone`（附件晶片列），以及可獨立使用的 `CamelotFileChip`。依客製程度選用其中一層。
+
 > 來源計畫：[2606101554-file-dropzone-chips](../../archive/2606101554-file-dropzone-chips.md)（2026-06-10）
 > 相關：[RichTextEditor 與 ImageDropzone](richtext-editor-image-dropzone.md)
 

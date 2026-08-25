@@ -1,5 +1,9 @@
 # 🕒 Timeline 時間軸
 
+## Summary
+
+`CamelotTimeline` 是垂直／水平時間軸元件，支援交錯排列、捲動淡入與四主題色彩角色。
+
 > 來源計畫：[2606101900-ui-batch](../../archive/2606081900-ui-batch.md)、[2606101530-timeline-alignment-and-image](../../archive/2606101530-timeline-alignment-and-image.md)
 
 `app/components/Camelot/Timeline.vue` — 垂直/水平時間軸，支援交錯排列、捲動淡入、四主題 color role。

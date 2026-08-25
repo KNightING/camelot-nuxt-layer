@@ -1,6 +1,8 @@
 # 🗓️🪟🔔 DatePicker 時間/確認・Aqua 邊框 Token・Toast 動畫批次
 
-> 一個收尾批次：DatePicker 時間模式（完整顯示、確認按鈕、小螢幕垂直、月/年選擇橫跨雙月曆）、Aqua 浮層邊框走主題 `--color-border` token、`on-*` 前景配對修正、Toast 透明度與滑入玻璃漸入動畫。對應計畫 `2606082359`。
+## Summary
+
+一個收尾批次：DatePicker 時間模式（完整顯示、確認按鈕、小螢幕垂直、月/年選擇橫跨雙月曆）、Aqua 浮層邊框走主題 `--color-border` token、`on-*` 前景配對修正、Toast 透明度與滑入玻璃漸入動畫。對應計畫 `2606082359`。
 
 ## 🗓️ DatePicker（DateV2 / DateRangeV2 / Internal/Calendar）
 - **時間完整顯示**：DateRangeV2 trigger 的起/迄 input 改為依內容自適應寬度（`:style` ch），修正 `enableTime` 時 `yyyy-MM-dd HH:mm:ss` 被裁切。

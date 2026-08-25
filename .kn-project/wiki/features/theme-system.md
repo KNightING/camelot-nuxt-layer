@@ -1,6 +1,8 @@
 # 🎨 主題系統 / Theme System（四風格 + Aqua）
 
-> Camelot 的「統一元件 → 多風格實作」主題系統。所有可主題化元件會依當前 `themeMode` 切換為對應風格的外觀，共享相同 props/emits 介面。
+## Summary
+
+Camelot 的「統一元件 → 多風格實作」主題系統。所有可主題化元件會依當前 `themeMode` 切換為對應風格的外觀，共享相同 props/emits 介面。
 
 ## 🧭 概覽
 

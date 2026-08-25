@@ -91,27 +91,28 @@ graph TD
 
 ## 📎 主題頁 (Topics)
 
-跨切面/專題文件（與上方 API 頁互補）：
+每頁的說明見該頁的 `## Summary`；元件與 composable 的逐頁索引見上方的清單矩陣。
 
-- [🎨 Theme System / 主題系統（四風格 + Aqua）](./features/theme-system.md)
-- [🧱 Drawer / Tree / Table / Menu](./features/layout-data-components.md)
-- [📜 OverlayScrollbar / 自訂捲軸系統](./features/overlay-scrollbar.md)
-- [🗓️ Calendar / 日期選擇器（含節日/語系/緊湊）](./features/calendar.md)
-- [🗓️🔔 DatePicker 時間/確認・Aqua 邊框 Token・Toast 動畫](./features/datepicker-time-aqua-toast.md)
-- [✍️🖼️ RichTextEditor（TipTap）與 ImageDropzone](./features/richtext-editor-image-dropzone.md)
-- [⏰ TimeV2 / 純時間選擇器](./features/time-picker.md)
-- [🏷️ FieldLabel 共通標籤與表單控制元件](./features/field-label-and-form-controls.md)
-- [🕒 Timeline 時間軸](./features/timeline.md)
+- [API 用戶端（API Client）](./features/api-client.md)
+- [🗓️ Calendar / 日期選擇器系統](./features/calendar.md)
+- [🎨 Color Scheme / 色彩主題系統](./features/color-scheme.md)
+- [🗓️🪟🔔 DatePicker 時間/確認・Aqua 邊框 Token・Toast 動畫批次](./features/datepicker-time-aqua-toast.md)
+- [錯誤處理系統（佇列 + 轉換器 + 攔截器）](./features/error-handling.md)
+- [🏷️ FieldLabel 共通標籤與表單控制元件調整](./features/field-label-and-form-controls.md)
 - [📎 檔案拖曳系統（FileDropzone / FileChip / useCamelotFileDrop）](./features/file-drop.md)
+- [🌐 i18n 語系系統(CLDR 代碼 + Fallback 鏈 + Layer/消費端分工)](./features/i18n-locales.md)
+- [📦 Layer 整合與必裝依賴 (Consumer Integration)](./features/layer-integration.md)
+- [🧱 Layering / 疊層刻度](./features/layering.md)
+- [🧱 Drawer / Tree / Table / Menu / CascadeMenu](./features/layout-data-components.md)
+- [🌐 useLocale（語系格式正規化）](./features/locale.md)
+- [📜 OverlayScrollbar / 自訂捲軸系統](./features/overlay-scrollbar.md)
+- [🧩 Pagination / VirtualScroll / Carousel + 主題色彩批次](./features/pagination-virtualscroll-carousel.md)
+- [📊 Progress 元件（ProgressBar / ProgressCircle / ProgressStage）](./features/progress-components.md)
 - [🔘 Radio 與選項群組（RadioGroup / CheckboxGroup）](./features/radio-and-groups.md)
-- [🎨 Color Scheme / 色彩主題](./features/color-scheme.md)
-- [🚨 錯誤處理系統（佇列 + 轉換器 + 攔截器）](./features/error-handling.md)
-- [🧱 Layering / 疊層刻度（z-index）](./features/layering.md)
-- [🌐 useLocale / 語系格式正規化](./features/locale.md)
-- [📦 Layer 整合與必裝依賴（消費端前提）](./features/layer-integration.md)
-- [🌐 i18n 語系系統（CLDR + Fallback 鏈 + Layer 分工）](./features/i18n-locales.md)
-- [⚙️ 環境變數](./environment.md)
-
+- [✍️🖼️ RichTextEditor（TipTap）與 ImageDropzone](./features/richtext-editor-image-dropzone.md)
+- [🎨 主題系統 / Theme System（四風格 + Aqua）](./features/theme-system.md)
+- [⏰ CamelotTimeV2（純時間選擇器）](./features/time-picker.md)
+- [🕒 Timeline 時間軸](./features/timeline.md)
 ---
 
 [🧩 元件清單](./features/components.md) | [🪝 Composable 清單](./features/composables.md) | [⚙️ 環境變數](./environment.md) | [🏠 Wiki](index.md)

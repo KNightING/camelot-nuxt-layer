@@ -1,5 +1,9 @@
 # ✍️🖼️ RichTextEditor（TipTap）與 ImageDropzone
 
+## Summary
+
+`CamelotRichTextEditor` 是以 TipTap 驅動的主題化 WYSIWYG 編輯器，`CamelotImageDropzone` 則是自其抽出、可重用的圖片拖曳／選擇元件。兩者皆支援四主題。
+
 > 參考私有專案 `sld-official-website-webapp` 的 TipTap 編輯器，於 camelot 重建為主題化的 `CamelotRichTextEditor`，並抽出可重用的 `CamelotImageDropzone`（拖曳/選擇圖片）。皆四主題（material/cupertino/scifi/aqua）。對應計畫 `2606091129`。
 
 ## ✍️ CamelotRichTextEditor

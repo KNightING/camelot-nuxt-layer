@@ -1,5 +1,9 @@
 # 🏷️ FieldLabel 共通標籤與表單控制元件調整
 
+## Summary
+
+`CamelotFieldLabel` 是所有表單元件 label 的單一來源，依主題自動切換字級與字距，並以 `#label` slot 統一串接各表單控制元件。
+
 > 來源計畫：[2606101443-playground-form-demos-and-aqua-switch](../../archive/2606101443-playground-form-demos-and-aqua-switch.md)（2026-06-10）
 
 ## CamelotFieldLabel（共通標籤元件）

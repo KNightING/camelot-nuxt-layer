@@ -43,12 +43,12 @@ graph TD
 
 | 項目 | 位置 | 說明 |
 | :--- | :--- | :--- |
-| `useColorMode` 實例 | [useCamelotColorMode](../composables/useCamelotColorMode.md) | VueUse 每個實例都會註冊一份往 `<html>` 寫 class 的 watcher |
+| `useColorMode` 實例 | [useCamelotColorMode](./composables/useCamelotColorMode.md) | VueUse 每個實例都會註冊一份往 `<html>` 寫 class 的 watcher |
 | `themeMode` storage ref | `useCamelotTheme` | 同分頁兩個 `useStorage` 實例不會互相同步，必須共用同一個 ref |
 | 主題屬性 / 漸變過場 watcher | `useCamelotTheme` | 掛在 `globalThemeScope`（`effectScope(true)`） |
 | 全域色彩方案 watcher | `useCustomColorScheme` | 所有全域呼叫端寫的都是同一個 `<html>` |
 
-CSS 變數寫入本身是**單向**動作，由 [useColorSchemeCssVars](../composables/useColorSchemeCssVars.md) 直接 `setProperty`，不為每個變數建立響應式 ref。
+CSS 變數寫入本身是**單向**動作，由 [useColorSchemeCssVars](./composables/useColorSchemeCssVars.md) 直接 `setProperty`，不為每個變數建立響應式 ref。
 
 ---
 

@@ -1,6 +1,8 @@
 # 📊 Progress 元件（ProgressBar / ProgressCircle / ProgressStage）
 
-> 三個進度元件，皆支援四種主題（material / cupertino / scifi / aqua）、determinate 過場與動畫；前兩者另有 indeterminate（不確定）模式。
+## Summary
+
+三個進度元件，皆支援四種主題（material / cupertino / scifi / aqua）、determinate 過場與動畫；前兩者另有 indeterminate（不確定）模式。
 
 ## ▬ ProgressBar（`ProgressBar.vue`）
 
