@@ -1,5 +1,9 @@
 # 🔘 Radio 與選項群組（RadioGroup / CheckboxGroup）
 
+## Summary
+
+`CamelotRadio` 與 `CamelotRadioGroup` / `CamelotCheckboxGroup` 的選項群組系統：wrapper + 四主題 variant，群組層負責版面、逐選項停用與必填標示。
+
 > 來源計畫：[2606101633-radio-groups-and-timeline-fix](../../archive/2606101633-radio-groups-and-timeline-fix.md)（2026-06-10）
 > 相關：[FieldLabel 表單元件](field-label-and-form-controls.md)
 

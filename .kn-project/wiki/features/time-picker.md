@@ -1,6 +1,8 @@
 # ⏰ CamelotTimeV2（純時間選擇器）
 
-> 純時間選擇器，操作與外觀比照 DateV2；重用既有 `TimeRow` 內部元件。四主題。對應計畫 `2606092138`。
+## Summary
+
+純時間選擇器，操作與外觀比照 DateV2；重用既有 `TimeRow` 內部元件。四主題。對應計畫 `2606092138`。
 
 ## 概要
 - **觸發/版型**：trigger（時鐘 icon + 唯讀 input）→ `CamelotPopupV2`（桌機 popup）/ `CamelotBaseDialogV2`（手機 dialog，`showType` auto），內含 `CamelotInternalTimeRow`（可輸入欄位 + 12/24 制 + AM/PM + 精細度）+「確認」按鈕。

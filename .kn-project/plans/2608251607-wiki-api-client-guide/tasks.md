@@ -13,3 +13,15 @@
 ## Phase 4 — 驗證
 - [x] 相對連結皆可解析（8/8）、Quick Navigation bar 以 `[🏠 Wiki]` 結尾、`## Summary` 置於 H1 之後
 - [x] 全頁不含外部參考專案的任何可辨識資訊（關鍵字掃描為空）
+
+## Phase 3b — 迭代：目錄結構與索引正規化
+- [x] `wiki/components/` → `wiki/features/components/`（91 頁）、`wiki/composables/` → `wiki/features/composables/`（52 頁），以 `git mv` 保留歷史
+- [x] 重寫受影響的相對連結：被搬移頁 143 頁、`features/` 頂層頁 6 頁、`index.md`
+- [x] `index.md` 主題頁清單改為純連結、依路徑 ASCII 排序（並補回先前漏列的 `pagination-virtualscroll-carousel`、`progress-components`）
+- [x] 為 `features/` 下全部 165 頁補齊 `## Summary`（143 頁由既有引言機械轉換、13 頁自撰、既有 9 頁已有）
+- [x] 修正 `features/i18n-locales.md:92` 的巢狀連結語法錯誤（既有缺陷）
+
+## Phase 4b — 驗證
+- [x] 全 wiki 167 頁連結掃描：唯一未解析者為 `index.md` 的語言切換佔位連結（`lang/en-US/`，標註尚未建立）
+- [x] `features/` 下無任何頁面缺少 `## Summary`
+- [x] `.kn-project/project.md` 的 wiki 連結全部指向 `features/` 頂層或 `index.md` / `environment.md`，不受搬移影響

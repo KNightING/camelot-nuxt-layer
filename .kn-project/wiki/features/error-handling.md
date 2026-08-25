@@ -2,7 +2,7 @@
 
 ## Summary
 
-Camelot 的全域錯誤機制由 [useCamelotError](../composables/useCamelotError.md) 的佇列與 [ErrorDialog](../components/ErrorDialog.md) 的顯示層組成，可累積多筆錯誤並逐一呈現。
+Camelot 的全域錯誤機制由 [useCamelotError](./composables/useCamelotError.md) 的佇列與 [ErrorDialog](./components/ErrorDialog.md) 的顯示層組成，可累積多筆錯誤並逐一呈現。
 入口只接受 `CamelotErrorType`，任意原始錯誤必須經由**消費端註冊的轉換器**轉成該型別，副作用則由**攔截器**負責，因此換一套 API 錯誤格式不需要改動 Layer。
 Layer 只內建 `FetchError` / `Error` / `string` 三個無業務語意的轉換器；401 導向登入這類行為一律由消費端註冊。
 
@@ -115,13 +115,13 @@ const retry = async () => {
 | :--- | :--- |
 | **useCamelotError** | 非致命、可累積、需逐一提示的錯誤 |
 | **Nuxt `useError` / `showError`** | 致命錯誤：只承載單一 `NuxtError`，且會中止當前頁渲染切換到 `error.vue` |
-| **[useBaseApi](../composables/useBaseApi.md) 的 `autoRefreshToken`** | **可自動回復**的 401：在 API 層就地刷新 token 並重送，根本不會進入本管線。本管線處理的是刷新也失敗、已無法回復的 401 |
-| **[useCamelotToast](../composables/useCamelotToast.md)** | 不需要使用者確認的輕量提示 |
-| **[useErrorRef](../composables/useErrorRef.md)** | 只把多個錯誤 ref 匯總成一個 ref，不含佇列、轉換與顯示 |
+| **[useBaseApi](./composables/useBaseApi.md) 的 `autoRefreshToken`** | **可自動回復**的 401：在 API 層就地刷新 token 並重送，根本不會進入本管線。本管線處理的是刷新也失敗、已無法回復的 401 |
+| **[useCamelotToast](./composables/useCamelotToast.md)** | 不需要使用者確認的輕量提示 |
+| **[useErrorRef](./composables/useErrorRef.md)** | 只把多個錯誤 ref 匯總成一個 ref，不含佇列、轉換與顯示 |
 
 ## References
-- 元件 API：[ErrorDialog](../components/ErrorDialog.md)、[ConfirmDialog](../components/ConfirmDialog.md)
-- Composable API：[useCamelotError](../composables/useCamelotError.md)
+- 元件 API：[ErrorDialog](./components/ErrorDialog.md)、[ConfirmDialog](./components/ConfirmDialog.md)
+- Composable API：[useCamelotError](./composables/useCamelotError.md)
 - 示範程式碼：`.playground/app/pages/index.vue` 的 Global Error Queue 卡片
 
 ---

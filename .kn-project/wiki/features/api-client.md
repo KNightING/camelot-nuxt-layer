@@ -2,7 +2,7 @@
 
 ## Summary
 
-Camelot 的 API 層以 `useBaseApi` 為核心：一次設定 `baseURL`、標頭、攔截器與 refresh token 策略，之後每支端點各自取得一個請求物件，由呼叫端決定要用 `useFetch` 系列（響應式）或 `fetch`（命令式）。建議以 `class XxxApi extends BaseApi` 的應用層類別收斂設定與端點，元件只認具名方法、不碰 URL 字串。API 參考見 [useBaseApi](../composables/useBaseApi.md)。
+Camelot 的 API 層以 `useBaseApi` 為核心：一次設定 `baseURL`、標頭、攔截器與 refresh token 策略，之後每支端點各自取得一個請求物件，由呼叫端決定要用 `useFetch` 系列（響應式）或 `fetch`（命令式）。建議以 `class XxxApi extends BaseApi` 的應用層類別收斂設定與端點，元件只認具名方法、不碰 URL 字串。API 參考見 [useBaseApi](./composables/useBaseApi.md)。
 
 ---
 
@@ -135,15 +135,15 @@ export const useOrderApi = () => new OrderApi()
 
 ## 🔀 與其他系統的分工
 
-- **串流**：`useBaseApi` 處理一次性請求；SSE 與逐行 JSON 請改用 [useFetchStream](../composables/useFetchStream.md) 與 [useFetchJSONLinesStream](../composables/useFetchJSONLinesStream.md)。
+- **串流**：`useBaseApi` 處理一次性請求；SSE 與逐行 JSON 請改用 [useFetchStream](./composables/useFetchStream.md) 與 [useFetchJSONLinesStream](./composables/useFetchJSONLinesStream.md)。
 - **錯誤處理**：可自動回復的 401 在 API 層就地刷新並重送，不會進入全域管線；刷新也失敗、已無法回復的錯誤才交由 [錯誤處理系統](./error-handling.md) 提示。
-- **分頁**：清單型端點可搭配 [useInfinitePage](../composables/useInfinitePage.md)。
+- **分頁**：清單型端點可搭配 [useInfinitePage](./composables/useInfinitePage.md)。
 
 ---
 
 ## References
 
-- [useBaseApi](../composables/useBaseApi.md) — 完整 API 參考（簽章、`ApiFetchOptions` 全欄位）
+- [useBaseApi](./composables/useBaseApi.md) — 完整 API 參考（簽章、`ApiFetchOptions` 全欄位）
 - [錯誤處理系統](./error-handling.md) — 全域錯誤佇列與本頁的分工
 - `.playground/app/composables/useTestApi.ts` — 可執行的應用層 API 類別範例
 

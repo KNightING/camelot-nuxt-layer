@@ -2,7 +2,7 @@
 
 ## Summary
 
-Camelot 的浮動元件（Drawer、BottomSheet、Popup）以 `tailwind.css` 中一組具名 CSS 變數決定 z-index，而非各自硬編碼數字。刻度定義於一般 `:root`，元件一律以 `var(--cml-z-*)` 引用。浮層要在 `<dialog>` 內可見，還必須先經由 [useCamelotTeleportTarget](../composables/useCamelotTeleportTarget.md) teleport 進該對話框——層級只在同一堆疊脈絡內才有意義。
+Camelot 的浮動元件（Drawer、BottomSheet、Popup）以 `tailwind.css` 中一組具名 CSS 變數決定 z-index，而非各自硬編碼數字。刻度定義於一般 `:root`，元件一律以 `var(--cml-z-*)` 引用。浮層要在 `<dialog>` 內可見，還必須先經由 [useCamelotTeleportTarget](./composables/useCamelotTeleportTarget.md) teleport 進該對話框——層級只在同一堆疊脈絡內才有意義。
 
 ---
 
@@ -12,13 +12,13 @@ Camelot 的浮動元件（Drawer、BottomSheet、Popup）以 `tailwind.css` 中�
 
 | 變數 | 值 | 使用者 |
 | :--- | ---: | :--- |
-| `--cml-z-drawer` | `50` | 側邊抽屜（預留，尚未接上 [Drawer](../components/Drawer.md)） |
-| `--cml-z-sheet` | `60` | [BaseBottomSheetV2](../components/BaseBottomSheetV2.md) 的面板容器 |
-| `--cml-z-popup` | `70` | [PopupV2](../components/PopupV2.md) 浮層預設層級；[CascadeMenu](../components/CascadeMenu.md) 面板為 `calc(var(--cml-z-popup) + level)`（逐層 +1）；TimeV2 / DateV2 的內層時分秒清單為 `calc(var(--cml-z-popup) + 1)` |
+| `--cml-z-drawer` | `50` | 側邊抽屜（預留，尚未接上 [Drawer](./components/Drawer.md)） |
+| `--cml-z-sheet` | `60` | [BaseBottomSheetV2](./components/BaseBottomSheetV2.md) 的面板容器 |
+| `--cml-z-popup` | `70` | [PopupV2](./components/PopupV2.md) 浮層預設層級；[CascadeMenu](./components/CascadeMenu.md) 面板為 `calc(var(--cml-z-popup) + level)`（逐層 +1）；TimeV2 / DateV2 的內層時分秒清單為 `calc(var(--cml-z-popup) + 1)` |
 
 ## 為什麼 popup 必須高於 sheet / drawer
 
-所有 popup 概念的元件都經由 [useCamelotTeleportTarget](../composables/useCamelotTeleportTarget.md) 把浮層 **Teleport 進最近的 `<dialog>`**（沒有則回落 `body`），以繞開原生 `<dialog>` 的 top layer 限制。此時浮層與 BottomSheet 的面板容器成為**同一個堆疊脈絡下的兄弟節點**，純粹比 z-index 大小。若 popup 低於面板，Sheet 內的下拉選單就會被面板蓋住。
+所有 popup 概念的元件都經由 [useCamelotTeleportTarget](./composables/useCamelotTeleportTarget.md) 把浮層 **Teleport 進最近的 `<dialog>`**（沒有則回落 `body`），以繞開原生 `<dialog>` 的 top layer 限制。此時浮層與 BottomSheet 的面板容器成為**同一個堆疊脈絡下的兄弟節點**，純粹比 z-index 大小。若 popup 低於面板，Sheet 內的下拉選單就會被面板蓋住。
 
 > [!IMPORTANT]
 > 兩者有先後關係：**沒有先 teleport 進 `<dialog>`，調高 z-index 完全無效**——`body` 底下的內容永遠在對話框 top layer 之下，開到多大都一樣。
@@ -42,7 +42,7 @@ graph TD
 ## References
 
 - `app/assets/css/tailwind.css` — 刻度定義
-- [PopupV2](../components/PopupV2.md) ・ [BaseBottomSheetV2](../components/BaseBottomSheetV2.md) ・ [BaseDialogV2](../components/BaseDialogV2.md)
+- [PopupV2](./components/PopupV2.md) ・ [BaseBottomSheetV2](./components/BaseBottomSheetV2.md) ・ [BaseDialogV2](./components/BaseDialogV2.md)
 
 ---
 [🗂️ 元件清單](./components.md) ・ [🏠 Wiki](../index.md)
