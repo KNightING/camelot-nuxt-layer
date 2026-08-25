@@ -39,7 +39,7 @@
 
 | Composable | 說明 | 詳情 |
 | :--- | :--- | :--- |
-| `useBaseApi` | API 請求基礎封裝（含串流） | [詳情](../composables/useBaseApi.md) |
+| `useBaseApi` | API 請求基礎封裝（含串流） | [詳情](../composables/useBaseApi.md) ・[使用指南](./api-client.md) |
 | `useBaseUrl` | Base URL | [詳情](../composables/useBaseUrl.md) |
 | `useFetchStream` | Fetch 串流請求 | [詳情](../composables/useFetchStream.md) |
 | `useFetchJSONLinesStream` | JSON Lines 串流 | [詳情](../composables/useFetchJSONLinesStream.md) |
