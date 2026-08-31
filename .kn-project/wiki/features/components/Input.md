@@ -48,10 +48,11 @@
 ## Exposed
 | 名稱 | 說明 |
 | :--- | :--- |
-| `inputEl` | 內部 input 元素的 template ref |
+| `inputEl` | 當前主題子元件內的原生 `<input>`（`HTMLInputElement \| null`），供 `focus()` / `select()` 等操作 |
 
 ## 備註
 - 依 `themeMode` 分別渲染 `CamelotScifiInput` / `CamelotCupertinoInput` / `CamelotAquaInput` / `CamelotMaterialInput`。
+- `CamelotInput` 本身不含 `<input>`：四個主題子元件各自持有原生 input 並 `defineExpose({ inputEl })`，父元件以共用的 `themeInput` template ref（同時間只渲染一個）取得後轉接為對外的 `inputEl`。新增主題子元件時務必一併 expose，否則該主題下 `inputEl` 會是 `null`。
 - 選單依 `target` 底部位置與視窗高度自動判斷向上或向下展開；該位置只在選單展開期間追蹤（展開當下量測一次，並於展開期間才掛載 window 的 scroll／resize 監聽），收合後不留任何監聽。
 - 使用 `onClickOutside` 於點擊外部時關閉選單。
 - 選取選項時將 `model` 設為 `option.label` 並關閉選單。

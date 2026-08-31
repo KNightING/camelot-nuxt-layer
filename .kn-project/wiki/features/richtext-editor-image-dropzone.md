@@ -10,7 +10,8 @@
 TipTap 驅動的 WYSIWYG 編輯器。
 
 - **引擎/擴充**：`@tiptap/{vue-3,pm,core,starter-kit,extension-link,extension-image,extension-placeholder}`；移植並主題化 extensions 至 `app/components/Camelot/Internal/editor/`：
-  - `resizable-image.ts` + `ResizableImageView.vue`（圖片寬度/對齊/pending/caption + NodeView 縮放手把與對齊工具列，已主題化）
+  - `resizable-image.ts` + `ResizableImageView.vue`（圖片寬度/對齊/pending/caption + NodeView 縮放手把與對齊工具列，已主題化）。NodeView 元件的 props 直接取用 `@tiptap/vue-3` 的 `NodeViewProps`（手寫 props 會缺 `decorations`/`view`/`getPos` 等而被 `VueNodeViewRenderer` 拒絕）；`addNodeView()` 必須明寫回傳型別 `NodeViewRenderer`，否則與 schema 形成循環推導。
+  - 插入圖片走 `insertContent({ type: 'image', attrs })` 而非 `setImage()`——後者的 `SetImageOptions` 只涵蓋上游內建屬性，容不下本擴充的 `pending`；上游 `setImage` 的實作本就是前者，行為完全等價。
   - `paste-sanitize.ts`（貼上 HTML 清洗：allowlist tag/attr、b→strong…）
   - `tab-indent.ts`（Tab/Shift-Tab：list 交 StarterKit、codeBlock 兩空白、其餘全形空白）
 - **工具列**：material-symbols icons + `CamelotButton` 連結/圖片彈窗；**四主題識別度**——按鈕形狀（aqua pill / scifi 銳利 / cupertino 柔圓 / material）與 active/idle 態（aqua `aqua-fill` 漸層+柔光、scifi 霓虹 tint+role 邊框+glow、其餘實心）。色彩走主題 token（`border-border` / `on-surface` / role color）。
