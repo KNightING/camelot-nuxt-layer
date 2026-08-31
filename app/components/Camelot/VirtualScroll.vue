@@ -10,14 +10,14 @@
         :style="padStyle(topPad)"
       />
       <div
-        v-for="i in visibleIndices"
-        :key="keyFor(i)"
-        :data-vindex="i"
+        v-for="entry in visibleEntries"
+        :key="keyFor(entry.index)"
+        :data-vindex="entry.index"
         :class="horizontal ? 'shrink-0' : ''"
       >
         <slot
-          :item="items[i]"
-          :index="i"
+          :item="entry.item"
+          :index="entry.index"
         />
       </div>
       <div
@@ -53,6 +53,12 @@ const props = withDefaults(
 )
 
 const scrollEl = useTemplateRef<HTMLElement>('scrollEl')
+
+/** 可見項目的 index/item 配對 */
+interface VisibleEntry {
+  index: number
+  item: T
+}
 
 const {
   visibleIndices, topPad, bottomPad, totalSize, setSize, scrollToIndex, readScroll,
@@ -114,6 +120,18 @@ onMounted(() => {
   })
   nextTick(measureAll)
 })
+
+/**
+ * 把可見索引解析成實際項目後再交給 slot。
+ * visibleIndices 恆落在 items 範圍內，但 noUncheckedIndexedAccess 下 items[i] 仍為 T | undefined，
+ * 若直接綁進 slot 會讓所有消費端的 item 都帶上 undefined。此處以型別守衛一次濾除。
+ */
+const visibleEntries = computed<VisibleEntry[]>(() => visibleIndices.value
+  .map(index => ({
+    index,
+    item: props.items[index],
+  }))
+  .filter((entry): entry is VisibleEntry => entry.item !== undefined))
 
 watch(visibleIndices, () => nextTick(measureAll))
 watch(() => props.items, () => nextTick(() => {

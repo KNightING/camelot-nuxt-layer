@@ -18,6 +18,8 @@
         class="fixed min-w-[184px] max-w-[300px] origin-top-left overflow-hidden text-sm text-on-surface"
         :class="[roleColorClass, surfaceClass]"
         :style="panelStyle"
+        @mouseenter="onPanelEnter"
+        @mouseleave="onPanelLeave"
       >
         <ul
           class="flex flex-col gap-0.5 overflow-x-hidden overflow-y-auto overscroll-contain p-1.5"
@@ -113,6 +115,36 @@ const closeSubmenu = () => {
   clearTimers()
   openItem.value = null
   openAnchor.value = null
+}
+
+const parentPanel = inject<CamelotCascadeMenuPanelParent | null>(CAMELOT_CASCADE_MENU_PANEL_KEY, null)
+
+const cancelClose = () => {
+  clearTimeout(closeTimer)
+  parentPanel?.cancelClose()
+}
+
+const scheduleClose = () => {
+  clearTimeout(closeTimer)
+  closeTimer = setTimeout(closeSubmenu, ctx.closeDelay)
+}
+
+provide<CamelotCascadeMenuPanelParent>(CAMELOT_CASCADE_MENU_PANEL_KEY, {
+  cancelClose,
+  scheduleClose,
+})
+
+const onPanelEnter = () => {
+  if (ctx.submenuTrigger !== 'hover') return
+  cancelClose()
+}
+
+const onPanelLeave = () => {
+  if (ctx.submenuTrigger !== 'hover') return
+  // 滑出本層 → 本層的子選單與祖先鏈一併排定收合；
+  // 若只是移往子面板，子面板的 mouseenter 會在之後觸發並取消整條鏈。
+  scheduleClose()
+  parentPanel?.scheduleClose()
 }
 
 const onRowEnter = (item: CamelotCascadeMenuItem, e: MouseEvent) => {

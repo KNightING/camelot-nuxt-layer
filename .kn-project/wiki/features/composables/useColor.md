@@ -16,7 +16,7 @@ useColor(): ColorUtil
 | --- | --- | --- |
 | `isCorrectHex` | `(hex: string) => boolean` | 檢查是否為合法 Hex（支援 3/4/6/8 碼，可含或不含 `#`）。 |
 | `toFullHex` | `(hex: string \| undefined) => string \| undefined` | 將 Hex 補齊為 8 碼 `#RRGGBBAA`；無效時回傳 `undefined`。 |
-| `hexToRgbaArray` | `(hex: string \| undefined) => number[] \| undefined` | 轉為 `[r, g, b, a]` 陣列，`a` 為 0~1；無效時回傳 `undefined`。 |
+| `hexToRgbaArray` | `(hex: string \| undefined) => CamelotRgbaTuple \| undefined` | 轉為 `[r, g, b, a]`（具名 tuple，`r`/`g`/`b` 為 0~255、`a` 為 0~1）；無效時回傳 `undefined`。 |
 | `hexToRgba` | `(hex: string \| undefined, alpha?: number) => string \| undefined` | 轉為 `rgba(...)` 字串，`alpha` 範圍 0~1；無效時回傳 `undefined`。 |
 | `shade` | `(hex: string \| undefined, amt: number) => string \| undefined` | 對 RGB 各通道加上 `amt`（可負）調整明暗，回傳 Hex。 |
 | `lightness` | `(hex: string \| undefined) => string \| undefined` | 等同 `shade(hex, 40)`，提亮。 |

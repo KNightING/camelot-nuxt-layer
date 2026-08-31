@@ -20,7 +20,7 @@
 ## Slots
 | Slot | 作用域參數 | 說明 |
 | :--- | :--- | :--- |
-| `default` | `{ item, index }` | 單一項目的呈現。 |
+| `default` | `{ item: T, index: number }` | 單一項目的呈現。`item` 保證非 `undefined`——元件內部先把可見索引解析成 index/item 配對並以型別守衛濾除越界項，才交給 slot。 |
 
 ## Exposed
 | 名稱 | 說明 |

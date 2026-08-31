@@ -81,6 +81,7 @@
 | `#default` slot | — | 觸發器內容（如「設定」按鈕） |
 | `@select [item]` | — | 點選葉節點事件 |
 
+- **hover 收合**：滑出面板後經 `closeDelay` 才收合，途中滑入子面板會沿祖先鏈取消收合（子面板 Teleport 至 body，DOM 上非父面板後代，故父面板必定先觸發 `mouseleave`）。`click` 模式不受滑鼠進出影響。
 - **定位凍結**：面板於 `onMounted`（繪製前）同步量測 anchor 與自身尺寸算好位置並凍結，僅在視窗 `resize` 重算；定位前 `visibility:hidden` 佔位 → 消除開啟首幀 (0,0) 抖動。
 - **翻轉**：根面板貼觸發器下緣左對齊（下/右不足翻上/右對齊）；子面板於該列右側頂端對齊（右不足翻左、下不足上移、夾邊 8px）。
 - **子面板 `:key="openItem.value"`**：兄弟切換時重建乾淨實例，避免舊面板殘留並在淡出時飛到角落。
@@ -92,7 +93,8 @@
 
 ## 📌 References
 - 歸檔計畫：[2606081316-drawer-tree-table-components](../../archive/2606081316-drawer-tree-table-components.md)、[2606111326-cascade-popup-menu](../../archive/2606111326-cascade-popup-menu.md)
-- 型別：`shared/types/tree.ts`、`shared/types/table.ts`、`shared/types/menu.ts`、`shared/types/cascadeMenu.ts`
+- 型別：`shared/types/tree.ts`、`shared/types/table.ts`、`shared/types/menu.ts`、`shared/types/cascadeMenu.ts`（僅資料契約 `CamelotCascadeMenuItem`）
+- CascadeMenu 的 client-only 型別（`CamelotCascadeMenuContext`、`CamelotCascadeMenuPanelParent` 及其 inject key）在 `app/types/cascadeMenu.ts`——含 DOM 型別，不可置於 `shared/`（見[Layer 整合](./layer-integration.md)的型別放置規則）
 - 主題系統：[Theme System](./theme-system.md)
 
 ---

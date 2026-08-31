@@ -29,13 +29,14 @@ camelot-nuxt-layer/
 │   │   └── Internal/        # 共用內部元件（Calendar）
 │   ├── composables/         # 共用 Composables（40+ 個）
 │   ├── middleware/          # Nuxt Middleware
-│   └── plugins/             # Nuxt Client Plugins
+│   ├── plugins/             # Nuxt Client Plugins
+│   └── types/               # 僅瀏覽器端成立的型別（含 DOM 型別、provide/inject 上下文）
 ├── i18n/locales/            # 語言包基底 (en, zh)；區域語系範例在 .playground/i18n/locales/
 ├── modules/                 # 自訂 Nuxt 模組 (tappay, googleFont...)
 ├── server/
 │   ├── api/                 # Nitro API Endpoints
 │   └── plugins/             # Nitro Server Plugins (securityPlugin)
-├── shared/types/            # 共用型別
+├── shared/types/            # 跨環境資料契約（不得含 DOM 型別）
 └── .kn-project/         # AI 治理文件
 ```
 

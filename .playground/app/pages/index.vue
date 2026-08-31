@@ -1588,12 +1588,18 @@ import { isToday } from 'date-fns'
 
 const getDayAttributes = (date: Date) => {
   if (isToday(date)) {
-    return { isHoliday: true, label: '我是今天啦' }
+    return {
+      isHoliday: true,
+      label: '我是今天啦',
+    }
   }
   const day = date.getDay()
   // 週末標為假日並帶 label（讓「顯示日期 label」切換時整片高度差異明顯）
   if (day === 0 || day === 6) {
-    return { isHoliday: true, label: '假日' }
+    return {
+      isHoliday: true,
+      label: '假日',
+    }
   }
 }
 
@@ -2368,14 +2374,38 @@ const dateRangeTimeVal = ref<[Date, Date] | null>(null)
 
 // DatePicker 語系 / 緊湊 demo
 const dateLocales: { label: string, value: string | undefined }[] = [
-  { label: '預設(中文)', value: undefined },
-  { label: '繁中', value: 'zh-Hant-TW' },
-  { label: '簡中', value: 'zh-Hans-CN' },
-  { label: '英文', value: 'en-US' },
-  { label: '日文', value: 'ja-JP' },
-  { label: '韓文', value: 'ko-KR' },
-  { label: '泰文(佛曆)', value: 'th-TH' },
-  { label: '阿拉伯(RTL文字)', value: 'ar' },
+  {
+    label: '預設(中文)',
+    value: undefined,
+  },
+  {
+    label: '繁中',
+    value: 'zh-Hant-TW',
+  },
+  {
+    label: '簡中',
+    value: 'zh-Hans-CN',
+  },
+  {
+    label: '英文',
+    value: 'en-US',
+  },
+  {
+    label: '日文',
+    value: 'ja-JP',
+  },
+  {
+    label: '韓文',
+    value: 'ko-KR',
+  },
+  {
+    label: '泰文(佛曆)',
+    value: 'th-TH',
+  },
+  {
+    label: '阿拉伯(RTL文字)',
+    value: 'ar',
+  },
 ]
 const dateLocale = ref<string | undefined>(undefined)
 const dateWeekMonday = ref(false)

@@ -1,3 +1,4 @@
+import type { Dispatcher } from 'undici'
 import type { UseFetchOptions } from 'nuxt/app'
 import type { FetchContext, FetchResponse, FetchError, ResponseType } from 'ofetch'
 import type { NitroFetchOptions } from 'nitropack/types'
@@ -337,6 +338,14 @@ const useApiFetch = <DataT>(
       realUrl = realUrl()
     }
 
+    // ApiFetchOptions 衍生自 useFetch 的選項型別，但此處餵給的是 $fetch(ofetch)，
+    // 兩者對下列兩個欄位的接受範圍不同，需在邊界收斂：
+    // 1. useFetch 的 cache 允許 false（停用 Nuxt payload 快取），$fetch 無對應值 → 收為 undefined
+    const cacheOption = toValue(options.cache)
+    // 2. dispatcher 在 useFetch 型別下是逐屬性可為 ref 的 ComputedOptions 包裝，
+    //    toValue 只拆頂層，無法拆到內層；實際傳入的一律是 undici Dispatcher 實例。
+    const dispatcherOption = toValue(options.dispatcher) as Dispatcher | undefined
+
     return $fetch<DataT>(realUrl as string,
       {
         method,
@@ -350,7 +359,7 @@ const useApiFetch = <DataT>(
         referrer: toValue(options.referrer),
         referrerPolicy: toValue(options.referrerPolicy),
         agent: toValue(options.agent),
-        cache: toValue(options.cache),
+        cache: cacheOption === false ? undefined : cacheOption,
         keepalive: toValue(options.keepalive),
         signal: abortSignal,
         retry: toValue(options.retry),
@@ -358,7 +367,7 @@ const useApiFetch = <DataT>(
         timeout: toValue(options.timeout),
         ignoreResponseError: toValue(options.ignoreResponseError),
         duplex: toValue(options.duplex),
-        dispatcher: toValue(options.dispatcher),
+        dispatcher: dispatcherOption,
         integrity: toValue(options.integrity),
         priority: toValue(options.priority),
         async onRequest(context: FetchContext<any, ResponseType>) {

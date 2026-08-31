@@ -41,4 +41,11 @@ const onFocus = () => {
 const onBlur = () => {
   isFocused.value = false
 }
+
+const inputEl = useTemplateRef<HTMLInputElement>('input')
+
+// 供 CamelotInput 轉接出去，讓消費端能取得原生 input 做 focus()/select() 等操作
+defineExpose({
+  inputEl,
+})
 </script>

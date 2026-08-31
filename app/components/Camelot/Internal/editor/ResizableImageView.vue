@@ -238,19 +238,15 @@
 </template>
 
 <script setup lang="ts">
-import type { Editor, Node as ProseMirrorNode } from '@tiptap/core'
+import type { NodeViewProps } from '@tiptap/vue-3'
 import { NodeViewWrapper } from '@tiptap/vue-3'
 
 type Align = 'none' | 'left' | 'right' | 'center'
 
-// NodeViewProps from @tiptap/vue-3
-const props = defineProps<{
-  editor: Editor
-  node: ProseMirrorNode
-  selected: boolean
-  updateAttributes: (attrs: Record<string, unknown>) => void
-  deleteNode: () => void
-}>()
+// 直接採用 tiptap 的 NodeViewProps：手寫版本缺 decorations / view / getPos 等屬性，
+// VueNodeViewRenderer 會因此拒絕本元件；且原本的 node 誤用 @tiptap/core 的 Node
+// （那是 Extension 定義類別，非 ProseMirror 文件節點），導致 node.attrs 不存在。
+const props = defineProps<NodeViewProps>()
 
 const imgEl = ref<HTMLImageElement | null>(null)
 const wrapperEl = ref<HTMLElement | null>(null)

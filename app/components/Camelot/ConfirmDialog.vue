@@ -106,7 +106,18 @@ const close = () => {
 }
 
 const onAction = (action: CamelotConfirmAction) => {
-  emit(action)
+  // defineEmits 產生的是多載簽章，聯集無法直接分派過去，逐一收窄成字面值才成立
+  switch (action) {
+    case 'positive':
+      emit('positive')
+      break
+    case 'neutral':
+      emit('neutral')
+      break
+    case 'negative':
+      emit('negative')
+      break
+  }
 
   if (!props.autoClose) {
     return
