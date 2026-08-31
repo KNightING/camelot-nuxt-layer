@@ -89,6 +89,19 @@ const props = withDefaults(
   },
 )
 
+/**
+ * 明確宣告 node slot 的形狀。本元件會遞迴地把自己的 node slot 再轉傳給子節點，
+ * 缺少宣告時 TypeScript 會從轉傳處回頭推導而形成循環（TS7022），故不可省略。
+ */
+defineSlots<{
+  node?: (props: {
+    node: CamelotTreeNode
+    level: number
+    isChecked: boolean
+    isExpanded: boolean
+  }) => unknown
+}>()
+
 const tree = inject<CamelotTreeContext>(CAMELOT_TREE_KEY)!
 
 const hasChildren = computed(() => !!props.node.children?.length)

@@ -1,3 +1,5 @@
+import type { ShallowRef } from 'vue'
+
 export type CamelotScrollbarOrientation = 'horizontal' | 'vertical'
 
 /** thumb 最小尺寸（px），避免內容極多時 thumb 太小難以抓取 */

@@ -1,3 +1,4 @@
+import type { NodeViewRenderer } from '@tiptap/core'
 import Image from '@tiptap/extension-image'
 import { VueNodeViewRenderer } from '@tiptap/vue-3'
 import ResizableImageView from './ResizableImageView.vue'
@@ -63,7 +64,9 @@ export const ResizableImage = Image.extend({
     }
   },
 
-  addNodeView() {
+  // 回傳型別必須明寫：NodeView 元件會反向參照本擴充的 schema，
+  // 省略時 TypeScript 會在兩者間形成循環推導 (TS7023/TS7022)。
+  addNodeView(): NodeViewRenderer {
     return VueNodeViewRenderer(ResizableImageView)
   },
 })

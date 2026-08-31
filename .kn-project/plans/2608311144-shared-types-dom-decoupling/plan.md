@@ -43,6 +43,18 @@ panel 只有 `@mouseenter` 而無任何 `mouseleave` — 公開 prop `closeDelay
 - [ ] 選項 D：另開計畫
 - **決議**：選項 A　狀態：✅ 已確認
 
+### Q8. layer 的 `zh` / `en` 基底字典未註冊為 locale，fallback 鏈是斷的，如何處理？ — 影響範圍：`i18n/i18n.config.ts`、`.playground/i18n/i18n.config.ts`
+執行期實測 `availableLocales` 僅 9 個區域語系，不含 `zh` / `en`；兩份 config 的 fallback 皆指向未註冊語系。
+- [ ] 選項 A：在 layer 註冊 `zh` / `en` 基底 locale
+- [x] 選項 B：移除死的 fallback 目標，只保留實際存在的語系　(使用者決議)
+- **決議**：選項 B　狀態：✅ 已確認
+
+### Q9. `CamelotInput` 對外暴露的 `inputEl` 恆為 null，如何處理？ — 影響範圍：`app/components/Camelot/Input.vue` 與四個主題子元件
+`Input.vue` 內無任何 `<input>`（按主題委派），`useTemplateRef('input')` 匹配不到元素；四個主題子元件雖有 `ref="input"` 但皆未 `defineExpose`。
+- [x] 選項 A：子元件各自 expose，父元件依當前主題轉接　(使用者決議)
+- [ ] 選項 B：移除死的 `inputEl` 與 `defineExpose`（breaking change）
+- **決議**：選項 A　狀態：✅ 已確認
+
 ## Key Decisions` 留存。
 
 ### 解法（方法 1：依執行環境歸位）
@@ -136,6 +148,18 @@ panel 只有 `@mouseenter` 而無任何 `mouseleave` — 公開 prop `closeDelay
 - [ ] 選項 D：另開計畫
 - **決議**：選項 A　狀態：✅ 已確認
 
+### Q8. layer 的 `zh` / `en` 基底字典未註冊為 locale，fallback 鏈是斷的，如何處理？ — 影響範圍：`i18n/i18n.config.ts`、`.playground/i18n/i18n.config.ts`
+執行期實測 `availableLocales` 僅 9 個區域語系，不含 `zh` / `en`；兩份 config 的 fallback 皆指向未註冊語系。
+- [ ] 選項 A：在 layer 註冊 `zh` / `en` 基底 locale
+- [x] 選項 B：移除死的 fallback 目標，只保留實際存在的語系　(使用者決議)
+- **決議**：選項 B　狀態：✅ 已確認
+
+### Q9. `CamelotInput` 對外暴露的 `inputEl` 恆為 null，如何處理？ — 影響範圍：`app/components/Camelot/Input.vue` 與四個主題子元件
+`Input.vue` 內無任何 `<input>`（按主題委派），`useTemplateRef('input')` 匹配不到元素；四個主題子元件雖有 `ref="input"` 但皆未 `defineExpose`。
+- [x] 選項 A：子元件各自 expose，父元件依當前主題轉接　(使用者決議)
+- [ ] 選項 B：移除死的 `inputEl` 與 `defineExpose`（breaking change）
+- **決議**：選項 A　狀態：✅ 已確認
+
 ## Key Decisions
 - **[Q1]** `CAMELOT_CASCADE_MENU_KEY` 隨 `CamelotCascadeMenuContext` 一併移至 `app/types/cascadeMenu.ts` — 理由：key 的唯一用途是注入該 context，同進退才語意一致；`shared/` 職責收斂為「跨環境資料契約」。
 - **[Q2]** `typecheck` script 採用 `nuxt typecheck .playground` — 理由：Nuxt 官方入口，涵蓋 app／server／shared 全部 TS project，與既有 `dev`/`build` 的 `.playground` 慣例一致。
@@ -144,6 +168,9 @@ panel 只有 `@mouseenter` 而無任何 `mouseleave` — 公開 prop `closeDelay
 - **[執行中]** 型別新家採 `app/types/`，未採 code-style 技能建議的 `app/models/` — 理由：本 repo 既有慣例一律是 `types/`（`shared/types/`、根目錄 `types/`），全 repo 無任何 `models/` 目錄；通用鐵則第 1 條「貼合既有風格」在此優先。
 - **[執行中]** `app/types/` 的型別確認可被自動匯入，`nuxt.config.ts` 未更動 — 理由：`imports.dirs` 既有的 `app/**` 已涵蓋；`nuxt prepare` 後 `imports.d.ts:106` 實測收錄 `CAMELOT_CASCADE_MENU_KEY` 與 `CamelotCascadeMenuContext`，故 Impact Files 中該條件性項目不成立。
 - **[執行中]** `nuxt typecheck` 揭露 43 個 pre-existing 錯誤，依 Q3 決議不在本計畫處理 — 理由：零筆與 CascadeMenu 相關，證明本次搬移未引入新錯誤；清單另開計畫。此狀態下 `typecheck` 尚不可直接接入 CI 門檻。
+- **[Q8]** 移除指向未註冊語系的 fallback 目標，而非補註冊 — 理由：使用者決議；layer 宣告 `locales: []`，本就不該替消費端決定 fallback 落點。layer 的 `zh.json`/`en.json` 保留不動：以 `zh`/`en` 為 locale code 的消費端仍會取用，只是 playground 不用這兩碼。
+- **[Q9]** 接通 `inputEl` 而非刪除 — 理由：使用者決議；`inputEl` 是 `CamelotInput` 唯一對外暴露項，刪除等於拿掉整個 imperative API。與 [Q7] 同一判準：已公開的 API 不做成不生效的空殼。
+- **[執行中]** Phase 5 全程僅用 2 處 `as` 斷言（`useCustomColorScheme` 的 `Partial<T>`、`useBaseApi` 的 `dispatcher`），皆附理由註解 — 理由：依 Q5，其餘 41 項皆追出可真修的根因，其中 tiptap 9 項源於 `Node` 誤取自 `@tiptap/core`（Extension 類別而非 ProseMirror 節點）且 props 為手寫。
 - **[Q7]** 實作 CascadeMenu 的 hover 收合延遲，而非刪除死碼 — 理由：`closeDelay` 是已對外公開的 prop（預設 160ms）且有文件註解，刪死碼等於把「功能沒做」固化成不生效的 API；一併修正「滑出選單不會收合」的行為缺口。由 Phase 4 的 `no-unassigned-vars` 追查而來。
 - **[Q3 改判]** 使用者要求 `nuxt typecheck` 與 `eslint` 全綠，Q3 由選項 A 改判為 B，以 Iteration 併入本計畫（同分支、同 issue、同 PR）— 理由：使用者明示；同時記錄此改判使本計畫範圍由 5 個檔案擴大到 20+ 個檔案。
 - **[Q5]** 第三方型別衝突先追真因，確定是上游缺陷才加附理由的 `as` 斷言 — 理由：直接斷言會掩蓋真正的用法錯誤，違背 code-style「收窄優先於斷言」。

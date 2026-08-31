@@ -123,20 +123,26 @@ export const useCustomColorScheme = <T>(
 
   const lightColorScheme = isGlobal
     ? globalLightColorScheme
-    : ref(
+    : ref<CustomColorScheme<T>>(
+        // config 本身即 CustomColorScheme<T>，其 Partial<T> 的鍵在 spread 後原樣保留，
+        // 值在執行期確實成立；但 T 未受約束，TypeScript 無法為未解析的泛型證明
+        // 物件字面值滿足 Partial<T>，故此處斷言。
         {
           ...globalLightColorScheme.value,
           ...(config?.lightColorScheme ? config?.lightColorScheme : {}),
-        },
+        } as CustomColorScheme<T>,
       )
 
   const darkColorScheme = isGlobal
     ? globalDarkColorScheme
-    : ref(
+    : ref<CustomColorScheme<T>>(
+        // config 本身即 CustomColorScheme<T>，其 Partial<T> 的鍵在 spread 後原樣保留，
+        // 值在執行期確實成立；但 T 未受約束，TypeScript 無法為未解析的泛型證明
+        // 物件字面值滿足 Partial<T>，故此處斷言。
         {
           ...globalDarkColorScheme.value,
           ...(config?.darkColorScheme ? config?.darkColorScheme : {}),
-        },
+        } as CustomColorScheme<T>,
       )
 
   const usedColorScheme = computed<CustomColorScheme<T>>(() =>

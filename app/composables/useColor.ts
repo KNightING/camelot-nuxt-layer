@@ -1,3 +1,6 @@
+/** hexToRgbaArray 的回傳：[r, g, b, a]，其中 r/g/b 為 0-255，a 為 0-1 */
+export type CamelotRgbaTuple = [number, number, number, number]
+
 class ColorUtil {
   public isCorrectHex(hex: string): boolean {
     if (hex[0] === '#') {
@@ -21,13 +24,9 @@ class ColorUtil {
       return undefined
     }
 
-    if (hex.length === 3) {
-      hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2]
-    }
-
-    if (hex.length === 4) {
-      hex
-        = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2] + hex[3] + hex[3]
+    // 3 碼 (RGB) 與 4 碼 (RGBA) 縮寫一律逐字元加倍展開
+    if (hex.length === 3 || hex.length === 4) {
+      hex = [...hex].map(char => char + char).join('')
     }
 
     if (hex.length === 6) {
@@ -42,7 +41,7 @@ class ColorUtil {
    * @param hex
    * @returns [r,g,b,a]
    */
-  public hexToRgbaArray(hex: string | undefined) {
+  public hexToRgbaArray(hex: string | undefined): CamelotRgbaTuple | undefined {
     if (!hex) {
       return undefined
     }
@@ -51,12 +50,12 @@ class ColorUtil {
       return undefined
     }
 
-    const array = fullHex
-      .replace('#', '')
-      .match(/.{2}/g)!
-      .map(c => parseInt(c, 16))
+    // toFullHex 保證為 8 碼，故直接依位置切段；substring 恆回傳 string，
+    // 不像索引存取會在 noUncheckedIndexedAccess 下帶 undefined。
+    const body = fullHex.replace('#', '')
+    const channel = (start: number) => parseInt(body.substring(start, start + 2), 16)
 
-    return [array[0], array[1], array[2], Math.floor((array[3] * 10) / 255) / 10]
+    return [channel(0), channel(2), channel(4), Math.floor((channel(6) * 10) / 255) / 10]
   }
 
   // alpha's range is from 0 to 1
@@ -85,16 +84,16 @@ class ColorUtil {
       return undefined
     }
 
-    const [r, g, b, a] = fullHex
-      .replace('#', '')
-      .match(/.{2}/g)!
-      .map(c =>
-        Math.min(255, Math.max(0, parseInt(c, 16) + amt)).toString(16),
-      )
+    const body = fullHex.replace('#', '')
+    // 位移後夾在 0-255 再轉回 16 進位；不足兩碼補前導 0
+    const shifted = (start: number) => {
+      const value = Math.min(255, Math.max(0, parseInt(body.substring(start, start + 2), 16) + amt))
+      return value.toString(16).padStart(2, '0')
+    }
 
-    const rr = (r.length < 2 ? '0' : '') + r
-    const gg = (g.length < 2 ? '0' : '') + g
-    const bb = (b.length < 2 ? '0' : '') + b
+    const rr = shifted(0)
+    const gg = shifted(2)
+    const bb = shifted(4)
 
     return `#${rr}${gg}${bb}${fullHex.substring(
       fullHex.length - 2,

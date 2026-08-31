@@ -67,8 +67,8 @@ function isValidTaiwanID(id: string) {
     Z: 33,
   }
 
-  // 取得第一碼對應的數值
-  const firstChar = id[0]
+  // 取得第一碼對應的數值；格式已由上方 regex 保證，charAt 恆回傳 string
+  const firstChar = id.charAt(0)
 
   if (!useIsValidKey(firstChar, letterMap)) {
     return false
@@ -78,9 +78,10 @@ function isValidTaiwanID(id: string) {
   // 計算加總
   let sum = Math.floor(firstNum / 10) * 1 + (firstNum % 10) * 9
   for (let i = 1; i <= 8; i++) {
-    sum += parseInt(id[i]) * (9 - i)
+    sum += parseInt(id.charAt(i)) * (9 - i)
   }
-  sum += parseInt(id[9]) // 最後一碼
+  // 最後一碼
+  sum += parseInt(id.charAt(9))
 
   // 驗證規則：總和 % 10 必須等於 0
   return sum % 10 === 0
@@ -107,9 +108,9 @@ function isValidTaiwanUniformNumber(id: string): boolean {
   let sum = 0
 
   // 將每一位依權重計算後，其乘積各位數相加
-  for (let i = 0; i < 8; i++) {
-    const digit = parseInt(id[i], 10)
-    const product = digit * weights[i]
+  for (const [i, weight] of weights.entries()) {
+    const digit = parseInt(id.charAt(i), 10)
+    const product = digit * weight
     // 分解乘積為十位與個位數再相加
     sum += Math.floor(product / 10) + (product % 10)
   }
@@ -119,7 +120,7 @@ function isValidTaiwanUniformNumber(id: string): boolean {
     return true
   }
   // 特例處理：若第7位數為7，並且 (sum+1) 可被5整除，則也視為合法
-  if (id[6] === '7' && ((sum + 1) % 5 === 0)) {
+  if (id.charAt(6) === '7' && ((sum + 1) % 5 === 0)) {
     return true
   }
   return false

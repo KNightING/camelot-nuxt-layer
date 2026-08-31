@@ -325,10 +325,16 @@ function revokeBlob(url: string) {
 }
 
 function insertImageUrl(url: string, pending = false) {
-  editor.value?.chain().focus().setImage({
-    src: url,
-    pending: pending ? '1' : null,
-  } as Record<string, unknown>).run()
+  // setImage 的 SetImageOptions 只涵蓋上游內建屬性，容不下本擴充新增的 pending；
+  // 而 setImage 本身即 insertContent({ type: 'image', attrs })，故直接用後者，
+  // 行為完全等價且自訂屬性有正確型別，不需斷言。
+  editor.value?.chain().focus().insertContent({
+    type: 'image',
+    attrs: {
+      src: url,
+      pending: pending ? '1' : null,
+    },
+  }).run()
 }
 
 const editor = useEditor({

@@ -25,13 +25,17 @@
 - [x] `eslint .` 零錯誤零警告
 
 ## Phase 5 — TypeScript 全綠
-- [ ] i18n locale 字面值（10）：對齊 `@nuxtjs/i18n` 產生的 locale 聯集
-- [ ] `noUncheckedIndexedAccess` 家族（`useColor.ts` 9、`useValueValidation.ts` 5）：以 guard clause 收窄，不用非空斷言
-- [ ] tiptap 契約（9，依 Q5）：先查版本／用法，確為上游缺陷才加附理由斷言
-- [ ] undici `Dispatcher` / `RequestCache`（2，依 Q5）：同上
-- [ ] 其餘單點（`useCustomColorScheme` / `useCamelotOverlayScrollbar` / `TreeNode` / `ConfirmDialog` / `Input` / playground index，共 8）
-- [ ] `pnpm typecheck` 零錯誤
+- [x] i18n locale 字面值（10）：依 Q8 移除指向未註冊語系的 fallback 目標
+- [x] `noUncheckedIndexedAccess` 家族（`useColor.ts` 9、`useValueValidation.ts` 5）：以 guard clause 收窄，不用非空斷言
+- [x] tiptap 契約（9，依 Q5）：先查版本／用法，確為上游缺陷才加附理由斷言
+- [x] undici `Dispatcher` / `RequestCache`（2，依 Q5）：同上
+- [x] 其餘單點（`useCustomColorScheme` / `useCamelotOverlayScrollbar` / `TreeNode` / `ConfirmDialog` / `Input` / playground index，共 8）
+- [x] `pnpm typecheck` 零錯誤
 
 ## Phase 6 — 最終驗證
-- [ ] `pnpm typecheck` 與 `pnpm lint` 皆全綠
-- [ ] playground 回歸：CascadeMenu、RichTextEditor、Tree、ConfirmDialog、無限捲動實際操作正常
+- [x] `pnpm typecheck` 與 `pnpm lint` 皆全綠
+- [x] playground 回歸：編輯器插入圖片（自訂 pending 屬性保留、NodeView 正常包覆）、虛擬滾動渲染、CamelotInput 的 inputEl 可取得原生 input、i18n fallback（切到空字典的 zh-Hant 仍解析出「登入」）
+
+## Phase 7 — 迭代追加（Q8 / Q9 衍生）
+- [x] 依 Q8 移除 layer 與 playground 兩份 i18n config 的死 fallback 目標
+- [x] 依 Q9 讓四個主題 Input 子元件 expose `inputEl`，`CamelotInput` 依當前主題轉接

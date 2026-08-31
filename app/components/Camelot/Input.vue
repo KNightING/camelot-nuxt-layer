@@ -24,6 +24,7 @@
       class="relative w-full flex-1"
     >
       <CamelotScifiInput
+        ref="themeInput"
         v-model="model"
         :placeholder="placeholder"
         :disabled="disabled || mode === 'only-select'"
@@ -127,6 +128,7 @@
       class="relative w-full flex-1"
     >
       <CamelotCupertinoInput
+        ref="themeInput"
         v-model="model"
         :placeholder="placeholder"
         :disabled="disabled || mode === 'only-select'"
@@ -230,6 +232,7 @@
       class="relative w-full flex-1"
     >
       <CamelotAquaInput
+        ref="themeInput"
         v-model="model"
         :placeholder="placeholder"
         :disabled="disabled || mode === 'only-select'"
@@ -322,6 +325,7 @@
       class="relative w-full flex-1"
     >
       <CamelotMaterialInput
+        ref="themeInput"
         v-model="model"
         :label="label"
         :required="required"
@@ -459,7 +463,13 @@ const {
   windowResize: false,
 })
 
-const inputEl = useTemplateRef('input')
+/**
+ * 四個主題子元件各自持有原生 input 並 expose 出來；同一時間只渲染其中一個，
+ * 故共用同一個 ref 名稱，再由此轉接成 CamelotInput 對外的 inputEl。
+ */
+const themeInput = useTemplateRef<{ inputEl: HTMLInputElement | null }>('themeInput')
+
+const inputEl = computed(() => themeInput.value?.inputEl ?? null)
 
 const placeholder = computed(() => {
   if (props.placeholder) {
