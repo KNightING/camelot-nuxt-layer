@@ -16,12 +16,13 @@
 - [x] CascadeMenu 於 playground 實際渲染／子選單展開正常（Browser 驗證）
 
 ## Phase 4 — ESLint 全綠（先做：範圍明確、可先排除格式雜訊）
-- [ ] `eslint . --fix` 清掉 17 項格式問題，逐檔確認 diff 僅為排版
-- [ ] `CascadeMenuPanel.vue:99` `closeTimer` 未賦值：追查 hover 收合延遲的實際行為，判定是缺陷或死碼後修正
-- [ ] `useScrollOnBottom.ts:33-35` 三個未使用的賦值：確認是否漏用變數
-- [ ] `RichTextEditor.vue:446` 重拋錯誤補上 `cause`
-- [ ] `.playground/app/layouts/defualt.vue:2` template root 含 `<slot>`
-- [ ] `eslint .` 零錯誤零警告
+- [x] `eslint . --fix` 清掉 18 項格式問題，逐檔確認 diff 僅為排版
+- [x] `CascadeMenuPanel.vue:99` `closeTimer` 未賦值：追查證實 `closeDelay` 全未實作 → 依 Q7 決議實作
+- [x] 依 Q7 實作 hover 收合延遲：panel 補 `mouseleave`，以 `closeTimer` + `ctx.closeDelay` 延遲收合，滑回時取消
+- [x] `useScrollOnBottom.ts:33-35`：兩個分支皆必然賦值，多餘的初始值移除（非缺陷）
+- [x] `RichTextEditor.vue:446` 重拋錯誤補上 `cause`
+- [x] `.playground/app/layouts/defualt.vue:2` template root 含 `<slot>` → 包一層 `<div>`
+- [x] `eslint .` 零錯誤零警告
 
 ## Phase 5 — TypeScript 全綠
 - [ ] i18n locale 字面值（10）：對齊 `@nuxtjs/i18n` 產生的 locale 聯集

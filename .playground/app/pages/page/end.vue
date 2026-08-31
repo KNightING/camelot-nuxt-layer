@@ -18,7 +18,9 @@
 
 <script lang="ts" setup>
 const router = useRouter()
-const { toPath, back, canBack } = useCamelotRouter()
+const {
+  toPath, back, canBack,
+} = useCamelotRouter()
 </script>
 
 <style>

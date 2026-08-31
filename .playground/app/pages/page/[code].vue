@@ -31,7 +31,9 @@
 </template>
 
 <script lang="ts" setup>
-const { toPath, back, canBack } = useCamelotRouter()
+const {
+  toPath, back, canBack,
+} = useCamelotRouter()
 
 const route = useRoute()
 const nextCode = computed(() => {

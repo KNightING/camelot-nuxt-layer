@@ -35,3 +35,18 @@ export interface CamelotCascadeMenuContext {
 
 /** 上述 context 的 inject key；與 context 同進退，故一併置於此 */
 export const CAMELOT_CASCADE_MENU_KEY = 'camelotCascadeMenu'
+
+/**
+ * 每層 CascadeMenuPanel 提供給「其子面板」的收合控制。
+ * 因每層面板皆 Teleport 至 body，子面板在 DOM 上並非父面板的後代，
+ * 滑鼠移入子面板時父面板一定會觸發 mouseleave，故需由子面板反向取消父層的待收合。
+ */
+export interface CamelotCascadeMenuPanelParent {
+  /** 取消本層待收合，並沿祖先鏈一路取消 */
+  cancelClose: () => void
+  /** 依 closeDelay 排定本層收合 */
+  scheduleClose: () => void
+}
+
+/** 上述面板層級控制的 inject key（逐層覆寫，每層面板注入到的都是其直接父層） */
+export const CAMELOT_CASCADE_MENU_PANEL_KEY = 'camelotCascadeMenuPanel'

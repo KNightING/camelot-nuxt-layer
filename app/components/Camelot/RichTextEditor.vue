@@ -443,7 +443,8 @@ async function flush(): Promise<void> {
   catch (err: unknown) {
     const msg = (err as Error)?.message || '上傳失敗'
     uploadError.value = msg
-    throw new Error(msg)
+    // 對外只暴露可顯示的訊息，但保留原始錯誤供上層追查真因
+    throw new Error(msg, { cause: err })
   }
   finally {
     uploading.value = false

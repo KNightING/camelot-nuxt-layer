@@ -16,7 +16,10 @@ export const useInfinitePage = (options: {
     offset = 20,
   } = options
 
-  const { isOnBottom } = useScrollOnBottom({ target, offset })
+  const { isOnBottom } = useScrollOnBottom({
+    target,
+    offset,
+  })
 
   const nextPageThrottleFn = useThrottleFn(() => {
     if (isEnd && isEnd.value) {

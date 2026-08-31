@@ -30,9 +30,9 @@ export const useScrollOnBottom = (options?: {
     })
 
     const checkOnBottom = () => {
-      let scrollTop = 0
-      let viewportHeight = 0
-      let totalHeight = 0
+      let scrollTop: number
+      let viewportHeight: number
+      let totalHeight: number
 
       if (target.value instanceof Window) {
         scrollTop = target.value.scrollY ?? 0

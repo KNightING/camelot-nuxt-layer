@@ -21,10 +21,16 @@ export default <RouterConfig>{
           })
         }
         else {
-          resolve({ behavior: 'auto', top: -1 })
+          resolve({
+            behavior: 'auto',
+            top: -1,
+          })
         }
       }, 100)
     })
-    return savedPosition || { behavior: 'auto', top: 0 }
+    return savedPosition || {
+      behavior: 'auto',
+      top: 0,
+    }
   },
 }
