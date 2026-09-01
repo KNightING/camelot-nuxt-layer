@@ -3,7 +3,7 @@
   "configurations": [
     {
       "name": "playground",
-      "runtimeExecutable": "pnpm",
+      "runtimeExecutable": "/Users/knighting/Library/pnpm/bin/pnpm",
       "runtimeArgs": ["dev"],
       "port": 3000,
       "autoPort": true

@@ -341,7 +341,8 @@ const editor = useEditor({
   content: modelValue.value,
   editable: !props.disabled,
   extensions: [
-    StarterKit,
+    // StarterKit 3.31 起內建 Link，改由下方顯式註冊以套用 openOnClick: false
+    StarterKit.configure({ link: false }),
     Link.configure({ openOnClick: false }),
     Placeholder.configure({ placeholder: () => props.placeholder }),
     ResizableImage,
