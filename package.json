@@ -52,11 +52,6 @@
     "tailwindcss": "^4.3.3"
   },
   "pnpm": {
-    "onlyBuiltDependencies": [
-      "@parcel/watcher",
-      "esbuild",
-      "vue-demi"
-    ],
     "ignoredBuiltDependencies": [
       "@tailwindcss/oxide"
     ]
