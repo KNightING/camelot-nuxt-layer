@@ -42,6 +42,7 @@
 - 本元件**不提供內建關閉按鈕**：四種版面皆只渲染 `<slot />`，關閉 UI 由使用端負責。需要標準按鈕列時請改用 [ConfirmDialog](./ConfirmDialog.md)。
 - 網址同步：設定 `tag` 或 `query` 後，開啟會 push 查詢字串（含 `isDialog=true`），關閉會 back 或移除查詢字串；並監聽路由變化反向同步 `open`。
 - 開啟時鎖定 `body` 捲動。
+- `<dialog>` 用 `overflow: clip` 而非 `hidden`。元素上的 `transform-gpu` 使本對話框成為內部 `position: fixed` 元素（如 [BaseBottomSheetV2](./BaseBottomSheetV2.md) 的 `.wrapper`）的 containing block，那些元素因此計入本元素的 scrollable overflow；`overflow: hidden` 仍是可被程式捲動的捲動容器，`showModal()` 的 autofocus scroll-into-view 會把整份內容往上捲一段，Sheet 就浮在離視窗底部一個面板高度的位置（在 [Drawer](./Drawer.md) 內開 Sheet 特別容易觸發）。`overflow: clip` 不建立捲動容器，`scrollTop` 恆為 `0`。
 
 ---
 [🏠 Wiki](../../index.md)

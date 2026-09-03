@@ -7,7 +7,7 @@
       :style="[
         `z-index:${zIndex};`,
       ]"
-      class="camelot-dialog outline-none overflow-hidden transform-gpu bg-transparent"
+      class="camelot-dialog outline-none overflow-clip transform-gpu bg-transparent"
       :class="[themeMode]"
       @pointerup="onDialogClick"
       @keydown.esc="onEsc"
@@ -243,6 +243,15 @@ dialog {
   justify-content: center;
   pointer-events: painted;
   background-color: transparent;
+
+  /*
+   * clip 而非 hidden：`transform-gpu` 讓本對話框成為內部 `position: fixed` 元素
+   * （如 BottomSheet 的 .wrapper）的 containing block，那些元素會一併計入本元素的
+   * scrollable overflow。overflow: hidden 仍是可被程式捲動的捲動容器，showModal()
+   * 的 autofocus scroll-into-view 因此會把整個對話框內容往上捲一段，Sheet 就浮在
+   * 離底部一個面板高度的位置。overflow: clip 不建立捲動容器，scrollTop 恆為 0。
+   */
+  overflow: clip;
 }
 
 /* 全屏背景遮罩 */
