@@ -7,30 +7,41 @@
           class="fixed inset-0 z-[1100] flex items-center justify-center bg-black/35 backdrop-blur-xs select-none pointer-events-auto"
         >
           <div
-            class="flex items-center justify-center"
+            class="flex flex-col items-center justify-center gap-5"
             :class="[themeMode]"
           >
-            <!-- Aqua Split / Merge Cycle：1 顆 → 炸開為 2 → 炸開為 4 → 旋入合一 → 蓄力再爆開 -->
-            <div
-              v-if="themeMode === 'aqua'"
-              class="aqua-split"
-            >
-              <!-- 公轉層：整組等速旋轉，球體進出中心的軌跡因此是螺旋而非直線 -->
-              <div class="aqua-split-spin">
-                <!-- 臂：決定該球在圓周上的角度，分裂時把子球從母球身上岔開 -->
-                <div
-                  v-for="index in 4"
-                  :key="index"
-                  class="aqua-split-branch"
-                  :class="`aqua-split-branch-${index}`"
-                >
-                  <span
-                    class="aqua-split-ball"
-                    :class="`aqua-split-ball-${index}`"
-                  />
-                </div>
+            <!--
+              Aqua：兩種樣式，以 type 切換（其他主題各只有一種，會忽略此 prop）。
+              兩者都刻意做成向心／原地的形狀，避免被讀成由左往右填滿的進度條。
+            -->
+            <template v-if="themeMode === 'aqua'">
+              <!-- ripple（預設）：中心水滴呼吸，外圈同心圓一波波向外擴散淡出 -->
+              <div
+                v-if="type === 'ripple'"
+                class="aqua-ripple"
+              >
+                <span
+                  v-for="i in 3"
+                  :key="i"
+                  class="aqua-ripple-wave"
+                  :class="`aqua-ripple-wave-${i}`"
+                />
+                <span class="aqua-ripple-droplet" />
               </div>
-            </div>
+
+              <!-- bounce：三顆玻璃珠依序彈跳，起跳與落地各壓扁一次 -->
+              <div
+                v-else
+                class="aqua-bounce"
+              >
+                <span
+                  v-for="i in 3"
+                  :key="i"
+                  class="aqua-bounce-bead"
+                  :class="`aqua-bounce-bead-${i}`"
+                />
+              </div>
+            </template>
 
             <!-- Sci-fi Loading Radar -->
             <div
@@ -70,6 +81,26 @@
                 />
               </svg>
             </div>
+
+            <!--
+              指示器下方的提示文字：由 useLoading().open(tag, text) / setText(tag, text) 驅動，
+              可在同一次載入中換階段。沒有文字時整段不渲染，版面不會多出空位。
+              以 Transition 做淡入淡出，換階段時不會硬跳。
+            -->
+            <Transition
+              name="loading-text"
+              mode="out-in"
+            >
+              <p
+                v-if="text"
+                :key="text"
+                class="cml-loading-text"
+                role="status"
+                aria-live="polite"
+              >
+                {{ text }}
+              </p>
+            </Transition>
           </div>
         </div>
       </Transition>
@@ -78,11 +109,52 @@
 </template>
 
 <script setup lang="ts">
-const { isOpening } = useLoading()
+withDefaults(
+  defineProps<{
+    /**
+     * Aqua 主題的指示器樣式；其他主題各只有一種樣式，會忽略此 prop。
+     * - `ripple`：水滴漣漪（預設）
+     * - `bounce`：玻璃珠彈跳
+     */
+    type?: CamelotLoadingType
+  }>(),
+  { type: 'ripple' },
+)
+
+const {
+  isOpening, text,
+} = useLoading()
 const { themeMode } = useCamelotTheme()
 </script>
 
 <style scoped>
+/* 指示器下方的提示文字 */
+.cml-loading-text {
+  max-width: 16rem;
+  text-align: center;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  /* 遮罩固定是半透明深色，這裡不吃 surface / on-surface：淺色模式下那組會看不見 */
+  color: rgba(255, 255, 255, 0.88);
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.45);
+}
+/* sci-fi 的資訊都走等寬字，文字也跟著 */
+.scifi .cml-loading-text {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: 0.08em;
+  color: var(--cml-color-current-color, var(--color-primary));
+}
+
+.loading-text-enter-active,
+.loading-text-leave-active {
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.loading-text-enter-from,
+.loading-text-leave-to {
+  opacity: 0;
+  transform: translateY(4px);
+}
+
 /* Material spinner */
 .material-spinner {
   width: 50px;
@@ -192,203 +264,94 @@ const { themeMode } = useCamelotTheme()
 .fade-leave-to {
   opacity: 0;
 }
-/* Aqua Split / Merge Cycle
-   節奏為「長停留 × 快移動」：時間主要花在 2 顆與 4 顆兩個狀態上，
-   轉換各約 0.3s。兩處分裂前都先蓄力膨脹，合一後的能量不洩掉、
-   直接轉為下一輪的蓄力，因此整個循環沒有靜止的一顆球。 */
-.aqua-split {
-  position: relative;
-  width: 112px;
-  height: 112px;
+/* ===== Aqua：共用的玻璃球體填色 =====
+   走色彩角色而非 surface：載入遮罩本身是半透明黑底，surface 色在深色模式下
+   幾乎與遮罩同色，球會看不見。不透明填色也讓 backdrop-filter 失去意義。 */
+.aqua-ripple-droplet,
+.aqua-bounce-bead {
+  background-image: linear-gradient(
+    165deg,
+    color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 58%, white),
+    var(--cml-color-current-color, var(--color-primary))
+  );
+  box-shadow:
+    inset 0 2px 2px 0 rgba(255, 255, 255, 0.58),
+    0 0 14px color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 58%, transparent);
 }
-.aqua-split-spin,
-.aqua-split-branch {
+
+/* ===== Aqua ・ ripple：水滴漣漪 ===== */
+.aqua-ripple {
+  --cml-aqua-ripple-duration: 2.8s;
+  position: relative;
+  display: flex;
+  width: 96px;
+  height: 96px;
+  align-items: center;
+  justify-content: center;
+}
+.aqua-ripple-wave {
   position: absolute;
   inset: 0;
-}
-/* 公轉每循環 3 圈（約 300°/s）：週期較長仍能維持環繞的速度感 */
-.aqua-split-spin {
-  animation: aqua-split-spin 3.6s linear infinite;
-}
-.aqua-split-branch-1 {
-  transform: rotate(0deg);
-}
-.aqua-split-branch-2 {
-  transform: rotate(180deg);
-}
-/* 第 3、4 顆由母球所在的角度岔開 90°，四顆最終等分圓周 */
-.aqua-split-branch-3 {
-  animation: aqua-split-fork-3 3.6s linear infinite;
-}
-.aqua-split-branch-4 {
-  animation: aqua-split-fork-4 3.6s linear infinite;
-}
-.aqua-split-ball {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 26px;
-  height: 26px;
-  margin: -13px 0 0 -13px;
   border-radius: 9999px;
-  /* 球體走色彩角色而非 surface：載入遮罩本身是半透明黑底，
-     surface 色在深色模式下幾乎與遮罩同色，球會看不見。
-     不透明填色也讓 backdrop-filter 失去意義，一併省下該層合成。 */
-  background-color: color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 88%, white);
-  box-shadow:
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.55),
-    0 2px 16px color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 55%, transparent);
-  animation: none 3.6s linear infinite;
+  border: 1.5px solid color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 70%, transparent);
+  animation: aqua-ripple-out var(--cml-aqua-ripple-duration) cubic-bezier(0.22, 0.61, 0.36, 1) infinite;
 }
-.aqua-split-ball-1 {
-  animation-name: aqua-split-ball-1;
+/* 三道波錯開 1/3 週期，看起來是連續不斷的擴散而非一次一發 */
+.aqua-ripple-wave-2 { animation-delay: calc(var(--cml-aqua-ripple-duration) / -3); }
+.aqua-ripple-wave-3 { animation-delay: calc(var(--cml-aqua-ripple-duration) / -1.5); }
+.aqua-ripple-droplet {
+  width: 22px;
+  height: 22px;
+  border-radius: 9999px;
+  animation: aqua-ripple-breathe var(--cml-aqua-ripple-duration) ease-in-out infinite;
 }
-.aqua-split-ball-2 {
-  animation-name: aqua-split-ball-2;
+/* 先縮再脹：讀起來像「滴下去」才盪出漣漪 */
+@keyframes aqua-ripple-out {
+  0% { transform: scale(0.28); opacity: 0; }
+  12% { opacity: 0.75; }
+  100% { transform: scale(1); opacity: 0; }
 }
-.aqua-split-ball-3 {
-  animation-name: aqua-split-ball-3;
+@keyframes aqua-ripple-breathe {
+  0%, 100% { transform: scale(1); }
+  12% { transform: scale(0.82); }
+  40% { transform: scale(1.06); }
 }
-.aqua-split-ball-4 {
-  animation-name: aqua-split-ball-4;
+
+/* ===== Aqua ・ bounce：玻璃珠彈跳 ===== */
+.aqua-bounce {
+  --cml-aqua-bounce-duration: 1.1s;
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+  height: 64px;
 }
-@keyframes aqua-split-spin {
-  to { transform: rotate(1080deg); }
+.aqua-bounce-bead {
+  width: 18px;
+  height: 18px;
+  border-radius: 9999px;
+  transform-origin: center bottom;
+  animation: aqua-bounce-bead var(--cml-aqua-bounce-duration) cubic-bezier(0.3, 0, 0.4, 1) infinite;
 }
-@keyframes aqua-split-fork-3 {
-  0%, 36% {
-    transform: rotate(0deg);
-    animation-timing-function: cubic-bezier(0.08, 1.2, 0.3, 1);
-  }
-  44%, 100% { transform: rotate(90deg); }
+.aqua-bounce-bead-2 { animation-delay: calc(var(--cml-aqua-bounce-duration) / 8.5); }
+.aqua-bounce-bead-3 { animation-delay: calc(var(--cml-aqua-bounce-duration) / 4.2); }
+/* 起跳與落地各壓扁一次，空中略微拉長——沒有這兩下會像等速上下平移 */
+@keyframes aqua-bounce-bead {
+  0% { transform: translateY(0) scale(1, 1); }
+  12% { transform: translateY(0) scale(1.18, 0.82); }
+  50% { transform: translateY(-34px) scale(0.94, 1.06); }
+  88% { transform: translateY(0) scale(1.18, 0.82); }
+  100% { transform: translateY(0) scale(1, 1); }
 }
-@keyframes aqua-split-fork-4 {
-  0%, 36% {
-    transform: rotate(180deg);
-    animation-timing-function: cubic-bezier(0.08, 1.2, 0.3, 1);
-  }
-  44%, 100% { transform: rotate(270deg); }
-}
-/* 母球：週期起點即上一輪蓄力的頂點，不回落而直接拋射 */
-@keyframes aqua-split-ball-1 {
-  0% {
-    transform: translateX(0) scale(1.5);
-    opacity: 1;
-    animation-timing-function: cubic-bezier(0.08, 1.25, 0.3, 1);
-  }
-  8%, 26% {
-    transform: translateX(27px) scale(0.82);
-    opacity: 0.85;
-    animation-timing-function: cubic-bezier(0.5, 0, 0.78, 0.6);
-  }
-  36% {
-    transform: translateX(27px) scale(1.08);
-    opacity: 0.9;
-    animation-timing-function: cubic-bezier(0.08, 1.25, 0.3, 1);
-  }
-  44%, 74% {
-    transform: translateX(41px) scale(0.6);
-    opacity: 0.62;
-    animation-timing-function: cubic-bezier(0.55, 0, 0.9, 0.55);
-  }
-  84% {
-    transform: translateX(0) scale(0.6);
-    opacity: 0.85;
-    animation-timing-function: cubic-bezier(0.5, 0, 0.78, 0.6);
-  }
-  100% {
-    transform: translateX(0) scale(1.5);
-    opacity: 1;
-  }
-}
-/* 第 2 顆自母球分出；透明度只在與母球完全重合時切換，故看不出淡入淡出 */
-@keyframes aqua-split-ball-2 {
-  0% {
-    transform: translateX(0) scale(1.5);
-    opacity: 0;
-    animation-timing-function: cubic-bezier(0.08, 1.25, 0.3, 1);
-  }
-  2% { opacity: 0.85; }
-  8%, 26% {
-    transform: translateX(27px) scale(0.82);
-    opacity: 0.85;
-    animation-timing-function: cubic-bezier(0.5, 0, 0.78, 0.6);
-  }
-  36% {
-    transform: translateX(27px) scale(1.08);
-    opacity: 0.9;
-    animation-timing-function: cubic-bezier(0.08, 1.25, 0.3, 1);
-  }
-  44%, 74% {
-    transform: translateX(41px) scale(0.6);
-    opacity: 0.62;
-    animation-timing-function: cubic-bezier(0.55, 0, 0.9, 0.55);
-  }
-  84% {
-    transform: translateX(0) scale(0.32);
-    opacity: 0.62;
-  }
-  85% { opacity: 0; }
-  100% {
-    transform: translateX(0) scale(1.5);
-    opacity: 0;
-  }
-}
-@keyframes aqua-split-ball-3 {
-  0%, 36% {
-    transform: translateX(27px) scale(1.08);
-    opacity: 0;
-    animation-timing-function: cubic-bezier(0.08, 1.25, 0.3, 1);
-  }
-  38% { opacity: 0.62; }
-  44%, 74% {
-    transform: translateX(41px) scale(0.6);
-    opacity: 0.62;
-    animation-timing-function: cubic-bezier(0.55, 0, 0.9, 0.55);
-  }
-  84% {
-    transform: translateX(0) scale(0.32);
-    opacity: 0.62;
-  }
-  85% { opacity: 0; }
-  100% {
-    transform: translateX(27px) scale(1.08);
-    opacity: 0;
-  }
-}
-@keyframes aqua-split-ball-4 {
-  0%, 36% {
-    transform: translateX(27px) scale(1.08);
-    opacity: 0;
-    animation-timing-function: cubic-bezier(0.08, 1.25, 0.3, 1);
-  }
-  38% { opacity: 0.62; }
-  44%, 74% {
-    transform: translateX(41px) scale(0.6);
-    opacity: 0.62;
-    animation-timing-function: cubic-bezier(0.55, 0, 0.9, 0.55);
-  }
-  84% {
-    transform: translateX(0) scale(0.32);
-    opacity: 0.62;
-  }
-  85% { opacity: 0; }
-  100% {
-    transform: translateX(27px) scale(1.08);
-    opacity: 0;
-  }
-}
-/* 降級：停用公轉與分裂，只留一顆靜態球 */
+
+/* 降級：停住動畫，留靜態的球體表示「進行中」 */
 @media (prefers-reduced-motion: reduce) {
-  .aqua-split-spin,
-  .aqua-split-branch,
-  .aqua-split-ball {
+  .aqua-ripple-wave,
+  .aqua-ripple-droplet,
+  .aqua-bounce-bead {
     animation: none;
   }
-  .aqua-split-ball-2,
-  .aqua-split-ball-3,
-  .aqua-split-ball-4 {
-    opacity: 0;
+  .aqua-ripple-wave {
+    opacity: 0.35;
   }
 }
 </style>

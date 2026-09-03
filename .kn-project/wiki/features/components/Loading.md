@@ -6,49 +6,51 @@
 
 **匯入名稱**：`CamelotLoading`
 
+## Props
+| Prop | 型別 | 預設 | 說明 |
+| :--- | :--- | :---: | :--- |
+| `type` | `CamelotLoadingType`（`'ripple' \| 'bounce'`） | `'ripple'` | Aqua 主題的指示器樣式；其他主題忽略 |
+
 ## 備註
-- 無 Props、Emits、v-model、Slots、Exposed。狀態完全由 `useLoading()` 的 `isOpening` 控制顯示。
+- 無 Emits、v-model、Slots、Exposed。顯示與否完全由 `useLoading()` 的 `isOpening` 控制。
+- 唯一的 Prop 是 `type`（見下表），只影響 Aqua 主題；其他主題各只有一種樣式，會忽略它。
 - 透過 `<Teleport to="body">` 掛載於 `body`，包在 `<ClientOnly>` 中僅於用戶端渲染。
 - 顯示時為固定定位（`fixed inset-0`）的半透明黑色遮罩並帶背景模糊，層級 `z-[1100]`。
 - 依 `useCamelotTheme()` 的 `themeMode` 切換樣式：
-  - `aqua`：分裂／合一循環（`aqua-split`，112×112px），見下節。
+  - `aqua`：依 `type` 切換水滴漣漪或玻璃珠彈跳，見下節。
   - `scifi`：雷達掃描動畫（含 `CamelotScifiReticle`、`SYS_LOAD...` 文字）。
   - `cupertino`：iOS 風格 8 葉片旋轉器。
   - 其他（預設）：Material SVG 圓形旋轉器。
 - 使用 `fade` 過場動畫（0.35s）。
+- 指示器下方可顯示提示文字，由 [useLoading](../composables/useLoading.md) 的 `open(tag, text)` / `setText(tag, text)` 驅動，可在同一次載入中換階段。沒有文字時整段不渲染。文字以 `Transition mode="out-in"` 淡入淡出，換階段不會硬跳；帶 `role="status"` 與 `aria-live="polite"`。
+- 文字顏色固定為半透明白 + 陰影，**不吃 `on-surface`**：遮罩永遠是半透明深色，淺色模式下 `on-surface` 會看不見。sci-fi 另外改等寬字並走 CurrentColor，與該主題其他資訊一致。
 
-## Aqua：分裂／合一循環
+## Aqua：`ripple` 與 `bounce`
 
-單週期 3.6s，內容為「1 顆 → 炸開為 2 → 炸開為 4 → 旋入合一 → 蓄力再爆開」，循環無縫銜接（0% 與 100% 為同一狀態，皆是蓄力頂點）。
+兩者都刻意做成**向心／原地**的形狀，沒有任何由左往右填滿的線性位移——之前的水平膠囊流光版本會被讀成進度條而非指示器。
 
-**三層結構**（環繞與分裂各自獨立，時間曲線互不牽制）：
+### `ripple`（預設）：水滴漣漪
 
-| 層 | 類別 | 職責 |
+| 元素 | 類別 | 職責 |
 | :--- | :--- | :--- |
-| 公轉層 | `.aqua-split-spin` | 整組等速旋轉，每循環 3 圈（約 300°/s）；球體進出中心的軌跡因此是螺旋而非直線 |
-| 臂 | `.aqua-split-branch-{1..4}` | 決定該球在圓周上的角度；第 3、4 顆於分裂時自母球角度岔開 90°，四顆最終等分圓周 |
-| 球體 | `.aqua-split-ball-{1..4}` | 沿臂的方向推進半徑（`translateX`）與縮放、淡入淡出 |
+| 水滴 | `.aqua-ripple-droplet` | 中心 22px 玻璃球，先縮後脹的呼吸，讀起來像「滴下去」才盪出漣漪 |
+| 漣漪 | `.aqua-ripple-wave-{1..3}` | 三道同心圓由 scale 0.28 擴散到 1 並淡出，錯開 1/3 週期形成連續擴散 |
 
-**節奏**（長停留 × 快移動，停留與移動的時間曲線於各 keyframe 內個別指定）：
+週期由 `--cml-aqua-ripple-duration`（預設 `2.8s`）控制，三道波的延遲以 `calc()` 從它推算，改一個值即可整組變速。
 
-| 區間 | 動作 |
-| :--- | :--- |
-| 0–8% | 自蓄力頂點炸開為 2（帶過衝的爆發曲線），推進至 r27 |
-| 8–26% | 停留 2 顆 |
-| 26–36% | 原地蓄力膨脹（半徑不變，scale → 1.08） |
-| 36–44% | 炸開為 4，推進至 r41 |
-| 44–74% | 停留 4 顆（最長） |
-| 74–84% | 加速旋入合一 |
-| 84–100% | 蓄力膨脹至 scale 1.5（不回落），接回下一輪 |
+### `bounce`：玻璃珠彈跳
 
-**規則**：
+| 元素 | 類別 | 職責 |
+| :--- | :--- | :--- |
+| 玻璃珠 | `.aqua-bounce-bead-{1..3}` | 三顆 18px 玻璃球依序彈跳，`transform-origin: center bottom` |
 
-- 4 顆球固定存在於 DOM，分裂以位移／縮放／透明度演出，不動態增刪節點。
-- 尺寸與濃度隨分裂遞減、合併時一併還原（尺寸峰值 1.5 → .82 → .6；濃度 1 → .85 → .62），表達總量守恆。
-- 合併時外圍球不提前淡出，透明度只在與母球完全重合的瞬間切換，避免讀成「消失」而非「併回」。
-- 球體填色走色彩角色 `--cml-color-current-color`（混入少量白），**不使用 `backdrop-filter`**——載入遮罩為半透明黑底，surface 色在深色模式下與遮罩幾乎同色會看不見；不透明填色後毛玻璃亦無作用。
+週期由 `--cml-aqua-bounce-duration`（預設 `1.1s`）控制。關鍵在 keyframe 的**起跳與落地各壓扁一次**（`scale(1.18, 0.82)`）、空中略微拉長（`scale(0.94, 1.06)`）——少了這兩下會讀成等速上下平移而不是彈跳。
+
+### 共通
+
+- 球體填色走色彩角色 `--cml-color-current-color`（混入白做漸層與內高光），**不使用 `backdrop-filter`**：載入遮罩是半透明黑底，surface 色在深色模式下與遮罩幾乎同色會看不見；不透明填色後毛玻璃也失去意義。
 - 動畫僅使用 `transform` 與 `opacity`。
-- `prefers-reduced-motion: reduce` 時停用公轉與分裂，只保留一顆靜態球。
+- `prefers-reduced-motion: reduce` 時停住動畫，保留靜態球體表示「進行中」。
 
 ---
 [🏠 Wiki](../../index.md)

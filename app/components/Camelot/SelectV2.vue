@@ -99,12 +99,12 @@
               class="w-full outline-none text-base transition-colors"
               :class="[
                 themeMode === 'cupertino'
-                  ? 'rounded-[10px] bg-surface-container-highest border border-outline-variant px-4 py-2 focus:border-[var(--cml-color-current-color)]'
+                  ? 'rounded-[10px] bg-surface-container-highest border border-outline-variant pl-4 pr-10 py-2 focus:border-[var(--cml-color-current-color)]'
                   : themeMode === 'material'
-                    ? 'h-[56px] rounded-t-[4px] rounded-b-none bg-surface-container-highest border-b border-t-0 border-x-0 border-outline px-4 focus:border-b-2 focus:border-[var(--cml-color-current-color)]'
+                    ? 'h-[56px] rounded-t-[4px] rounded-b-none bg-surface-container-highest border-b border-t-0 border-x-0 border-outline pl-4 pr-10 focus:border-b-2 focus:border-[var(--cml-color-current-color)]'
                     : themeMode === 'aqua'
-                      ? 'aqua-track rounded-full px-4 py-2.5 backdrop-blur-md focus:aqua-glow'
-                      : 'border border-stroke rounded-lg px-4 py-2 focus:border-[var(--cml-color-current-color)]',
+                      ? 'aqua-track rounded-full pl-4 pr-10 py-2.5 backdrop-blur-md focus:aqua-glow'
+                      : 'border border-stroke rounded-lg pl-4 pr-10 py-2 focus:border-[var(--cml-color-current-color)]',
                 open && themeMode !== 'aqua' ? 'border-[var(--cml-color-current-color)]' : '',
                 open ? 'pointer-events-auto' : 'pointer-events-none',
                 disabled ? 'text-on-surface-variant' : 'text-on-surface',
@@ -147,7 +147,7 @@
             ]"
           >
             <span
-              class="flex-1 truncate"
+              class="min-w-0 flex-1 truncate"
               :class="selectedData ? 'text-on-surface' : 'text-on-surface-variant'"
             >{{ selectedData?.label ?? selectedData?.name ?? selectedData?.value ?? placeholder }}</span>
             <span
@@ -160,7 +160,7 @@
       <template #popup>
         <div
           ref="optionsContainerEl"
-          class="options-container relative flex flex-col overflow-hidden"
+          class="options-container relative flex flex-col overflow-hidden text-on-surface"
           :class="[
             roleColorClass,
             optionsContainerClass || (themeMode === 'aqua' ? 'aqua-glass' : 'bg-surface'),
@@ -195,8 +195,11 @@
                     v-for="(option, index) in filteredOptions"
                     :key="index"
                     type="button"
-                    :class="optionButtonClass(model === option.value)"
-                    @click="(e) => onItemClick(e, option.value)"
+                    :title="option.label ?? option.name"
+                    :disabled="option.disable"
+                    :data-camelot-selected="model === option.value || undefined"
+                    :class="optionButtonClass(model === option.value, option.disable)"
+                    @click="(e) => onItemClick(e, option)"
                   >
                     <slot
                       name="option"
@@ -209,9 +212,12 @@
                   </button>
                 </template>
                 <template v-else>
-                  <div class="text-center py-4 text-xs text-primary opacity-60">
-                    沒有可選選項
-                  </div>
+                  <!-- 與其他三個主題一致：空狀態走 #empty-options slot，預設文案改吃 CurrentColor -->
+                  <slot name="empty-options">
+                    <div class="text-center py-4 text-xs text-[var(--cml-color-current-color)] opacity-60">
+                      沒有可選選項
+                    </div>
+                  </slot>
                 </template>
               </div>
             </CamelotScifiFrame>
@@ -235,8 +241,11 @@
                   >
                     <button
                       type="button"
-                      :class="optionButtonClass(model === option.value)"
-                      @click="(e) => onItemClick(e, option.value)"
+                      :title="option.label ?? option.name"
+                      :disabled="option.disable"
+                      :data-camelot-selected="model === option.value || undefined"
+                      :class="optionButtonClass(model === option.value, option.disable)"
+                      @click="(e) => onItemClick(e, option)"
                     >
                       <slot
                         :name="`option-${option.value}`"
@@ -282,8 +291,11 @@
                   >
                     <button
                       type="button"
-                      :class="optionButtonClass(model === option.value)"
-                      @click="(e) => onItemClick(e, option.value)"
+                      :title="option.label ?? option.name"
+                      :disabled="option.disable"
+                      :data-camelot-selected="model === option.value || undefined"
+                      :class="optionButtonClass(model === option.value, option.disable)"
+                      @click="(e) => onItemClick(e, option)"
                     >
                       <slot
                         :name="`option-${option.value}`"
@@ -364,7 +376,15 @@ const {
   activeClass: optionActiveClass, hoverClass: optionHoverClass,
 } = useCamelotMenuItemTheme()
 const OPTION_ROW_BASE = 'flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left min-h-[36px] transition-colors'
-const optionButtonClass = (isSelected: boolean) => [OPTION_ROW_BASE, isSelected ? optionActiveClass.value : optionHoverClass.value]
+// 停用列：不套 hover 效果（避免看起來可點），並與其他元件的停用態一致用 0.38 透明度。
+// 已選中的停用列仍保留 active 樣式，否則「目前值不可再選」的情境會看不出選在哪。
+const OPTION_ROW_DISABLED = 'cursor-not-allowed opacity-[0.38]'
+const optionButtonClass = (isSelected: boolean, isDisabled?: boolean) => [
+  OPTION_ROW_BASE,
+  isDisabled
+    ? [OPTION_ROW_DISABLED, isSelected ? optionActiveClass.value : 'text-on-surface']
+    : (isSelected ? optionActiveClass.value : optionHoverClass.value),
+]
 
 const open = defineModel<boolean>('open', { default: false })
 
@@ -419,19 +439,54 @@ const popupShadowClass = computed(() => {
   }
 })
 
+// 已選項在目前（過濾後）清單中的位置；不在清單中時為 -1
+const selectedIndex = computed(() => {
+  const list = filteredOptions.value
+  if (!list) return -1
+  return list.findIndex(option => option && option.value === model.value)
+})
+
+/**
+ * 展開時把已選項捲進可視範圍並置中。
+ * 清單一長，每次打開都停在頂端就看不出目前選的是哪一個，得自己捲去找。
+ *
+ * 用 scrollTop 而非 scrollIntoView：後者會連同外層祖先一起捲（浮層在 body 或 <dialog>
+ * 底下，會把整個頁面拉走）。這裡只動選項自己的捲動容器。
+ */
+const scrollSelectedIntoView = () => {
+  const root = optionsContainerEl.value as HTMLElement | null
+  // 一般 / aqua / cupertino / material 用 .cml-options-scroll；scifi 版面是 .options-list-inner
+  const container = root?.querySelector?.('.cml-options-scroll, .options-list-inner') as HTMLElement | null
+  const target = root?.querySelector?.('[data-camelot-selected]') as HTMLElement | null
+  if (!container || !target) return
+
+  const containerRect = container.getBoundingClientRect()
+  const targetRect = target.getBoundingClientRect()
+  // 展開動畫未跑完時高度可能還是 0，此時算出來的位移沒有意義，交給下一次重試
+  if (!containerRect.height) return
+
+  container.scrollTop += (targetRect.top - containerRect.top)
+    - (containerRect.height - targetRect.height) / 2
+}
+
 watch(open, (isOpen) => {
   if (!isOpen) {
     searchValue.value = ''
     return
   }
 
-  if (!props.virtualScroll) {
-    return
-  }
+  nextTick(() => {
+    if (props.virtualScroll) {
+      // useVirtualList 的可視範圍由容器的 ResizeObserver 驅動，會隨展開動畫自行重算——
+      // 先前為此派發全域 resize 事件對它無效，只會讓全站監聽者空轉。
+      scrollTo(selectedIndex.value > 0 ? selectedIndex.value : 0)
+      return
+    }
 
-  // 展開後回到清單頂端即可：useVirtualList 的可視範圍由容器的 ResizeObserver 驅動，
-  // 會隨展開動畫自行重算——先前為此派發全域 resize 事件對它無效，只會讓全站監聽者空轉。
-  nextTick(() => scrollTo(0))
+    scrollSelectedIntoView()
+    // 展開是 grid-rows 過場，第一幀容器高度還在長；動畫收尾後再校正一次。
+    setTimeout(scrollSelectedIntoView, 320)
+  })
 })
 
 const model = defineModel<string | number>()
@@ -476,19 +531,31 @@ const handleSearchInput = (val: string) => {
   }
 }
 
-const onItemClick = (e: Event, value: string | number) => {
+const onItemClick = (e: Event, option: SelectOption<T>) => {
+  // 停用項：button 的 disabled 已擋掉使用者點擊，這裡再擋一次，
+  // 讓自訂 #option slot 內部自己送出的 click 也無法繞過。
+  if (option.disable) return
+
+  const value = option.value
+  // disableCloseWhenSelected 讓選單在選取後保持開啟（方便連續比較多個選項），
+  // 但「再點一次已經選中的那一項」視為確認，仍然關閉——否則只剩點外面才關得掉。
+  const reselectedCurrent = props.disableCloseWhenSelected && model.value === value
   searchValue.value = ''
   nextTick(() => {
     model.value = value
-    if (!props.disableCloseWhenSelected) {
+    if (!props.disableCloseWhenSelected || reselectedCurrent) {
       open.value = false
     }
   })
 }
 
 watch([() => props.options, () => props.default], ([options, isDefault]) => {
-  if (isDefault && typeof model.value === 'undefined' && options && options.length > 0 && options[0]) {
-    model.value = options[0].value
+  if (!isDefault || typeof model.value !== 'undefined' || !options) return
+  // 預設值取「第一個可選的」而非第一個：首項若是停用中的佔位（例如「請先選擇上層條件」），
+  // 直接選它會讓元件一開始就停在一個使用者無法再點選的值上。
+  const firstSelectable = options.find(option => option && !option.disable)
+  if (firstSelectable) {
+    model.value = firstSelectable.value
   }
 }, { immediate: true })
 </script>

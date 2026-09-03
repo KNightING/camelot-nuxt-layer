@@ -11,7 +11,7 @@
   >
     <!-- 滿版 + scale 縮小：以中心對稱取樣，避免半像素偏移（內容盒 20px × 0.4 = 8px） -->
     <span
-      class="h-full w-full scale-[0.4] rounded-full bg-white transition-opacity duration-200"
+      class="h-full w-full scale-[0.4] rounded-full bg-[var(--cml-color-current-on-color)] transition-opacity duration-200"
       :class="modelValue ? 'opacity-100' : 'opacity-0'"
     />
   </span>
