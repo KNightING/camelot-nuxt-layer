@@ -197,6 +197,7 @@
                     type="button"
                     :title="option.label ?? option.name"
                     :disabled="option.disable"
+                    :data-camelot-selected="model === option.value || undefined"
                     :class="optionButtonClass(model === option.value, option.disable)"
                     @click="(e) => onItemClick(e, option)"
                   >
@@ -242,6 +243,7 @@
                       type="button"
                       :title="option.label ?? option.name"
                       :disabled="option.disable"
+                      :data-camelot-selected="model === option.value || undefined"
                       :class="optionButtonClass(model === option.value, option.disable)"
                       @click="(e) => onItemClick(e, option)"
                     >
@@ -291,6 +293,7 @@
                       type="button"
                       :title="option.label ?? option.name"
                       :disabled="option.disable"
+                      :data-camelot-selected="model === option.value || undefined"
                       :class="optionButtonClass(model === option.value, option.disable)"
                       @click="(e) => onItemClick(e, option)"
                     >
@@ -436,19 +439,54 @@ const popupShadowClass = computed(() => {
   }
 })
 
+// 已選項在目前（過濾後）清單中的位置；不在清單中時為 -1
+const selectedIndex = computed(() => {
+  const list = filteredOptions.value
+  if (!list) return -1
+  return list.findIndex(option => option && option.value === model.value)
+})
+
+/**
+ * 展開時把已選項捲進可視範圍並置中。
+ * 清單一長，每次打開都停在頂端就看不出目前選的是哪一個，得自己捲去找。
+ *
+ * 用 scrollTop 而非 scrollIntoView：後者會連同外層祖先一起捲（浮層在 body 或 <dialog>
+ * 底下，會把整個頁面拉走）。這裡只動選項自己的捲動容器。
+ */
+const scrollSelectedIntoView = () => {
+  const root = optionsContainerEl.value as HTMLElement | null
+  // 一般 / aqua / cupertino / material 用 .cml-options-scroll；scifi 版面是 .options-list-inner
+  const container = root?.querySelector?.('.cml-options-scroll, .options-list-inner') as HTMLElement | null
+  const target = root?.querySelector?.('[data-camelot-selected]') as HTMLElement | null
+  if (!container || !target) return
+
+  const containerRect = container.getBoundingClientRect()
+  const targetRect = target.getBoundingClientRect()
+  // 展開動畫未跑完時高度可能還是 0，此時算出來的位移沒有意義，交給下一次重試
+  if (!containerRect.height) return
+
+  container.scrollTop += (targetRect.top - containerRect.top)
+    - (containerRect.height - targetRect.height) / 2
+}
+
 watch(open, (isOpen) => {
   if (!isOpen) {
     searchValue.value = ''
     return
   }
 
-  if (!props.virtualScroll) {
-    return
-  }
+  nextTick(() => {
+    if (props.virtualScroll) {
+      // useVirtualList 的可視範圍由容器的 ResizeObserver 驅動，會隨展開動畫自行重算——
+      // 先前為此派發全域 resize 事件對它無效，只會讓全站監聽者空轉。
+      scrollTo(selectedIndex.value > 0 ? selectedIndex.value : 0)
+      return
+    }
 
-  // 展開後回到清單頂端即可：useVirtualList 的可視範圍由容器的 ResizeObserver 驅動，
-  // 會隨展開動畫自行重算——先前為此派發全域 resize 事件對它無效，只會讓全站監聽者空轉。
-  nextTick(() => scrollTo(0))
+    scrollSelectedIntoView()
+    // 展開是 grid-rows 過場，第一幀容器高度還在長；動畫收尾後再校正一次。
+    setTimeout(scrollSelectedIntoView, 320)
+  })
 })
 
 const model = defineModel<string | number>()

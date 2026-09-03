@@ -8,7 +8,7 @@
       class="relative inline-block h-5 w-5 shrink-0 border align-middle transition-all duration-200 ease-spring"
       :class="[
         shape === 'circle' ? 'rounded-full' : 'rounded-md',
-        (modelValue || indeterminate) ? 'aqua-fill border-transparent' : 'aqua-track',
+        (modelValue || indeterminate) ? 'aqua-fill border-transparent [--cml-aqua-fill-gloss:transparent]' : 'aqua-track',
       ]"
     >
       <span

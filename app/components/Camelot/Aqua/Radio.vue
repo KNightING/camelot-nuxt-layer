@@ -2,7 +2,7 @@
   <span
     class="inline-flex h-5 w-5 shrink-0 cursor-pointer items-center justify-center rounded-full border align-middle transition-all duration-200 ease-spring"
     :class="[
-      modelValue ? 'aqua-fill border-transparent' : 'aqua-track',
+      modelValue ? 'aqua-fill border-transparent [--cml-aqua-fill-gloss:transparent]' : 'aqua-track',
       { 'pointer-events-none cursor-not-allowed opacity-40 grayscale': disabled },
     ]"
     @click="toggle"

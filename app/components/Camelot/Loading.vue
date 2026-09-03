@@ -200,15 +200,17 @@ const { themeMode } = useCamelotTheme()
   position: relative;
   width: 112px;
   height: 112px;
+  /* 分裂／公轉／四顆球共用同一個週期，改這裡就整組一起變速 */
+  --cml-aqua-split-duration: 6s;
 }
 .aqua-split-spin,
 .aqua-split-branch {
   position: absolute;
   inset: 0;
 }
-/* 公轉每循環 3 圈（約 300°/s）：週期較長仍能維持環繞的速度感 */
+/* 公轉每循環 3 圈（約 180°/s）：週期拉長讓分裂與合併看得清楚，仍維持環繞的速度感 */
 .aqua-split-spin {
-  animation: aqua-split-spin 3.6s linear infinite;
+  animation: aqua-split-spin var(--cml-aqua-split-duration) linear infinite;
 }
 .aqua-split-branch-1 {
   transform: rotate(0deg);
@@ -218,10 +220,10 @@ const { themeMode } = useCamelotTheme()
 }
 /* 第 3、4 顆由母球所在的角度岔開 90°，四顆最終等分圓周 */
 .aqua-split-branch-3 {
-  animation: aqua-split-fork-3 3.6s linear infinite;
+  animation: aqua-split-fork-3 var(--cml-aqua-split-duration) linear infinite;
 }
 .aqua-split-branch-4 {
-  animation: aqua-split-fork-4 3.6s linear infinite;
+  animation: aqua-split-fork-4 var(--cml-aqua-split-duration) linear infinite;
 }
 .aqua-split-ball {
   position: absolute;
@@ -238,7 +240,7 @@ const { themeMode } = useCamelotTheme()
   box-shadow:
     inset 0 1px 0 0 rgba(255, 255, 255, 0.55),
     0 2px 16px color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 55%, transparent);
-  animation: none 3.6s linear infinite;
+  animation: none var(--cml-aqua-split-duration) linear infinite;
 }
 .aqua-split-ball-1 {
   animation-name: aqua-split-ball-1;

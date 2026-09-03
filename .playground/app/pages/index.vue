@@ -8,7 +8,7 @@
     </Header>
 
     <!-- Beautiful Theme Selector & Demo section (放置於 Header 下方，加上 pt-4 避免重疊) -->
-    <div class="p-6 pt-10 bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 flex flex-col gap-6">
+    <div class="p-4 pt-8 sm:p-6 sm:pt-10 bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 flex flex-col gap-6">
       <h1 class="text-2xl font-bold text-slate-800 dark:text-white">
         Camelot UI Style System Demo
       </h1>
@@ -88,7 +88,7 @@
       </div>
 
       <!-- Component Showcase -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mt-4">
         <!-- Rich Text Editor (WYSIWYG) Card -->
         <div :class="[cardClass, 'col-span-1 md:col-span-2 lg:col-span-3']">
           <h2 :class="cardTitleClass">
@@ -176,7 +176,7 @@
             </p>
             <div
               v-if="headlessImageEntries.length"
-              class="grid grid-cols-6 gap-2"
+              class="grid grid-cols-3 gap-2 sm:grid-cols-6"
             >
               <div
                 v-for="x in headlessImageEntries"
@@ -1045,7 +1045,7 @@
           <h2 :class="cardTitleClass">
             Notifications (8 positions / title / action)
           </h2>
-          <div class="grid grid-cols-3 gap-1.5 text-xs">
+          <div class="grid grid-cols-2 gap-1.5 text-xs sm:grid-cols-3">
             <button
               v-for="p in toastPositions"
               :key="p"
@@ -2983,13 +2983,13 @@ const pagedTableData = computed(() => {
 
 const cardClass = computed(() => {
   if (themeMode.value === 'scifi') {
-    return 'p-6 bg-slate-950/60 border border-primary/25 relative font-mono text-primary shadow-[inset_0_0_15px_rgba(0,240,255,0.05)] transition-all flex flex-col gap-4'
+    return 'p-4 sm:p-6 bg-slate-950/60 border border-primary/25 relative font-mono text-primary shadow-[inset_0_0_15px_rgba(0,240,255,0.05)] transition-all flex flex-col gap-4'
   }
   else if (themeMode.value === 'cupertino') {
-    return 'p-6 bg-slate-100/40 dark:bg-slate-900/40 backdrop-blur-md rounded-2xl border border-white/20 dark:border-black/30 shadow-md text-slate-800 dark:text-slate-100 transition-all flex flex-col gap-4'
+    return 'p-4 sm:p-6 bg-slate-100/40 dark:bg-slate-900/40 backdrop-blur-md rounded-2xl border border-white/20 dark:border-black/30 shadow-md text-slate-800 dark:text-slate-100 transition-all flex flex-col gap-4'
   }
   else {
-    return 'p-6 bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white transition-all flex flex-col gap-4'
+    return 'p-4 sm:p-6 bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white transition-all flex flex-col gap-4'
   }
 })
 
