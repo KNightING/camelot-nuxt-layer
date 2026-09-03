@@ -727,8 +727,10 @@ const idleBtnClass = computed(() => {
 const activeBtnClass = computed(() => {
   switch (themeMode.value) {
     case 'aqua':
-      // 玻璃填滿態：135deg 漸層 + 柔光（aqua-fill），與其他 aqua 選中態一致
-      return 'aqua-fill text-[var(--cml-color-current-on-color)]'
+      // 玻璃填滿態：135deg 漸層 + 柔光（aqua-fill），與其他 aqua 選中態一致。
+      // 關掉頂部內高光：.cml-rte-btn 帶一圈 1px 透明外框（為 scifi 的 active 邊框佔位），
+      // 那條 1px 白線因此離邊緣一格，在 36px 的膠囊上會沿著圓角斷成幾塊白點。
+      return 'aqua-fill text-[var(--cml-color-current-on-color)] [--cml-aqua-fill-gloss:transparent]'
     case 'scifi':
       // 霓虹：淡色底 + 角色色字 + 邊框 + 外發光
       return 'text-[var(--cml-color-current-color)] bg-[color-mix(in_srgb,var(--cml-color-current-color)_16%,transparent)] border-[color-mix(in_srgb,var(--cml-color-current-color)_55%,transparent)]! shadow-[0_0_8px_color-mix(in_srgb,var(--cml-color-current-color)_35%,transparent)]'

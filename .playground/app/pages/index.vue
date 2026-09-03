@@ -1193,6 +1193,125 @@
           </div>
         </div>
 
+        <!-- Carousel Customisation Card（拿掉內建控制項、換成自己的） -->
+        <div :class="[cardClass, 'col-span-1 md:col-span-2 lg:col-span-3']">
+          <h2 :class="cardTitleClass">
+            Carousel ・ 客製化控制項
+          </h2>
+          <p class="text-xs text-slate-400">
+            內建箭頭與指標都可以個別關掉或整顆換掉；三個範例都保留拖曳跟手（按住往左右拖，畫面會跟著手走，放開才決定換不換頁）。
+          </p>
+
+          <div class="grid gap-6 lg:grid-cols-3">
+            <!-- 1. 全部移除：只剩拖曳 -->
+            <div class="flex flex-col gap-2">
+              <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                :show-arrows="false" :show-dots="false"
+              </span>
+              <span class="text-xs text-slate-400">兩側按鈕與內建指標都移除，只靠拖曳或外部控制切換。</span>
+              <CamelotCarousel
+                v-model="carouselBareIndex"
+                :items="carouselItems"
+                item-key="id"
+                :color="currentColorRole"
+                :show-arrows="false"
+                :show-dots="false"
+                height="180px"
+                loop
+              >
+                <template #default="{ item }">
+                  <div
+                    class="flex h-full w-full items-center justify-center rounded-2xl text-lg font-bold text-white"
+                    :style="{ background: `hsl(${item.hue} 70% 55%)` }"
+                  >
+                    {{ item.title }}
+                  </div>
+                </template>
+              </CamelotCarousel>
+              <div class="text-center text-xs text-slate-400">
+                目前第 {{ carouselBareIndex + 1 }} / {{ carouselItems.length }} 張
+              </div>
+            </div>
+
+            <!-- 2. 自訂箭頭：#prev / #next slot -->
+            <div class="flex flex-col gap-2">
+              <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                #prev / #next ・ 自訂箭頭
+              </span>
+              <span class="text-xs text-slate-400">定位由元件負責，slot 只管長相與觸發；到頭尾時用 disabled 變灰。</span>
+              <CamelotCarousel
+                v-model="carouselCustomArrowIndex"
+                :items="carouselItems"
+                item-key="id"
+                :color="currentColorRole"
+                :show-dots="false"
+                height="180px"
+              >
+                <template #default="{ item }">
+                  <div
+                    class="flex h-full w-full items-center justify-center rounded-2xl text-lg font-bold text-white"
+                    :style="{ background: `hsl(${item.hue} 70% 55%)` }"
+                  >
+                    {{ item.title }}
+                  </div>
+                </template>
+                <template #prev="{ prev, disabled }">
+                  <CamelotButton
+                    :color="currentColorRole"
+                    label="◀ 上一張"
+                    :disabled="disabled"
+                    @click="prev"
+                  />
+                </template>
+                <template #next="{ next, disabled }">
+                  <CamelotButton
+                    :color="currentColorRole"
+                    label="下一張 ▶"
+                    :disabled="disabled"
+                    @click="next"
+                  />
+                </template>
+              </CamelotCarousel>
+            </div>
+
+            <!-- 3. 自訂指標：#dot slot -->
+            <div class="flex flex-col gap-2">
+              <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                #dot ・ 自訂指標
+              </span>
+              <span class="text-xs text-slate-400">關掉箭頭，把圓點換成帶編號的膠囊；點擊照樣可跳頁。</span>
+              <CamelotCarousel
+                v-model="carouselCustomDotIndex"
+                :items="carouselItems"
+                item-key="id"
+                :color="currentColorRole"
+                :show-arrows="false"
+                height="180px"
+                loop
+              >
+                <template #default="{ item }">
+                  <div
+                    class="flex h-full w-full items-center justify-center rounded-2xl text-lg font-bold text-white"
+                    :style="{ background: `hsl(${item.hue} 70% 55%)` }"
+                  >
+                    {{ item.title }}
+                  </div>
+                </template>
+                <template #dot="{ index, active }">
+                  <span
+                    class="inline-flex h-6 min-w-6 items-center justify-center rounded-full px-2 text-[11px] font-bold transition-all"
+                    :class="active
+                      ? 'bg-primary text-on-primary'
+                      : 'bg-white/25 text-white/80 backdrop-blur-sm'"
+                  >
+                    {{ index + 1 }}
+                  </span>
+                </template>
+              </CamelotCarousel>
+            </div>
+          </div>
+        </div>
+
         <!-- Table Card -->
         <div :class="[cardClass, 'col-span-1 md:col-span-2 lg:col-span-3']">
           <h2 :class="cardTitleClass">
@@ -2333,7 +2452,7 @@ const themeOptions = [
   },
   {
     value: 'aqua',
-    label: 'Aqua Pill',
+    label: 'Aqua',
   },
 ] as const
 const colorModeOptions = [
@@ -2898,6 +3017,10 @@ const doDeleteRow = () => {
 const carouselEffects = ['slide', 'fade', 'zoom', 'coverflow', 'cardStack', 'flip'] as const
 const carouselEffect = ref<typeof carouselEffects[number]>('slide')
 const carouselIndex = ref(0)
+// 客製化控制項展示：各自獨立的頁碼
+const carouselBareIndex = ref(0)
+const carouselCustomArrowIndex = ref(0)
+const carouselCustomDotIndex = ref(0)
 const carouselLoop = ref(true)
 const carouselAutoplay = ref(false)
 const carouselPeek = ref(0)

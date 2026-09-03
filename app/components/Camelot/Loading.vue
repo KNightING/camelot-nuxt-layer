@@ -10,26 +10,19 @@
             class="flex items-center justify-center"
             :class="[themeMode]"
           >
-            <!-- Aqua Split / Merge Cycle：1 顆 → 炸開為 2 → 炸開為 4 → 旋入合一 → 蓄力再爆開 -->
+            <!--
+              Aqua：磨砂玻璃膠囊 + 內部流光。
+              另外三個主題的指示器都是圓形（Material 環、Cupertino 葉片、Sci-fi 雷達），
+              這裡刻意用水平膠囊做區隔，也呼應 Aqua 通篇的 pill 語彙。
+            -->
             <div
               v-if="themeMode === 'aqua'"
-              class="aqua-split"
+              class="aqua-capsule"
             >
-              <!-- 公轉層：整組等速旋轉，球體進出中心的軌跡因此是螺旋而非直線 -->
-              <div class="aqua-split-spin">
-                <!-- 臂：決定該球在圓周上的角度，分裂時把子球從母球身上岔開 -->
-                <div
-                  v-for="index in 4"
-                  :key="index"
-                  class="aqua-split-branch"
-                  :class="`aqua-split-branch-${index}`"
-                >
-                  <span
-                    class="aqua-split-ball"
-                    :class="`aqua-split-ball-${index}`"
-                  />
-                </div>
-              </div>
+              <!-- 副流光：更寬更淡、相位錯開，疊出玻璃裡的層次 -->
+              <span class="aqua-capsule-sheen" />
+              <!-- 主流光：一段柔邊的角色色，來回穿過膠囊 -->
+              <span class="aqua-capsule-flow" />
             </div>
 
             <!-- Sci-fi Loading Radar -->
@@ -192,205 +185,86 @@ const { themeMode } = useCamelotTheme()
 .fade-leave-to {
   opacity: 0;
 }
-/* Aqua Split / Merge Cycle
-   節奏為「長停留 × 快移動」：時間主要花在 2 顆與 4 顆兩個狀態上，
-   轉換各約 0.3s。兩處分裂前都先蓄力膨脹，合一後的能量不洩掉、
-   直接轉為下一輪的蓄力，因此整個循環沒有靜止的一顆球。 */
-.aqua-split {
+/* ===== Aqua：磨砂玻璃膠囊 + 流光 =====
+   主流光與副流光共用同一個週期變數，改速度只要動這一個值。 */
+.aqua-capsule {
+  --cml-aqua-loading-duration: 2.6s;
   position: relative;
-  width: 112px;
-  height: 112px;
-  /* 分裂／公轉／四顆球共用同一個週期，改這裡就整組一起變速 */
-  --cml-aqua-split-duration: 6s;
-}
-.aqua-split-spin,
-.aqua-split-branch {
-  position: absolute;
-  inset: 0;
-}
-/* 公轉每循環 3 圈（約 180°/s）：週期拉長讓分裂與合併看得清楚，仍維持環繞的速度感 */
-.aqua-split-spin {
-  animation: aqua-split-spin var(--cml-aqua-split-duration) linear infinite;
-}
-.aqua-split-branch-1 {
-  transform: rotate(0deg);
-}
-.aqua-split-branch-2 {
-  transform: rotate(180deg);
-}
-/* 第 3、4 顆由母球所在的角度岔開 90°，四顆最終等分圓周 */
-.aqua-split-branch-3 {
-  animation: aqua-split-fork-3 var(--cml-aqua-split-duration) linear infinite;
-}
-.aqua-split-branch-4 {
-  animation: aqua-split-fork-4 var(--cml-aqua-split-duration) linear infinite;
-}
-.aqua-split-ball {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 26px;
-  height: 26px;
-  margin: -13px 0 0 -13px;
+  width: 168px;
+  height: 16px;
   border-radius: 9999px;
-  /* 球體走色彩角色而非 surface：載入遮罩本身是半透明黑底，
-     surface 色在深色模式下幾乎與遮罩同色，球會看不見。
-     不透明填色也讓 backdrop-filter 失去意義，一併省下該層合成。 */
-  background-color: color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 88%, white);
+  overflow: hidden;
+  background-color: color-mix(in srgb, var(--color-surface, white) 45%, transparent);
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  border: 1px solid color-mix(in srgb, white 24%, transparent);
   box-shadow:
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.55),
-    0 2px 16px color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 55%, transparent);
-  animation: none var(--cml-aqua-split-duration) linear infinite;
+    inset 0 1px 0 0 color-mix(in srgb, white 38%, transparent),
+    0 8px 24px -8px color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 60%, transparent);
+  animation: aqua-capsule-breathe var(--cml-aqua-loading-duration) ease-in-out infinite;
 }
-.aqua-split-ball-1 {
-  animation-name: aqua-split-ball-1;
+
+.aqua-capsule-flow,
+.aqua-capsule-sheen {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 9999px;
+  will-change: transform;
 }
-.aqua-split-ball-2 {
-  animation-name: aqua-split-ball-2;
+
+/* 主流光：角色色由淡到亮再到淡，兩端柔化成一段「液體」而不是硬塊 */
+.aqua-capsule-flow {
+  width: 46%;
+  background-image: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 55%, transparent),
+    color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 92%, white),
+    color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 55%, transparent),
+    transparent
+  );
+  animation: aqua-capsule-flow var(--cml-aqua-loading-duration) cubic-bezier(0.62, 0, 0.38, 1) infinite;
 }
-.aqua-split-ball-3 {
-  animation-name: aqua-split-ball-3;
+
+/* 副流光：白色高光，寬一點淡一點，相位落後主流光約 1/6 週期 */
+.aqua-capsule-sheen {
+  width: 70%;
+  background-image: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, white 26%, transparent),
+    transparent
+  );
+  animation: aqua-capsule-sheen var(--cml-aqua-loading-duration) cubic-bezier(0.62, 0, 0.38, 1) infinite;
+  animation-delay: calc(var(--cml-aqua-loading-duration) / -6);
 }
-.aqua-split-ball-4 {
-  animation-name: aqua-split-ball-4;
+
+/* translateX 以自身寬度為單位：-100% 完全離開左緣，
+   (168 / 自身寬度) × 100% 完全離開右緣（46% → 218%、70% → 143%） */
+@keyframes aqua-capsule-flow {
+  0%, 100% { transform: translateX(-100%); }
+  50% { transform: translateX(218%); }
 }
-@keyframes aqua-split-spin {
-  to { transform: rotate(1080deg); }
+@keyframes aqua-capsule-sheen {
+  0%, 100% { transform: translateX(-100%); }
+  50% { transform: translateX(143%); }
 }
-@keyframes aqua-split-fork-3 {
-  0%, 36% {
-    transform: rotate(0deg);
-    animation-timing-function: cubic-bezier(0.08, 1.2, 0.3, 1);
-  }
-  44%, 100% { transform: rotate(90deg); }
+@keyframes aqua-capsule-breathe {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(1.18); }
 }
-@keyframes aqua-split-fork-4 {
-  0%, 36% {
-    transform: rotate(180deg);
-    animation-timing-function: cubic-bezier(0.08, 1.2, 0.3, 1);
-  }
-  44%, 100% { transform: rotate(270deg); }
-}
-/* 母球：週期起點即上一輪蓄力的頂點，不回落而直接拋射 */
-@keyframes aqua-split-ball-1 {
-  0% {
-    transform: translateX(0) scale(1.5);
-    opacity: 1;
-    animation-timing-function: cubic-bezier(0.08, 1.25, 0.3, 1);
-  }
-  8%, 26% {
-    transform: translateX(27px) scale(0.82);
-    opacity: 0.85;
-    animation-timing-function: cubic-bezier(0.5, 0, 0.78, 0.6);
-  }
-  36% {
-    transform: translateX(27px) scale(1.08);
-    opacity: 0.9;
-    animation-timing-function: cubic-bezier(0.08, 1.25, 0.3, 1);
-  }
-  44%, 74% {
-    transform: translateX(41px) scale(0.6);
-    opacity: 0.62;
-    animation-timing-function: cubic-bezier(0.55, 0, 0.9, 0.55);
-  }
-  84% {
-    transform: translateX(0) scale(0.6);
-    opacity: 0.85;
-    animation-timing-function: cubic-bezier(0.5, 0, 0.78, 0.6);
-  }
-  100% {
-    transform: translateX(0) scale(1.5);
-    opacity: 1;
-  }
-}
-/* 第 2 顆自母球分出；透明度只在與母球完全重合時切換，故看不出淡入淡出 */
-@keyframes aqua-split-ball-2 {
-  0% {
-    transform: translateX(0) scale(1.5);
-    opacity: 0;
-    animation-timing-function: cubic-bezier(0.08, 1.25, 0.3, 1);
-  }
-  2% { opacity: 0.85; }
-  8%, 26% {
-    transform: translateX(27px) scale(0.82);
-    opacity: 0.85;
-    animation-timing-function: cubic-bezier(0.5, 0, 0.78, 0.6);
-  }
-  36% {
-    transform: translateX(27px) scale(1.08);
-    opacity: 0.9;
-    animation-timing-function: cubic-bezier(0.08, 1.25, 0.3, 1);
-  }
-  44%, 74% {
-    transform: translateX(41px) scale(0.6);
-    opacity: 0.62;
-    animation-timing-function: cubic-bezier(0.55, 0, 0.9, 0.55);
-  }
-  84% {
-    transform: translateX(0) scale(0.32);
-    opacity: 0.62;
-  }
-  85% { opacity: 0; }
-  100% {
-    transform: translateX(0) scale(1.5);
-    opacity: 0;
-  }
-}
-@keyframes aqua-split-ball-3 {
-  0%, 36% {
-    transform: translateX(27px) scale(1.08);
-    opacity: 0;
-    animation-timing-function: cubic-bezier(0.08, 1.25, 0.3, 1);
-  }
-  38% { opacity: 0.62; }
-  44%, 74% {
-    transform: translateX(41px) scale(0.6);
-    opacity: 0.62;
-    animation-timing-function: cubic-bezier(0.55, 0, 0.9, 0.55);
-  }
-  84% {
-    transform: translateX(0) scale(0.32);
-    opacity: 0.62;
-  }
-  85% { opacity: 0; }
-  100% {
-    transform: translateX(27px) scale(1.08);
-    opacity: 0;
-  }
-}
-@keyframes aqua-split-ball-4 {
-  0%, 36% {
-    transform: translateX(27px) scale(1.08);
-    opacity: 0;
-    animation-timing-function: cubic-bezier(0.08, 1.25, 0.3, 1);
-  }
-  38% { opacity: 0.62; }
-  44%, 74% {
-    transform: translateX(41px) scale(0.6);
-    opacity: 0.62;
-    animation-timing-function: cubic-bezier(0.55, 0, 0.9, 0.55);
-  }
-  84% {
-    transform: translateX(0) scale(0.32);
-    opacity: 0.62;
-  }
-  85% { opacity: 0; }
-  100% {
-    transform: translateX(27px) scale(1.08);
-    opacity: 0;
-  }
-}
-/* 降級：停用公轉與分裂，只留一顆靜態球 */
+
+/* 降級：停住流光，留一段靜態的填色表示「進行中」 */
 @media (prefers-reduced-motion: reduce) {
-  .aqua-split-spin,
-  .aqua-split-branch,
-  .aqua-split-ball {
+  .aqua-capsule,
+  .aqua-capsule-flow,
+  .aqua-capsule-sheen {
     animation: none;
   }
-  .aqua-split-ball-2,
-  .aqua-split-ball-3,
-  .aqua-split-ball-4 {
-    opacity: 0;
+  .aqua-capsule-flow {
+    transform: translateX(60%);
   }
 }
 </style>

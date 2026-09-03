@@ -6,8 +6,9 @@
     @pointerenter="hovered = true"
     @pointerleave="hovered = false"
     @pointerdown="onPointerDown"
-    @pointerup="onPointerUp"
-    @pointercancel="dragStart = null"
+    @pointermove="onPointerMove"
+    @pointerup="onPointerEnd"
+    @pointercancel="onPointerEnd"
   >
     <!-- Viewport -->
     <div
@@ -36,26 +37,59 @@
       </div>
     </div>
 
-    <!-- Arrows -->
+    <!--
+      Arrows：定位交給外層 .cml-arrow-anchor，內容可用 #prev / #next slot 整顆換掉。
+      slot 只負責長相與觸發，不必重寫定位；要完全移除請用 :show-arrows="false"。
+    -->
     <template v-if="showArrows && items.length > 1">
-      <button
-        type="button"
-        class="cml-arrow"
-        :class="[arrowClass, direction === 'vertical' ? 'top-2 left-1/2 -translate-x-1/2 rotate-90' : 'top-1/2 left-2 -translate-y-1/2']"
-        aria-label="previous"
-        @click="prev"
+      <div
+        class="cml-arrow-anchor"
+        :class="direction === 'vertical' ? 'top-2 left-1/2 -translate-x-1/2' : 'top-1/2 left-2 -translate-y-1/2'"
       >
-        <IMaterialSymbolsChevronLeftRounded class="h-6 w-6" />
-      </button>
-      <button
-        type="button"
-        class="cml-arrow"
-        :class="[arrowClass, direction === 'vertical' ? 'bottom-2 left-1/2 -translate-x-1/2 rotate-90' : 'top-1/2 right-2 -translate-y-1/2']"
-        aria-label="next"
-        @click="next"
+        <slot
+          name="prev"
+          :prev="prev"
+          :next="next"
+          :go="go"
+          :current="current"
+          :total="items.length"
+          :disabled="atStart"
+        >
+          <button
+            type="button"
+            class="cml-arrow"
+            :class="[arrowClass, direction === 'vertical' ? 'rotate-90' : '']"
+            aria-label="previous"
+            @click="prev"
+          >
+            <IMaterialSymbolsChevronLeftRounded class="h-6 w-6" />
+          </button>
+        </slot>
+      </div>
+      <div
+        class="cml-arrow-anchor"
+        :class="direction === 'vertical' ? 'bottom-2 left-1/2 -translate-x-1/2' : 'top-1/2 right-2 -translate-y-1/2'"
       >
-        <IMaterialSymbolsChevronRightRounded class="h-6 w-6" />
-      </button>
+        <slot
+          name="next"
+          :prev="prev"
+          :next="next"
+          :go="go"
+          :current="current"
+          :total="items.length"
+          :disabled="atEnd"
+        >
+          <button
+            type="button"
+            class="cml-arrow"
+            :class="[arrowClass, direction === 'vertical' ? 'rotate-90' : '']"
+            aria-label="next"
+            @click="next"
+          >
+            <IMaterialSymbolsChevronRightRounded class="h-6 w-6" />
+          </button>
+        </slot>
+      </div>
     </template>
 
     <!-- Dots（獨立 CamelotCarouselIndicator，可 slot 自訂、支援垂直排列） -->
@@ -208,7 +242,16 @@ const slideStyle = (i: number) => {
   }
 
   const axis = isVertical.value ? 'Y' : 'X'
-  const centre = 'translate(-50%, -50%)'
+  // 拖曳位移接在置中之後、各效果自己的位移之前：coverflow 之類帶 rotateY 的效果，
+  // 若把它接在最後會沿著已旋轉的軸移動，看起來會歪掉。
+  const dragPx = FOLLOW_DRAG_EFFECTS.has(props.effect) ? dragOffset.value : 0
+  const centre = dragPx
+    ? `translate(-50%, -50%) translate${axis}(${dragPx}px)`
+    : 'translate(-50%, -50%)'
+  if (dragPx) {
+    // 跟手期間不要有過場，否則畫面會落後手指一個 duration
+    base.transition = 'none'
+  }
   let transform = ''
   let opacity = 1
 
@@ -263,6 +306,9 @@ const go = (i: number) => {
 const next = () => go(current.value + 1)
 const prev = () => go(current.value - 1)
 
+const atStart = computed(() => !props.loop && current.value <= 0)
+const atEnd = computed(() => !props.loop && current.value >= n.value - 1)
+
 // Autoplay
 const hovered = ref(false)
 const {
@@ -282,23 +328,66 @@ watchEffect(() => {
   else pause()
 })
 
-// 滑動/拖曳（門檻式 swipe）
+// 滑動/拖曳：pointermove 期間把位移直接畫在投影片上（跟手），放開才決定要不要換頁
+const SWIPE_THRESHOLD = 40
+// 只有位移類效果跟手；fade / flip 沒有平移可跟，維持門檻式換頁
+const FOLLOW_DRAG_EFFECTS = new Set(['slide', 'coverflow', 'zoom', 'cardStack'])
+
 const dragStart = ref<{ x: number, y: number } | null>(null)
+const dragOffset = ref(0)
+
+// setPointerCapture / releasePointerCapture 在 pointerId 已失效時會丟 NotFoundError。
+// 讓它中斷 handler 會使後面的換頁判斷整段不執行，因此一律吞掉——抓不到指標最多是
+// 拖出元件外會斷開，不該連換頁都失效。
+const setPointerCaptureSafely = (e: PointerEvent, capture: boolean) => {
+  const el = e.currentTarget as HTMLElement | null
+  if (!el) return
+  try {
+    if (capture) el.setPointerCapture?.(e.pointerId)
+    else el.releasePointerCapture?.(e.pointerId)
+  }
+  catch {
+    // 忽略：指標已結束或不屬於本元件
+  }
+}
+
+// 控制項（箭頭、指標、投影片內的連結／按鈕）不進入拖曳
+const INTERACTIVE_SELECTOR = 'button, a, input, select, textarea, label, [role="button"], [role="tab"]'
+
 const onPointerDown = (e: PointerEvent) => {
+  if (n.value < 2) return
+  // 從控制項按下時直接放行：setPointerCapture 會把 pointerup 重新導向到本元件，
+  // click 因此改派給兩者的共同祖先（也就是這裡），箭頭與指標就再也收不到點擊。
+  if ((e.target as HTMLElement | null)?.closest?.(INTERACTIVE_SELECTOR)) return
   dragStart.value = {
     x: e.clientX,
     y: e.clientY,
   }
+  dragOffset.value = 0
+  // 指標移出元件範圍後仍要收得到事件，否則拖到一半離開就卡在半路。
+  // 包 try：pointerId 已失效時會丟 NotFoundError，沒接住的話會中斷後續流程。
+  setPointerCaptureSafely(e, true)
 }
-const onPointerUp = (e: PointerEvent) => {
+
+const onPointerMove = (e: PointerEvent) => {
   const start = dragStart.value
-  dragStart.value = null
   if (!start) return
-  const dx = e.clientX - start.x
-  const dy = e.clientY - start.y
-  const primary = isVertical.value ? dy : dx
-  if (Math.abs(primary) < 40) return
-  if (primary < 0) next()
+  const raw = isVertical.value ? e.clientY - start.y : e.clientX - start.x
+  // 非 loop 時拖出頭尾給阻尼：讓「已經到底」有回饋，而不是完全不動
+  const atEdge = !props.loop
+    && ((raw > 0 && current.value === 0) || (raw < 0 && current.value === n.value - 1))
+  dragOffset.value = atEdge ? raw * 0.35 : raw
+}
+
+const onPointerEnd = (e: PointerEvent) => {
+  const start = dragStart.value
+  const offset = dragOffset.value
+  dragStart.value = null
+  dragOffset.value = 0
+  setPointerCaptureSafely(e, false)
+  if (!start) return
+  if (Math.abs(offset) < SWIPE_THRESHOLD) return
+  if (offset < 0) next()
   else prev()
 }
 
@@ -321,9 +410,11 @@ defineExpose({
 </script>
 
 <style scoped>
-.cml-arrow {
+.cml-arrow-anchor {
   position: absolute;
   z-index: 200;
+}
+.cml-arrow {
   display: inline-flex;
   align-items: center;
   justify-content: center;
