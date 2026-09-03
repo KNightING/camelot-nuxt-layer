@@ -7,7 +7,7 @@
     <div
       class="fixed inset-0"
       :class="{ 'pointer-events-none': !open }"
-      :style="{ zIndex: zIndex }"
+      :style="{ zIndex: zIndex ?? 'var(--cml-z-drawer)' }"
     >
       <Transition name="cml-drawer-scrim">
         <div
@@ -55,6 +55,21 @@
   </div>
 </template>
 
+<script lang="ts">
+/*
+ * 多層 Drawer 共用的 body 捲動鎖計數。
+ * 每個實例各自 watch 自己的 open 會踩到彼此：關掉內層 Drawer 時把 overflow 清空，
+ * 外層明明還開著，背景卻又能捲動。改為計數，只有全部關閉才解除鎖定。
+ */
+let bodyScrollLockCount = 0
+
+const setBodyScrollLock = (locked: boolean) => {
+  if (typeof document === 'undefined') return
+  bodyScrollLockCount = Math.max(0, bodyScrollLockCount + (locked ? 1 : -1))
+  document.body.style.overflow = bodyScrollLockCount > 0 ? 'hidden' : ''
+}
+</script>
+
 <script setup lang="ts">
 const props = withDefaults(
   defineProps<{
@@ -69,7 +84,6 @@ const props = withDefaults(
     variant: 'floating',
     width: '320px',
     closeByMask: true,
-    zIndex: 50,
   },
 )
 
@@ -102,13 +116,18 @@ const onMaskClick = () => {
   }
 }
 
-// floating + 開啟時：鎖定 body 捲動
+// floating + 開啟時：鎖定 body 捲動（多層 Drawer 以計數共用同一把鎖）
+let holdsBodyScrollLock = false
+
+const syncBodyScrollLock = (locked: boolean) => {
+  if (locked === holdsBodyScrollLock) return
+  holdsBodyScrollLock = locked
+  setBodyScrollLock(locked)
+}
+
 watch(
   () => props.variant === 'floating' && open.value,
-  (locked) => {
-    if (typeof document === 'undefined') return
-    document.body.style.overflow = locked ? 'hidden' : ''
-  },
+  syncBodyScrollLock,
 )
 
 // Esc 關閉（floating）
@@ -120,9 +139,7 @@ useEventListener('keydown', (e: KeyboardEvent) => {
 })
 
 onBeforeUnmount(() => {
-  if (typeof document !== 'undefined') {
-    document.body.style.overflow = ''
-  }
+  syncBodyScrollLock(false)
 })
 </script>
 

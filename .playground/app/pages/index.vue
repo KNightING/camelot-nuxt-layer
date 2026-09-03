@@ -620,7 +620,19 @@
               :label="fixedDrawerOpen ? 'Collapse Fixed' : 'Expand Fixed'"
               @click="fixedDrawerOpen = !fixedDrawerOpen"
             />
+            <CamelotButton
+              :color="currentColorRole"
+              is-container
+              label="Open Full Page"
+              @click="drawerFullOpen = true"
+            />
           </div>
+          <p class="text-xs text-slate-400">
+            「Open Full Page」是整個版面的 Drawer（<code>width="100vw"</code>，元件本身以
+            <code>max-w-[90vw]</code> 收邊，保留一條可點擊關閉的遮罩），內含 Select / Popup /
+            Dialog / Sheet 的啟動按鈕，用來檢查浮層會不會被 Drawer 面板蓋住；
+            裡面另有「多層 Drawer」段落，可從 Drawer 再開 L2 / L3 Drawer 與其內的 Select / Sheet。
+          </p>
           <div class="flex h-40 overflow-hidden rounded-lg border border-slate-200 dark:border-slate-700">
             <CamelotDrawer
               v-model:open="fixedDrawerOpen"
@@ -1579,6 +1591,54 @@
           />
         </div>
       </CamelotDrawer>
+
+      <!--
+        全版面 Drawer：疊層檢查點。
+        內容刻意放滿 Select / Popup / CascadeMenu / Date / Time / Dialog / Sheet 的啟動點，
+        且全部使用元件預設值（不傳 zIndex 等迴避用的 prop）——浮層一旦被面板蓋住就會直接看得到。
+      -->
+      <CamelotDrawer
+        v-model:open="drawerFullOpen"
+        position="left"
+        width="100vw"
+      >
+        <template #header>
+          <div class="flex items-center justify-between gap-4 border-b border-outline-variant/40 px-6 py-4">
+            <div class="flex flex-col">
+              <h3 class="text-lg font-bold">
+                Full Page Drawer
+              </h3>
+              <span class="text-xs opacity-60">
+                浮層疊層檢查點：Select / Popup / Dialog / Sheet
+              </span>
+            </div>
+            <CamelotButton
+              :color="currentColorRole"
+              is-container
+              label="關閉"
+              @click="drawerFullOpen = false"
+            />
+          </div>
+        </template>
+
+        <div class="px-6 py-5">
+          <DrawerOverlayFields
+            v-model:option="drawerFullOption"
+            :options="options"
+            :color="currentColorRole"
+          />
+        </div>
+
+        <template #footer>
+          <div class="flex justify-end border-t border-outline-variant/40 px-6 py-4">
+            <CamelotButton
+              :color="currentColorRole"
+              label="Close"
+              @click="drawerFullOpen = false"
+            />
+          </div>
+        </template>
+      </CamelotDrawer>
     </div>
   </div>
 </template>
@@ -1946,6 +2006,9 @@ const demoSkeletonLoading = ref(true)
 const drawerLeftOpen = ref(false)
 const drawerRightOpen = ref(false)
 const fixedDrawerOpen = ref(true)
+// 全版面 Drawer：浮層疊層檢查點（內容見 DrawerOverlayFields）
+const drawerFullOpen = ref(false)
+const drawerFullOption = ref('韓式餐廳')
 
 // Tree demo state
 const treeChecked = ref<(string | number)[]>(['kr'])

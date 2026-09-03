@@ -12,7 +12,7 @@ Camelot 的浮動元件（Drawer、BottomSheet、Popup）以 `tailwind.css` 中�
 
 | 變數 | 值 | 使用者 |
 | :--- | ---: | :--- |
-| `--cml-z-drawer` | `50` | 側邊抽屜（預留，尚未接上 [Drawer](./components/Drawer.md)） |
+| `--cml-z-drawer` | `50` | [Drawer](./components/Drawer.md) floating 模式的 Teleport 容器 |
 | `--cml-z-sheet` | `60` | [BaseBottomSheetV2](./components/BaseBottomSheetV2.md) 的面板容器 |
 | `--cml-z-popup` | `70` | [PopupV2](./components/PopupV2.md) 浮層預設層級；[CascadeMenu](./components/CascadeMenu.md) 面板為 `calc(var(--cml-z-popup) + level)`（逐層 +1）；TimeV2 / DateV2 的內層時分秒清單為 `calc(var(--cml-z-popup) + 1)` |
 
