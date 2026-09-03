@@ -22,6 +22,8 @@
   - `cupertino`：iOS 風格 8 葉片旋轉器。
   - 其他（預設）：Material SVG 圓形旋轉器。
 - 使用 `fade` 過場動畫（0.35s）。
+- 指示器下方可顯示提示文字，由 [useLoading](../composables/useLoading.md) 的 `open(tag, text)` / `setText(tag, text)` 驅動，可在同一次載入中換階段。沒有文字時整段不渲染。文字以 `Transition mode="out-in"` 淡入淡出，換階段不會硬跳；帶 `role="status"` 與 `aria-live="polite"`。
+- 文字顏色固定為半透明白 + 陰影，**不吃 `on-surface`**：遮罩永遠是半透明深色，淺色模式下 `on-surface` 會看不見。sci-fi 另外改等寬字並走 CurrentColor，與該主題其他資訊一致。
 
 ## Aqua：`ripple` 與 `bounce`
 

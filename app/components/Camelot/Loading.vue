@@ -7,7 +7,7 @@
           class="fixed inset-0 z-[1100] flex items-center justify-center bg-black/35 backdrop-blur-xs select-none pointer-events-auto"
         >
           <div
-            class="flex items-center justify-center"
+            class="flex flex-col items-center justify-center gap-5"
             :class="[themeMode]"
           >
             <!--
@@ -81,6 +81,26 @@
                 />
               </svg>
             </div>
+
+            <!--
+              指示器下方的提示文字：由 useLoading().open(tag, text) / setText(tag, text) 驅動，
+              可在同一次載入中換階段。沒有文字時整段不渲染，版面不會多出空位。
+              以 Transition 做淡入淡出，換階段時不會硬跳。
+            -->
+            <Transition
+              name="loading-text"
+              mode="out-in"
+            >
+              <p
+                v-if="text"
+                :key="text"
+                class="cml-loading-text"
+                role="status"
+                aria-live="polite"
+              >
+                {{ text }}
+              </p>
+            </Transition>
           </div>
         </div>
       </Transition>
@@ -101,11 +121,40 @@ withDefaults(
   { type: 'ripple' },
 )
 
-const { isOpening } = useLoading()
+const {
+  isOpening, text,
+} = useLoading()
 const { themeMode } = useCamelotTheme()
 </script>
 
 <style scoped>
+/* 指示器下方的提示文字 */
+.cml-loading-text {
+  max-width: 16rem;
+  text-align: center;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  /* 遮罩固定是半透明深色，這裡不吃 surface / on-surface：淺色模式下那組會看不見 */
+  color: rgba(255, 255, 255, 0.88);
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.45);
+}
+/* sci-fi 的資訊都走等寬字，文字也跟著 */
+.scifi .cml-loading-text {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: 0.08em;
+  color: var(--cml-color-current-color, var(--color-primary));
+}
+
+.loading-text-enter-active,
+.loading-text-leave-active {
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.loading-text-enter-from,
+.loading-text-leave-to {
+  opacity: 0;
+  transform: translateY(4px);
+}
+
 /* Material spinner */
 .material-spinner {
   width: 50px;

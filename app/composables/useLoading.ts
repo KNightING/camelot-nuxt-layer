@@ -6,18 +6,27 @@ type ErrorFn = (ex: unknown) => Promise<void> | void
 
 interface LoadingState {
   tags: string[]
+  /** 各 tag 對應的提示文字；沒有文字的 tag 不會有鍵 */
+  texts: Record<string, string>
 }
 
 const state = ref<LoadingState>({
   tags: [],
+  texts: {},
 })
 
 export const useLoading = () => {
-  const open = (tag: string): LoadingCloseable => {
+  const open = (tag: string, text?: string): LoadingCloseable => {
     // state.value.tags.push(tag);
     state.value = {
       ...state.value,
       tags: [...state.value.tags, tag],
+      texts: typeof text === 'string'
+        ? {
+            ...state.value.texts,
+            [tag]: text,
+          }
+        : state.value.texts,
     }
 
     return () => close(tag)
@@ -26,18 +35,53 @@ export const useLoading = () => {
   const close = (tag?: string) => {
     if (tag) {
       // state.value.tags = state.value.tags.filter((value) => value != tag);
+      const {
+        [tag]: _removed, ...restTexts
+      } = state.value.texts
       state.value = {
         ...state.value,
         tags: state.value.tags.filter(value => value !== tag),
+        texts: restTexts,
       }
     }
     else {
       state.value = {
         ...state.value,
         tags: [],
+        texts: {},
       }
     }
   }
+
+  /**
+   * 更新某個 tag 的提示文字，用於同一次載入中切換階段
+   * （例如「正在連線…」→「下載資料中…」→「整理結果…」）。
+   *
+   * 只對「目前開著的 tag」生效：已關閉的 tag 若還能寫入，文字會殘留到下一次開啟。
+   */
+  const setText = (tag: string, text: string) => {
+    if (!state.value.tags.includes(tag)) return
+    state.value = {
+      ...state.value,
+      texts: {
+        ...state.value.texts,
+        [tag]: text,
+      },
+    }
+  }
+
+  /**
+   * 目前要顯示的提示文字。
+   * 多個 tag 同時開啟時取「最後開啟且有文字」的那個——巢狀載入以內層為準較符合預期。
+   */
+  const text = computed(() => {
+    for (let i = state.value.tags.length - 1; i >= 0; i--) {
+      const tag = state.value.tags[i]
+      const value = tag ? state.value.texts[tag] : undefined
+      if (value) return value
+    }
+    return ''
+  })
 
   const isOpening = computed(() => {
     return state.value.tags.length > 0
@@ -102,6 +146,8 @@ export const useLoading = () => {
   return {
     open,
     close,
+    setText,
+    text,
     isOpening,
     isOpen,
     run,

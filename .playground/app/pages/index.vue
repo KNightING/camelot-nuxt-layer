@@ -768,7 +768,17 @@
               label="Show Toast"
               @click="triggerToast"
             />
+            <CamelotButton
+              :color="currentColorRole"
+              is-container
+              label="分階段文字"
+              @click="triggerStagedLoading"
+            />
           </div>
+          <span class="text-xs text-slate-400">
+            「分階段文字」示範同一次載入中以 <code>setText(tag, text)</code> 換階段文字：
+            連線 → 下載 → 整理 → 完成，指示器不重開。
+          </span>
 
           <div class="flex flex-col gap-1.5">
             <span class="text-xs text-slate-400">
@@ -3310,6 +3320,32 @@ const triggerLoading = async () => {
   const close = useLoading().open('Loading theme presets...')
   await useDelay(2500)
   close()
+}
+
+// 分階段文字：同一個 tag 從頭到尾只開一次，中途只換文字，指示器不會閃爍重來
+const triggerStagedLoading = async () => {
+  const {
+    open, setText,
+  } = useLoading()
+  const tag = 'staged-demo'
+  const stages = [
+    '正在連線…',
+    '下載資料中…',
+    '整理結果…',
+    '快好了…',
+  ]
+
+  const close = open(tag, stages[0])
+  try {
+    for (const stage of stages.slice(1)) {
+      await useDelay(1100)
+      setText(tag, stage)
+    }
+    await useDelay(1100)
+  }
+  finally {
+    close()
+  }
 }
 
 const brandColors = [
