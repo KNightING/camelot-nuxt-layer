@@ -6,36 +6,49 @@
 
 **匯入名稱**：`CamelotLoading`
 
+## Props
+| Prop | 型別 | 預設 | 說明 |
+| :--- | :--- | :---: | :--- |
+| `type` | `CamelotLoadingType`（`'ripple' \| 'bounce'`） | `'ripple'` | Aqua 主題的指示器樣式；其他主題忽略 |
+
 ## 備註
-- 無 Props、Emits、v-model、Slots、Exposed。狀態完全由 `useLoading()` 的 `isOpening` 控制顯示。
+- 無 Emits、v-model、Slots、Exposed。顯示與否完全由 `useLoading()` 的 `isOpening` 控制。
+- 唯一的 Prop 是 `type`（見下表），只影響 Aqua 主題；其他主題各只有一種樣式，會忽略它。
 - 透過 `<Teleport to="body">` 掛載於 `body`，包在 `<ClientOnly>` 中僅於用戶端渲染。
 - 顯示時為固定定位（`fixed inset-0`）的半透明黑色遮罩並帶背景模糊，層級 `z-[1100]`。
 - 依 `useCamelotTheme()` 的 `themeMode` 切換樣式：
-  - `aqua`：磨砂玻璃膠囊 + 流光（`aqua-capsule`，168×16px），見下節。
+  - `aqua`：依 `type` 切換水滴漣漪或玻璃珠彈跳，見下節。
   - `scifi`：雷達掃描動畫（含 `CamelotScifiReticle`、`SYS_LOAD...` 文字）。
   - `cupertino`：iOS 風格 8 葉片旋轉器。
   - 其他（預設）：Material SVG 圓形旋轉器。
 - 使用 `fade` 過場動畫（0.35s）。
 
-## Aqua：磨砂玻璃膠囊 + 流光
+## Aqua：`ripple` 與 `bounce`
 
-另外三個主題的指示器都是圓形（Material 環、Cupertino 葉片、Sci-fi 雷達），Aqua 刻意改用水平膠囊做視覺區隔，也呼應 Aqua 通篇的 pill 語彙。
+兩者都刻意做成**向心／原地**的形狀，沒有任何由左往右填滿的線性位移——之前的水平膠囊流光版本會被讀成進度條而非指示器。
 
-**三層結構**：
+### `ripple`（預設）：水滴漣漪
 
-| 層 | 類別 | 職責 |
+| 元素 | 類別 | 職責 |
 | :--- | :--- | :--- |
-| 膠囊 | `.aqua-capsule` | 半透明底 + `backdrop-filter` 毛玻璃 + 髮絲白邊 + 頂部內高光 + 角色色柔影；本身做 `scaleY` 呼吸 |
-| 主流光 | `.aqua-capsule-flow` | 寬 46%，角色色由淡到亮再到淡的漸層，兩端柔化成一段「液體」而非硬塊 |
-| 副流光 | `.aqua-capsule-sheen` | 寬 70% 的白色高光，更寬更淡，相位落後主流光約 1/6 週期，疊出玻璃裡的層次 |
+| 水滴 | `.aqua-ripple-droplet` | 中心 22px 玻璃球，先縮後脹的呼吸，讀起來像「滴下去」才盪出漣漪 |
+| 漣漪 | `.aqua-ripple-wave-{1..3}` | 三道同心圓由 scale 0.28 擴散到 1 並淡出，錯開 1/3 週期形成連續擴散 |
 
-**規則**：
+週期由 `--cml-aqua-ripple-duration`（預設 `2.8s`）控制，三道波的延遲以 `calc()` 從它推算，改一個值即可整組變速。
 
-- 週期由 `--cml-aqua-loading-duration`（預設 `2.6s`）統一控制，三層共用；調速只需改這一個值。
-- 流光來回穿過膠囊（`0%/100%` 在左外、`50%` 在右外），時間曲線 `cubic-bezier(0.62, 0, 0.38, 1)`，兩端減速像液體到底再回流。
-- `translateX` 以**自身寬度**為單位，因此右側終點值依寬度換算：`(168 / 自身寬度) × 100%` —— 46% 寬為 `218%`、70% 寬為 `143%`。改寬度時這兩個數字要一起改。
-- 動畫僅使用 `transform`，兩層流光皆標記 `will-change: transform`。
-- `prefers-reduced-motion: reduce` 時停住所有動畫，主流光固定停在膠囊中段，仍表達「進行中」。
+### `bounce`：玻璃珠彈跳
+
+| 元素 | 類別 | 職責 |
+| :--- | :--- | :--- |
+| 玻璃珠 | `.aqua-bounce-bead-{1..3}` | 三顆 18px 玻璃球依序彈跳，`transform-origin: center bottom` |
+
+週期由 `--cml-aqua-bounce-duration`（預設 `1.1s`）控制。關鍵在 keyframe 的**起跳與落地各壓扁一次**（`scale(1.18, 0.82)`）、空中略微拉長（`scale(0.94, 1.06)`）——少了這兩下會讀成等速上下平移而不是彈跳。
+
+### 共通
+
+- 球體填色走色彩角色 `--cml-color-current-color`（混入白做漸層與內高光），**不使用 `backdrop-filter`**：載入遮罩是半透明黑底，surface 色在深色模式下與遮罩幾乎同色會看不見；不透明填色後毛玻璃也失去意義。
+- 動畫僅使用 `transform` 與 `opacity`。
+- `prefers-reduced-motion: reduce` 時停住動畫，保留靜態球體表示「進行中」。
 
 ---
 [🏠 Wiki](../../index.md)

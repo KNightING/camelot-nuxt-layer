@@ -770,6 +770,23 @@
             />
           </div>
 
+          <div class="flex flex-col gap-1.5">
+            <span class="text-xs text-slate-400">
+              Aqua 指示器樣式（<code>CamelotLoading</code> 的 <code>type</code>，其他主題忽略）：
+            </span>
+            <div class="flex flex-wrap gap-2">
+              <CamelotButton
+                v-for="t in aquaLoadingTypes"
+                :key="t.value"
+                :color="currentColorRole"
+                :is-container="aquaLoadingType !== t.value"
+                :class="aquaLoadingType === t.value ? '' : 'opacity-50'"
+                :label="t.label"
+                @click="aquaLoadingType = t.value"
+              />
+            </div>
+          </div>
+
           <div class="flex flex-col gap-2 mt-2">
             <div class="flex items-center justify-between">
               <span class="text-xs text-slate-400">Skeleton Loader:</span>
@@ -2605,6 +2622,19 @@ const demoTabsOptions = ref([
 ])
 const demoActiveTab = ref('dash')
 const demoSkeletonLoading = ref(true)
+
+// Aqua 載入指示器樣式：與 app.vue 的 <CamelotLoading> 共用同一份 useState
+const aquaLoadingType = useState<CamelotLoadingType>('aqua-loading-type', () => 'ripple')
+const aquaLoadingTypes: { value: CamelotLoadingType, label: string }[] = [
+  {
+    value: 'ripple',
+    label: '水滴漣漪',
+  },
+  {
+    value: 'bounce',
+    label: '玻璃珠彈跳',
+  },
+]
 
 // Drawer demo state
 const drawerLeftOpen = ref(false)

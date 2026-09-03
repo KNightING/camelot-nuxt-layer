@@ -11,19 +11,37 @@
             :class="[themeMode]"
           >
             <!--
-              Aqua：磨砂玻璃膠囊 + 內部流光。
-              另外三個主題的指示器都是圓形（Material 環、Cupertino 葉片、Sci-fi 雷達），
-              這裡刻意用水平膠囊做區隔，也呼應 Aqua 通篇的 pill 語彙。
+              Aqua：兩種樣式，以 type 切換（其他主題各只有一種，會忽略此 prop）。
+              兩者都刻意做成向心／原地的形狀，避免被讀成由左往右填滿的進度條。
             -->
-            <div
-              v-if="themeMode === 'aqua'"
-              class="aqua-capsule"
-            >
-              <!-- 副流光：更寬更淡、相位錯開，疊出玻璃裡的層次 -->
-              <span class="aqua-capsule-sheen" />
-              <!-- 主流光：一段柔邊的角色色，來回穿過膠囊 -->
-              <span class="aqua-capsule-flow" />
-            </div>
+            <template v-if="themeMode === 'aqua'">
+              <!-- ripple（預設）：中心水滴呼吸，外圈同心圓一波波向外擴散淡出 -->
+              <div
+                v-if="type === 'ripple'"
+                class="aqua-ripple"
+              >
+                <span
+                  v-for="i in 3"
+                  :key="i"
+                  class="aqua-ripple-wave"
+                  :class="`aqua-ripple-wave-${i}`"
+                />
+                <span class="aqua-ripple-droplet" />
+              </div>
+
+              <!-- bounce：三顆玻璃珠依序彈跳，起跳與落地各壓扁一次 -->
+              <div
+                v-else
+                class="aqua-bounce"
+              >
+                <span
+                  v-for="i in 3"
+                  :key="i"
+                  class="aqua-bounce-bead"
+                  :class="`aqua-bounce-bead-${i}`"
+                />
+              </div>
+            </template>
 
             <!-- Sci-fi Loading Radar -->
             <div
@@ -71,6 +89,18 @@
 </template>
 
 <script setup lang="ts">
+withDefaults(
+  defineProps<{
+    /**
+     * Aqua 主題的指示器樣式；其他主題各只有一種樣式，會忽略此 prop。
+     * - `ripple`：水滴漣漪（預設）
+     * - `bounce`：玻璃珠彈跳
+     */
+    type?: CamelotLoadingType
+  }>(),
+  { type: 'ripple' },
+)
+
 const { isOpening } = useLoading()
 const { themeMode } = useCamelotTheme()
 </script>
@@ -185,86 +215,94 @@ const { themeMode } = useCamelotTheme()
 .fade-leave-to {
   opacity: 0;
 }
-/* ===== Aqua：磨砂玻璃膠囊 + 流光 =====
-   主流光與副流光共用同一個週期變數，改速度只要動這一個值。 */
-.aqua-capsule {
-  --cml-aqua-loading-duration: 2.6s;
-  position: relative;
-  width: 168px;
-  height: 16px;
-  border-radius: 9999px;
-  overflow: hidden;
-  background-color: color-mix(in srgb, var(--color-surface, white) 45%, transparent);
-  backdrop-filter: blur(12px) saturate(160%);
-  -webkit-backdrop-filter: blur(12px) saturate(160%);
-  border: 1px solid color-mix(in srgb, white 24%, transparent);
+/* ===== Aqua：共用的玻璃球體填色 =====
+   走色彩角色而非 surface：載入遮罩本身是半透明黑底，surface 色在深色模式下
+   幾乎與遮罩同色，球會看不見。不透明填色也讓 backdrop-filter 失去意義。 */
+.aqua-ripple-droplet,
+.aqua-bounce-bead {
+  background-image: linear-gradient(
+    165deg,
+    color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 58%, white),
+    var(--cml-color-current-color, var(--color-primary))
+  );
   box-shadow:
-    inset 0 1px 0 0 color-mix(in srgb, white 38%, transparent),
-    0 8px 24px -8px color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 60%, transparent);
-  animation: aqua-capsule-breathe var(--cml-aqua-loading-duration) ease-in-out infinite;
+    inset 0 2px 2px 0 rgba(255, 255, 255, 0.58),
+    0 0 14px color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 58%, transparent);
 }
 
-.aqua-capsule-flow,
-.aqua-capsule-sheen {
+/* ===== Aqua ・ ripple：水滴漣漪 ===== */
+.aqua-ripple {
+  --cml-aqua-ripple-duration: 2.8s;
+  position: relative;
+  display: flex;
+  width: 96px;
+  height: 96px;
+  align-items: center;
+  justify-content: center;
+}
+.aqua-ripple-wave {
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
+  inset: 0;
   border-radius: 9999px;
-  will-change: transform;
+  border: 1.5px solid color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 70%, transparent);
+  animation: aqua-ripple-out var(--cml-aqua-ripple-duration) cubic-bezier(0.22, 0.61, 0.36, 1) infinite;
+}
+/* 三道波錯開 1/3 週期，看起來是連續不斷的擴散而非一次一發 */
+.aqua-ripple-wave-2 { animation-delay: calc(var(--cml-aqua-ripple-duration) / -3); }
+.aqua-ripple-wave-3 { animation-delay: calc(var(--cml-aqua-ripple-duration) / -1.5); }
+.aqua-ripple-droplet {
+  width: 22px;
+  height: 22px;
+  border-radius: 9999px;
+  animation: aqua-ripple-breathe var(--cml-aqua-ripple-duration) ease-in-out infinite;
+}
+/* 先縮再脹：讀起來像「滴下去」才盪出漣漪 */
+@keyframes aqua-ripple-out {
+  0% { transform: scale(0.28); opacity: 0; }
+  12% { opacity: 0.75; }
+  100% { transform: scale(1); opacity: 0; }
+}
+@keyframes aqua-ripple-breathe {
+  0%, 100% { transform: scale(1); }
+  12% { transform: scale(0.82); }
+  40% { transform: scale(1.06); }
 }
 
-/* 主流光：角色色由淡到亮再到淡，兩端柔化成一段「液體」而不是硬塊 */
-.aqua-capsule-flow {
-  width: 46%;
-  background-image: linear-gradient(
-    90deg,
-    transparent,
-    color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 55%, transparent),
-    color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 92%, white),
-    color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 55%, transparent),
-    transparent
-  );
-  animation: aqua-capsule-flow var(--cml-aqua-loading-duration) cubic-bezier(0.62, 0, 0.38, 1) infinite;
+/* ===== Aqua ・ bounce：玻璃珠彈跳 ===== */
+.aqua-bounce {
+  --cml-aqua-bounce-duration: 1.1s;
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+  height: 64px;
+}
+.aqua-bounce-bead {
+  width: 18px;
+  height: 18px;
+  border-radius: 9999px;
+  transform-origin: center bottom;
+  animation: aqua-bounce-bead var(--cml-aqua-bounce-duration) cubic-bezier(0.3, 0, 0.4, 1) infinite;
+}
+.aqua-bounce-bead-2 { animation-delay: calc(var(--cml-aqua-bounce-duration) / 8.5); }
+.aqua-bounce-bead-3 { animation-delay: calc(var(--cml-aqua-bounce-duration) / 4.2); }
+/* 起跳與落地各壓扁一次，空中略微拉長——沒有這兩下會像等速上下平移 */
+@keyframes aqua-bounce-bead {
+  0% { transform: translateY(0) scale(1, 1); }
+  12% { transform: translateY(0) scale(1.18, 0.82); }
+  50% { transform: translateY(-34px) scale(0.94, 1.06); }
+  88% { transform: translateY(0) scale(1.18, 0.82); }
+  100% { transform: translateY(0) scale(1, 1); }
 }
 
-/* 副流光：白色高光，寬一點淡一點，相位落後主流光約 1/6 週期 */
-.aqua-capsule-sheen {
-  width: 70%;
-  background-image: linear-gradient(
-    90deg,
-    transparent,
-    color-mix(in srgb, white 26%, transparent),
-    transparent
-  );
-  animation: aqua-capsule-sheen var(--cml-aqua-loading-duration) cubic-bezier(0.62, 0, 0.38, 1) infinite;
-  animation-delay: calc(var(--cml-aqua-loading-duration) / -6);
-}
-
-/* translateX 以自身寬度為單位：-100% 完全離開左緣，
-   (168 / 自身寬度) × 100% 完全離開右緣（46% → 218%、70% → 143%） */
-@keyframes aqua-capsule-flow {
-  0%, 100% { transform: translateX(-100%); }
-  50% { transform: translateX(218%); }
-}
-@keyframes aqua-capsule-sheen {
-  0%, 100% { transform: translateX(-100%); }
-  50% { transform: translateX(143%); }
-}
-@keyframes aqua-capsule-breathe {
-  0%, 100% { transform: scaleY(1); }
-  50% { transform: scaleY(1.18); }
-}
-
-/* 降級：停住流光，留一段靜態的填色表示「進行中」 */
+/* 降級：停住動畫，留靜態的球體表示「進行中」 */
 @media (prefers-reduced-motion: reduce) {
-  .aqua-capsule,
-  .aqua-capsule-flow,
-  .aqua-capsule-sheen {
+  .aqua-ripple-wave,
+  .aqua-ripple-droplet,
+  .aqua-bounce-bead {
     animation: none;
   }
-  .aqua-capsule-flow {
-    transform: translateX(60%);
+  .aqua-ripple-wave {
+    opacity: 0.35;
   }
 }
 </style>

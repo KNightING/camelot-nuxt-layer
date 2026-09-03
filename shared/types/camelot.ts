@@ -11,6 +11,14 @@ export type CamelotColorRole
     | 'warning'
     | 'success'
 
+/**
+ * Loading 在 Aqua 主題下的指示器樣式。
+ * 其他主題各只有一種樣式，會忽略此設定。
+ * - `ripple`：水滴漣漪（預設）
+ * - `bounce`：玻璃珠彈跳
+ */
+export type CamelotLoadingType = 'ripple' | 'bounce'
+
 /** RadioGroup / CheckboxGroup 的選項（disabled 為逐選項停用） */
 export interface CamelotGroupOption {
   label: string
