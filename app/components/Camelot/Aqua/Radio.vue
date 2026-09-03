@@ -9,7 +9,7 @@
   >
     <!-- 滿版 + scale 縮小：transform 以中心對稱取樣，避免固定 px 圓點在非整數 DPR 下的半像素偏移 -->
     <span
-      class="h-full w-full rounded-full bg-white transition-transform duration-200 ease-spring"
+      class="h-full w-full rounded-full bg-[var(--cml-color-current-on-color)] transition-transform duration-200 ease-spring"
       :class="modelValue ? 'scale-[0.56]' : 'scale-0'"
     />
   </span>

@@ -412,6 +412,208 @@
           </div>
         </div>
 
+        <!-- Select Options Card（選項渲染與篩選行為） -->
+        <div :class="cardClass">
+          <h2 :class="cardTitleClass">
+            Select ・ 選項進階（slot / filter / 寬度 / 觸發器）
+          </h2>
+          <p class="text-xs text-slate-400">
+            聚焦在「選項」本身：怎麼畫、怎麼篩、選單多寬、選完關不關，以及用自訂元素當觸發器。
+          </p>
+
+          <!-- 1. #option：整份選項清單自訂外觀 -->
+          <div class="flex flex-col gap-1.5">
+            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+              #option ・ 自訂每個選項
+            </span>
+            <CamelotSelectV2
+              v-model="restaurantVal"
+              :color="currentColorRole"
+              label="帶說明與選中標記"
+              :options="restaurantOptions"
+              class="w-full"
+            >
+              <template #option="{ data: opt, isSelected }">
+                <span
+                  class="size-2 shrink-0 rounded-full"
+                  :style="{ backgroundColor: opt.data?.tone }"
+                />
+                <span class="flex flex-1 flex-col text-left">
+                  <span class="truncate">{{ opt.label ?? opt.name }}</span>
+                  <span class="truncate text-xs opacity-60">{{ opt.data?.desc }}</span>
+                </span>
+                <span
+                  v-if="isSelected"
+                  class="shrink-0 text-xs font-bold"
+                >✓</span>
+              </template>
+            </CamelotSelectV2>
+          </div>
+
+          <!-- 2. #option-<value>：只覆寫單一選項 -->
+          <div class="flex flex-col gap-1.5">
+            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+              #option-&lt;value&gt; ・ 只覆寫其中一個
+            </span>
+            <CamelotSelectV2
+              v-model="singleSlotVal"
+              :color="currentColorRole"
+              label="其餘選項維持預設外觀"
+              :options="restaurantOptions"
+              class="w-full"
+            >
+              <template #option-kr="{ data: opt }">
+                <span class="flex-1 truncate text-left font-bold">
+                  {{ opt.label ?? opt.name }}
+                  <span class="ml-1 rounded bg-primary px-1.5 py-0.5 text-[10px] text-on-primary">推薦</span>
+                </span>
+              </template>
+            </CamelotSelectV2>
+          </div>
+
+          <!-- 3. filterFunction：自訂搜尋條件（別名 / 縮寫也能命中） -->
+          <div class="flex flex-col gap-1.5">
+            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+              filterFunction ・ 別名搜尋
+            </span>
+            <span class="text-xs text-slate-400">
+              預設只比對 name / label / value；這裡加上別名，輸入 <code>kr</code>、<code>korean</code> 也能找到「韓式餐廳」。
+            </span>
+            <CamelotSelectV2
+              v-model="aliasVal"
+              :color="currentColorRole"
+              label="輸入 kr / jp / hk 試試"
+              :options="restaurantOptions"
+              :filter-function="filterByAlias"
+              search-placeholder="輸入中文或英文縮寫…"
+              class="w-full"
+            />
+          </div>
+
+          <!-- 3b. SelectOption.disable：單一選項停用 -->
+          <div class="flex flex-col gap-1.5">
+            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+              SelectOption.disable ・ 單一選項停用
+            </span>
+            <span class="text-xs text-slate-400">
+              「韓式餐廳」「日式餐廳」「法式餐廳」今日已額滿：仍列在清單裡（搜尋也找得到），但點不下去。
+              首項就是停用的，因此 <code>default</code> 自動選值會跳過它、直接落在「港式餐廳」。
+            </span>
+            <CamelotSelectV2
+              v-model="disabledOptionVal"
+              :color="currentColorRole"
+              label="部分選項停用"
+              :options="partiallyDisabledOptions"
+              class="w-full"
+            />
+          </div>
+
+          <!-- 4. empty-options：空清單自訂 -->
+          <div class="flex flex-col gap-1.5">
+            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+              #empty-options ・ 空狀態
+            </span>
+            <CamelotSelectV2
+              v-model="emptyVal"
+              :color="currentColorRole"
+              label="沒有任何選項時"
+              :options="[]"
+              class="w-full"
+            >
+              <template #empty-options>
+                <div class="flex flex-col items-center gap-1 py-4 text-center">
+                  <span class="text-sm font-semibold">目前沒有可選的餐廳</span>
+                  <span class="text-xs opacity-60">換個日期或放寬篩選條件再試一次</span>
+                </div>
+              </template>
+            </CamelotSelectV2>
+          </div>
+
+          <!-- 5. popupWidthMode：選單寬度三種行為 -->
+          <div class="flex flex-col gap-1.5">
+            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+              popupWidthMode ・ 選單寬度
+            </span>
+            <div class="grid gap-3 sm:grid-cols-3">
+              <CamelotSelectV2
+                v-model="widthFitVal"
+                :color="currentColorRole"
+                label="fit-content"
+                :options="longLabelOptions"
+                popup-width-mode="fit-content"
+              />
+              <CamelotSelectV2
+                v-model="widthMinVal"
+                :color="currentColorRole"
+                label="min-target（預設）"
+                :options="longLabelOptions"
+                popup-width-mode="min-target"
+              />
+              <CamelotSelectV2
+                v-model="widthSameVal"
+                :color="currentColorRole"
+                label="same-target"
+                :options="longLabelOptions"
+                popup-width-mode="same-target"
+              />
+            </div>
+          </div>
+
+          <!-- 6. disableCloseWhenSelected + optionsContainerMaxHeight -->
+          <div class="flex flex-col gap-1.5">
+            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+              disableCloseWhenSelected ・ 選完不關閉
+            </span>
+            <span class="text-xs text-slate-400">
+              連續比較多個選項時不用一直重開；<strong>再點一次已選中的那一項即視為確認並關閉</strong>。
+              同時把選單高度壓到 120px 觀察捲動。
+            </span>
+            <CamelotSelectV2
+              v-model="keepOpenVal"
+              :color="currentColorRole"
+              label="選了還是開著"
+              :options="restaurantOptions"
+              disable-close-when-selected
+              :options-container-max-height="120"
+              class="w-full"
+            />
+          </div>
+
+          <!-- 7. 預設 slot：拿 selectedData 自訂觸發器 -->
+          <div class="flex flex-col gap-1.5">
+            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+              #default ・ 自訂觸發器
+            </span>
+            <span class="text-xs text-slate-400">
+              預設 slot 會拿到 <code>selectedData</code>（整個 option 物件，含泛型 <code>data</code>），可以完全自己畫觸發元素。
+            </span>
+            <CamelotSelectV2
+              v-model="triggerVal"
+              :color="currentColorRole"
+              :options="restaurantOptions"
+              class="w-fit"
+            >
+              <template #default="{ selectedData }">
+                <CamelotButton
+                  :color="currentColorRole"
+                  is-container
+                  :label="selectedData ? `${selectedData.label ?? selectedData.name} ▾` : '選擇餐廳 ▾'"
+                />
+              </template>
+            </CamelotSelectV2>
+          </div>
+
+          <div class="mt-2 rounded-lg bg-slate-50 p-3 text-xs text-slate-400 dark:bg-slate-900/50">
+            自訂選項：{{ restaurantVal || '—' }} ・
+            單一 slot：{{ singleSlotVal || '—' }} ・
+            別名搜尋：{{ aliasVal || '—' }} <br>
+            部分停用：{{ disabledOptionVal || '—' }} <br>
+            寬度：{{ widthFitVal || '—' }} / {{ widthMinVal || '—' }} / {{ widthSameVal || '—' }} <br>
+            不關閉：{{ keepOpenVal || '—' }} ・
+            觸發器：{{ triggerVal || '—' }}
+          </div>
+        </div>
+
         <!-- Dialog & Bottom Sheet Card -->
         <div :class="cardClass">
           <h2 :class="cardTitleClass">
@@ -1722,7 +1924,290 @@ const options = ref([
     value: '中式餐廳',
     label: '中式餐廳',
   },
+  {
+    name: '泰式餐廳',
+    value: '泰式餐廳',
+    label: '泰式餐廳',
+  },
+  {
+    name: '越南料理',
+    value: '越南料理',
+    label: '越南料理',
+  },
+  {
+    name: '義式餐廳',
+    value: '義式餐廳',
+    label: '義式餐廳',
+  },
+  {
+    name: '法式餐廳',
+    value: '法式餐廳',
+    label: '法式餐廳',
+  },
+  {
+    name: '美式餐廳',
+    value: '美式餐廳',
+    label: '美式餐廳',
+  },
+  {
+    name: '墨西哥料理',
+    value: '墨西哥料理',
+    label: '墨西哥料理',
+  },
+  {
+    name: '印度料理',
+    value: '印度料理',
+    label: '印度料理',
+  },
+  {
+    name: '土耳其料理',
+    value: '土耳其料理',
+    label: '土耳其料理',
+  },
+  {
+    name: '西班牙餐酒館',
+    value: '西班牙餐酒館',
+    label: '西班牙餐酒館',
+  },
+  {
+    name: '素食餐廳',
+    value: '素食餐廳',
+    label: '素食餐廳',
+  },
+  {
+    name: '海鮮餐廳',
+    value: '海鮮餐廳',
+    label: '海鮮餐廳',
+  },
+  {
+    name: '火鍋店',
+    value: '火鍋店',
+    label: '火鍋店',
+  },
 ])
+
+// Select 選項進階展示：帶泛型 data 的選項（供 #option slot 與自訂觸發器使用）
+const restaurantOptions = ref<SelectOptions<{ desc: string, alias: string[], tone: string }>>([
+  {
+    name: '韓式餐廳',
+    value: 'kr',
+    label: '韓式餐廳',
+    data: {
+      desc: '烤肉、部隊鍋、韓式小菜吃到飽',
+      alias: ['kr', 'korean', 'korea'],
+      tone: '#e05252',
+    },
+  },
+  {
+    name: '港式餐廳',
+    value: 'hk',
+    label: '港式餐廳',
+    data: {
+      desc: '燒臘、粥粉麵飯、港式茶餐廳',
+      alias: ['hk', 'hongkong', 'cantonese'],
+      tone: '#e0a23f',
+    },
+  },
+  {
+    name: '日式餐廳',
+    value: 'jp',
+    label: '日式餐廳',
+    data: {
+      desc: '壽司、丼飯、居酒屋',
+      alias: ['jp', 'japan', 'japanese'],
+      tone: '#5aa9e0',
+    },
+  },
+  {
+    name: '中式餐廳',
+    value: 'cn',
+    label: '中式餐廳',
+    data: {
+      desc: '合菜、熱炒、家常菜',
+      alias: ['cn', 'chinese'],
+      tone: '#6fbf73',
+    },
+  },
+  {
+    name: '泰式餐廳',
+    value: 'th',
+    label: '泰式餐廳',
+    data: {
+      desc: '打拋豬、綠咖哩、月亮蝦餅',
+      alias: ['th', 'thai', 'thailand'],
+      tone: '#c76fbf',
+    },
+  },
+  {
+    name: '越南料理',
+    value: 'vn',
+    label: '越南料理',
+    data: {
+      desc: '河粉、法國麵包、生春捲',
+      alias: ['vn', 'viet', 'vietnam'],
+      tone: '#4fb8a8',
+    },
+  },
+  {
+    name: '義式餐廳',
+    value: 'it',
+    label: '義式餐廳',
+    data: {
+      desc: '手工義大利麵、窯烤披薩',
+      alias: ['it', 'italy', 'italian', 'pizza'],
+      tone: '#d97742',
+    },
+  },
+  {
+    name: '法式餐廳',
+    value: 'fr',
+    label: '法式餐廳',
+    data: {
+      desc: '前菜主餐甜點的完整套餐',
+      alias: ['fr', 'france', 'french'],
+      tone: '#7b7fd4',
+    },
+  },
+  {
+    name: '美式餐廳',
+    value: 'us',
+    label: '美式餐廳',
+    data: {
+      desc: '漢堡、烤肋排、啤酒',
+      alias: ['us', 'usa', 'american', 'burger'],
+      tone: '#d4614f',
+    },
+  },
+  {
+    name: '墨西哥料理',
+    value: 'mx',
+    label: '墨西哥料理',
+    data: {
+      desc: '塔可、墨西哥捲餅、莎莎醬',
+      alias: ['mx', 'mexico', 'mexican', 'taco'],
+      tone: '#cf9b3a',
+    },
+  },
+  {
+    name: '印度料理',
+    value: 'in',
+    label: '印度料理',
+    data: {
+      desc: '咖哩、烤餅、坦都里烤雞',
+      alias: ['in', 'india', 'indian', 'curry'],
+      tone: '#c98a2e',
+    },
+  },
+  {
+    name: '土耳其料理',
+    value: 'tr',
+    label: '土耳其料理',
+    data: {
+      desc: '沙威瑪、烤肉拼盤、優格醬',
+      alias: ['tr', 'turkey', 'turkish', 'kebab'],
+      tone: '#a86b4a',
+    },
+  },
+  {
+    name: '西班牙餐酒館',
+    value: 'es',
+    label: '西班牙餐酒館',
+    data: {
+      desc: 'Tapas、海鮮燉飯、火腿',
+      alias: ['es', 'spain', 'spanish', 'tapas'],
+      tone: '#c25c6b',
+    },
+  },
+  {
+    name: '素食餐廳',
+    value: 'veg',
+    label: '素食餐廳',
+    data: {
+      desc: '蔬食料理，含全素與蛋奶素',
+      alias: ['veg', 'vegan', 'vegetarian'],
+      tone: '#6aa84f',
+    },
+  },
+  {
+    name: '海鮮餐廳',
+    value: 'sea',
+    label: '海鮮餐廳',
+    data: {
+      desc: '現流海產、清蒸、生魚片',
+      alias: ['sea', 'seafood'],
+      tone: '#4f8fd4',
+    },
+  },
+  {
+    name: '火鍋店',
+    value: 'hot',
+    label: '火鍋店',
+    data: {
+      desc: '個人鍋、麻辣鴛鴦、涮涮鍋',
+      alias: ['hot', 'hotpot', 'shabu'],
+      tone: '#d4534f',
+    },
+  },
+])
+
+// 預設篩選只比對 name / label / value；這裡額外把 data.alias 納入，讓縮寫也能命中
+const filterByAlias = (
+  option: SelectOption<{ desc: string, alias: string[], tone: string }>,
+  query: string,
+) => {
+  const keyword = query.trim().toLowerCase()
+  if (!keyword) return true
+  const haystack = [
+    option.name,
+    option.label,
+    String(option.value),
+    ...(option.data?.alias ?? []),
+  ]
+  return haystack.some(text => text?.toLowerCase().includes(keyword))
+}
+
+const longLabelOptions = ref([
+  {
+    name: '短',
+    value: 'short',
+    label: '短',
+  },
+  {
+    name: '中等長度的選項名稱',
+    value: 'medium',
+    label: '中等長度的選項名稱',
+  },
+  {
+    name: '非常非常長的選項名稱，用來觀察選單寬度怎麼跟著變',
+    value: 'long',
+    label: '非常非常長的選項名稱，用來觀察選單寬度怎麼跟著變',
+  },
+])
+
+// 部分選項停用：驗證 SelectOption.disable
+const partiallyDisabledOptions = computed<SelectOptions<{ desc: string, alias: string[], tone: string }>>(
+  () => restaurantOptions.value.map(option =>
+    ['kr', 'jp', 'fr'].includes(String(option.value))
+      ? {
+          ...option,
+          label: `${option.label ?? option.name}（今日已額滿）`,
+          disable: true,
+        }
+      : option,
+  ),
+)
+
+const disabledOptionVal = ref<string | undefined>()
+
+const restaurantVal = ref('kr')
+const singleSlotVal = ref('')
+const aliasVal = ref('')
+const emptyVal = ref('')
+const widthFitVal = ref('medium')
+const widthMinVal = ref('medium')
+const widthSameVal = ref('medium')
+const keepOpenVal = ref('')
+const triggerVal = ref('jp')
 
 const virtualValue = ref('')
 

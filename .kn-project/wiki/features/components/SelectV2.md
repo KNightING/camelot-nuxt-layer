@@ -12,7 +12,7 @@
 | `options` | `SelectOptions<T>` | — | 選項清單。 |
 | `optionsContainerMaxHeight` | `number` | `200` | 選項容器最大高度（px）。 |
 | `zIndex` | `number` | — | 浮層 z-index。 |
-| `disableCloseWhenSelected` | `boolean` | — | 選取後不自動關閉。 |
+| `disableCloseWhenSelected` | `boolean` | — | 選取後不自動關閉；再點一次「已選中的那一項」仍會關閉（視為確認），否則只剩點外面才關得掉。 |
 | `default` | `boolean` | `true` | 未選值時自動選第一個選項。 |
 | `disabledCloseWhenScrolling` | `boolean` | `true` | 捲動時不關閉浮層。 |
 | `searchable` | `boolean` | `true` | 觸發器改為可輸入搜尋。 |
@@ -48,13 +48,16 @@
 | `header` | `{ searchValue, setSearchValue }` | 選項清單上方的自訂表頭。 |
 | `option` | `{ index, data, isSelected }` | 單一選項的預設呈現覆寫（所有選項共用）。 |
 | `option-${value}` | `{ index, data, isSelected }` | 針對特定值選項的呈現覆寫（優先於 `option`）。 |
-| `empty-options` | — | 無可選選項時的內容（非 scifi 模式）。 |
+| `empty-options` | — | 無可選選項時的內容（四種主題皆支援）。 |
 
 ## 備註
 - 使用 `<script setup lang="ts" generic="T">` 泛型；選項顯示文字依序取 `label ?? name ?? value`。
 - 搜尋：有 `filterFunction` 時採用之，否則以小寫比對 `value / label / name`。
 - 虛擬滾動採 `@vueuse/core` 的 `useVirtualList`；其可視範圍由容器的 `ResizeObserver`（`useElementSize`）驅動，會隨浮層展開動畫自行重算。開啟浮層時僅 `scrollTo(0)` 回到清單頂端。
-- `default` 為真且 `modelValue` 未定義時，自動選取第一個選項（`immediate` watch）。
+- `default` 為真且 `modelValue` 未定義時，自動選取**第一個可選**的選項（`immediate` watch）；停用中的選項會被跳過，避免一開始就停在使用者無法再點選的值上。
+- 單一選項停用：`SelectOption.disable` 為真時該列渲染為 `disabled` 的 `<button>`、不套 hover 效果並降到 0.38 透明度，`onItemClick` 另有一道防線，讓自訂 `#option` slot 內自行送出的 click 也無法繞過。停用列仍會出現在搜尋結果中（只是不可選）；若該列剛好是目前選中值，仍保留 active 樣式以便看出選在哪。
+- 選項列會帶 `title`（取 `label ?? name`），文字被截斷時可 hover 看到完整內容。
+- 選項面板本身設有 `text-on-surface`，自訂 slot（如 `empty-options`）的內容不必各自指定文字色。
 - 觸發器樣式依 `themeMode`（scifi / cupertino / material / aqua / 預設）切換；浮層基於 `CamelotPopupV2`。
 
 ---
