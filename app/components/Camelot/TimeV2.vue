@@ -208,7 +208,7 @@ const showType = computed<'popup' | 'dialog'>(() => {
 const popupShadowClass = computed(() => {
   switch (themeMode.value) {
     case 'aqua':
-      return 'shadow-[0_12px_44px_-8px_rgba(0,0,0,0.30)] rounded-3xl'
+      return 'shadow-[0_12px_44px_-8px_rgba(0,0,0,0.30)] rounded-aqua-panel'
     case 'cupertino':
       return 'shadow-2xl rounded-2xl'
     case 'scifi':

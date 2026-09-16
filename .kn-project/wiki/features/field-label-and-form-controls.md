@@ -61,7 +61,7 @@ Checkbox 打勾放大：Aqua/Material 8×4 → 10×6；Cupertino 6×10 → 8×12
 
 ## NumberCounter 四主題化
 
-- 容器分支：aqua（`aqua-track` 膠囊 + focus `aqua-glow`）/ cupertino（`bg-surface-container-highest` 圓角面板）/ scifi（current-color 5% 底 + 30% 髮絲框、直角）/ 預設（圓膠囊 + `border-outline-variant`）。
+- 容器分支：aqua（`aqua-track` + `rounded-aqua-control` 12px + focus `aqua-glow`）/ cupertino（`bg-surface-container-highest` 圓角面板）/ scifi（current-color 5% 底 + 30% 髮絲框、直角）/ 預設（圓膠囊 + `border-outline-variant`）。
 - focus 邊框由硬編 `--cml-c-m3-primary` 改為 `--cml-color-current-color`；新增 `color` / `disabled` / `label` / `required` props。
 - **Bug 修復**：step watch 結尾原無條件 `absStep.value = 1`，導致 `step` / `minStepByValue` 全失效；改為僅於無設定時 fallback（保留 `usedMinStepByValue` 的「曾經 step」語意）。
 

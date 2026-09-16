@@ -103,7 +103,7 @@
                   : themeMode === 'material'
                     ? 'h-[56px] rounded-t-[4px] rounded-b-none bg-surface-container-highest border-b border-t-0 border-x-0 border-outline pl-4 pr-10 focus:border-b-2 focus:border-[var(--cml-color-current-color)]'
                     : themeMode === 'aqua'
-                      ? 'aqua-track rounded-full pl-4 pr-10 py-2.5 backdrop-blur-md focus:aqua-glow'
+                      ? 'aqua-track rounded-aqua-control pl-4 pr-10 py-2.5 backdrop-blur-md focus:aqua-glow'
                       : 'border border-stroke rounded-lg pl-4 pr-10 py-2 focus:border-[var(--cml-color-current-color)]',
                 open && themeMode !== 'aqua' ? 'border-[var(--cml-color-current-color)]' : '',
                 open ? 'pointer-events-auto' : 'pointer-events-none',
@@ -140,7 +140,7 @@
                 : themeMode === 'material'
                   ? 'h-[56px] rounded-t-[4px] rounded-b-none bg-surface-container-highest border-b border-t-0 border-x-0 border-outline px-4'
                   : themeMode === 'aqua'
-                    ? 'aqua-track rounded-full px-4 py-2.5 backdrop-blur-md'
+                    ? 'aqua-track rounded-aqua-control px-4 py-2.5 backdrop-blur-md'
                     : 'border border-stroke rounded-lg px-4 py-2',
               open && themeMode !== 'aqua' ? 'border-[var(--cml-color-current-color)]' : '',
               disabled ? 'text-on-surface-variant' : 'text-on-surface',
@@ -165,7 +165,7 @@
             roleColorClass,
             optionsContainerClass || (themeMode === 'aqua' ? 'aqua-glass' : 'bg-surface'),
             themeMode === 'cupertino' ? 'rounded-[12px] backdrop-blur-md' : '',
-            themeMode === 'aqua' ? 'aqua-options rounded-3xl p-1 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.16)]!' : '',
+            themeMode === 'aqua' ? 'aqua-options rounded-aqua-panel p-1 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.16)]!' : '',
             themeMode === 'scifi' ? 'scifi-options-panel bg-transparent border-none shadow-none!' : '',
             themeMode === 'material' ? 'rounded-md' : '',
           ]"

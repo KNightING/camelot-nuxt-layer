@@ -118,6 +118,7 @@
 | `Internal/Calendar` | 日曆核心（DateV2/DateRangeV2 共用） | [詳情](./components/Internal-Calendar.md) |
 | `Internal/CascadeMenuPanel` | CascadeMenu 遞迴飛出面板 | [詳情](./components/Internal-CascadeMenuPanel.md) |
 | `Internal/MenuItem` | Menu 遞迴項目 | [詳情](./components/Internal-MenuItem.md) |
+| `Internal/PasswordToggle` | Input 密碼顯示切換鈕 | [詳情](./components/Internal-PasswordToggle.md) |
 | `Internal/TimeField` | 時/分/秒欄位 | [詳情](./components/Internal-TimeField.md) |
 | `Internal/TimeRow` | 時間列 | [詳情](./components/Internal-TimeRow.md) |
 | `Internal/TreeNode` | Tree 遞迴節點 | [詳情](./components/Internal-TreeNode.md) |

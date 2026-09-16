@@ -16,6 +16,7 @@
         v-model="modelValue"
         class="w-full min-w-0 flex-1 border-none bg-transparent text-sm text-on-surface outline-none transition-colors duration-200 placeholder:text-[color-mix(in_srgb,var(--cml-color-current-color)_40%,var(--color-on-surface))] placeholder:opacity-50"
         :placeholder="placeholder"
+        :type="type"
         :disabled="disabled"
         @focus="onFocus"
         @blur="onBlur"
@@ -31,10 +32,12 @@ withDefaults(
   defineProps<{
     placeholder?: string
     disabled?: boolean
+    type?: CamelotInputType
   }>(),
   {
     placeholder: '',
     disabled: false,
+    type: 'text',
   },
 )
 

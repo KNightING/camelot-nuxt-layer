@@ -11,6 +11,7 @@ Aqua（水感玻璃）主題的輸入框實作，聚焦時呈現光暈效果。�
 | :--- | :--- | :---: | :--- |
 | `placeholder` | `string` | `''` | 佔位提示文字 |
 | `disabled` | `boolean` | `false` | 是否停用輸入框 |
+| `type` | `CamelotInputType` | `'text'` | 原生 input type，由 `CamelotInput` 以 `effectiveType` 下傳 |
 
 ## v-model
 | Model | 型別 | 說明 |
@@ -25,6 +26,7 @@ Aqua（水感玻璃）主題的輸入框實作，聚焦時呈現光暈效果。�
 
 ## 備註
 - 聚焦時套用 `aqua-glow` 樣式（由內部 `isFocused` 狀態控制）。
+- 圓角為 `rounded-aqua-control`（12px token，見 [主題系統](../theme-system.md)）。
 
 ---
 [🏠 Wiki](../../index.md)

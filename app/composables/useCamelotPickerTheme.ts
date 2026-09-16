@@ -9,7 +9,7 @@ export const useCamelotPickerTheme = () => {
   const triggerClass = computed(() => {
     switch (themeMode.value) {
       case 'aqua':
-        return 'aqua-track rounded-full backdrop-blur-md'
+        return 'aqua-track rounded-aqua-control backdrop-blur-md'
       case 'scifi':
         return 'border border-[color-mix(in_srgb,var(--color-primary)_35%,transparent)] bg-surface-container-lowest'
       case 'cupertino':
@@ -23,7 +23,7 @@ export const useCamelotPickerTheme = () => {
   const panelClass = computed(() => {
     switch (themeMode.value) {
       case 'aqua':
-        return 'aqua-glass rounded-3xl'
+        return 'aqua-glass rounded-aqua-panel'
       case 'scifi':
         return 'rounded-none border border-[color-mix(in_srgb,var(--color-primary)_40%,transparent)] bg-surface shadow-[0_0_20px_color-mix(in_srgb,var(--color-primary)_15%,transparent)]'
       case 'cupertino':

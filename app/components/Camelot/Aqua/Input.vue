@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex h-11 w-full items-center rounded-full px-4 transition-all duration-200 ease-spring aqua-track"
+    class="flex h-11 w-full items-center rounded-aqua-control px-4 transition-all duration-200 ease-spring aqua-track"
     :class="{ 'aqua-glow': isFocused }"
   >
     <slot name="before" />
@@ -10,6 +10,7 @@
       v-model="modelValue"
       class="w-full min-w-0 flex-1 border-none bg-transparent text-sm text-on-surface outline-none placeholder:text-on-surface-variant"
       :placeholder="placeholder"
+      :type="type"
       :disabled="disabled"
       @focus="onFocus"
       @blur="onBlur"
@@ -24,10 +25,12 @@ withDefaults(
   defineProps<{
     placeholder?: string
     disabled?: boolean
+    type?: CamelotInputType
   }>(),
   {
     placeholder: '',
     disabled: false,
+    type: 'text',
   },
 )
 

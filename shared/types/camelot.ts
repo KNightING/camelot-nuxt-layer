@@ -19,6 +19,9 @@ export type CamelotColorRole
  */
 export type CamelotLoadingType = 'ripple' | 'bounce'
 
+/** Input 原生 type（單行文字型別；textarea 不適用） */
+export type CamelotInputType = 'text' | 'password' | 'email' | 'number' | 'tel' | 'url' | 'search'
+
 /** RadioGroup / CheckboxGroup 的選項（disabled 為逐選項停用） */
 export interface CamelotGroupOption {
   label: string

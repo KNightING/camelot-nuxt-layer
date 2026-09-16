@@ -105,6 +105,12 @@
   --ease-spring: cubic-bezier(0.34, 1.2, 0.64, 1);
   --ease-ios: cubic-bezier(0.19, 1, 0.22, 1);
 
+  /* Aqua 表單控制項圓角：控制項（button / input / select 觸發器 / number counter / textarea）
+     與浮層面板（select 選單）各一個 token，元件消費 rounded-aqua-control / rounded-aqua-panel。
+     膠囊與圓形語意的元件（tabs / switch / radio / slider thumb）不走這組 token。 */
+  --radius-aqua-control: 0.75rem;
+  --radius-aqua-panel: 1rem;
+
   /* 共用動畫：Sci-Fi 掃描線（供 animate-scifi-scan 使用） */
   --animate-scifi-scan: scifi-scan 3s linear infinite;
 
@@ -128,6 +134,16 @@
     box-sizing: border-box;
     /* position: relative; */
     min-width: 0;
+  }
+
+  /* 關閉瀏覽器原生的密碼顯示/清除按鈕（Edge/IE 的 ::-ms-reveal、::-ms-clear），
+     顯示切換一律由元件的 #after slot 自行提供，避免出現兩顆眼睛 */
+  /* 兩條分開寫：選擇器列表中任一 pseudo-element 不被引擎認得，整條規則就會被丟棄 */
+  input[type='password']::-ms-reveal {
+    display: none;
+  }
+  input[type='password']::-ms-clear {
+    display: none;
   }
 
   body,

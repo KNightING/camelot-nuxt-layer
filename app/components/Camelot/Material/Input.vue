@@ -9,6 +9,7 @@
       v-model="modelValue"
       class="w-full min-w-0 flex-1 border-none bg-transparent pt-4 pb-1 outline-none"
       :placeholder="isFocused ? placeholder : ''"
+      :type="type"
       :disabled="disabled"
       @focus="onFocus"
       @blur="onBlur"
@@ -36,12 +37,14 @@ withDefaults(
     placeholder?: string
     disabled?: boolean
     required?: boolean
+    type?: CamelotInputType
   }>(),
   {
     label: '',
     placeholder: '',
     disabled: false,
     required: false,
+    type: 'text',
   },
 )
 
