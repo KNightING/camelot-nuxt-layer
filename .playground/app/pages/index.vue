@@ -340,6 +340,23 @@
           />
 
           <CamelotInput
+            v-model="inputPasswordVal"
+            label="Password（hide-on-change・預設）"
+            type="password"
+            placeholder="顯示後只要輸入就自動切回隱碼"
+            :color="currentColorRole"
+          />
+
+          <CamelotInput
+            v-model="inputPasswordVal2"
+            label="Password（persistent）"
+            type="password"
+            password-reveal-mode="persistent"
+            placeholder="顯示後保持，直到再次點擊"
+            :color="currentColorRole"
+          />
+
+          <CamelotInput
             v-model="inputTextVal"
             label="Custom Label Slot"
             placeholder="label 由 #label slot 自定義"
@@ -2582,6 +2599,8 @@ watch(currentColorRole, () => triggerThemeTransition())
 const switchVal = ref(false)
 const checkboxVal = ref(false)
 const inputTextVal = ref('')
+const inputPasswordVal = ref('')
+const inputPasswordVal2 = ref('')
 const selectVal = ref('韓式餐廳')
 const selectV2Val = ref('港式餐廳')
 

@@ -72,3 +72,8 @@ camelot-nuxt-layer/
 
 ## Active Plans
 請參閱 [plans.md](./plans.md) 查看執行中計畫。
+
+---
+
+## 全域規則
+- appFlow: false — 本專案為 UI 元件庫，不維護 app-flow 畫面流程紀錄（2026-09-16 決定，不再詢問）。

@@ -107,7 +107,7 @@ const containerThemeClass = computed(() => {
   switch (themeMode.value) {
     case 'aqua':
       return [
-        'aqua-track rounded-full backdrop-blur-md',
+        'aqua-track rounded-aqua-control backdrop-blur-md',
         isFocus.value ? 'aqua-glow' : '',
       ]
     case 'cupertino':

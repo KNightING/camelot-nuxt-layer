@@ -27,6 +27,7 @@
         ref="themeInput"
         v-model="model"
         :placeholder="placeholder"
+        :type="effectiveType"
         :disabled="disabled || mode === 'only-select'"
         :class="{ 'pointer-events-none select-none': mode === 'only-select' }"
         @focus="onFocus"
@@ -43,6 +44,11 @@
         </template>
         <template #after>
           <slot name="after" />
+          <CamelotInternalPasswordToggle
+            v-if="showPasswordToggle"
+            v-model:revealed="isPasswordRevealed"
+            :disabled="disabled"
+          />
         </template>
       </CamelotScifiInput>
 
@@ -131,6 +137,7 @@
         ref="themeInput"
         v-model="model"
         :placeholder="placeholder"
+        :type="effectiveType"
         :disabled="disabled || mode === 'only-select'"
         :class="{ 'pointer-events-none select-none': mode === 'only-select' }"
         @focus="onFocus"
@@ -147,6 +154,11 @@
         </template>
         <template #after>
           <slot name="after" />
+          <CamelotInternalPasswordToggle
+            v-if="showPasswordToggle"
+            v-model:revealed="isPasswordRevealed"
+            :disabled="disabled"
+          />
         </template>
       </CamelotCupertinoInput>
 
@@ -235,6 +247,7 @@
         ref="themeInput"
         v-model="model"
         :placeholder="placeholder"
+        :type="effectiveType"
         :disabled="disabled || mode === 'only-select'"
         :class="{ 'pointer-events-none select-none': mode === 'only-select' }"
         @focus="onFocus"
@@ -251,6 +264,11 @@
         </template>
         <template #after>
           <slot name="after" />
+          <CamelotInternalPasswordToggle
+            v-if="showPasswordToggle"
+            v-model:revealed="isPasswordRevealed"
+            :disabled="disabled"
+          />
         </template>
       </CamelotAquaInput>
 
@@ -330,6 +348,7 @@
         :label="label"
         :required="required"
         :placeholder="placeholder"
+        :type="effectiveType"
         :disabled="disabled || mode === 'only-select'"
         :class="{ 'pointer-events-none select-none': mode === 'only-select' }"
         @focus="onFocus"
@@ -346,6 +365,11 @@
         </template>
         <template #after>
           <slot name="after" />
+          <CamelotInternalPasswordToggle
+            v-if="showPasswordToggle"
+            v-model:revealed="isPasswordRevealed"
+            :disabled="disabled"
+          />
         </template>
       </CamelotMaterialInput>
 
@@ -422,6 +446,16 @@ const props = withDefaults(defineProps<{
   label?: string
   required?: boolean
   placeholder?: string
+  /** 原生 input type，預設 text */
+  type?: CamelotInputType
+  /** type=password 時是否內建顯示/隱藏切換鈕（預設開） */
+  passwordToggle?: boolean
+  /**
+   * 密碼顯示後的維持策略（預設 hide-on-change）：
+   * - hide-on-change：只要數值有異動就自動切回隱碼
+   * - persistent：切到顯示後一直保持，直到再次點擊
+   */
+  passwordRevealMode?: 'persistent' | 'hide-on-change'
   mode?: 'default' | 'select' | 'only-select'
   options?: SelectOptions<T>
   showOptionOnFocus?: boolean
@@ -431,6 +465,9 @@ const props = withDefaults(defineProps<{
 }>(), {
   border: true,
   size: 'basic',
+  type: 'text',
+  passwordToggle: true,
+  passwordRevealMode: 'hide-on-change',
   mode: 'default',
   showOptionOnFocus: true,
   hideOptionOnBlur: false,
@@ -517,6 +554,37 @@ const { themeMode } = useCamelotTheme()
 const isFocused = ref(false)
 
 const roleColorClass = useCamelotRoleColorClass(() => props.color)
+
+// 密碼顯示狀態只在元件內部維持；effectiveType 才是實際下傳給原生 input 的 type
+const isPasswordRevealed = ref(false)
+const showPasswordToggle = computed(() => props.type === 'password' && props.passwordToggle)
+const effectiveType = computed<CamelotInputType>(() =>
+  props.type === 'password' && isPasswordRevealed.value ? 'text' : props.type,
+)
+
+// hide-on-change：數值一有異動就切回隱碼（用 watch 而非 onInput，因 onInput 有 debounce）
+watch(model, () => {
+  if (props.passwordRevealMode === 'hide-on-change' && isPasswordRevealed.value) {
+    isPasswordRevealed.value = false
+  }
+})
+
+// 切換 type 會讓瀏覽器把游標重設到最前面；切換後把游標放回原位（原本無選取時即字尾）。
+// 只在 input 本來就有焦點時處理，避免點眼睛把焦點硬拉進輸入框。
+watch(isPasswordRevealed, () => {
+  const el = inputEl.value
+  if (!el || document.activeElement !== el) {
+    return
+  }
+  const len = String(el.value ?? '').length
+  const start = el.selectionStart ?? len
+  const end = el.selectionEnd ?? len
+  // 真實滑鼠點擊時，Chromium 會在同一個 task 結尾才重設游標，nextTick（microtask）太早；
+  // 因此排到下一個 macrotask 再還原。
+  nextTick(() => {
+    setTimeout(() => el.setSelectionRange(start, end), 0)
+  })
+})
 
 const onFocus = () => {
   isFocused.value = true

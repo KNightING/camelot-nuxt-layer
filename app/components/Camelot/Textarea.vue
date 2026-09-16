@@ -98,7 +98,7 @@ const resizeClass = computed(() => {
 const themeClass = computed(() => {
   switch (themeMode.value) {
     case 'aqua':
-      return 'aqua-track rounded-2xl px-4 py-3 backdrop-blur-md focus:aqua-glow'
+      return 'aqua-track rounded-aqua-control px-4 py-3 backdrop-blur-md focus:aqua-glow'
     case 'scifi':
       return 'rounded-none border border-[color-mix(in_srgb,var(--cml-color-current-color)_30%,transparent)] bg-surface-container-lowest px-4 py-3 font-mono focus:border-[var(--cml-color-current-color)] focus:shadow-[0_0_8px_color-mix(in_srgb,var(--cml-color-current-color)_40%,transparent)]'
     case 'cupertino':
