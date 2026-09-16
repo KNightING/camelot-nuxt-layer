@@ -21,6 +21,8 @@
       :popup-class="popupShadowClass"
       :z-index="selectZIndex"
     >
+      <!-- .prevent：點在 icon／分隔符等非 input 子元素時，label 的啟用行為會再對內層 input 補發一次 click，
+           冒泡回來把剛開的浮層又關掉；阻止預設即可（input 為 readonly，無其他副作用） -->
       <label
         ref="triggerRef"
         class="group flex w-full min-w-[12ch] cursor-pointer items-center gap-2 px-4 py-2 transition-colors"
@@ -33,11 +35,10 @@
             'bg-gray-200! opacity-50': disabled,
           },
         ]"
-        @click="togglePopup"
+        @click.prevent="togglePopup"
       >
         <IMaterialSymbolsScheduleRounded
           class="w-5 h-5 text-outline group-hover:text-[var(--cml-color-current-color)] transition-colors shrink-0"
-          @click.stop="open = true"
         />
         <input
           v-bind="$attrs"

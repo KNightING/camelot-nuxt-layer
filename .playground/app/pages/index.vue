@@ -387,6 +387,129 @@
           />
         </div>
 
+        <!-- Tooltip Card -->
+        <div :class="cardClass">
+          <h2 :class="cardTitleClass">
+            Tooltip
+          </h2>
+          <p class="text-xs opacity-70">
+            滑鼠 hover 顯示；觸控裝置長壓 500ms 顯示、手指放開即關；鍵盤 focus 亦會顯示。浮層自行找空間：偏好上方、不夠時翻到下方，水平置中並夾在視窗內（捲到頁面最頂再 hover 第一顆試試）。
+          </p>
+          <div class="flex flex-wrap items-center gap-4">
+            <CamelotTooltip content="這是預設（上方）的 tooltip">
+              <CamelotButton
+                label="Hover / 長壓我"
+                :color="currentColorRole"
+              />
+            </CamelotTooltip>
+            <CamelotTooltip
+              placement="bottom"
+              content="強制下方，支援多行文字&#10;第二行"
+            >
+              <CamelotButton
+                label="下方"
+                :color="currentColorRole"
+              />
+            </CamelotTooltip>
+            <CamelotTooltip>
+              <template #content>
+                <div class="flex items-center gap-2">
+                  <span class="inline-block h-2 w-2 rounded-full bg-success" />
+                  <span>#content slot 富內容</span>
+                </div>
+              </template>
+              <span class="cursor-help underline decoration-dotted">純文字觸發</span>
+            </CamelotTooltip>
+            <CamelotTooltip
+              disabled
+              content="不會顯示"
+            >
+              <CamelotButton
+                label="disabled"
+                disabled
+                :color="currentColorRole"
+              />
+            </CamelotTooltip>
+          </div>
+          <div class="flex justify-between">
+            <CamelotTooltip content="貼齊左緣時 tooltip 會夾回視窗內，不會被切掉，這段文字故意寫得很長很長">
+              <CamelotButton
+                label="左緣"
+                :color="currentColorRole"
+              />
+            </CamelotTooltip>
+            <CamelotTooltip content="貼齊右緣時 tooltip 會夾回視窗內，不會被切掉，這段文字故意寫得很長很長">
+              <CamelotButton
+                label="右緣"
+                :color="currentColorRole"
+              />
+            </CamelotTooltip>
+          </div>
+        </div>
+
+        <!-- Marquee Card -->
+        <div :class="cardClass">
+          <h2 :class="cardTitleClass">
+            Marquee
+          </h2>
+          <p class="text-xs opacity-70">
+            內容超出容器才捲動；hover 暫停；<code>prefers-reduced-motion</code> 時停止。
+          </p>
+          <CamelotMarquee
+            :speed="marqueeSpeed"
+            :paused="marqueePaused"
+            class="rounded-lg border border-border py-2"
+          >
+            <span
+              v-for="n in 8"
+              :key="n"
+              class="px-2 text-sm whitespace-nowrap"
+            >
+              📢 跑馬燈訊息 {{ n }} · Camelot UI 支援四種主題
+            </span>
+          </CamelotMarquee>
+          <CamelotMarquee
+            direction="right"
+            :speed="40"
+            class="rounded-lg border border-border py-2"
+          >
+            <CamelotTag
+              v-for="n in 10"
+              :key="n"
+              :label="`Tag ${n}`"
+              :color="currentColorRole"
+            />
+          </CamelotMarquee>
+          <div class="flex items-center gap-4">
+            <CamelotMarquee
+              direction="up"
+              :speed="30"
+              class="h-16 w-48 rounded-lg border border-border px-3"
+            >
+              <div
+                v-for="n in 5"
+                :key="n"
+                class="py-1 text-sm"
+              >
+                垂直訊息 {{ n }}
+              </div>
+            </CamelotMarquee>
+            <div class="flex flex-col gap-2">
+              <CamelotSlider
+                v-model="marqueeSpeed"
+                :min="10"
+                :max="200"
+                :color="currentColorRole"
+              />
+              <CamelotSwitch
+                v-model="marqueePaused"
+                label="外部暫停"
+                :color="currentColorRole"
+              />
+            </div>
+          </div>
+        </div>
+
         <!-- Select Card -->
         <div :class="cardClass">
           <h2 :class="cardTitleClass">
@@ -1826,7 +1949,7 @@
             Themed Bottom Sheet
           </h3>
           <p class="text-sm opacity-80 text-center">
-            Handles pull-up offsets, smooth slide-up actions, and border frame customizations dynamically.
+            壓住頂部把手往下拖曳可關閉（超過 35% 高度或快速甩動），遮罩會隨拖曳漸淡；未達門檻會彈回。
           </p>
           <CamelotButton
             :color="currentColorRole"
@@ -2600,6 +2723,8 @@ const switchVal = ref(false)
 const checkboxVal = ref(false)
 const inputTextVal = ref('')
 const inputPasswordVal = ref('')
+const marqueeSpeed = ref(60)
+const marqueePaused = ref(false)
 const inputPasswordVal2 = ref('')
 const selectVal = ref('韓式餐廳')
 const selectV2Val = ref('港式餐廳')

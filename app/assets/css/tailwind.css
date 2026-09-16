@@ -146,6 +146,13 @@
     display: none;
   }
 
+  /* 永遠保留捲軸空間：Dialog / Sheet（BaseDialogV2 的 body:has(dialog[open])）與 Drawer
+     鎖捲動時把 body 設為 overflow: hidden，會傳播到 viewport；有了 stable gutter，
+     捲軸消失時軌道位置仍被保留，版面寬度不會跳動。 */
+  html {
+    scrollbar-gutter: stable;
+  }
+
   body,
   html {
     margin: 0;
