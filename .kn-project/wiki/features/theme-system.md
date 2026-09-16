@@ -40,6 +40,17 @@ graph TD
 | `aqua-glow` | 聚焦光暈（可加 `focus:` / `focus-within:` 變體） |
 | `aqua-thumb` | 玻璃光澤拖點（switch thumb） |
 
+### 圓角 token（`@theme`）
+
+Aqua 表單控制項**不用** `rounded-full` 膠囊，統一消費兩個 token（`tailwind.css` `@theme`）：
+
+| token | 值 | utility | 消費者 |
+| :--- | :---: | :--- | :--- |
+| `--radius-aqua-control` | 12px | `rounded-aqua-control` | Button、Input、Select 觸發器、NumberCounter、Textarea、Date/DateRange/Time picker 觸發欄位 |
+| `--radius-aqua-panel` | 16px | `rounded-aqua-panel` | Select 選單面板、DatePicker/TimePicker 浮層面板與其 popup 落影容器（兩者圓角必須一致，否則落影露方角） |
+
+不走 token、維持膠囊或圓形語意的元件：Tabs（segmented pill）、Switch、Radio、Checkbox（circle）、Slider thumb、Pagination 頁碼；Dialog 面板為大面積浮層，維持 `rounded-3xl`。
+
 ## 🧩 相關 Composables / 型別
 
 | 名稱 | 說明 |
@@ -48,6 +59,7 @@ graph TD
 | `useCamelotRoleColorClass` | 將 `color` 角色解析為設定 `--cml-color-current-*` 的 Tailwind class（取代 router 的 computed `:style`） |
 | `useCamelotPickerTheme` | DatePicker 各風格的 `triggerClass` / `panelClass` / `selectedSurfaceClass` |
 | `CamelotColorRole`（`shared/types/camelot.ts`） | 共用色彩角色 union（primary/secondary/tertiary/error/info/warning/success） |
+| `CamelotInputType`（`shared/types/camelot.ts`） | Input 原生 type union（text/password/email/number/tel/url/search） |
 
 ## 🔧 Tailwind v4 重構重點
 
@@ -58,6 +70,7 @@ graph TD
 
 ## 📌 References
 - 歸檔計畫：[2606081005-aqua-complete-and-tailwind-refactor](../../archive/2606081005-aqua-complete-and-tailwind-refactor.md)
+- 歸檔計畫：[2609161457-aqua-control-radius](../../archive/2609161457-aqua-control-radius.md)（圓角 token）
 - 色彩主題細節：[Color Scheme](./color-scheme.md)
 - 主要檔案：`app/composables/useCamelotTheme.ts`、`app/assets/css/tailwind.css`、`app/components/Camelot/{Aqua,Material,Cupertino,Scifi}/*`
 

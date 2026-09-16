@@ -11,6 +11,7 @@ Cupertino（iOS）風格輸入框，聚焦時切換背景並顯示內框線。<�
 | :--- | :--- | :---: | :--- |
 | `placeholder` | `string` | `''` | 佔位文字 |
 | `disabled` | `boolean` | `false` | 是否停用輸入框 |
+| `type` | `CamelotInputType` | `'text'` | 原生 input type，由 `CamelotInput` 以 `effectiveType` 下傳 |
 
 ## v-model
 | Model | 型別 | 說明 |

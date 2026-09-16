@@ -11,6 +11,7 @@
 | :--- | :--- | :---: | :--- |
 | `placeholder` | `string` | `''` | 輸入框佔位文字。 |
 | `disabled` | `boolean` | `false` | 停用輸入。 |
+| `type` | `CamelotInputType` | `'text'` | 原生 input type，由 `CamelotInput` 以 `effectiveType` 下傳 |
 
 ## v-model
 | Model | 型別 | 說明 |

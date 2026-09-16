@@ -12,6 +12,7 @@ Material Design 風格的浮動標籤文字輸入框，支援聚焦上浮標籤�
 | `label` | `string` | `''` | 浮動標籤文字 |
 | `placeholder` | `string` | `''` | 佔位文字（僅於聚焦時顯示） |
 | `disabled` | `boolean` | `false` | 是否停用輸入框 |
+| `type` | `CamelotInputType` | `'text'` | 原生 input type，由 `CamelotInput` 以 `effectiveType` 下傳 |
 | `required` | `boolean` | `false` | 是否必填，為真時標籤後顯示紅色 `*` |
 
 ## v-model
