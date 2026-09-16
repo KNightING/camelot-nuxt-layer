@@ -6,9 +6,10 @@
       ref="dialog"
       :style="[
         `z-index:${zIndex};`,
+        `--cml-backdrop-progress:${backdropProgress};`,
       ]"
       class="camelot-dialog outline-none overflow-clip transform-gpu bg-transparent"
-      :class="[themeMode]"
+      :class="[themeMode, { 'backdrop-immediate': backdropImmediate }]"
       @pointerup="onDialogClick"
       @keydown.esc="onEsc"
     >
@@ -64,9 +65,15 @@ const props = withDefaults(
     tag?: string
     zIndex?: number
     query?: CamelotDialogQuery
+    /** 遮罩「褪去」進度 0–1（BottomSheet 拖曳關閉時回寫；::backdrop 依此漸變透明） */
+    backdropProgress?: number
+    /** 為 true 時關閉遮罩的 transition，讓進度逐幀即時反映（拖曳中） */
+    backdropImmediate?: boolean
   }>(),
   {
     closeByMask: true,
+    backdropProgress: 0,
+    backdropImmediate: false,
   },
 )
 
@@ -258,7 +265,14 @@ dialog {
 dialog::backdrop {
   background-color: rgba(0, 0, 0, 0.5); /* 兜底：在不支援 color-mix 的極舊版本顯示純黑半透 */
   background-color: color-mix(in srgb, var(--cml-c-mask-color, #000) 50%, transparent); /* 較佳相容性的做法 */
+  /* ::backdrop 會繼承 originating <dialog> 的 custom property；
+     BottomSheet 拖曳時把進度寫進 --cml-backdrop-progress，遮罩隨之褪去 */
+  opacity: calc(1 - var(--cml-backdrop-progress, 0));
   transition: all 0.4s ease;
+}
+
+.camelot-dialog.backdrop-immediate::backdrop {
+  transition: none;
 }
 
 .camelot-dialog.cupertino::backdrop {

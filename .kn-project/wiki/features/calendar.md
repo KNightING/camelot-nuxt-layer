@@ -50,7 +50,7 @@ graph TD
 | `hidePrevArrow` | `boolean` | `false` | 是否隱藏上個月箭頭 |
 | `hideNextArrow` | `boolean` | `false` | 是否隱藏下個月箭頭 |
 | `getDayAttributes` | `(date: Date, dayOfWeek: number) => CalendarDayAttributes \| null` | — | 自訂每日屬性回調（節日/label/dot…） |
-| `showDayLabel` | `boolean` | `true` | 是否顯示日期下方 label；關閉則不渲染、格高緊湊（開 `min-h-[52px]`／關 `min-h-9`） |
+| `showDayLabel` | `boolean` | `true` | 是否顯示日期下方 label；關閉則不渲染、格高緊湊（開 `min-h-[42px]`／關 `min-h-9`） |
 | `locale` | `string`（BCP47） | —（預設中文） | 語系。未給→預設中文（繁中）；給了以 `Intl` 產生週/月/年月名。**中文（含繁/簡 `zh-*`）一律用預設 `日一二`/`一月`/`yyyy年` 格式**，避免 Intl 中文週名帶「週」 |
 | `weekStartsOn` | `0 \| 1` | `0` | 每週起始：0=週日、1=週一 |
 | `weekdayFormatter` | `(date, index) => string` | — | 自訂週名（優先序最高，覆蓋 locale/預設） |
@@ -114,7 +114,9 @@ stateDiagram-v2
 
 ### 緊湊模式（`showDayLabel`）
 
-日期與 label 為兩個獨立元素；`showDayLabel: false` 不渲染 label，格高由 `min-h-[52px]`（開）降為 `min-h-9`（關）→ 不需 label 時無多餘空間。
+日期與 label 為兩個獨立元素；`showDayLabel: false` 不渲染 label，格高由 `min-h-[42px]`（開）降為 `min-h-9`（關）→ 不需 label 時無多餘空間。
+
+label **固定單行**、超出格寬以 `…` 截斷；被截斷時 hover／觸控長壓以 [Tooltip](./components/Tooltip.md)（`block` + `onlyWhenTruncated`）顯示完整文字，未截斷的 label 不會出現 tooltip。Tooltip 會 teleport 進 picker 的 `<dialog>`，dialog 模式下也看得到。
 
 ### 各國語系（`locale` / `weekStartsOn` / formatters）
 
@@ -170,7 +172,8 @@ sequenceDiagram
 | [2604131355-refactor-calendar-define-model](../../archive/2604131355-refactor-calendar-define-model.md) | ✅ 已歸檔 | 將 Calendar 改為 `defineModel` |
 | [2604131417-propagate-calendar-updates](../../archive/2604131417-propagate-calendar-updates.md) | ✅ 已歸檔 | 傳播 `getDayAttributes` 更新 |
 | [2604131437-fix-calendar-type-errors](../../archive/2604131437-fix-calendar-type-errors.md) | ✅ 已歸檔 | 修復 TypeScript 型別問題 |
-| [2604131441-unify-calendar-colors-and-2-line-label](../../archive/2604131441-unify-calendar-colors-and-2-line-label.md) | ✅ 已歸檔 | 統一顏色控制與換行 Label |
+| [2604131441-unify-calendar-colors-and-2-line-label](../../archive/2604131441-unify-calendar-colors-and-2-line-label.md) | ✅ 已歸檔 | 統一顏色控制與換行 Label（兩行 label 已由 2609161544 改為單行＋Tooltip） |
+| [2609161544-marquee-tooltip-sheet-gesture-scroll-lock](../../archive/2609161544-marquee-tooltip-sheet-gesture-scroll-lock.md) | ✅ 已歸檔 | label 單行截斷＋Tooltip；觸發器 label 點 icon／`~` 修正 |
 | [2604131510-refactor-daterange-separate-inputs](../../archive/2604131510-refactor-daterange-separate-inputs.md) | ✅ 已歸檔 | DateRangeV2 改為雙獨立 Input |
 
 ---

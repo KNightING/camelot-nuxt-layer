@@ -30,6 +30,7 @@
 - 使用 `CamelotPopupV2`（桌機）或 `CamelotBaseDialogV2`（手機）承載時間選擇列 `CamelotInternalTimeRow` 與「確認」按鈕。
 - 首次開啟未調整時間即按確認，會套用當前內部值（預設 0:0:0）。
 - popup 模式下點擊外部會關閉（`onClickOutside`，忽略 popup 面板本身）。
+- 觸發器為 `<label>`，`@click.prevent` 開關浮層：點在 icon／分隔符等非 input 子元素時，label 的啟用行為會再對內層 input 補發一次 click、冒泡回來把剛開的又關掉；阻止預設即可（input 唯讀，無其他副作用）。
 - 額外屬性（`$attrs`）會綁定到內部唯讀 `input`。
 - 時分秒欄位（`CamelotInternalTimeField`）的下拉清單本身也是浮層：經由 [useCamelotTeleportTarget](../composables/useCamelotTeleportTarget.md) Teleport 至最近的 `<dialog>`（沒有則 `body`），層級為 `calc(var(--cml-z-popup) + 1)`，確定性地疊在承載它的時間浮層之上。因此在 Dialog / Sheet 內可正常顯示與點選。
 

@@ -22,7 +22,7 @@
 | `hidePrevArrow` | `boolean` | `false` | 隱藏上一月箭頭 |
 | `hideNextArrow` | `boolean` | `false` | 隱藏下一月箭頭 |
 | `getDayAttributes` | `(date: Date, dayOfWeek: number) => CalendarDayAttributes \| undefined \| null` | - | 逐日自訂屬性（節日/label/停用/圓點/class） |
-| `showDayLabel` | `boolean` | `true` | 是否顯示日期下方 label；關閉則不渲染、格高緊湊 |
+| `showDayLabel` | `boolean` | `true` | 是否顯示日期下方 label（單行截斷，截斷時 [Tooltip](./Tooltip.md) 顯示完整）；關閉則不渲染、格高緊湊 |
 | `locale` | `string` | - | BCP47 語系；未給→預設中文，給了以 Intl 產生週/月/年月名 |
 | `weekStartsOn` | `0 \| 1` | `0` | 週起始：0=週日、1=週一 |
 | `weekdayFormatter` | `(date: Date, index: number) => string` | - | 自訂週名（最高優先） |
