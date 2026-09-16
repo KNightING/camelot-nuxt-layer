@@ -48,6 +48,7 @@
 - 啟用時間時，時間列（`CamelotInternalTimeRow`）與「確認」按鈕置於月曆下方；月曆本身設 `hide-time`。時間變動即時 commit 至 model。
 - 未啟用時間時，選日即關閉浮層；啟用時間時保持開啟以便調整，按確認或點外部關閉。
 - 開啟時同步 `viewDate` 到當前 model 值。
+- 觸發器為 `<label>`，`@click.prevent` 開關浮層：點在 icon／分隔符等非 input 子元素時，label 的啟用行為會再對內層 input 補發一次 click、冒泡回來把剛開的又關掉；阻止預設即可（input 唯讀，無其他副作用）。
 
 ---
 [🏠 Wiki](../../index.md)

@@ -54,8 +54,9 @@
 | `BaseDialogV2` | 對話框（mask 點空白關閉） | [詳情](./components/BaseDialogV2.md) |
 | `ConfirmDialog` | 確認對話框（最多三顆按鈕，預設一顆確認） | [詳情](./components/ConfirmDialog.md) |
 | `ErrorDialog` | 全域錯誤對話框（綁定 `useCamelotError` 佇列，逐一顯示） | [詳情](./components/ErrorDialog.md) |
-| `BaseBottomSheetV2` | 底部彈出面板 | [詳情](./components/BaseBottomSheetV2.md) |
+| `BaseBottomSheetV2` | 底部彈出面板（把手拖曳關閉） | [詳情](./components/BaseBottomSheetV2.md) |
 | `PopupV2` | 彈出層 | [詳情](./components/PopupV2.md) |
+| `Tooltip` | 提示浮層（hover／觸控長壓／Tab focus，自行找空間） | [詳情](./components/Tooltip.md) |
 | `Toast` | 吐司通知（玻璃淡入、8 方位） | [詳情](./components/Toast.md) |
 | `OverlayScrollbar` | 附著容器的自訂 overlay 捲軸（H/V） | [詳情](./components/OverlayScrollbar.md) |
 | `Scrollbar` | 包裝式自訂捲軸 | [詳情](./components/Scrollbar.md) |
@@ -98,6 +99,7 @@
 | :--- | :--- | :--- |
 | `RippleEffect` | 漣漪點擊效果 | [詳情](./components/RippleEffect.md) |
 | `SlideTransitionGroup` | 滑動過場群組 | [詳情](./components/SlideTransitionGroup.md) |
+| `Marquee` | 跑馬燈（無縫循環、四方向、hover／外部暫停） | [詳情](./components/Marquee.md) |
 | `Gpu` | GPU 加速動畫容器 | [詳情](./components/Gpu.md) |
 | `Breakpoints` | 斷點顯示（開發用） | [詳情](./components/Breakpoints.md) |
 
@@ -119,6 +121,7 @@
 | `Internal/CascadeMenuPanel` | CascadeMenu 遞迴飛出面板 | [詳情](./components/Internal-CascadeMenuPanel.md) |
 | `Internal/MenuItem` | Menu 遞迴項目 | [詳情](./components/Internal-MenuItem.md) |
 | `Internal/PasswordToggle` | Input 密碼顯示切換鈕 | [詳情](./components/Internal-PasswordToggle.md) |
+| `Internal/SheetHandle` | BottomSheet 拖曳把手 | [詳情](./components/Internal-SheetHandle.md) |
 | `Internal/TimeField` | 時/分/秒欄位 | [詳情](./components/Internal-TimeField.md) |
 | `Internal/TimeRow` | 時間列 | [詳情](./components/Internal-TimeRow.md) |
 | `Internal/TreeNode` | Tree 遞迴節點 | [詳情](./components/Internal-TreeNode.md) |

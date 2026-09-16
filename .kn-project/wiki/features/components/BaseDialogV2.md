@@ -10,6 +10,8 @@
 | Prop | 型別 | 預設 | 說明 |
 | :--- | :--- | :---: | :--- |
 | `closeByMask` | `boolean` | `true` | 點擊遮罩（內容框之外）或按 Esc 是否關閉 |
+| `backdropProgress` | `number` | `0` | 遮罩「褪去」進度 0–1，寫入 `<dialog>` 的 `--cml-backdrop-progress`，`::backdrop` 以 `opacity: calc(1 − 進度)` 漸變（`::backdrop` 會繼承 originating element 的 custom property）；[BaseBottomSheetV2](./BaseBottomSheetV2.md) 拖曳時回寫 |
+| `backdropImmediate` | `boolean` | `false` | 為 true 時關閉遮罩 transition，讓進度逐幀即時反映（拖曳中） |
 | `tag` | `string` | - | 對話框 id；亦作為預設的網址查詢字串 key（值為此 tag） |
 | `zIndex` | `number` | - | 對話框 z-index |
 | `query` | `CamelotDialogQuery` | - | 自訂網址查詢字串同步設定（優先於 `tag`） |
@@ -41,7 +43,7 @@
 - `closeByMask: false` 會**連帶停用 Esc 關閉**，這是刻意設計，用於強制決策的 modal。此時元件不提供任何內建關閉 UI，使用端必須自行提供關閉途徑（可改用 [ConfirmDialog](./ConfirmDialog.md)）。
 - 本元件**不提供內建關閉按鈕**：四種版面皆只渲染 `<slot />`，關閉 UI 由使用端負責。需要標準按鈕列時請改用 [ConfirmDialog](./ConfirmDialog.md)。
 - 網址同步：設定 `tag` 或 `query` 後，開啟會 push 查詢字串（含 `isDialog=true`），關閉會 back 或移除查詢字串；並監聽路由變化反向同步 `open`。
-- 開啟時鎖定 `body` 捲動。
+- 開啟時鎖定 `body` 捲動（`body:has(dialog[open].camelot-dialog) { overflow: hidden }`）。`tailwind.css` 的 `html { scrollbar-gutter: stable }` 永遠保留捲軸空間，鎖定時捲軸軌道仍在、版面寬度不跳動（thumb 因無可捲內容而消失）。[Drawer](./Drawer.md) 的鎖同樣受惠；全 repo 只有這兩處鎖 body 捲動。
 - `<dialog>` 用 `overflow: clip` 而非 `hidden`。元素上的 `transform-gpu` 使本對話框成為內部 `position: fixed` 元素（如 [BaseBottomSheetV2](./BaseBottomSheetV2.md) 的 `.wrapper`）的 containing block，那些元素因此計入本元素的 scrollable overflow；`overflow: hidden` 仍是可被程式捲動的捲動容器，`showModal()` 的 autofocus scroll-into-view 會把整份內容往上捲一段，Sheet 就浮在離視窗底部一個面板高度的位置（在 [Drawer](./Drawer.md) 內開 Sheet 特別容易觸發）。`overflow: clip` 不建立捲動容器，`scrollTop` 恆為 `0`。
 
 ---
