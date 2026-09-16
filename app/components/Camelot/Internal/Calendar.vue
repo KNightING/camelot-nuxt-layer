@@ -96,7 +96,7 @@
           :key="date.toISOString()"
           class="w-10 px-0.5 flex cursor-pointer group"
           :class="[
-            showDayLabel ? 'min-h-[52px]' : 'min-h-9',
+            showDayLabel ? 'min-h-[42px]' : 'min-h-9',
             (isDisabled && isVisible) && 'cursor-not-allowed opacity-30',
           ]"
           @click="(!isDisabled && isVisible) && selectDate(date)"
@@ -128,13 +128,21 @@
                 :is-today="isToday"
               >{{ format(date, 'd') }}</slot>
             </span>
-            <span
+            <!-- label 固定單行、超出以 … 截斷；被截斷時 hover／長壓以 Tooltip 顯示完整內容（未截斷不出現） -->
+            <CamelotTooltip
               v-if="dayLabel && showDayLabel"
-              class="text-[10px] items-center justify-center leading-[1.1] line-clamp-2 break-all text-center shrink-0"
-              :class="!isSelected ? dayLabelClass : ''"
+              :content="dayLabel"
+              block
+              only-when-truncated
+              class="w-full shrink-0 px-0.5"
             >
-              {{ dayLabel }}
-            </span>
+              <span
+                class="block w-full truncate text-center text-[10px] leading-[1.2]"
+                :class="!isSelected ? dayLabelClass : ''"
+              >
+                {{ dayLabel }}
+              </span>
+            </CamelotTooltip>
             <div
               v-if="isDot || isToday"
               class="absolute top-1 left-1 w-1 h-1 rounded-full"

@@ -5,8 +5,7 @@
   -->
   <div
     ref="triggerRef"
-    class="inline-block"
-    :class="{ 'touch-none select-none': isPressing }"
+    :class="[block ? 'block min-w-0' : 'inline-block', { 'touch-none select-none': isPressing }]"
     :aria-describedby="open ? tooltipId : undefined"
     @pointerenter="onPointerEnter"
     @pointerleave="onPointerLeave"
@@ -67,6 +66,10 @@ const props = withDefaults(
     offset?: number
     disabled?: boolean
     zIndex?: number
+    /** 觸發器以 block 排版（預設 inline-block），供需要撐滿寬度、內含 truncate 文字的情境 */
+    block?: boolean
+    /** 只在觸發器內的文字被截斷（scrollWidth > clientWidth）時才顯示，用於 truncate 文字的完整內容提示 */
+    onlyWhenTruncated?: boolean
   }>(),
   {
     content: '',
@@ -75,6 +78,8 @@ const props = withDefaults(
     longPressDuration: 500,
     offset: 6,
     disabled: false,
+    block: false,
+    onlyWhenTruncated: false,
   },
 )
 
@@ -171,6 +176,17 @@ watch(open, (isOpen) => {
 })
 
 // ── 觸發邏輯 ──
+// onlyWhenTruncated：檢查觸發器（或其第一個子元素）的文字是否被截斷；每次開啟前才量，內容變動不需額外監聽
+const canOpen = () => {
+  if (props.disabled) return false
+  if (!props.onlyWhenTruncated) return true
+  const el = triggerRef.value
+  if (!el) return false
+  const candidates = [el, ...Array.from(el.children)] as HTMLElement[]
+  // 只看水平截斷（truncate／line-clamp 的溢出方向）；留 1px 容差避免 subpixel 誤判
+  return candidates.some(c => c.scrollWidth - c.clientWidth > 1)
+}
+
 let hoverTimer: ReturnType<typeof setTimeout> | null = null
 let pressTimer: ReturnType<typeof setTimeout> | null = null
 const isPressing = ref(false)
@@ -194,7 +210,7 @@ const clearPress = () => {
 
 // 滑鼠／觸控筆：hover
 const onPointerEnter = (e: PointerEvent) => {
-  if (props.disabled || e.pointerType === 'touch') return
+  if (e.pointerType === 'touch' || !canOpen()) return
   clearHover()
   hoverTimer = setTimeout(() => {
     open.value = true
@@ -213,7 +229,7 @@ const onPointerLeave = (e: PointerEvent) => {
 
 // 觸控：長壓顯示、放開即關
 const onPointerDown = (e: PointerEvent) => {
-  if (props.disabled || e.pointerType !== 'touch' || !e.isPrimary) return
+  if (e.pointerType !== 'touch' || !e.isPrimary || !canOpen()) return
   clearPress()
   isPressing.value = true
   pressStartX = e.clientX
@@ -250,7 +266,7 @@ const onContextMenu = (e: Event) => {
 // 鍵盤：只認 :focus-visible（Tab 進來），滑鼠點擊／觸控輕點造成的 focus 不開，
 // 否則 tooltip 會變成「點一下就出現」而非 hover／長壓
 const onFocusIn = (e: FocusEvent) => {
-  if (props.disabled) return
+  if (!canOpen()) return
   const target = e.target as Element | null
   if (!target?.matches(':focus-visible')) return
   open.value = true

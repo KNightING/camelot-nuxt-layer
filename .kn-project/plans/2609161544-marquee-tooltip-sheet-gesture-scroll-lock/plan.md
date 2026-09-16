@@ -54,6 +54,7 @@
 - `app/assets/css/tailwind.css:150`（`@layer base` `html`）— `scrollbar-gutter: stable`
 - `app/components/Camelot/Drawer.vue:69` — 僅驗證（body overflow 鎖與 gutter 相容），不改碼
 - `app/components/Camelot/DateV2.vue:36`、`TimeV2.vue:36`、`DateRangeV2.vue:43` — label `@click.prevent`，DateV2/TimeV2 移除 icon `@click.stop`
+- `app/components/Camelot/Internal/Calendar.vue:99`、`:132`（day label）— 單行 truncate + Tooltip
 - `.playground/app/pages/index.vue` — Marquee、Tooltip 範例；Sheet 手勢示範說明；scroll lock 寬度驗證說明
 - `.playground/app/pages/page/…`（疊層檢查點頁，Phase 3 定位）— 視需要補 Sheet 手勢
 
@@ -76,6 +77,7 @@
 - **[迭代]** Sheet 拖曳只允許向下（夾在 0）— 向上位移會露出面板底下的空白（來源：使用者指正）
 - **[迭代]** Tooltip 的 focus 觸發只認 `:focus-visible` — 滑鼠點擊／觸控輕點造成的 focus 不開，否則變成點擊觸發（來源：使用者指正）
 - **[迭代]** Date / DateRange / Time picker 點 icon／`~` 不開：觸發器是 `<label>`，點非 input 子元素時 label 啟用行為會對內層 input 補發 click、冒泡回來再 toggle 一次；改 `@click.prevent="togglePopup"` 並移除 icon 上繞過 label 的 `@click.stop`（來源：使用者回報，順手併入本計畫）
+- **[迭代]** Calendar 日期 label 改單行 `truncate`，格高 `min-h-[52px]` → `min-h-[42px]`；被截斷時以 `CamelotTooltip` 顯示完整內容（`block` + `onlyWhenTruncated` 新 props，未截斷不出現）— 使用者反映兩行 label 讓日期格太高（來源：使用者要求）
 - **[Milestone]** 不指定，PR 併回 `main`（來源：對話確認）
 
 ## Git Completion Policy
