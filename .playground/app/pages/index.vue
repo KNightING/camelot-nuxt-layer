@@ -1583,6 +1583,97 @@
           </div>
         </div>
 
+        <!-- Transitions Card：SlideTransitionGroup／RevealImage／RevealText -->
+        <div :class="[cardClass, 'col-span-1 md:col-span-2 lg:col-span-3']">
+          <h2 :class="cardTitleClass">
+            Transitions (SlideTransitionGroup / RevealImage / RevealText)
+          </h2>
+
+          <div class="grid gap-6 md:grid-cols-3">
+            <div class="flex flex-col gap-3">
+              <span class="text-xs text-slate-400">SlideTransitionGroup（{{ slideIndex + 1 }} / {{ slideItems.length }}，到頭尾按鈕停用）</span>
+              <div class="relative h-32 overflow-hidden rounded-lg border border-outline-variant">
+                <CamelotSlideTransitionGroup
+                  ref="slideGroup"
+                  v-model="slideIndex"
+                  :items="slideItems"
+                >
+                  <template #default="{ item }">
+                    <div
+                      class="flex h-24 w-40 items-center justify-center rounded-lg text-lg font-semibold text-white"
+                      :class="item.data"
+                    >
+                      {{ item.label }}
+                    </div>
+                  </template>
+                </CamelotSlideTransitionGroup>
+              </div>
+              <div class="flex gap-2">
+                <CamelotButton
+                  :color="currentColorRole"
+                  :disabled="slideIndex <= 0"
+                  label="上一張"
+                  @click="slideGroup?.prev()"
+                />
+                <CamelotButton
+                  :color="currentColorRole"
+                  :disabled="slideIndex >= slideItems.length - 1"
+                  label="下一張"
+                  @click="slideGroup?.next()"
+                />
+              </div>
+            </div>
+
+            <div class="flex flex-col gap-3">
+              <span class="text-xs text-slate-400">RevealImage：auto（載入即播）／hover（滑過才播）／manual（按鈕控制）</span>
+              <div class="grid grid-cols-3 gap-2">
+                <div
+                  v-for="trigger in revealTriggers"
+                  :key="trigger"
+                  class="flex flex-col items-center gap-1"
+                >
+                  <CamelotRevealImage
+                    v-if="url"
+                    :src="url"
+                    alt="cat"
+                    :trigger="trigger"
+                    :play="revealPlay"
+                    duration="1200ms"
+                    angle="135deg"
+                    class="h-24 w-full overflow-hidden rounded-lg object-cover"
+                  />
+                  <span class="text-xs text-slate-400">{{ trigger }}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex flex-col gap-3">
+              <span class="text-xs text-slate-400">RevealText：同樣三種觸發（文字底色固定深色，故放在淺色底上）</span>
+              <div class="flex flex-col items-start gap-1 rounded-lg bg-white px-4 py-3">
+                <CamelotRevealText
+                  v-for="trigger in revealTriggers"
+                  :key="trigger"
+                  :text="`Camelot · ${trigger}`"
+                  :trigger="trigger"
+                  :play="revealPlay"
+                  fill="var(--color-primary)"
+                  duration="900ms"
+                  class="whitespace-nowrap"
+                  style="font-size: 24px"
+                />
+              </div>
+            </div>
+          </div>
+
+          <CamelotButton
+            :color="currentColorRole"
+            is-container
+            :label="revealPlay ? '重置 manual' : '播放 manual'"
+            class="w-fit"
+            @click="revealPlay = !revealPlay"
+          />
+        </div>
+
         <!-- Table Card -->
         <div :class="[cardClass, 'col-span-1 md:col-span-2 lg:col-span-3']">
           <h2 :class="cardTitleClass">
@@ -2301,6 +2392,38 @@ const data
 const tabSelected = ref(0)
 const department = ref('韓式餐廳')
 const { url } = useRandomCatImg()
+
+const slideGroup = useTemplateRef<{ prev: () => void, next: () => void }>('slideGroup')
+const slideIndex = ref(0)
+const slideItems: Items<string> = [
+  {
+    key: 'a',
+    value: 'a',
+    label: 'Slide A',
+    data: 'bg-rose-500',
+  },
+  {
+    key: 'b',
+    value: 'b',
+    label: 'Slide B',
+    data: 'bg-amber-500',
+  },
+  {
+    key: 'c',
+    value: 'c',
+    label: 'Slide C',
+    data: 'bg-emerald-500',
+  },
+  {
+    key: 'd',
+    value: 'd',
+    label: 'Slide D',
+    data: 'bg-sky-500',
+  },
+]
+
+const revealTriggers = ['auto', 'hover', 'manual'] as const
+const revealPlay = ref(false)
 
 const options = ref([
   {
