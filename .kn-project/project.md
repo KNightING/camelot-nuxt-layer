@@ -60,11 +60,12 @@ camelot-nuxt-layer/
 | 分類 | 連結 |
 | :--- | :--- |
 | 📋 Wiki 首頁 | [wiki/index.md](./wiki/index.md) |
-| 🎨 主題系統（四風格 + Aqua） | [wiki/features/theme-system.md](./wiki/platform/theme-system.md) |
+| 🏗️ 專案架構 | [wiki/platform/architecture.md](./wiki/platform/architecture.md) |
+| 🎨 主題系統（四風格 + Aqua） | [wiki/platform/theme-system.md](./wiki/platform/theme-system.md) |
 | 🗓️ 日期選擇器系統 | [wiki/features/calendar.md](./wiki/features/calendar.md) |
-| 🎨 色彩主題系統 | [wiki/features/color-scheme.md](./wiki/platform/color-scheme.md) |
-| 🚨 錯誤處理系統（佇列 + 轉換器） | [wiki/features/error-handling.md](./wiki/platform/error-handling.md) |
-| 📦 Layer 整合與必裝依賴 | [wiki/features/layer-integration.md](./wiki/dev/layer-integration.md) |
+| 🎨 色彩主題系統 | [wiki/platform/color-scheme.md](./wiki/platform/color-scheme.md) |
+| 🚨 錯誤處理系統（佇列 + 轉換器） | [wiki/platform/error-handling.md](./wiki/platform/error-handling.md) |
+| 📦 Layer 整合與必裝依賴 | [wiki/dev/layer-integration.md](./wiki/dev/layer-integration.md) |
 | ⚙️ 環境變數 | [wiki/environment.md](./wiki/environment.md) |
 
 ---
