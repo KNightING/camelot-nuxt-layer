@@ -105,7 +105,6 @@ Camelot Nuxt Layer 全部元件的分類索引，依表單、版面資料導覽�
 | 元件 | 說明 | API |
 | :--- | :--- | :--- |
 | `RippleEffect` | 漣漪點擊效果 | [詳情](./components/RippleEffect.md) |
-| `SlideTransitionGroup` | 滑動過場群組 | [詳情](./components/SlideTransitionGroup.md) |
 | `Marquee` | 跑馬燈（無縫循環、四方向、hover／外部暫停） | [詳情](./components/Marquee.md) |
 | `Gpu` | GPU 加速動畫容器 | [詳情](./components/Gpu.md) |
 | `Breakpoints` | 斷點顯示（開發用） | [詳情](./components/Breakpoints.md) |
@@ -151,6 +150,7 @@ Camelot Nuxt Layer 全部元件的分類索引，依表單、版面資料導覽�
 
 | 日期 | 版本 | 計畫 | 變動 | Issue | PR |
 |---|---|---|---|---|---|
+| 2026-09-23 | — | [2609231801-playground-reveal-slide-demos](../../archive/2609231801-playground-reveal-slide-demos.md) | 移除 SlideTransitionGroup（由 Carousel 取代） | [#49](https://github.com/KNightING/camelot-nuxt-layer/issues/49) | — |
 | 2026-09-23 | — | [2609231616-wiki-lint-migration](../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
 
 ## References
