@@ -14,58 +14,74 @@
       />
     </slot>
 
-    <div
-      class="flex h-8 min-w-fit items-center px-1 transition-colors"
-      :class="[containerThemeClass, { 'pointer-events-none': disabled }]"
+    <DefineControl>
+      <div
+        class="flex min-w-fit items-center px-1 transition-colors"
+        :class="[containerThemeClass, { 'pointer-events-none': disabled }]"
+      >
+        <button
+          type="button"
+          class="outline-none"
+          :disabled="disabled"
+          @click="onMinusClick"
+        >
+          <slot name="minus">
+            <CamelotRippleEffect
+              class="flex h-8 aspect-square flex-col items-center justify-center text-[var(--cml-color-current-color)]"
+              :class="themeMode === 'scifi' ? 'rounded-none' : 'rounded-full'"
+            >
+              <span class="text-base font-bold select-none">-</span>
+            </CamelotRippleEffect>
+          </slot>
+        </button>
+
+        <input
+          ref="input"
+          v-model="model"
+          type="number"
+          class="m-0 min-w-[4ch] flex-1 appearance-none bg-transparent text-center text-on-surface caret-[var(--cml-color-current-color)] outline-none"
+          :placeholder="placeholder"
+          :step="step"
+          :min="min"
+          :max="max"
+          :disabled="disabled"
+          :inputmode="inputmode"
+          @blur="isFocus = false"
+          @focus="isFocus = true"
+          @click="onInputClick"
+        >
+
+        <button
+          type="button"
+          class="outline-none"
+          :disabled="disabled"
+          @click="onPlusClick"
+        >
+          <slot name="plus">
+            <CamelotRippleEffect
+              class="flex h-8 aspect-square flex-col items-center justify-center text-[var(--cml-color-current-color)]"
+              :class="themeMode === 'scifi' ? 'rounded-none' : 'rounded-full'"
+            >
+              <span class="text-base font-bold select-none">+</span>
+            </CamelotRippleEffect>
+          </slot>
+        </button>
+      </div>
+    </DefineControl>
+
+    <CamelotScifiFrame
+      v-if="themeMode === 'scifi'"
+      :focused="isFocus"
+      :show-scanline="!disabled"
+      :show-shine="isHovered && !disabled"
+      :active-reticle="isFocus || isHovered"
+      :show-grid="false"
+      @mouseenter="isHovered = true"
+      @mouseleave="isHovered = false"
     >
-      <button
-        type="button"
-        class="outline-none"
-        :disabled="disabled"
-        @click="onMinusClick"
-      >
-        <slot name="minus">
-          <CamelotRippleEffect
-            class="flex h-6 aspect-square flex-col items-center justify-center text-[var(--cml-color-current-color)]"
-            :class="themeMode === 'scifi' ? 'rounded-none' : 'rounded-full'"
-          >
-            <span class="text-base font-bold select-none">-</span>
-          </CamelotRippleEffect>
-        </slot>
-      </button>
-
-      <input
-        ref="input"
-        v-model="model"
-        type="number"
-        class="m-0 min-w-[4ch] flex-1 appearance-none bg-transparent text-center text-on-surface caret-[var(--cml-color-current-color)] outline-none"
-        :placeholder="placeholder"
-        :step="step"
-        :min="min"
-        :max="max"
-        :disabled="disabled"
-        :inputmode="inputmode"
-        @blur="isFocus = false"
-        @focus="isFocus = true"
-        @click="onInputClick"
-      >
-
-      <button
-        type="button"
-        class="outline-none"
-        :disabled="disabled"
-        @click="onPlusClick"
-      >
-        <slot name="plus">
-          <CamelotRippleEffect
-            class="flex h-6 aspect-square flex-col items-center justify-center text-[var(--cml-color-current-color)]"
-            :class="themeMode === 'scifi' ? 'rounded-none' : 'rounded-full'"
-          >
-            <span class="text-base font-bold select-none">+</span>
-          </CamelotRippleEffect>
-        </slot>
-      </button>
-    </div>
+      <ReuseControl />
+    </CamelotScifiFrame>
+    <ReuseControl v-else />
   </div>
 </template>
 
@@ -103,28 +119,28 @@ const input = ref<HTMLInputElement>()
 
 const isFocus = ref(false)
 
+const isHovered = ref(false)
+
+const [DefineControl, ReuseControl] = createReusableTemplate()
+
 const containerThemeClass = computed(() => {
   switch (themeMode.value) {
     case 'aqua':
       return [
-        'aqua-track rounded-aqua-control backdrop-blur-md',
+        'h-11 aqua-track rounded-aqua-control backdrop-blur-md',
         isFocus.value ? 'aqua-glow' : '',
       ]
     case 'cupertino':
       return [
-        'rounded-[10px] bg-surface-container-highest border',
+        'h-11 rounded-[10px] bg-surface-container-highest border',
         isFocus.value ? 'border-[var(--cml-color-current-color)]' : 'border-outline-variant',
       ]
     case 'scifi':
-      return [
-        'bg-[color-mix(in_srgb,var(--cml-color-current-color)_5%,transparent)] border',
-        isFocus.value
-          ? 'border-[var(--cml-color-current-color)] shadow-[0_0_10px_color-mix(in_srgb,var(--cml-color-current-color)_20%,transparent)]'
-          : 'border-[color-mix(in_srgb,var(--cml-color-current-color)_30%,transparent)]',
-      ]
+      // 外框與聚焦效果交給 CamelotScifiFrame，這裡只對齊 Sci-Fi Input 的內高
+      return ['h-9']
     default:
       return [
-        'rounded-full bg-surface border',
+        'h-14 rounded-full bg-surface border',
         isFocus.value ? 'border-[var(--cml-color-current-color)]' : 'border-outline-variant',
       ]
   }

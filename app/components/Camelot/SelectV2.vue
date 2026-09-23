@@ -44,7 +44,7 @@
               type="text"
               :placeholder="selectedLabel || placeholder"
               :disabled="disabled"
-              class="w-full bg-transparent outline-none border-none pl-4 pr-10 py-2 text-base text-on-surface"
+              class="w-full bg-transparent outline-none border-none h-9 pl-4 pr-10 text-base text-on-surface"
               @input="(e: any) => handleSearchInput(e.target.value)"
             >
             <div class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center justify-center">
@@ -69,7 +69,7 @@
           <!-- Static Trigger -->
           <div
             v-else
-            class="w-full outline-none px-4 py-2 text-base flex items-center gap-2 text-on-surface"
+            class="w-full outline-none h-9 px-4 text-base flex items-center gap-2 text-on-surface"
           >
             <span
               class="flex-1 truncate"
@@ -99,11 +99,11 @@
               class="w-full outline-none text-base transition-colors"
               :class="[
                 themeMode === 'cupertino'
-                  ? 'rounded-[10px] bg-surface-container-highest border border-outline-variant pl-4 pr-10 py-2 focus:border-[var(--cml-color-current-color)]'
+                  ? 'h-11 rounded-[10px] bg-surface-container-highest border border-outline-variant pl-4 pr-10 focus:border-[var(--cml-color-current-color)]'
                   : themeMode === 'material'
                     ? 'h-[56px] rounded-t-[4px] rounded-b-none bg-surface-container-highest border-b border-t-0 border-x-0 border-outline pl-4 pr-10 focus:border-b-2 focus:border-[var(--cml-color-current-color)]'
                     : themeMode === 'aqua'
-                      ? 'aqua-track rounded-aqua-control pl-4 pr-10 py-2.5 backdrop-blur-md focus:aqua-glow'
+                      ? 'h-11 aqua-track rounded-aqua-control pl-4 pr-10 backdrop-blur-md focus:aqua-glow'
                       : 'border border-stroke rounded-lg pl-4 pr-10 py-2 focus:border-[var(--cml-color-current-color)]',
                 open && themeMode !== 'aqua' ? 'border-[var(--cml-color-current-color)]' : '',
                 open ? 'pointer-events-auto' : 'pointer-events-none',
@@ -136,11 +136,11 @@
             class="w-full outline-none text-base flex items-center gap-2 transition-colors"
             :class="[
               themeMode === 'cupertino'
-                ? 'rounded-[10px] bg-surface-container-highest border border-outline-variant px-4 py-2'
+                ? 'h-11 rounded-[10px] bg-surface-container-highest border border-outline-variant px-4'
                 : themeMode === 'material'
                   ? 'h-[56px] rounded-t-[4px] rounded-b-none bg-surface-container-highest border-b border-t-0 border-x-0 border-outline px-4'
                   : themeMode === 'aqua'
-                    ? 'aqua-track rounded-aqua-control px-4 py-2.5 backdrop-blur-md'
+                    ? 'h-11 aqua-track rounded-aqua-control px-4 backdrop-blur-md'
                     : 'border border-stroke rounded-lg px-4 py-2',
               open && themeMode !== 'aqua' ? 'border-[var(--cml-color-current-color)]' : '',
               disabled ? 'text-on-surface-variant' : 'text-on-surface',
