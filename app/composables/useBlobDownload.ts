@@ -17,5 +17,7 @@ export const useBlobDownload = (obj: Blob | MediaSource, fileName: string) => {
   const link = document.createElement('a')
   link.download = fileName
   link.href = URL.createObjectURL(obj)
-  return link.click()
+  link.click()
+  // 下載已由瀏覽器接手，下一輪事件循環再釋放，避免 object URL 常駐記憶體
+  setTimeout(() => URL.revokeObjectURL(link.href))
 }

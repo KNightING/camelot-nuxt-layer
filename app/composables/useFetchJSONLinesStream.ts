@@ -53,13 +53,13 @@ export const useFetchJSONLinesStream = <T>(
   // 用於緩存不完整的行
   let lineBuffer = ''
 
-  // 處理緩衝區中的完整行
-  const processBuffer = async () => {
+  // 處理緩衝區中的完整行；isFinal 時串流已結束，最後一段即使沒有換行也視為完整的一行
+  const processBuffer = async (isFinal = false) => {
     // 尋找換行符
     const lines = lineBuffer.split(lineBreak)
 
-    // 最後一個元素可能是不完整的行，將其放回緩衝區
-    lineBuffer = lines.pop() || ''
+    // 串流進行中，最後一個元素可能是不完整的行，將其放回緩衝區
+    lineBuffer = isFinal ? '' : lines.pop() || ''
 
     for (const line of lines) {
       // 忽略空行
@@ -75,9 +75,11 @@ export const useFetchJSONLinesStream = <T>(
       catch (e: any) {
         onParseError?.(e, line)
 
-        if (options.finishOnParseError) {
-          // 如果設置了 finishOnParseError，則終止串流
+        if (finishOnParseError) {
+          // 如果設置了 finishOnParseError，則終止串流，不再處理後續的行
           stream.abort()
+          lineBuffer = ''
+          return
         }
       }
     }
@@ -95,11 +97,10 @@ export const useFetchJSONLinesStream = <T>(
       await processBuffer()
     },
     onFinish: async () => {
-      // 串流結束後，處理緩衝區中剩餘的最後一行（如果文件末尾沒有換行符）
+      // 串流結束後，先取出 decoder 內殘留的位元組，再處理剩餘內容（檔案末尾可能沒有換行符）
+      lineBuffer += decoder.decode()
       if (lineBuffer.trim()) {
-        await processBuffer()
-        // 確保最後的緩衝區也被清空
-        lineBuffer = ''
+        await processBuffer(true)
       }
       // 觸發使用者傳入的 onFinish
       options.onFinish?.(data.value as T[])

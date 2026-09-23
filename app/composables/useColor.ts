@@ -68,8 +68,8 @@ class ColorUtil {
       return undefined
     }
 
-    return `rgba(${array[0]},${array[1]},${array[2]}, ${alpha ?? Math.floor((array[3] * 10) / 255) / 10
-    })`
+    // hexToRgbaArray 的第 4 個值已是 0-1 的透明度
+    return `rgba(${array[0]},${array[1]},${array[2]}, ${alpha ?? array[3]})`
   }
 
   /**

@@ -67,6 +67,11 @@ const isObjectDiff = (
   newValue: any,
 ): boolean | PartialRecursive<any> => {
   if (newValue !== null && typeof newValue === 'object') {
+    // 舊值不是物件（null、基本型別）時無法逐鍵比較，視為整筆變更
+    if (oldValue === null || typeof oldValue !== 'object') {
+      return true
+    }
+
     if (isDate(oldValue) && isDate(newValue)) {
       if (oldValue.getTime() !== newValue.getTime()) {
         return true
@@ -104,6 +109,14 @@ const deepClone = <T>(source: T): T => {
     const copy = new Date()
     copy.setTime(source.getTime())
     return copy as T
+  }
+
+  if (source instanceof Map) {
+    return new Map([...source].map(([key, value]) => [deepClone(key), deepClone(value)])) as T
+  }
+
+  if (source instanceof Set) {
+    return new Set([...source].map(value => deepClone(value))) as T
   }
 
   if (Array.isArray(source)) {

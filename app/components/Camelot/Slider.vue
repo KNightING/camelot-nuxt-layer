@@ -226,6 +226,7 @@ const onTrackPointerDown = (e: PointerEvent) => {
 }
 
 const onThumbKey = (index: number, e: KeyboardEvent) => {
+  if (props.disabled) return
   const delta = e.key === 'ArrowRight' || e.key === 'ArrowUp'
     ? props.step
     : e.key === 'ArrowLeft' || e.key === 'ArrowDown'

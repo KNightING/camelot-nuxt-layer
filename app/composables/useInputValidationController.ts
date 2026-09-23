@@ -13,10 +13,14 @@ export interface InputValidationController {
   addValidator: (fn: Validator) => void
   removeValidator: (fn: Validator) => void
   validate: () => boolean
+  hasInvalid: (options?: { scrollToFirstElement?: boolean }) => boolean
   isValidate: ComputedRef<boolean>
 }
 
-export const useInputValidationController = () => {
+// 只移除確實存在的項目；indexOf 找不到時回傳 -1，直接 splice 會誤刪最後一個
+const withoutItem = <T>(list: T[], item: T) => list.filter(it => it !== item)
+
+export const useInputValidationController = (): InputValidationController => {
   const validateFnList = ref<(Validator)[]>([])
   const validateRefList = ref<ComputedRef<boolean | string | undefined>[]>([])
 
@@ -25,8 +29,7 @@ export const useInputValidationController = () => {
   }
 
   const removeValidatorComputed = (ref: ComputedRef<boolean | string | undefined>) => {
-    validateRefList.value.splice(validateRefList.value.indexOf(ref), 1)
-    validateRefList.value = [...validateRefList.value]
+    validateRefList.value = withoutItem(validateRefList.value, ref)
   }
 
   const addValidator = (fn: Validator) => {
@@ -34,8 +37,7 @@ export const useInputValidationController = () => {
   }
 
   const removeValidator = (fn: Validator) => {
-    validateFnList.value.splice(validateFnList.value.indexOf(fn), 1)
-    validateFnList.value = [...validateFnList.value]
+    validateFnList.value = withoutItem(validateFnList.value, fn)
   }
 
   const validate = () => {
@@ -69,7 +71,8 @@ export const useInputValidationController = () => {
             element = elementValue?.$el
           }
 
-          if (!firstElement || (element && element.scrollTop < firstElement.scrollTop)) {
+          // 以畫面上的位置判斷哪個錯誤欄位最靠上
+          if (element && (!firstElement || element.getBoundingClientRect().top < firstElement.getBoundingClientRect().top)) {
             firstElement = element
           }
         }

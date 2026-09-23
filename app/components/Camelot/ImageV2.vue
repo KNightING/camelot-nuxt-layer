@@ -90,8 +90,17 @@ const containerRef = useTemplateRef('containerRef')
 
 const {
   isLoading, isError, isPending, isReady, load, image, isLandscapeImage,
-} = useLazyImage(props.src, {
+} = useLazyImage(() => props.src, {
   immediate: props.immediate,
+})
+
+watch(image, (loadedImage) => {
+  if (loadedImage) emit('loaded', loadedImage)
+})
+
+// src 變更時，已開始載入過的圖片重新載入；尚未進入畫面的仍等交集觸發
+watch(() => props.src, () => {
+  if (isReady.value || isError.value || isPending.value) load()
 })
 
 const imgRef = useTemplateRef('imgRef')
