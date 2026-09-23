@@ -39,7 +39,7 @@ type BaseOptions = Omit<UseFetchStreamOptions, 'onChunk' | 'onFinish'>
 | `decoder` | `TextDecoder` | UTF-8 解碼器 | 把二進位資料塊解碼成文字 |
 | `lineBreak` | `string` | `'\n'` | 分行符號 |
 | `parse` | `(line: string) => T \| null` | `JSON.parse` | 單行解析函式 |
-| `finishOnParseError` | `boolean` | 實際為不中止 | 明確傳 `true` 時，解析失敗會中止串流 |
+| `finishOnParseError` | `boolean` | `true` | 解析失敗時中止串流；傳 `false` 則略過錯誤行繼續 |
 | `keepData` | `boolean` | `true` | 是否把解析結果累積到 `data` |
 | `method`、`headers`、`immediate`、`onError` | — | 同 useFetchStream | 原樣傳給底層 useFetchStream |
 
@@ -71,8 +71,9 @@ await refresh()
 | --- | --- |
 | 行緩衝 | 每收到一塊資料就解碼接到緩衝尾端，依分行符號切開，最後一段不完整的行留在緩衝 |
 | 空行 | 只有空白的行直接略過 |
-| 結尾沒有換行 | 串流結束時殘留在緩衝的最後一行不會被解析，後端須以分行符號結尾 |
-| 解析失敗 | 預設只呼叫 `onParseError` 並繼續；`finishOnParseError` 明確為 `true` 才中止 |
+| 結尾沒有換行 | 串流結束時殘留在緩衝的最後一行視為完整的一行照常解析 |
+| 解析失敗 | 先呼叫 `onParseError`；預設接著中止串流，後續的行不再解析 |
+| 略過錯誤行 | `finishOnParseError` 為 `false` 時略過該行，繼續解析後續的行 |
 | 底層資料 | 底層 useFetchStream 的 `keepData` 固定為 `false`，不累積位元組 |
 | 錯誤轉交 | 底層的 `onError` 轉呼叫使用者傳入的 `onError` |
 | 立即請求 | 未傳 `immediate` 時沿用底層預設，建立當下就發出請求 |
@@ -85,6 +86,7 @@ await refresh()
 
 | 日期 | 版本 | 計畫 | 變動 | Issue | PR |
 |---|---|---|---|---|---|
+| 2026-09-23 | — | [2609231702-fix-wiki-review-code-defects](../../../archive/2609231702-fix-wiki-review-code-defects.md) | 修正程式碼缺陷後更新為修正後的行為 | [#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47) | — |
 | 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
 
 ## References

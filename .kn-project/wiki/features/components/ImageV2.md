@@ -7,7 +7,7 @@ ImageV2（匯入名稱 `CamelotImageV2`）是延遲載入的圖片元件：進�
 ## Props
 | Prop | 型別 | 預設 | 說明 |
 | :--- | :--- | :---: | :--- |
-| `src` | `string` | — | 圖片網址，只在建立時讀取一次 |
+| `src` | `string` | — | 圖片網址；變更時已開始載入的圖會重新載入 |
 | `fullSrc` | `string` | — | 懸停大圖的網址；未提供時用 src |
 | `alt` | `string` | — | 替代文字 |
 | `hoverShowFullImage` | `boolean` | `false` | 懸停時顯示大圖預覽 |
@@ -19,7 +19,7 @@ ImageV2（匯入名稱 `CamelotImageV2`）是延遲載入的圖片元件：進�
 ## Emits
 | 事件 | 參數 | 說明 |
 | :--- | :--- | :--- |
-| `loaded` | `image: HTMLImageElement` | 已宣告但元件目前不會發出 |
+| `loaded` | `image: HTMLImageElement` | 圖片載入完成時發出 |
 
 ## Slots
 | Slot | 作用域參數 | 說明 |
@@ -39,8 +39,9 @@ ImageV2（匯入名稱 `CamelotImageV2`）是延遲載入的圖片元件：進�
 
 1. 容器有一半進入視窗時開始載入，觸發後即停止觀察。
 2. 載入中顯示 [Skeleton](./Skeleton.md)。
-3. 失敗時渲染 error 插槽，成功時渲染圖片。
-4. 元件上的其他屬性會傳到圖片或 error 插槽的外層元素上。
+3. 失敗時渲染 error 插槽，成功時渲染圖片並發出 `loaded` 事件。
+4. `src` 變更時，已開始載入的圖立即重新載入；還沒進入視窗的仍等進入後才載入。
+5. 元件上的其他屬性會傳到圖片或 error 插槽的外層元素上。
 
 載入狀態由 [useLazyImage](../composables/useLazyImage.md) 管理；整段只在瀏覽器端渲染。
 
@@ -59,6 +60,7 @@ ImageV2（匯入名稱 `CamelotImageV2`）是延遲載入的圖片元件：進�
 
 | 日期 | 版本 | 計畫 | 變動 | Issue | PR |
 |---|---|---|---|---|---|
+| 2026-09-23 | — | [2609231702-fix-wiki-review-code-defects](../../../archive/2609231702-fix-wiki-review-code-defects.md) | 修正程式碼缺陷後更新為修正後的行為 | [#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47) | — |
 | 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
 
 ## References

@@ -49,7 +49,7 @@ const isValidId = useValueValidation(id, { type: 'taiwanIdNumber', allowUndefine
 
 | type | 規則 | 備註 |
 | --- | --- | --- |
-| `email` | `/^[\w\\-\\.]+@([\w\\-]+\.)+[\w\\-]{2,4}$/` | 見下方說明 |
+| `email` | `/^[\w.+-]+@([\w-]+\.)+[\w-]{2,4}$/` | 見下方說明 |
 | `mobile` | `/^[0-9]+$/` | 與 `number` 相同，只檢查純數字 |
 | `internationalMobile` | `/^\+\d{1,3}\d{8,9}$/` | 加號、1 到 3 碼國碼、8 到 9 碼號碼 |
 | `number` | `/^[0-9]+$/` | 純數字 |
@@ -58,7 +58,7 @@ const isValidId = useValueValidation(id, { type: 'taiwanIdNumber', allowUndefine
 | `taiwanIdNumber` | 身分證檢核碼 | 見下方步驟 |
 | `taiwanUniformNumber` | 統一編號檢核碼 | 見下方步驟 |
 
-email 的正規式在字元類別內寫成雙反斜線，實際允許反斜線、不允許連字號。帳號或網域含連字號的地址會被判為不合法。
+email 的帳號可含英數、底線、點、連字號與加號，網域各段可含英數、底線與連字號，不接受反斜線。頂級網域須為 2 到 4 碼。
 
 ### 台灣身分證字號
 
@@ -79,6 +79,7 @@ email 的正規式在字元類別內寫成雙反斜線，實際允許反斜線�
 
 | 日期 | 版本 | 計畫 | 變動 | Issue | PR |
 |---|---|---|---|---|---|
+| 2026-09-23 | — | [2609231702-fix-wiki-review-code-defects](../../../archive/2609231702-fix-wiki-review-code-defects.md) | 修正程式碼缺陷後更新為修正後的行為 | [#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47) | — |
 | 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
 
 ## References

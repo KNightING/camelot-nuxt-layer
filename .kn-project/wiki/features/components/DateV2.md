@@ -9,10 +9,10 @@ DateV2（匯入名稱 `CamelotDateV2`）是單一日期選擇器：點觸發欄�
 | :--- | :--- | :---: | :--- |
 | `minDate` | `Date \| number` | - | 可選最小日期 |
 | `maxDate` | `Date \| number` | - | 可選最大日期 |
-| `disableDaysOfWeekList` | `number[]` | - | 已宣告但元件未使用，傳入無效果 |
+| `disableDaysOfWeekList` | `number[]` | - | 停用星期幾，0 是星期日，6 是星期六 |
 | `isError` | `boolean` | - | 錯誤態，觸發欄位邊框改為 error 色 |
 | `placeholder` | `string` | `'YYYY-MM-DD'` | 未選值時的提示文字 |
-| `allowedDates` | `string[] \| Date[]` | - | 已宣告但元件未使用，傳入無效果 |
+| `allowedDates` | `string[] \| Date[]` | - | 只允許選擇這些日期，字串格式為 yyyy-MM-dd；未設定時不限制 |
 | `disabled` | `boolean` | - | 停用 |
 | `showType` | `'auto' \| 'popup' \| 'dialog'` | `'auto'` | 呈現方式；auto 在手機用 dialog、桌機用 popup |
 | `selectZIndex` | `number` | - | 浮層 z-index |
@@ -83,6 +83,21 @@ DateV2（匯入名稱 `CamelotDateV2`）是單一日期選擇器：點觸發欄�
 
 來源：1. [DateV2.vue][]
 
+### 停用日
+
+月曆每一天的屬性由三個來源合成，任一條件成立該日就停用：
+
+| 來源 | 規則 |
+| :--- | :--- |
+| 使用端的逐日屬性 | 先取得使用端回傳的屬性，含其自訂的停用 |
+| 停用星期 | 該日的星期在停用清單內 |
+| 允許日期 | 有設定允許清單且該日不在清單內；比對只看年月日，不受時分秒影響 |
+| 無法解析的允許日期 | 直接略過，不影響其餘日期與月曆渲染 |
+
+停用星期或不在允許清單時，保留使用端的其他屬性，只把該日設為停用。
+
+來源：1. [DateV2.vue][]
+
 ### 手機對話框
 
 showType 為 auto 時，手機斷點改用置中的 [BaseDialogV2](./BaseDialogV2.md) 呈現月曆，桌機用浮層。
@@ -106,6 +121,7 @@ showType 為 auto 時，手機斷點改用置中的 [BaseDialogV2](./BaseDialogV
 
 | 日期 | 版本 | 計畫 | 變動 | Issue | PR |
 |---|---|---|---|---|---|
+| 2026-09-23 | — | [2609231702-fix-wiki-review-code-defects](../../../archive/2609231702-fix-wiki-review-code-defects.md) | 修正程式碼缺陷後更新為修正後的行為 | [#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47) | — |
 | 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
 
 ## References

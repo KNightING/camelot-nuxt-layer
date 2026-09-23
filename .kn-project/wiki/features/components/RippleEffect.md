@@ -7,7 +7,7 @@
 ## Props
 | Prop | 型別 | 預設 | 說明 |
 | :--- | :--- | :---: | :--- |
-| `rippleColor` | `string` | — | 水波紋顏色，需為 hex 色碼 |
+| `rippleColor` | `string` | — | 水波紋顏色，可為任何 CSS 色值；未指定時沿用全域主題 |
 
 ## Slots
 | Slot | 作用域參數 | 說明 |
@@ -27,16 +27,17 @@
 
 ### 顏色
 
-`rippleColor` 在元件重新渲染後才轉成 RGB 寫入容器的 CSS 變數，掛載當下不會寫入。
+`rippleColor` 可以是 hex、rgb 函式或 CSS 變數等任何色值，由模板直接綁到容器的漣漪色 CSS 變數，掛載時就生效。
 
-不是 hex 色碼時無法轉換，變數維持原值；專案其他地方沒有定義這個變數，所以在寫入之前水波紋沒有顏色、看不見。
+沒指定時不覆寫變數，沿用全域色彩方案的漣漪色。
 
-來源：1. [RippleEffect.vue][]　2. [useColor.ts][]
+來源：1. [RippleEffect.vue][]　2. [useCustomColorScheme.ts][]
 
 ## Changelog
 
 | 日期 | 版本 | 計畫 | 變動 | Issue | PR |
 |---|---|---|---|---|---|
+| 2026-09-23 | — | [2609231702-fix-wiki-review-code-defects](../../../archive/2609231702-fix-wiki-review-code-defects.md) | 修正程式碼缺陷後更新為修正後的行為 | [#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47) | — |
 | 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
 
 ## References
@@ -44,10 +45,10 @@
 | 來源 | 位置 |
 |---|---|
 | RippleEffect.vue | [app/components/Camelot/RippleEffect.vue](../../../../app/components/Camelot/RippleEffect.vue) |
-| useColor.ts | [app/composables/useColor.ts](../../../../app/composables/useColor.ts) |
+| useCustomColorScheme.ts | [app/composables/useCustomColorScheme.ts](../../../../app/composables/useCustomColorScheme.ts) |
 
 [RippleEffect.vue]: #references
-[useColor.ts]: #references
+[useCustomColorScheme.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

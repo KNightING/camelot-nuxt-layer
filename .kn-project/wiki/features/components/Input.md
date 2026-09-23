@@ -7,8 +7,6 @@ Input（匯入名稱 `CamelotInput`）是泛型文字輸入框，依目前主題
 ## Props
 | Prop | 型別 | 預設 | 說明 |
 | :--- | :--- | :---: | :--- |
-| `border` | `boolean` | `true` | 已宣告但目前不影響渲染 |
-| `size` | `'small' \| 'basic'` | `'basic'` | 已宣告但目前不影響渲染 |
 | `mark` | `'money'` | — | 前置標記；`money` 顯示金額符號 |
 | `disabled` | `boolean` | — | 是否停用 |
 | `label` | `string` | — | 標題文字 |
@@ -117,6 +115,7 @@ type 為 password 且 passwordToggle 開啟時，after 區域尾端出現 [Passw
 
 | 日期 | 版本 | 計畫 | 變動 | Issue | PR |
 |---|---|---|---|---|---|
+| 2026-09-23 | — | [2609231702-fix-wiki-review-code-defects](../../../archive/2609231702-fix-wiki-review-code-defects.md) | 修正程式碼缺陷後更新為修正後的行為 | [#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47) | — |
 | 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
 
 ## References

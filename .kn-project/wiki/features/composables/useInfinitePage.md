@@ -25,7 +25,7 @@ const useInfinitePage: (options: {
 | `nextPage` | `VoidFunction` | 必填 | 載入下一頁的函式 |
 | `isPending` | `Ref<boolean \| null \| undefined>` | 必填 | 是否載入中；為真時不觸發 |
 | `isEnd` | `Ref<boolean \| null \| undefined>` | — | 是否已到最後一頁；為真時不觸發 |
-| `target` | `MaybeRefOrGetter<HTMLElement \| SVGElement \| null \| undefined>` | `window` | 捲動監聽目標，傳給 useScrollOnBottom |
+| `target` | `MaybeRefOrGetter<HTMLElement \| SVGElement \| null \| undefined>` | — | 捲動監聽目標，傳給 useScrollOnBottom；未指定時掛載後改用 `window` |
 | `offset` | `MaybeRefOrGetter<number>` | `20` | 到底容差像素，傳給 useScrollOnBottom |
 
 ### 回傳
@@ -54,7 +54,7 @@ useInfinitePage({
 | 規則 | 說明 |
 | --- | --- |
 | 補載判斷對象 | 永遠看整頁的捲動高度，不看自訂 `target` |
-| 伺服端 | 未傳 `target` 時預設取 `window`，伺服端沒有 `window`，須在瀏覽器端呼叫或自帶 `target` |
+| 伺服端 | 未傳 `target` 時交給 useScrollOnBottom 在掛載後才取 `window`，伺服端呼叫不會出錯 |
 
 ## 相關頁面
 
@@ -64,6 +64,7 @@ useInfinitePage({
 
 | 日期 | 版本 | 計畫 | 變動 | Issue | PR |
 |---|---|---|---|---|---|
+| 2026-09-23 | — | [2609231702-fix-wiki-review-code-defects](../../../archive/2609231702-fix-wiki-review-code-defects.md) | 修正程式碼缺陷後更新為修正後的行為 | [#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47) | — |
 | 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
 
 ## References

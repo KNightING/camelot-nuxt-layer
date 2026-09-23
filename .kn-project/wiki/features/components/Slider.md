@@ -12,7 +12,7 @@
 2. 點軌道時，離點擊位置最近的把手移過去，並可接著拖曳。
 3. 區間模式下兩個把手不會交錯，起點不超過終點。
 4. 聚焦把手後，右鍵與上鍵加一個步進，左鍵與下鍵減一個步進。
-5. 停用時擋掉拖曳與點軌道；方向鍵不受停用影響。
+5. 停用時擋掉拖曳、點軌道與方向鍵，值不會改變。
 
 來源：1. [Slider.vue][]
 
@@ -58,6 +58,7 @@ Sci-Fi 主題的軌道與把手為直角，其他主題為圓角。
 
 | 日期 | 版本 | 計畫 | 變動 | Issue | PR |
 |---|---|---|---|---|---|
+| 2026-09-23 | — | [2609231702-fix-wiki-review-code-defects](../../../archive/2609231702-fix-wiki-review-code-defects.md) | 修正程式碼缺陷後更新為修正後的行為 | [#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47) | — |
 | 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
 
 ## References

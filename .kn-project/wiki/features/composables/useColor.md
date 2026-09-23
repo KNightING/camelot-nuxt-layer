@@ -14,7 +14,7 @@
 | 注意事項 | 說明 |
 | --- | --- |
 | 陣列的透明度 | 換算成 0 到 1 後無條件捨去到小數一位 |
-| hexToRgba 未傳 alpha | 會把已是 0 到 1 的透明度再除一次 255，結果恆為 0；需要不透明時請明確傳入 1 |
+| hexToRgba 未傳 alpha | 沿用色碼本身的透明度；6 碼色碼為 1 |
 | 調整後的大小寫 | 紅綠藍三段輸出小寫 |
 
 來源：1. [useColor.ts][]
@@ -54,6 +54,7 @@ type CamelotRgbaTuple = [number, number, number, number]
 
 | 日期 | 版本 | 計畫 | 變動 | Issue | PR |
 |---|---|---|---|---|---|
+| 2026-09-23 | — | [2609231702-fix-wiki-review-code-defects](../../../archive/2609231702-fix-wiki-review-code-defects.md) | 修正程式碼缺陷後更新為修正後的行為 | [#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47) | — |
 | 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
 
 ## References
