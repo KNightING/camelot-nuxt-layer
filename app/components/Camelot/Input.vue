@@ -2,7 +2,7 @@
   <!-- Sci-fi Input Layout -->
   <label
     v-if="themeMode === 'scifi'"
-    class="flex w-full min-w-10 flex-col gap-1.5"
+    class="flex w-full min-w-10 flex-col gap-1.5 text-base"
     :class="[roleColorClass, { 'cursor-not-allowed opacity-60': disabled }]"
   >
     <slot
@@ -115,7 +115,7 @@
   <!-- Cupertino Input Layout -->
   <label
     v-else-if="themeMode === 'cupertino'"
-    class="flex w-full min-w-10 flex-col gap-1.5"
+    class="flex w-full min-w-10 flex-col gap-1.5 text-base"
     :class="[roleColorClass, { 'cursor-not-allowed opacity-40': disabled }]"
   >
     <slot
@@ -225,7 +225,7 @@
   <!-- Aqua Pill Input Layout -->
   <label
     v-else-if="themeMode === 'aqua'"
-    class="flex w-full min-w-10 flex-col gap-1.5"
+    class="flex w-full min-w-10 flex-col gap-1.5 text-base"
     :class="[roleColorClass, { 'cursor-not-allowed opacity-40': disabled }]"
   >
     <slot
@@ -335,9 +335,21 @@
   <!-- Material Input Layout (Default) -->
   <label
     v-else
-    class="relative flex w-full min-w-10 flex-col"
+    class="relative flex w-full min-w-10 flex-col gap-1.5 text-base"
     :class="[roleColorClass, { 'cursor-not-allowed opacity-50': disabled }]"
   >
+    <slot
+      v-if="labelMode === 'outside'"
+      name="label"
+      :label="label"
+    >
+      <CamelotFieldLabel
+        :label="label"
+        :required="required"
+        class="pl-1"
+      />
+    </slot>
+
     <div
       ref="target"
       class="relative w-full flex-1"
@@ -345,7 +357,7 @@
       <CamelotMaterialInput
         ref="themeInput"
         v-model="model"
-        :label="label"
+        :label="labelMode === 'floating' ? label : ''"
         :required="required"
         :placeholder="placeholder"
         :type="effectiveType"
@@ -456,6 +468,12 @@ const props = withDefaults(defineProps<{
    * - persistent：切到顯示後一直保持，直到再次點擊
    */
   passwordRevealMode?: 'persistent' | 'hide-on-change'
+  /**
+   * label 呈現方式（僅 Material 主題有差異，其他主題一律在框外）：
+   * - outside：label 在輸入框上方，框高 42px 起跳，與其他表單控制項並排對齊
+   * - floating：Material 浮動 label 收在框內，框高 56px 起跳
+   */
+  labelMode?: 'outside' | 'floating'
   mode?: 'default' | 'select' | 'only-select'
   options?: SelectOptions<T>
   showOptionOnFocus?: boolean
@@ -468,6 +486,7 @@ const props = withDefaults(defineProps<{
   type: 'text',
   passwordToggle: true,
   passwordRevealMode: 'hide-on-change',
+  labelMode: 'outside',
   mode: 'default',
   showOptionOnFocus: true,
   hideOptionOnBlur: false,

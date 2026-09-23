@@ -1,14 +1,16 @@
 <template>
   <div
-    class="relative flex h-14 w-full items-center rounded-t-[4px] border-b border-outline bg-surface-container-highest px-4 transition-all duration-200 focus-within:border-b-2 focus-within:border-b-[var(--cml-color-current-color)]"
+    class="relative flex w-full items-center rounded-t-[4px] border-y border-t-transparent border-b-outline bg-surface-container-highest px-4 transition-all duration-200 focus-within:border-b-[var(--cml-color-current-color)] focus-within:shadow-[inset_0_-1px_0_var(--cml-color-current-color)]"
+    :class="label ? 'min-h-14' : 'min-h-10.5'"
   >
     <slot name="before" />
 
     <input
       ref="input"
       v-model="modelValue"
-      class="w-full min-w-0 flex-1 border-none bg-transparent pt-4 pb-1 outline-none"
-      :placeholder="isFocused ? placeholder : ''"
+      class="w-full min-w-0 flex-1 border-none bg-transparent outline-none"
+      :class="label ? 'pt-4 pb-1' : 'py-2'"
+      :placeholder="!label || isFocused ? placeholder : ''"
       :type="type"
       :disabled="disabled"
       @focus="onFocus"

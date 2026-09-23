@@ -5,17 +5,31 @@
 export const useCamelotPickerTheme = () => {
   const { themeMode } = useCamelotTheme()
 
-  // 觸發欄位（input 外框）
+  // 觸發欄位（input 外框）：與同主題的 Input 同一套外觀；Sci-Fi 外框由 CamelotInternalFieldFrame 負責
   const triggerClass = computed(() => {
     switch (themeMode.value) {
       case 'aqua':
-        return 'aqua-track rounded-aqua-control backdrop-blur-md'
+        return 'min-h-10.5 aqua-track rounded-aqua-control backdrop-blur-md'
       case 'scifi':
-        return 'border border-[color-mix(in_srgb,var(--color-primary)_35%,transparent)] bg-surface-container-lowest'
+        return 'min-h-10'
       case 'cupertino':
-        return 'border border-outline-variant bg-surface-container-highest rounded-[10px]'
+        return 'min-h-10.5 rounded-[10px] border border-transparent bg-surface-container-highest'
       default:
-        return 'border border-outline bg-surface-container-lowest rounded-lg'
+        return 'min-h-10.5 rounded-t-[4px] border-y border-t-transparent border-b-outline bg-surface-container-highest'
+    }
+  })
+
+  // 觸發欄位展開（聚焦）時的樣式，對應各主題 Input 的聚焦效果
+  const triggerOpenClass = computed(() => {
+    switch (themeMode.value) {
+      case 'aqua':
+        return 'aqua-glow'
+      case 'scifi':
+        return ''
+      case 'cupertino':
+        return 'bg-surface shadow-[inset_0_0_0_1px_var(--cml-color-current-color)]'
+      default:
+        return 'border-b-[var(--cml-color-current-color)] shadow-[inset_0_-1px_0_var(--cml-color-current-color)]'
     }
   })
 
@@ -50,6 +64,7 @@ export const useCamelotPickerTheme = () => {
   return {
     themeMode,
     triggerClass,
+    triggerOpenClass,
     panelClass,
     selectedSurfaceClass,
   }

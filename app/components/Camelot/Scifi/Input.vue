@@ -8,13 +8,13 @@
     @mouseenter="isHovered = true"
     @mouseleave="isHovered = false"
   >
-    <div class="flex h-9 w-full items-center px-2">
+    <div class="flex min-h-10 w-full items-center px-2">
       <slot name="before" />
 
       <input
         ref="input"
         v-model="modelValue"
-        class="w-full min-w-0 flex-1 border-none bg-transparent text-base text-on-surface outline-none transition-colors duration-200 placeholder:text-[color-mix(in_srgb,var(--cml-color-current-color)_40%,var(--color-on-surface))] placeholder:opacity-50"
+        class="w-full min-w-0 flex-1 border-none bg-transparent py-2 text-on-surface outline-none transition-colors duration-200 placeholder:text-[color-mix(in_srgb,var(--cml-color-current-color)_40%,var(--color-on-surface))] placeholder:opacity-50"
         :placeholder="placeholder"
         :type="type"
         :disabled="disabled"
