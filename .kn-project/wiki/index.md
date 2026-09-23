@@ -94,7 +94,6 @@
 - [Scrollbar](features/components/Scrollbar.md)
 - [SelectV2](features/components/SelectV2.md)
 - [Skeleton](features/components/Skeleton.md)
-- [SlideTransitionGroup](features/components/SlideTransitionGroup.md)
 - [Slider](features/components/Slider.md)
 - [Steps](features/components/Steps.md)
 - [Switch](features/components/Switch.md)

@@ -1583,47 +1583,13 @@
           </div>
         </div>
 
-        <!-- Transitions Card：SlideTransitionGroup／RevealImage／RevealText -->
+        <!-- Transitions Card：RevealImage／RevealText -->
         <div :class="[cardClass, 'col-span-1 md:col-span-2 lg:col-span-3']">
           <h2 :class="cardTitleClass">
-            Transitions (SlideTransitionGroup / RevealImage / RevealText)
+            Transitions (RevealImage / RevealText)
           </h2>
 
-          <div class="grid gap-6 md:grid-cols-3">
-            <div class="flex flex-col gap-3">
-              <span class="text-xs text-slate-400">SlideTransitionGroup（{{ slideIndex + 1 }} / {{ slideItems.length }}，到頭尾按鈕停用）</span>
-              <div class="relative h-32 overflow-hidden rounded-lg border border-outline-variant">
-                <CamelotSlideTransitionGroup
-                  ref="slideGroup"
-                  v-model="slideIndex"
-                  :items="slideItems"
-                >
-                  <template #default="{ item }">
-                    <div
-                      class="flex h-24 w-40 items-center justify-center rounded-lg text-lg font-semibold text-white"
-                      :class="item.data"
-                    >
-                      {{ item.label }}
-                    </div>
-                  </template>
-                </CamelotSlideTransitionGroup>
-              </div>
-              <div class="flex gap-2">
-                <CamelotButton
-                  :color="currentColorRole"
-                  :disabled="slideIndex <= 0"
-                  label="上一張"
-                  @click="slideGroup?.prev()"
-                />
-                <CamelotButton
-                  :color="currentColorRole"
-                  :disabled="slideIndex >= slideItems.length - 1"
-                  label="下一張"
-                  @click="slideGroup?.next()"
-                />
-              </div>
-            </div>
-
+          <div class="grid gap-6 md:grid-cols-2">
             <div class="flex flex-col gap-3">
               <span class="text-xs text-slate-400">RevealImage：auto（載入即播）／hover（滑過才播）／manual（按鈕控制）</span>
               <div class="grid grid-cols-3 gap-2">
@@ -2392,35 +2358,6 @@ const data
 const tabSelected = ref(0)
 const department = ref('韓式餐廳')
 const { url } = useRandomCatImg()
-
-const slideGroup = useTemplateRef<{ prev: () => void, next: () => void }>('slideGroup')
-const slideIndex = ref(0)
-const slideItems: Items<string> = [
-  {
-    key: 'a',
-    value: 'a',
-    label: 'Slide A',
-    data: 'bg-rose-500',
-  },
-  {
-    key: 'b',
-    value: 'b',
-    label: 'Slide B',
-    data: 'bg-amber-500',
-  },
-  {
-    key: 'c',
-    value: 'c',
-    label: 'Slide C',
-    data: 'bg-emerald-500',
-  },
-  {
-    key: 'd',
-    value: 'd',
-    label: 'Slide D',
-    data: 'bg-sky-500',
-  },
-]
 
 const revealTriggers = ['auto', 'hover', 'manual'] as const
 const revealPlay = ref(false)
