@@ -73,7 +73,7 @@
             hide-time
             :time-precision="timePrecision"
             :hour-format="hourFormat"
-            :get-day-attributes="getDayAttributes"
+            :get-day-attributes="resolveDayAttributes"
             :show-day-label="showDayLabel"
             :locale="locale"
             :week-starts-on="weekStartsOn"
@@ -132,7 +132,7 @@
             hide-time
             :time-precision="timePrecision"
             :hour-format="hourFormat"
-            :get-day-attributes="getDayAttributes"
+            :get-day-attributes="resolveDayAttributes"
             :show-day-label="showDayLabel"
             :locale="locale"
             :week-starts-on="weekStartsOn"
@@ -180,16 +180,18 @@
 <script setup lang="ts">
 import IMaterialSymbolsCalendarMonthRounded from '~icons/material-symbols/calendar-month-rounded'
 import {
-  format, setHours, setMinutes, setSeconds, getHours, getMinutes, getSeconds,
+  format, isValid, parseISO, setHours, setMinutes, setSeconds, getHours, getMinutes, getSeconds,
 } from 'date-fns'
 import type { CalendarDayAttributes } from './Internal/Calendar.vue'
 
 const props = withDefaults(defineProps<{
   minDate?: Date | number
   maxDate?: Date | number
+  /** 停用星期幾（0 = 星期日 … 6 = 星期六） */
   disableDaysOfWeekList?: number[]
   isError?: boolean
   placeholder?: string
+  /** 只允許選擇這些日期（字串為 yyyy-MM-dd）；未設定時不限制 */
   allowedDates?: string[] | Date[]
   disabled?: boolean
   showType?: 'auto' | 'popup' | 'dialog'
@@ -229,6 +231,31 @@ const props = withDefaults(defineProps<{
 const roleColorClass = useCamelotRoleColorClass(() => props.color)
 
 const model = defineModel<Date | number>()
+
+const DATE_KEY_FORMAT = 'yyyy-MM-dd'
+
+// allowedDates 正規化成日期字串集合，逐日比對時不受時分秒與時區影響
+const allowedDateKeys = computed(() => {
+  if (!props.allowedDates) return undefined
+  // 無法解析的日期直接略過，避免 format 拋錯導致整個日曆無法渲染
+  const dates = props.allowedDates
+    .map(date => (typeof date === 'string' ? parseISO(date) : date))
+    .filter(date => isValid(date))
+  return new Set(dates.map(date => format(date, DATE_KEY_FORMAT)))
+})
+
+// 合成日曆的每日屬性：使用端的 getDayAttributes，再疊加停用星期與允許日期
+const resolveDayAttributes = (date: Date, dayOfWeek: number): CalendarDayAttributes | undefined => {
+  const attributes = props.getDayAttributes?.(date, dayOfWeek) ?? undefined
+  const isDisabledWeekday = props.disableDaysOfWeekList?.includes(dayOfWeek) ?? false
+  const isNotAllowed = allowedDateKeys.value !== undefined && !allowedDateKeys.value.has(format(date, DATE_KEY_FORMAT))
+  return isDisabledWeekday || isNotAllowed
+    ? {
+        ...attributes,
+        disabled: true,
+      }
+    : attributes
+}
 const inputModel = defineModel<string>('input')
 
 const open = ref(false)

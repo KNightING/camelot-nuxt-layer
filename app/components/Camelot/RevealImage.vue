@@ -44,6 +44,13 @@ const props = withDefaults(defineProps<Props>(), {
 </script>
 
 <style scoped>
+/* 註冊為 <percentage> 才能在 keyframes 中平滑插值；不自行註冊時會依賴 RevealText 是否剛好載入 */
+@property --p {
+  syntax: '<percentage>';
+  initial-value: 0%;
+  inherits: false;
+}
+
 /* 只用一個 <img>，黑白和彩色 reveal 效果用 ::before 偽元素 */
   .reveal-image {
     position: relative;
@@ -83,17 +90,10 @@ const props = withDefaults(defineProps<Props>(), {
 @keyframes reveal-img {
   to { --p: 100%; }
 }
+/* 減少動畫：彩色層直接完整顯示，不播放揭示動畫 */
 @media (prefers-reduced-motion: reduce) {
-  .reveal-image::before { --p: 100%; }
-  .reveal-image.play::before,
-  .reveal-image.hover:hover::before { animation: none !important; }
-}
-@keyframes reveal-img {
-  to { --p: 100%; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .reveal-image .color { --p: 100%; }
-  .reveal-image.play .color,
-  .reveal-image.hover:hover .color { animation: none !important; }
+  .reveal-image::after { --p: 100%; }
+  .reveal-image.play::after,
+  .reveal-image.hover:hover::after { animation: none !important; }
 }
 </style>

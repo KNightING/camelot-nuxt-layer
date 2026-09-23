@@ -1230,6 +1230,15 @@
               :color="currentColorRole"
             />
           </div>
+
+          <div class="mt-3 flex flex-col gap-1">
+            <span class="text-xs text-slate-400">Disabled（拖曳、點擊與方向鍵皆無效）</span>
+            <CamelotSlider
+              :model-value="30"
+              disabled
+              :color="currentColorRole"
+            />
+          </div>
         </div>
 
         <!-- Tag Card -->
@@ -1782,6 +1791,12 @@
               placeholder="請選擇日期"
               :get-day-attributes="getDayAttributes"
             />
+            <CamelotDateV2
+              :color="currentColorRole"
+              label="停用週末"
+              placeholder="週六、週日不可選"
+              :disable-days-of-week-list="[0, 6]"
+            />
             <CamelotDateRangeV2
               :color="currentColorRole"
               label="活動區間"
@@ -1964,12 +1979,14 @@
               <CamelotImageV2
                 :src="url"
                 class="h-full w-full object-cover"
+                @loaded="img => imageLoadedSize = `${img.naturalWidth}×${img.naturalHeight}`"
               >
                 <template #error>
                   <span class="flex h-full w-full items-center justify-center bg-surface-container text-xs text-error">load error</span>
                 </template>
               </CamelotImageV2>
             </div>
+            <span class="text-xs text-slate-400">loaded：{{ imageLoadedSize ?? '—' }}</span>
             <CamelotPopupV2>
               <CamelotButton
                 :color="currentColorRole"
@@ -2255,6 +2272,7 @@ const { isOnBottom } = useScrollOnBottom()
 
 const step = ref(0)
 const expanded = ref(false)
+const imageLoadedSize = ref<string>()
 
 const v = ref(0.3)
 

@@ -58,7 +58,7 @@ load()
 ## 運作方式
 
 1. `load` 先把 `isLoading`、`isPending` 設為 `true`，`isError`、`isReady` 設為 `false`。
-2. 網址為空時直接結束，狀態停在載入中與等待中。
+2. 網址為空時清空 `image`、標記 `isError`，並結束載入中與等待中。
 3. 網址有值時清空 `image`，建立新的 Image 並設定網址。
 4. 載入成功：`isReady` 為 `true`，存入 `image`，結束載入中與等待中。
 5. 載入失敗：`isError` 為 `true`，結束載入中與等待中。
@@ -67,6 +67,7 @@ load()
 
 | 日期 | 版本 | 計畫 | 變動 | Issue | PR |
 |---|---|---|---|---|---|
+| 2026-09-23 | — | [2609231702-fix-wiki-review-code-defects](../../../archive/2609231702-fix-wiki-review-code-defects.md) | 修正程式碼缺陷後更新為修正後的行為 | [#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47) | — |
 | 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
 
 ## References

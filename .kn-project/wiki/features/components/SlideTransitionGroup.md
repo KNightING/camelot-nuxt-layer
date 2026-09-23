@@ -9,8 +9,7 @@
 1. 項目清單每項需含唯一的 key 與 value，data 可選，會傳給插槽。
 2. 只渲染索引等於目前值的項目，並置中疊放。
 3. 上一項：索引減 1，以向右滑動的轉場切換；索引已小於等於 0 時不作動。
-4. 下一項：索引加 1，以向左滑動的轉場切換；索引已大於等於項目數時不作動。
-5. 下一項的上限是項目數本身，此時畫面上沒有項目，使用端需自行在最後一項停止呼叫。
+4. 下一項：索引加 1，以向左滑動的轉場切換；已在最後一項時不作動。
 
 來源：1. [SlideTransitionGroup.vue][]　2. [items.ts][]
 
@@ -39,6 +38,7 @@
 
 | 日期 | 版本 | 計畫 | 變動 | Issue | PR |
 |---|---|---|---|---|---|
+| 2026-09-23 | — | [2609231702-fix-wiki-review-code-defects](../../../archive/2609231702-fix-wiki-review-code-defects.md) | 修正程式碼缺陷後更新為修正後的行為 | [#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47) | — |
 | 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
 
 ## References

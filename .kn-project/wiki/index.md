@@ -179,6 +179,7 @@
 ## 開發
 
 - [Layer 整合](dev/layer-integration.md)
+- [單元測試](dev/testing.md)
 
 ---
 [⚙️ Env](environment.md) | [🏠 Wiki](index.md)

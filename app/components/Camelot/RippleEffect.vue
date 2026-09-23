@@ -3,6 +3,7 @@
   <div
     id="container"
     ref="container"
+    :style="rippleColor ? { '--cml-c-ripple-color': rippleColor } : undefined"
     @pointerdown="onPointerDown"
   >
     <slot />
@@ -10,11 +11,13 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{ rippleColor?: string }>()
+/**
+ * rippleColor 接受任何 CSS 色值（hex、rgb()、var(...)）；
+ * 未指定時沿用全域主題的 --cml-c-ripple-color。
+ */
+defineProps<{ rippleColor?: string }>()
 
 const container = useTemplateRef('container')
-
-const rippleColorCss = useElCssVar('--cml-c-ripple-color', container, { inherit: false })
 
 /**
  * 容器矩形只在點擊當下需要，故就地量測一次。
@@ -59,13 +62,6 @@ const onPointerDown = (e: PointerEvent) => {
 //     })
 //   }, 650)
 // }
-
-onUpdated(() => {
-  const rgba = useColor().hexToRgbaArray(props.rippleColor)
-  if (rgba) {
-    rippleColorCss.value = `${rgba[0]},${rgba[1]},${rgba[2]}`
-  }
-})
 </script>
 
 <style scoped>

@@ -1,6 +1,6 @@
-export const useIsValidKey = (
-  key: string | number | symbol,
-  object: object,
-): key is keyof typeof object => {
+export const useIsValidKey = <T extends object>(
+  key: PropertyKey,
+  object: T,
+): key is keyof T => {
   return key in object
 }

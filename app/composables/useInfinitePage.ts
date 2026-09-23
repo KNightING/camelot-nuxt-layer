@@ -12,7 +12,8 @@ export const useInfinitePage = (options: {
     nextPage,
     isPending,
     isEnd,
-    target = window,
+    // 未指定時交給 useScrollOnBottom 在掛載後改用 window（伺服器端沒有 window）
+    target,
     offset = 20,
   } = options
 

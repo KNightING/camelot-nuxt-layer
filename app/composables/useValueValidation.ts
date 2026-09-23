@@ -14,7 +14,7 @@ export const useValueValidation = (
 
     switch (options.type) {
       case 'email':
-        return /^[\w\\-\\.]+@([\w\\-]+\.)+[\w\\-]{2,4}$/.test(value)
+        return /^[\w.+-]+@([\w-]+\.)+[\w-]{2,4}$/.test(value)
       case 'mobile':
         return /^[0-9]+$/.test(value)
       case 'internationalMobile':

@@ -39,7 +39,7 @@ const { data, pending } = await useFileToDataURL(file)
 | --- | --- |
 | 快取 key | `useFileKey(file)` |
 | 讀取方式 | `FileReader.readAsDataURL`，只能在瀏覽器端執行 |
-| 讀取失敗 | 只監聽 load 事件，讀檔失敗時 Promise 不會結束，`pending` 會停在 `true` |
+| 讀取失敗 | 讀檔失敗或中止時結束載入，`error` 帶出錯誤 |
 
 ## 相關頁面
 
@@ -49,6 +49,7 @@ const { data, pending } = await useFileToDataURL(file)
 
 | 日期 | 版本 | 計畫 | 變動 | Issue | PR |
 |---|---|---|---|---|---|
+| 2026-09-23 | — | [2609231702-fix-wiki-review-code-defects](../../../archive/2609231702-fix-wiki-review-code-defects.md) | 修正程式碼缺陷後更新為修正後的行為 | [#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47) | — |
 | 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
 
 ## References

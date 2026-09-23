@@ -42,7 +42,8 @@ const prev = () => {
 }
 
 const next = () => {
-  if (currentIndex.value >= props.items.length) {
+  // 已在最後一項就不再前進，避免停在沒有內容的索引
+  if (currentIndex.value >= props.items.length - 1) {
     return
   }
   animeDirection.value = 'slide-left'

@@ -26,19 +26,20 @@
 
 來源：1. [RevealImage.vue][]
 
-### 限制
+### 漸進與減少動態
 
-| 項目 | 現況 |
+| 項目 | 行為 |
 | :--- | :--- |
-| 漸進效果 | 遮罩比例需註冊為百分比型別才能平滑過渡，這個註冊寫在 [RevealText](./RevealText.md) 的樣式裡；頁面沒載入它時，揭示會在動畫中途一次跳到全彩 |
-| 減少動態 | 偏好減少動態的樣式沒有作用在揭示層上，仍會播放動畫 |
+| 漸進效果 | 元件自行把遮罩比例註冊為百分比型別，揭示過程平滑推進，不依賴其他元件 |
+| 減少動態 | 使用者偏好減少動態時，彩色層直接完整顯示，不播放揭示動畫 |
 
-來源：1. [RevealImage.vue][]　2. [RevealText.vue][]
+來源：1. [RevealImage.vue][]
 
 ## Changelog
 
 | 日期 | 版本 | 計畫 | 變動 | Issue | PR |
 |---|---|---|---|---|---|
+| 2026-09-23 | — | [2609231702-fix-wiki-review-code-defects](../../../archive/2609231702-fix-wiki-review-code-defects.md) | 修正程式碼缺陷後更新為修正後的行為 | [#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47) | — |
 | 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
 
 ## References
@@ -46,10 +47,8 @@
 | 來源 | 位置 |
 |---|---|
 | RevealImage.vue | [app/components/Camelot/RevealImage.vue](../../../../app/components/Camelot/RevealImage.vue) |
-| RevealText.vue | [app/components/Camelot/RevealText.vue](../../../../app/components/Camelot/RevealText.vue) |
 
 [RevealImage.vue]: #references
-[RevealText.vue]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

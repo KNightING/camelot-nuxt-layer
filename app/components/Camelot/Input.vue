@@ -451,8 +451,6 @@ import IMaterialSymbolsErrorCircleRounded from '~icons/material-symbols/error-ci
 import { isClient } from '@vueuse/core'
 
 const props = withDefaults(defineProps<{
-  border?: boolean
-  size?: 'small' | 'basic'
   mark?: 'money'
   disabled?: boolean
   label?: string
@@ -481,8 +479,6 @@ const props = withDefaults(defineProps<{
   selectedValue?: string | number
   color?: CamelotColorRole
 }>(), {
-  border: true,
-  size: 'basic',
   type: 'text',
   passwordToggle: true,
   passwordRevealMode: 'hide-on-change',

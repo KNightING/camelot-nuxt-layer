@@ -29,26 +29,29 @@ export const useLazyImage = (
     isReady.value = false
 
     const srcValue = toValue(src)
+    // 沒有圖片來源視為載入失敗，讓使用端顯示錯誤狀態而不是永遠 loading
     if (!srcValue) {
+      image.value = null
+      isError.value = true
+      isLoading.value = false
+      isPending.value = false
       return
     }
 
-    if (srcValue) {
-      image.value = null
-      const img = new Image()
-      img.onerror = () => {
-        isError.value = true
-        isLoading.value = false
-        isPending.value = false
-      }
-      img.onload = () => {
-        isReady.value = true
-        isLoading.value = false
-        isPending.value = false
-        image.value = img
-      }
-      img.src = srcValue
+    image.value = null
+    const img = new Image()
+    img.onerror = () => {
+      isError.value = true
+      isLoading.value = false
+      isPending.value = false
     }
+    img.onload = () => {
+      isReady.value = true
+      isLoading.value = false
+      isPending.value = false
+      image.value = img
+    }
+    img.src = srcValue
   }
 
   if (options?.immediate) {
