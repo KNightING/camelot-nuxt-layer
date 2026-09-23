@@ -1,29 +1,41 @@
-# 🔘 Radio 與選項群組（RadioGroup / CheckboxGroup）
+# 🔘 單選與選項群組
 
 ## Summary
 
-`CamelotRadio` 與 `CamelotRadioGroup` / `CamelotCheckboxGroup` 的選項群組系統：wrapper + 四主題 variant，群組層負責版面、逐選項停用與必填標示。
+選項群組系統由單選鈕 `CamelotRadio`、單選群組 `CamelotRadioGroup` 與複選群組 `CamelotCheckboxGroup` 組成。Radio 與 Checkbox 同樣是「外層 wrapper＋四主題 variant」的結構，群組層負責選項排列方向、整組與逐選項停用、群組標題與必填標示，選項型別共用 `CamelotGroupOption`。
 
-> 來源計畫：[2606101633-radio-groups-and-timeline-fix](../../archive/2606101633-radio-groups-and-timeline-fix.md)（2026-06-10）
-> 相關：[FieldLabel 表單元件](field-label-and-form-controls.md)
+## 運作方式
 
-## CamelotRadio
+### Radio
 
-與 Checkbox 同模式的 wrapper + 4 主題 variant：
+外層 wrapper 依目前主題選用 Material、Cupertino、Aqua 或 Scifi 的 variant，label 則由 wrapper 統一用 FieldLabel 渲染。
 
 | 主題 | 外觀 | 尺寸 |
 | :--- | :--- | :--- |
-| Material | border-2 外圈、current-color 圓點縮放 | 20px |
-| Cupertino | 選中填滿 current-color + 白點 | 22px |
-| Aqua | aqua-track / aqua-fill + 白點（10px） | 20px |
-| Scifi | current-color 髮絲圓框 + glow 圓點 | 18px |
+| Material | 2px 外圈，選中時色彩角色圓點放大 | 20px |
+| Cupertino | 選中時整圈填滿色彩角色，中間淺色小點 | 22px |
+| Aqua | 未選為玻璃軌道，選中為漸層填滿加淺色圓點 | 20px |
+| Scifi | 髮絲圓框，選中時邊框與圓點帶光暈 | 18px |
 
-- Props：`label`、`disabled`、`deselectable`、`color`、`isContainer`；`v-model: boolean`、`change` emit。
-- label 由 wrapper 統一（FieldLabel + `#label` slot、點擊切換、`leading-none` 光學置中）。
-- **防半像素偏移**：圓點以「滿版尺寸 + `transform scale` 縮小」渲染——合成階段以中心對稱取樣，避免固定 px 圓點在非整數 DPR（Windows 125%/150%）下的偏移感。
-- **deselectable**（預設 false）：點擊已選取項取消選取，用於非必填情境。
+1. 點圓鈕或 label 都能選取；停用時 label 呈半透明且不可點。
+2. 已選取時再點一次不會取消，除非開啟 `deselectable`，適合非必填情境。
+3. 圓點以滿版尺寸再用 transform 縮小繪製，以中心對稱取樣，避免 Windows 125%、150% 這類非整數縮放下的半像素偏移。
+4. label 可用 `#label` slot 替換，預設以 `leading-none` 做光學置中。
 
-## RadioGroup / CheckboxGroup
+| Prop | 預設 | 說明 |
+| :--- | :--- | :--- |
+| `v-model` | `false` | 是否選取 |
+| `label` | `''` | 標籤文字 |
+| `disabled` | `false` | 停用 |
+| `deselectable` | `false` | 點已選取項可取消 |
+| `color` | `'primary'` | 色彩角色 |
+| `isContainer` | `false` | 使用 container 系列色 |
+
+選取狀態改變時 emit `change`，帶新的布林值。
+
+來源：1. [Radio.vue][]　2. [Material/Radio.vue][]　3. [Cupertino/Radio.vue][]　4. [Aqua/Radio.vue][]　5. [Scifi/Radio.vue][]
+
+### RadioGroup 與 CheckboxGroup
 
 ```vue
 <CamelotRadioGroup v-model="val" :options="options" direction="vertical" deselectable label="付款方式" />
@@ -32,18 +44,55 @@
 
 | Prop | RadioGroup | CheckboxGroup |
 | :--- | :--- | :--- |
-| `v-model` | `string \| number \| undefined` | `(string \| number)[]` |
-| `options` | `CamelotGroupOption[]`（`{ label, value, disabled? }`，shared/types） | 同左 |
-| `direction` | `horizontal`（預設）/ `vertical` | 同左 |
-| `disabled` | 整組停用；**逐選項**用 `option.disabled`（取 OR） | 同左 |
-| `deselectable` | 點已選項取消（model→undefined、change emit undefined） | —（checkbox 本可取消） |
-| `label`/`required` | 群組標題（FieldLabel + `#label` slot） | 同左 |
-| `change` emit | 選中 option（取消時 undefined） | 勾選值陣列 |
+| `v-model` | `string \| number \| undefined` | `(string \| number)[]`，預設空陣列 |
+| `options` | `CamelotGroupOption[]`，欄位為 `label`、`value`、`disabled` | 同左 |
+| `direction` | `'horizontal'`（預設）或 `'vertical'` | 同左 |
+| `color` | `'primary'` | 同左 |
+| `disabled` | 整組停用；與 `option.disabled` 任一為真即停用該項 | 同左 |
+| `deselectable` | 點已選項取消，model 變成 `undefined` | 無，複選本來就能取消 |
+| `label`、`required` | 群組標題與必填標示，可用 `#label` slot 替換 | 同左 |
+| `change` emit | 選中的 option；取消時為 `undefined` | 勾選後的值陣列 |
 
-間距規格：選項間 `gap-x-6 gap-y-2`（橫 24px / 縱 8px），四主題一致（Scifi Checkbox 已移除 label-in-variant 時代的整列 padding 殘留）。
+1. 選項間距固定為橫向 24px、縱向 8px，四主題一致。
+2. 水平排列時選項會自動換行。
+3. 群組標題用 FieldLabel，左側內縮 4px 與選項對齊。
+
+來源：1. [RadioGroup.vue][]　2. [CheckboxGroup.vue][]　3. [camelot.ts][]
+
+## 相關頁面
+
+- [Radio](./components/Radio.md)
+- [RadioGroup](./components/RadioGroup.md)
+- [CheckboxGroup](./components/CheckboxGroup.md)
+- [FieldLabel](./components/FieldLabel.md)
+
+## Changelog
+
+| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
+|---|---|---|---|---|---|
+| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
 
 ## References
-- Playground：`.playground/app/pages/index.vue`「Radio & Checkbox Groups」卡（水平/垂直/deselectable/逐選項 disabled）。
+
+| 來源 | 位置 |
+|---|---|
+| Radio.vue | [app/components/Camelot/Radio.vue](../../../app/components/Camelot/Radio.vue) |
+| Material/Radio.vue | [app/components/Camelot/Material/Radio.vue](../../../app/components/Camelot/Material/Radio.vue) |
+| Cupertino/Radio.vue | [app/components/Camelot/Cupertino/Radio.vue](../../../app/components/Camelot/Cupertino/Radio.vue) |
+| Aqua/Radio.vue | [app/components/Camelot/Aqua/Radio.vue](../../../app/components/Camelot/Aqua/Radio.vue) |
+| Scifi/Radio.vue | [app/components/Camelot/Scifi/Radio.vue](../../../app/components/Camelot/Scifi/Radio.vue) |
+| RadioGroup.vue | [app/components/Camelot/RadioGroup.vue](../../../app/components/Camelot/RadioGroup.vue) |
+| CheckboxGroup.vue | [app/components/Camelot/CheckboxGroup.vue](../../../app/components/Camelot/CheckboxGroup.vue) |
+| camelot.ts | [shared/types/camelot.ts](../../../shared/types/camelot.ts) |
+
+[Radio.vue]: #references
+[Material/Radio.vue]: #references
+[Cupertino/Radio.vue]: #references
+[Aqua/Radio.vue]: #references
+[Scifi/Radio.vue]: #references
+[RadioGroup.vue]: #references
+[CheckboxGroup.vue]: #references
+[camelot.ts]: #references
 
 ---
-[🏷️ FieldLabel 表單元件](field-label-and-form-controls.md) | [🕒 Timeline](timeline.md) | [🏠 Wiki](../index.md)
+[⚙️ Env](../environment.md) | [🏠 Wiki](../index.md)

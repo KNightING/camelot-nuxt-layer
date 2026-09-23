@@ -1,118 +1,184 @@
-# 📚 Camelot Nuxt Layer — Wiki 首頁
+# Camelot Nuxt Layer Wiki
 
-> 本 Wiki 是專案知識的中樞，涵蓋架構、元件/Composable API 目錄、環境設定與開發規範。
+## 功能
 
-## 🌐 語言切換 (Language Switcher)
-- 🇹🇼 **正體中文** (當前)
-- 🇺🇸 [English](./lang/en-US/index.md) *(尚未建立)*
+- [🗓️ 日期選擇器](features/calendar.md)
+- [🧩 元件清單](features/components.md)
+- [🪝 Composable 清單](features/composables.md)
+- [📎 檔案拖曳](features/file-drop.md)
+- [📊 進度元件](features/progress-components.md)
+- [🔘 單選與選項群組](features/radio-and-groups.md)
+- [✍️ 富文本與圖片拖曳](features/richtext-editor-image-dropzone.md)
+- [⏰ 時間選擇器](features/time-picker.md)
+- [🕒 時間軸](features/timeline.md)
+
+### components
+- [Aqua Button](features/components/Aqua-Button.md)
+- [Aqua Checkbox](features/components/Aqua-Checkbox.md)
+- [Aqua Input](features/components/Aqua-Input.md)
+- [Aqua Radio](features/components/Aqua-Radio.md)
+- [Aqua Switch](features/components/Aqua-Switch.md)
+- [BaseBottomSheetV2](features/components/BaseBottomSheetV2.md)
+- [BaseDialogV2](features/components/BaseDialogV2.md)
+- [Breadcrumb](features/components/Breadcrumb.md)
+- [Breakpoints](features/components/Breakpoints.md)
+- [Button](features/components/Button.md)
+- [Carousel](features/components/Carousel.md)
+- [CarouselIndicator](features/components/CarouselIndicator.md)
+- [CascadeMenu](features/components/CascadeMenu.md)
+- [Checkbox](features/components/Checkbox.md)
+- [CheckboxGroup](features/components/CheckboxGroup.md)
+- [ColorSchemeProvider](features/components/ColorSchemeProvider.md)
+- [ConfirmDialog](features/components/ConfirmDialog.md)
+- [Container](features/components/Container.md)
+- [Cupertino Button](features/components/Cupertino-Button.md)
+- [Cupertino Checkbox](features/components/Cupertino-Checkbox.md)
+- [Cupertino Input](features/components/Cupertino-Input.md)
+- [Cupertino Radio](features/components/Cupertino-Radio.md)
+- [Cupertino Switch](features/components/Cupertino-Switch.md)
+- [區域配色提供者](features/components/CustomColorSchemeProvider.md)
+- [DateRangeV2](features/components/DateRangeV2.md)
+- [DateV2](features/components/DateV2.md)
+- [Drawer](features/components/Drawer.md)
+- [DropImage](features/components/DropImage.md)
+- [ErrorDialog](features/components/ErrorDialog.md)
+- [Expanded](features/components/Expanded.md)
+- [FieldLabel](features/components/FieldLabel.md)
+- [FileChip](features/components/FileChip.md)
+- [FileDropzone](features/components/FileDropzone.md)
+- [Gpu](features/components/Gpu.md)
+- [IdxForm](features/components/IdxForm.md)
+- [ImageDropzone](features/components/ImageDropzone.md)
+- [ImageV2](features/components/ImageV2.md)
+- [Input](features/components/Input.md)
+- [Calendar](features/components/Internal-Calendar.md)
+- [CascadeMenuPanel](features/components/Internal-CascadeMenuPanel.md)
+- [FieldFrame](features/components/Internal-FieldFrame.md)
+- [MenuItem](features/components/Internal-MenuItem.md)
+- [PasswordToggle](features/components/Internal-PasswordToggle.md)
+- [SheetHandle](features/components/Internal-SheetHandle.md)
+- [TimeField](features/components/Internal-TimeField.md)
+- [TimeRow](features/components/Internal-TimeRow.md)
+- [TreeNode](features/components/Internal-TreeNode.md)
+- [ResizableImageView](features/components/Internal-editor-ResizableImageView.md)
+- [Loading](features/components/Loading.md)
+- [Marquee](features/components/Marquee.md)
+- [Material Button](features/components/Material-Button.md)
+- [Material Checkbox](features/components/Material-Checkbox.md)
+- [Material Input](features/components/Material-Input.md)
+- [MaterialRadio](features/components/Material-Radio.md)
+- [Material Switch](features/components/Material-Switch.md)
+- [Material3Provider](features/components/Material3Provider.md)
+- [Menu](features/components/Menu.md)
+- [NumberCounter](features/components/NumberCounter.md)
+- [OverlayScrollbar](features/components/OverlayScrollbar.md)
+- [Pagination](features/components/Pagination.md)
+- [PopupV2](features/components/PopupV2.md)
+- [ProgressBar](features/components/ProgressBar.md)
+- [ProgressCircle](features/components/ProgressCircle.md)
+- [ProgressStage](features/components/ProgressStage.md)
+- [Radio](features/components/Radio.md)
+- [RadioGroup](features/components/RadioGroup.md)
+- [RevealImage](features/components/RevealImage.md)
+- [RevealText](features/components/RevealText.md)
+- [RichTextEditor](features/components/RichTextEditor.md)
+- [RippleEffect](features/components/RippleEffect.md)
+- [RippleTabs](features/components/RippleTabs.md)
+- [Scifi Button](features/components/Scifi-Button.md)
+- [ScifiCheckbox](features/components/Scifi-Checkbox.md)
+- [Scifi Frame](features/components/Scifi-Frame.md)
+- [Scifi Input](features/components/Scifi-Input.md)
+- [ScifiRadio](features/components/Scifi-Radio.md)
+- [Scifi Reticle](features/components/Scifi-Reticle.md)
+- [Scifi Switch](features/components/Scifi-Switch.md)
+- [Scrollbar](features/components/Scrollbar.md)
+- [SelectV2](features/components/SelectV2.md)
+- [Skeleton](features/components/Skeleton.md)
+- [SlideTransitionGroup](features/components/SlideTransitionGroup.md)
+- [Slider](features/components/Slider.md)
+- [Steps](features/components/Steps.md)
+- [Switch](features/components/Switch.md)
+- [Table](features/components/Table.md)
+- [Tabs](features/components/Tabs.md)
+- [Tag](features/components/Tag.md)
+- [TagGroup](features/components/TagGroup.md)
+- [Textarea](features/components/Textarea.md)
+- [TimeV2](features/components/TimeV2.md)
+- [Timeline](features/components/Timeline.md)
+- [Toast](features/components/Toast.md)
+- [Tooltip](features/components/Tooltip.md)
+- [Tree](features/components/Tree.md)
+- [VirtualScroll](features/components/VirtualScroll.md)
+
+### composables
+- [useAnchorLink](features/composables/useAnchorLink.md)
+- [useAutoLink](features/composables/useAutoLink.md)
+- [useBaseApi](features/composables/useBaseApi.md)
+- [useBaseUrl](features/composables/useBaseUrl.md)
+- [useBlobDownload](features/composables/useBlobDownload.md)
+- [useCamelotColorMode](features/composables/useCamelotColorMode.md)
+- [useCamelotError](features/composables/useCamelotError.md)
+- [useCamelotFileDrop](features/composables/useCamelotFileDrop.md)
+- [選單項主題](features/composables/useCamelotMenuItemTheme.md)
+- [覆蓋式捲軸](features/composables/useCamelotOverlayScrollbar.md)
+- [選擇器主題](features/composables/useCamelotPickerTheme.md)
+- [角色色彩類別](features/composables/useCamelotRoleColorClass.md)
+- [useCamelotRouter](features/composables/useCamelotRouter.md)
+- [浮層傳送目標](features/composables/useCamelotTeleportTarget.md)
+- [useCamelotTheme](features/composables/useCamelotTheme.md)
+- [useCamelotToast](features/composables/useCamelotToast.md)
+- [useCamelotVirtual](features/composables/useCamelotVirtual.md)
+- [useCanvasConvert](features/composables/useCanvasConvert.md)
+- [useColor](features/composables/useColor.md)
+- [色彩方案變數](features/composables/useColorSchemeCssVars.md)
+- [useCookieProxy](features/composables/useCookieProxy.md)
+- [useCurrentRoute](features/composables/useCurrentRoute.md)
+- [useCustomColorScheme](features/composables/useCustomColorScheme.md)
+- [useDelay](features/composables/useDelay.md)
+- [useDeviceBreakpoints](features/composables/useDeviceBreakpoints.md)
+- [useDrawerCollapsed](features/composables/useDrawerCollapsed.md)
+- [useElCssVar](features/composables/useElCssVar.md)
+- [useErrorRef](features/composables/useErrorRef.md)
+- [JSON Lines 串流](features/composables/useFetchJSONLinesStream.md)
+- [useFetchStream](features/composables/useFetchStream.md)
+- [useFileKey](features/composables/useFileKey.md)
+- [useFileToDataURL](features/composables/useFileToDataURL.md)
+- [useFloat](features/composables/useFloat.md)
+- [useInfinitePage](features/composables/useInfinitePage.md)
+- [輸入驗證控制器](features/composables/useInputValidationController.md)
+- [useIsValidKey](features/composables/useIsValidKey.md)
+- [useLazyImage](features/composables/useLazyImage.md)
+- [useLoading](features/composables/useLoading.md)
+- [useLocalStorageProxy](features/composables/useLocalStorageProxy.md)
+- [useLocale](features/composables/useLocale.md)
+- [M3 色彩配置](features/composables/useMaterial3ColorScheme.md)
+- [千分位格式化](features/composables/useNumberThousandsSeparators.md)
+- [useObject](features/composables/useObject.md)
+- [Pinia 重置與釋放](features/composables/usePiniaClear.md)
+- [useRandom](features/composables/useRandom.md)
+- [useRandomCatImg](features/composables/useRandomCatImg.md)
+- [useRouteWrapper](features/composables/useRouteWrapper.md)
+- [useScrollOnBottom](features/composables/useScrollOnBottom.md)
+- [useScrollParent](features/composables/useScrollParent.md)
+- [sessionStorage 代理](features/composables/useSessionStorageProxy.md)
+- [useStorageProxy](features/composables/useStorageProxy.md)
+- [useValueValidation](features/composables/useValueValidation.md)
+
+## 平台
+
+- [API 用戶端](platform/api-client.md)
+- [專案架構](platform/architecture.md)
+- [色彩主題系統](platform/color-scheme.md)
+- [錯誤處理系統](platform/error-handling.md)
+- [i18n 語系系統](platform/i18n-locales.md)
+- [疊層刻度](platform/layering.md)
+- [useLocale](platform/locale.md)
+- [自訂捲軸系統](platform/overlay-scrollbar.md)
+- [主題系統](platform/theme-system.md)
+
+## 開發
+
+- [Layer 整合](dev/layer-integration.md)
 
 ---
-
-## 📋 專案概覽
-
-**Camelot Nuxt Layer** 是一個 Nuxt Layer 形式的 UI 元件函式庫，提供各種可複用的 Vue 3 元件、Composables 與工具模組，供各類 Nuxt 4 應用程式擴展使用。
-
-| 項目 | 說明 |
-| :--- | :--- |
-| **套件名稱** | `camelot-nuxt3-layer` |
-| **版本** | 以 `package.json` 為準（撰寫時為 `4.5.2.0`） |
-| **框架** | Nuxt 4 + Vue 3 (Composition API) |
-| **樣式** | Tailwind CSS v4 |
-| **狀態管理** | Pinia + pinia-plugin-persistedstate |
-| **多語系** | @nuxtjs/i18n（語系**全部由消費端註冊**；Layer 的 `en` / `zh` 基底字典目前未生效，見 [i18n 語系系統](./features/i18n-locales.md)） |
-| **套件管理** | pnpm |
-
----
-
-## 🗂️ API 清單矩陣 (Inventory Matrix)
-
-每個 component / composable 皆有**獨立 API 頁**（Props / Emits / v-model / Slots / Exposed / 簽章 / 回傳）：
-
-| 矩陣 | 內容 |
-| :--- | :--- |
-| **[🧩 元件清單矩陣](./features/components.md)** | 全部 ~89 元件（表單 / 版面 / 覆蓋層 / 回饋 / 媒體 / 主題變體 / 內部），每個一頁 |
-| **[🪝 Composable 清單矩陣](./features/composables.md)** | 全部 ~48 composable（主題 / 元件相關 / API / 驗證 / 儲存 / 路由 / DOM / 工具），每個一頁 |
-
-> 元件為 Nuxt 自動匯入 `Camelot<Name>`；主題子元件（Aqua/Material/Cupertino/Scifi）與 `Internal/` 為實作細節，由公開元件自動選用。
-
----
-
-### 🧩 Nuxt 模組 (`modules/`)
-
-| 模組 | 狀態 | 說明 |
-| :--- | :---: | :--- |
-| `tappay` | ✅ | 依 `runtimeConfig` 條件注入 TapPay SDK |
-| `googleFont` | ✅ | 自動注入 Noto Sans TC Google Fonts |
-| `buildHook` | ✅ | 建置期 Hook |
-| `echartModule` | ✅ | ECharts 整合模組 |
-
-### 🖥️ 伺服器功能 (`server/`)
-
-| 項目 | 狀態 | 說明 |
-| :--- | :---: | :--- |
-| `server/plugins/securityPlugin` | ✅ | CSP Headers、Nonce 注入、安全標頭設定 |
-| `server/api/version` | ✅ | `GET /api/version` — 回傳應用程式版本號 |
-
----
-
-## 🗺️ 架構圖
-
-```mermaid
-graph TD
-    A["消費端 Nuxt App"] -->|extends| B["camelot-nuxt-layer"]
-
-    B --> C["UI 元件 (Camelot/)"]
-    B --> D["Composables"]
-    B --> E["Nuxt 模組"]
-    B --> F["Server Plugins"]
-    B --> G["i18n fallback 設定；語系由消費端註冊"]
-    B --> H["Tailwind CSS v4 主題"]
-
-    C --> C1["表單元件 (Input, Select, Date...)"]
-    C --> C2["對話框/側欄 (Dialog, BottomSheet, Drawer, Popup)"]
-    C --> C3["動畫元件 (Reveal, Ripple, Skeleton...)"]
-    C --> C4["Internal/Calendar (共用日曆核心)"]
-    C --> C5["版面/資料/導覽 (Tree, Table, Menu, OverlayScrollbar)"]
-
-    H --> H1["四風格主題 (material/cupertino/scifi/aqua, 預設 aqua)"]
-    H --> H2["aqua-glass / aqua-fill 等共用 utility"]
-
-    D --> D1["useBaseApi (API 封裝)"]
-    D --> D2["useCamelotRouter (路由管理)"]
-    D --> D3["useCustomColorScheme (主題)"]
-
-    E --> E1["tappay (支付 SDK)"]
-    E --> E2["googleFont (字體)"]
-
-    F --> F1["securityPlugin (CSP/Nonce)"]
-```
-
----
-
-## 📎 主題頁 (Topics)
-
-每頁的說明見該頁的 `## Summary`；元件與 composable 的逐頁索引見上方的清單矩陣。
-
-- [API 用戶端（API Client）](./features/api-client.md)
-- [🗓️ Calendar / 日期選擇器系統](./features/calendar.md)
-- [🎨 Color Scheme / 色彩主題系統](./features/color-scheme.md)
-- [🗓️🪟🔔 DatePicker 時間/確認・Aqua 邊框 Token・Toast 動畫批次](./features/datepicker-time-aqua-toast.md)
-- [錯誤處理系統（佇列 + 轉換器 + 攔截器）](./features/error-handling.md)
-- [🏷️ FieldLabel 共通標籤與表單控制元件調整](./features/field-label-and-form-controls.md)
-- [📎 檔案拖曳系統（FileDropzone / FileChip / useCamelotFileDrop）](./features/file-drop.md)
-- [🌐 i18n 語系系統(CLDR 代碼 + Fallback 鏈 + Layer/消費端分工)](./features/i18n-locales.md)
-- [📦 Layer 整合與必裝依賴 (Consumer Integration)](./features/layer-integration.md)
-- [🧱 Layering / 疊層刻度](./features/layering.md)
-- [🧱 Drawer / Tree / Table / Menu / CascadeMenu](./features/layout-data-components.md)
-- [🌐 useLocale（語系格式正規化）](./features/locale.md)
-- [📜 OverlayScrollbar / 自訂捲軸系統](./features/overlay-scrollbar.md)
-- [🧩 Pagination / VirtualScroll / Carousel + 主題色彩批次](./features/pagination-virtualscroll-carousel.md)
-- [📊 Progress 元件（ProgressBar / ProgressCircle / ProgressStage）](./features/progress-components.md)
-- [🔘 Radio 與選項群組（RadioGroup / CheckboxGroup）](./features/radio-and-groups.md)
-- [✍️🖼️ RichTextEditor（TipTap）與 ImageDropzone](./features/richtext-editor-image-dropzone.md)
-- [🎨 主題系統 / Theme System（四風格 + Aqua）](./features/theme-system.md)
-- [⏰ CamelotTimeV2（純時間選擇器）](./features/time-picker.md)
-- [🕒 Timeline 時間軸](./features/timeline.md)
----
-
-[🧩 元件清單](./features/components.md) | [🪝 Composable 清單](./features/composables.md) | [⚙️ 環境變數](./environment.md) | [🏠 Wiki](index.md)
+[⚙️ Env](environment.md) | [🏠 Wiki](index.md)

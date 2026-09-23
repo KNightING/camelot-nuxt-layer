@@ -2,18 +2,18 @@
 
 ## Summary
 
-側邊抽屜元件，支援浮動（floating）遮罩滑入與固定（fixed）行內展開兩種型態。
-
-**匯入名稱**：`CamelotDrawer`
+Drawer（匯入名稱 `CamelotDrawer`）是側邊抽屜，有兩種型態：floating 從畫面左或右滑入並蓋上遮罩，fixed 在版面中佔位、以寬度展開或收合。面板分成 header、可捲動的主要內容與 footer 三區，外觀依主題切換，開關由 v-model:open 控制。
 
 ## Props
 | Prop | 型別 | 預設 | 說明 |
 | :--- | :--- | :---: | :--- |
 | `position` | `'left' \| 'right'` | `'left'` | 抽屜出現的位置 |
-| `variant` | `'floating' \| 'fixed'` | `'floating'` | 型態：浮動（Teleport + 遮罩滑入）或固定（行內佔位、寬度展開/收合） |
-| `width` | `string` | `'320px'` | 抽屜寬度 |
-| `closeByMask` | `boolean` | `true` | 是否可透過點擊遮罩或按 Esc 關閉 |
-| `zIndex` | `number` | `undefined` | 浮動型態的容器層級；未指定時回落到疊層刻度的 `--cml-z-drawer`（見 [Layering](../layering.md)）。調高超過 `--cml-z-popup` 會讓 Drawer 內的 Select / Popup 被面板蓋住 |
+| `variant` | `'floating' \| 'fixed'` | `'floating'` | 浮動滑入或行內佔位 |
+| `width` | `string` | `'320px'` | 抽屜寬度；floating 另限制最寬 90vw |
+| `closeByMask` | `boolean` | `true` | 是否可點遮罩或按 Esc 關閉 |
+| `zIndex` | `number` | — | floating 容器層級；未指定時用 `--cml-z-drawer`，見 [疊層刻度](../../platform/layering.md) |
+
+zIndex 調高到超過 popup 層級時，Drawer 內的 Select、Popup 浮層會被面板蓋住。
 
 ## Emits
 | 事件 | 參數 | 說明 |
@@ -23,20 +23,65 @@
 ## v-model
 | Model | 型別 | 說明 |
 | :--- | :--- | :--- |
-| `open` | `boolean`（預設 `false`） | 抽屜是否開啟 |
+| `open` | `boolean`，預設 `false` | 抽屜是否開啟 |
 
 ## Slots
 | Slot | 作用域參數 | 說明 |
 | :--- | :--- | :--- |
 | `header` | — | 抽屜頂部區塊 |
-| `default` | — | 抽屜主要內容（可捲動） |
+| `default` | — | 抽屜主要內容，超出時可捲動 |
 | `footer` | — | 抽屜底部區塊 |
 
-## 備註
-- 面板樣式依 `useCamelotTheme()` 的 `themeMode` 而異：`aqua`（半透明玻璃模糊）、`scifi`（光暈陰影）、`cupertino`（一般陰影）與其他預設值。
-- 浮動型態開啟時會鎖定 `body` 捲動（`body.style.overflow = 'hidden'`；`html { scrollbar-gutter: stable }` 讓版面寬度不因捲軸消失而跳動）；卸載前會還原。多層 Drawer 共用一個模組層級的計數器，只有全部關閉才解除鎖定——否則關掉內層會把外層的鎖一併清掉，背景又能捲動。
-- 浮動型態支援 Esc 關閉（需 `closeByMask` 為 `true`）。
-- 尊重 `prefers-reduced-motion`，減少動態時停用過場動畫。
+## 運作方式
+
+### 兩種型態
+
+| 型態 | 行為 |
+| :--- | :--- |
+| floating | 掛到 body，半透明遮罩淡入，面板從所在側滑入 |
+| fixed | 留在原位，容器寬度在 0 與 width 之間過場；靠右時面板貼齊右緣 |
+
+兩種型態在使用者偏好減少動態時都停用過場動畫。
+
+來源：1. [Drawer.vue][]
+
+### 關閉與捲動鎖
+
+1. floating 開啟時鎖住頁面捲動，關閉或元件卸載時解除。
+2. 多層 Drawer 共用同一個計數，全部關閉才解除，關掉內層不會讓外層背景又能捲動。
+3. 全域樣式固定保留捲軸空間，鎖捲動時版面寬度不會跳動。
+4. closeByMask 開啟時，點遮罩或按 Esc 都會關閉並觸發 close；Esc 只對 floating 有效。
+
+來源：1. [Drawer.vue][]　2. [tailwind.css][]
+
+### 面板外觀
+
+兩種型態的面板都不畫邊框，只用底色與陰影和背景區隔。
+
+| 主題 | 面板樣式 |
+| :--- | :--- |
+| Aqua | 75% 半透明底、背景模糊與大範圍陰影；不套用共用的玻璃面板工具，以避開它的髮絲邊框 |
+| Sci-Fi | 實色底，外圍一圈 18% 主色光暈 |
+| Cupertino | 實色底與大範圍陰影 |
+| Material | 低階容器底色與大範圍陰影 |
+
+來源：1. [Drawer.vue][]
+
+## Changelog
+
+| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
+|---|---|---|---|---|---|
+| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
+
+## References
+
+| 來源 | 位置 |
+|---|---|
+| Drawer.vue | [app/components/Camelot/Drawer.vue](../../../../app/components/Camelot/Drawer.vue) |
+| tailwind.css | [app/assets/css/tailwind.css](../../../../app/assets/css/tailwind.css) |
+
+[Drawer.vue]: #references
+[tailwind.css]: #references
 
 ---
-[🏠 Wiki](../../index.md)
+[⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

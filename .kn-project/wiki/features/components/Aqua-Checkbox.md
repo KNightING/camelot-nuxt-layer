@@ -2,9 +2,7 @@
 
 ## Summary
 
-Aqua 風格的核取方塊元件，支援方形／圓形與未定狀態。此為 Aqua 主題實作，通常由 `CamelotCheckbox` 依主題自動載入。
-
-**匯入名稱**：`CamelotAquaCheckbox`
+Aqua Checkbox 是 Aqua 主題（毛玻璃風格）的核取方塊外觀實作，匯入名稱 `CamelotAquaCheckbox`。支援方形與圓形外框、未定（半選）狀態，一般在 Aqua 主題下由 [Checkbox](./Checkbox.md) 自動選用。
 
 ## Props
 | Prop | 型別 | 預設 | 說明 |
@@ -23,10 +21,30 @@ Aqua 風格的核取方塊元件，支援方形／圓形與未定狀態。此為
 | :--- | :--- | :--- |
 | `modelValue` | `boolean`（預設 `false`） | 核取狀態 |
 
-## 備註
-- 勾選或未定時套用 `aqua-fill`，否則為 `aqua-track` 樣式。
-- 勾選顯示打勾標記；`indeterminate && !modelValue` 時顯示橫線標記。
-- 停用時忽略點擊，不觸發 `change`。
+## 運作方式
+
+| 狀態 | 外觀 |
+|---|---|
+| 未勾選 | 玻璃軌道底色 |
+| 勾選 | 玻璃填色，顯示打勾標記 |
+| 未定且未勾選 | 玻璃填色，顯示橫線標記 |
+| 停用 | 半透明並灰階，點擊無效、不觸發 change |
+
+來源：1. [Aqua/Checkbox.vue][]
+
+## Changelog
+
+| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
+|---|---|---|---|---|---|
+| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
+
+## References
+
+| 來源 | 位置 |
+|---|---|
+| Aqua/Checkbox.vue | [app/components/Camelot/Aqua/Checkbox.vue](../../../../app/components/Camelot/Aqua/Checkbox.vue) |
+
+[Aqua/Checkbox.vue]: #references
 
 ---
-[🏠 Wiki](../../index.md)
+[⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

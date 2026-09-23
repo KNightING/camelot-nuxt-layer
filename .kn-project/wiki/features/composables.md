@@ -1,13 +1,19 @@
-# 🪝 Composable 清單矩陣 (Composables)
+# 🪝 Composable 清單
 
 ## Summary
 
-本頁是 Camelot Nuxt Layer 全部 composable 的分類索引，依主題色彩／元件相關／API 串流／驗證／儲存／路由／DOM／工具分組，每個 composable 連到自己的 API 頁（簽章 / 參數 / 回傳 / 用法）。
-全部由 Nuxt 自動匯入，直接呼叫即可，不需手動 import。
+Camelot Nuxt Layer 全部 composable 的分類索引，依主題色彩、元件相關、API 串流、表單驗證、儲存 Proxy、路由連結、DOM 滾動裝置、檔案媒體與工具分組，每個 composable 連到自己的 API 頁（簽章、參數、回傳、用法）。全部由 Nuxt 自動匯入，直接呼叫即可，不需手動 import。
 
----
+## 運作方式
 
-## 🎨 主題 / 色彩
+1. composables 目錄下每個檔案至少匯出一個與檔名同名的函式，由 Nuxt 自動匯入，元件與頁面可直接呼叫。
+2. 名稱以 `useCamelot` 開頭的是與本 layer 元件或主題綁定的 composable，其餘是通用工具。
+
+來源：1. [app/composables][]
+
+## Composable 清單
+
+### 主題、色彩
 
 | Composable | 說明 | 詳情 |
 | :--- | :--- | :--- |
@@ -21,7 +27,7 @@
 | `useColorSchemeCssVars` | 色彩方案 CSS 變數單向寫入器 | [詳情](./composables/useColorSchemeCssVars.md) |
 | `useColor` | 顏色處理工具 | [詳情](./composables/useColor.md) |
 
-## 🧩 元件相關
+### 元件相關
 
 | Composable | 說明 | 詳情 |
 | :--- | :--- | :--- |
@@ -35,16 +41,16 @@
 | `useLocale` | 語系格式正規化（bcp47/cldr/l10n） | [詳情](./composables/useLocale.md) |
 | `useLoading` | 全域載入狀態 | [詳情](./composables/useLoading.md) |
 
-## 🌐 API / 串流
+### API、串流
 
 | Composable | 說明 | 詳情 |
 | :--- | :--- | :--- |
-| `useBaseApi` | API 請求基礎封裝（含串流） | [詳情](./composables/useBaseApi.md) ・[使用指南](./api-client.md) |
+| `useBaseApi` | API 請求基礎封裝（含串流） | [詳情](./composables/useBaseApi.md) ・[使用指南](../platform/api-client.md) |
 | `useBaseUrl` | Base URL | [詳情](./composables/useBaseUrl.md) |
 | `useFetchStream` | Fetch 串流請求 | [詳情](./composables/useFetchStream.md) |
 | `useFetchJSONLinesStream` | JSON Lines 串流 | [詳情](./composables/useFetchJSONLinesStream.md) |
 
-## ✅ 表單 / 驗證
+### 表單、驗證
 
 | Composable | 說明 | 詳情 |
 | :--- | :--- | :--- |
@@ -52,7 +58,7 @@
 | `useValueValidation` | 值驗證工具 | [詳情](./composables/useValueValidation.md) |
 | `useIsValidKey` | 鍵值驗證 | [詳情](./composables/useIsValidKey.md) |
 
-## 💾 儲存 / Proxy
+### 儲存、Proxy
 
 | Composable | 說明 | 詳情 |
 | :--- | :--- | :--- |
@@ -62,7 +68,7 @@
 | `useCookieProxy` | cookie proxy | [詳情](./composables/useCookieProxy.md) |
 | `usePiniaClear` | 清空 Pinia | [詳情](./composables/usePiniaClear.md) |
 
-## 🧭 路由 / 連結
+### 路由、連結
 
 | Composable | 說明 | 詳情 |
 | :--- | :--- | :--- |
@@ -71,7 +77,7 @@
 | `useAnchorLink` | 錨點連結 | [詳情](./composables/useAnchorLink.md) |
 | `useAutoLink` | 自動連結 | [詳情](./composables/useAutoLink.md) |
 
-## 🖱️ DOM / 滾動 / 裝置
+### DOM、滾動、裝置
 
 | Composable | 說明 | 詳情 |
 | :--- | :--- | :--- |
@@ -82,7 +88,7 @@
 | `useDeviceBreakpoints` | 裝置斷點偵測 | [詳情](./composables/useDeviceBreakpoints.md) |
 | `useDrawerCollapsed` | Drawer 收合狀態（singleton） | [詳情](./composables/useDrawerCollapsed.md) |
 
-## 🖼️ 檔案 / 媒體
+### 檔案、媒體
 
 | Composable | 說明 | 詳情 |
 | :--- | :--- | :--- |
@@ -93,7 +99,7 @@
 | `useLazyImage` | 圖片懶載入 | [詳情](./composables/useLazyImage.md) |
 | `useRandomCatImg` | 隨機貓圖 | [詳情](./composables/useRandomCatImg.md) |
 
-## 🔧 工具
+### 工具
 
 | Composable | 說明 | 詳情 |
 | :--- | :--- | :--- |
@@ -104,6 +110,24 @@
 | `useDelay` | 延遲 | [詳情](./composables/useDelay.md) |
 | `useErrorRef` | 錯誤 ref 匯總（不含佇列/顯示，全域錯誤請見 `useCamelotError`） | [詳情](./composables/useErrorRef.md) |
 
----
+## 相關頁面
 
-[🧩 元件清單](./components.md) | [🏠 Wiki](../index.md)
+- [元件清單](./components.md)
+- [API 呼叫](../platform/api-client.md)
+
+## Changelog
+
+| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
+|---|---|---|---|---|---|
+| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
+
+## References
+
+| 來源 | 位置 |
+|---|---|
+| app/composables | [app/composables](../../../app/composables) |
+
+[app/composables]: #references
+
+---
+[⚙️ Env](../environment.md) | [🏠 Wiki](../index.md)

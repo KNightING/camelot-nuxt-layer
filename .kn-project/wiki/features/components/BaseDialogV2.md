@@ -2,24 +2,22 @@
 
 ## Summary
 
-原生 `<dialog>` 為基底的模態對話框，含四主題外框、遮罩點擊/Esc 關閉與網址查詢字串同步。
-
-**匯入名稱**：`CamelotBaseDialogV2`
+BaseDialogV2 是以原生 dialog 元素為基底的模態對話框，匯入名稱 `CamelotBaseDialogV2`。它依當前主題提供四種內容框，支援點遮罩或按 Esc 關閉，並可把開關狀態同步到網址查詢字串。本元件不提供內建關閉按鈕，需要標準按鈕列時改用 [ConfirmDialog](./ConfirmDialog.md)。
 
 ## Props
 | Prop | 型別 | 預設 | 說明 |
 | :--- | :--- | :---: | :--- |
 | `closeByMask` | `boolean` | `true` | 點擊遮罩（內容框之外）或按 Esc 是否關閉 |
-| `backdropProgress` | `number` | `0` | 遮罩「褪去」進度 0–1，寫入 `<dialog>` 的 `--cml-backdrop-progress`，`::backdrop` 以 `opacity: calc(1 − 進度)` 漸變（`::backdrop` 會繼承 originating element 的 custom property）；[BaseBottomSheetV2](./BaseBottomSheetV2.md) 拖曳時回寫 |
+| `backdropProgress` | `number` | `0` | 遮罩褪去進度 0–1，遮罩不透明度為 1 減進度；[BaseBottomSheetV2](./BaseBottomSheetV2.md) 拖曳時回寫 |
 | `backdropImmediate` | `boolean` | `false` | 為 true 時關閉遮罩 transition，讓進度逐幀即時反映（拖曳中） |
-| `tag` | `string` | - | 對話框 id；亦作為預設的網址查詢字串 key（值為此 tag） |
-| `zIndex` | `number` | - | 對話框 z-index |
-| `query` | `CamelotDialogQuery` | - | 自訂網址查詢字串同步設定（優先於 `tag`） |
+| `tag` | `string` | — | 對話框 id；亦作為預設的網址查詢字串值 |
+| `zIndex` | `number` | — | 對話框 z-index |
+| `query` | `CamelotDialogQuery` | — | 自訂網址查詢字串同步設定（優先於 `tag`） |
 
 ## Emits
 | 事件 | 參數 | 說明 |
 | :--- | :--- | :--- |
-| `cancel` | - | 透過遮罩或 Esc 關閉時觸發 |
+| `cancel` | — | 透過遮罩或 Esc 關閉時觸發 |
 
 ## v-model
 | Model | 型別 | 說明 |
@@ -29,22 +27,68 @@
 ## Slots
 | Slot | 作用域參數 | 說明 |
 | :--- | :--- | :--- |
-| `wrapper` | - | 覆寫整個全螢幕置中容器（自訂 wrapper 時遮罩判斷改回 `e.target === dialog`） |
-| `default` | - | 對話框內容（置於各主題內容框內） |
+| `wrapper` | — | 覆寫整個全螢幕置中容器；自訂後遮罩判斷改為點在 dialog 本身 |
+| `default` | — | 對話框內容（置於各主題內容框內） |
 
-## 備註
-- 依 `themeMode` 呈現四種內容框：`scifi`（`CamelotScifiFrame` 四角框）、`cupertino`、`aqua`（毛玻璃）、預設 Material。
-- 使用原生 `dialog.showModal()` 產生背景遮罩；關閉時延遲 400ms 再 `close()` 以配合淡出動畫。
-- 遮罩點擊判斷：點在 `.dialog-content-box` 之外即關閉，但下列四種情形會**先行排除**：
-    1. 點在 `[data-camelot-popup]` 內 —— [PopupV2](./PopupV2.md) 會把浮層 Teleport 進本 `<dialog>`，位置落在內容框之外；不排除的話，點選單選項會被誤判成點遮罩。
-    2. 事件 target 已脫離文件 —— 巢狀 `<dialog>` 以 `v-if` 渲染，選取後先被移除，本 `pointerup` 才輪到執行，此時 `contains()` 必然回傳 `false`。
-    3. 點在巢狀 `<dialog>` 內 —— 交由該內層自行處理遮罩與關閉。
-    4. 內容框只認**屬於本對話框**的那一個（以 `closest('dialog')` 篩選）—— `querySelector` 會一併撈到巢狀 `<dialog>` 的內容框；[BaseBottomSheetV2](./BaseBottomSheetV2.md) 以自訂 wrapper 渲染、本身沒有內容框，若不篩選會誤把對方的當成自己的，導致點面板空白處連整個 Sheet 一起關掉。
-- `closeByMask: false` 會**連帶停用 Esc 關閉**，這是刻意設計，用於強制決策的 modal。此時元件不提供任何內建關閉 UI，使用端必須自行提供關閉途徑（可改用 [ConfirmDialog](./ConfirmDialog.md)）。
-- 本元件**不提供內建關閉按鈕**：四種版面皆只渲染 `<slot />`，關閉 UI 由使用端負責。需要標準按鈕列時請改用 [ConfirmDialog](./ConfirmDialog.md)。
-- 網址同步：設定 `tag` 或 `query` 後，開啟會 push 查詢字串（含 `isDialog=true`），關閉會 back 或移除查詢字串；並監聽路由變化反向同步 `open`。
-- 開啟時鎖定 `body` 捲動（`body:has(dialog[open].camelot-dialog) { overflow: hidden }`）。`tailwind.css` 的 `html { scrollbar-gutter: stable }` 永遠保留捲軸空間，鎖定時捲軸軌道仍在、版面寬度不跳動（thumb 因無可捲內容而消失）。[Drawer](./Drawer.md) 的鎖同樣受惠；全 repo 只有這兩處鎖 body 捲動。
-- `<dialog>` 用 `overflow: clip` 而非 `hidden`。元素上的 `transform-gpu` 使本對話框成為內部 `position: fixed` 元素（如 [BaseBottomSheetV2](./BaseBottomSheetV2.md) 的 `.wrapper`）的 containing block，那些元素因此計入本元素的 scrollable overflow；`overflow: hidden` 仍是可被程式捲動的捲動容器，`showModal()` 的 autofocus scroll-into-view 會把整份內容往上捲一段，Sheet 就浮在離視窗底部一個面板高度的位置（在 [Drawer](./Drawer.md) 內開 Sheet 特別容易觸發）。`overflow: clip` 不建立捲動容器，`scrollTop` 恆為 `0`。
+## 運作方式
+
+### 開啟與關閉
+
+1. 開啟時呼叫原生 showModal，產生背景遮罩並進入 top layer。
+2. 依主題呈現內容框：scifi 四角框、cupertino、aqua 毛玻璃，其他一律 material。
+3. 關閉時先播淡出動畫，延遲 400ms 再關閉原生 dialog。
+4. 開啟期間鎖定頁面捲動；全站保留捲軸空間，所以鎖定時版面寬度不跳動。
+
+`closeByMask` 設為 false 會連帶停用 Esc 關閉，用於強制決策的對話框；此時使用端必須自行提供關閉途徑。
+
+來源：1. [BaseDialogV2.vue][]　2. [tailwind.css][]
+
+### 遮罩點擊判斷
+
+點在本對話框的內容框之外就關閉並送出 cancel，但以下情形先排除：
+
+| 情形 | 為什麼排除 |
+|---|---|
+| 點在帶 popup 標記的浮層內 | [PopupV2](./PopupV2.md) 把浮層傳送進本對話框，位置落在內容框外，不排除會選不到選項 |
+| 事件目標已脫離文件 | 巢狀對話框選取後先被移除，外層才收到事件，會被誤判成點遮罩 |
+| 點在巢狀對話框內 | 交由內層自行處理遮罩與關閉 |
+| 內容框屬於巢狀對話框 | 只認屬於本對話框的內容框；否則自訂外層的 Sheet 會誤用內層的內容框而整個被關掉 |
+
+來源：1. [BaseDialogV2.vue][]
+
+### 網址同步
+
+1. 設定 `tag` 或 `query` 後才啟用。
+2. 開啟時 push 查詢字串，並附帶 isDialog 為 true。
+3. 關閉時若能返回上一頁就 back，否則 replace 移除這兩個查詢參數。
+4. 監聽路由變化反向同步開關：查詢字串符合就開啟，否則關閉。
+
+來源：1. [BaseDialogV2.vue][]
+
+### 裁切方式
+
+對話框用 clip 而非 hidden 裁切溢出。GPU transform 讓對話框成為內部固定定位元素的定位基準，例如 BottomSheet 的面板；hidden 仍是可捲動容器，showModal 自動聚焦時會把內容往上捲，Sheet 就浮離視窗底部。clip 不建立捲動容器，捲動位置恆為 0。
+
+來源：1. [BaseDialogV2.vue][]
+
+## 相關頁面
+- [Drawer](./Drawer.md)：另一個鎖定頁面捲動的元件
+
+## Changelog
+
+| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
+|---|---|---|---|---|---|
+| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
+
+## References
+
+| 來源 | 位置 |
+|---|---|
+| BaseDialogV2.vue | [app/components/Camelot/BaseDialogV2.vue](../../../../app/components/Camelot/BaseDialogV2.vue) |
+| tailwind.css | [app/assets/css/tailwind.css](../../../../app/assets/css/tailwind.css) |
+
+[BaseDialogV2.vue]: #references
+[tailwind.css]: #references
 
 ---
-[🏠 Wiki](../../index.md)
+[⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

@@ -28,4 +28,4 @@
 - `archive/`: 存放已歸檔的計畫文件。
 
 ---
-[📈 專案入口](./.kn-project/project.md) | [📚 Wiki](./.kn-project/wiki/index.md)
+[📈 專案入口](.kn-project/project.md) | [📚 Wiki](.kn-project/wiki/index.md)
