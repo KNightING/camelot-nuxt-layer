@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex h-11 w-full items-center rounded-[10px] bg-surface-container-highest px-4 transition-all duration-200 ease-in-out"
+    class="flex min-h-10.5 w-full items-center rounded-[10px] border border-transparent bg-surface-container-highest px-4 transition-all duration-200 ease-in-out"
     :class="{ 'bg-surface shadow-[inset_0_0_0_1px_var(--cml-color-current-color)]': isFocused }"
   >
     <slot name="before" />
@@ -8,7 +8,7 @@
     <input
       ref="input"
       v-model="modelValue"
-      class="w-full min-w-0 flex-1 border-none bg-transparent outline-none"
+      class="w-full min-w-0 flex-1 border-none bg-transparent py-2 outline-none"
       :placeholder="placeholder"
       :type="type"
       :disabled="disabled"

@@ -319,6 +319,93 @@
           </div>
         </div>
 
+        <!-- Form Alignment Check Card：各表單控制項同列並排，切主題目視比對高度與字級 -->
+        <div :class="[cardClass, 'col-span-1 md:col-span-2 lg:col-span-3']">
+          <h2 :class="cardTitleClass">
+            Form Alignment (DatePicker / Input / Button / Counter / Select)
+          </h2>
+          <div class="flex flex-wrap items-end gap-3">
+            <div class="w-48">
+              <CamelotDateV2
+                :color="currentColorRole"
+                label="日期"
+                placeholder="請選擇日期"
+              />
+            </div>
+            <div class="w-48">
+              <CamelotInput
+                v-model="inputTextVal"
+                label="Input"
+                placeholder="輸入文字"
+                :color="currentColorRole"
+              />
+            </div>
+            <CamelotButton :color="currentColorRole">
+              送出
+            </CamelotButton>
+            <CamelotNumberCounter
+              v-model="v"
+              label="Counter"
+              :max="10"
+              :min="0"
+              :color="currentColorRole"
+            />
+            <div class="w-48">
+              <CamelotSelectV2
+                v-model="selectVal"
+                :color="currentColorRole"
+                label="Select"
+                :options="options"
+                :searchable="false"
+              />
+            </div>
+          </div>
+          <span class="text-xs text-slate-400">外部 CSS 覆蓋字級為 20px：高度隨字級自動變高，仍彼此等高</span>
+          <div class="flex flex-wrap items-end gap-3">
+            <div class="w-48">
+              <CamelotDateV2
+                style="font-size: 20px"
+                :color="currentColorRole"
+                label="日期"
+                placeholder="請選擇日期"
+              />
+            </div>
+            <div class="w-48">
+              <CamelotInput
+                v-model="inputTextVal"
+                style="font-size: 20px"
+                label="Input"
+                placeholder="輸入文字"
+                :color="currentColorRole"
+              />
+            </div>
+            <CamelotButton
+              :color="currentColorRole"
+              style="font-size: 20px"
+            >
+              送出
+            </CamelotButton>
+            <CamelotNumberCounter
+              v-model="v"
+              style="font-size: 20px"
+              label="Counter"
+              :max="10"
+              :min="0"
+              :color="currentColorRole"
+            />
+            <div class="w-48">
+              <CamelotSelectV2
+                v-model="selectVal"
+                style="font-size: 20px"
+                :color="currentColorRole"
+                label="Select"
+                :options="options"
+                :searchable="false"
+              />
+            </div>
+          </div>
+        </div>
+
         <!-- Input & Textarea Card -->
         <div :class="cardClass">
           <h2 :class="cardTitleClass">
@@ -329,6 +416,14 @@
             v-model="inputTextVal"
             label="Username"
             placeholder="Enter your username..."
+            :color="currentColorRole"
+          />
+
+          <CamelotInput
+            v-model="inputTextVal"
+            label="Floating Label（label-mode，僅 Material 生效）"
+            label-mode="floating"
+            placeholder="Material 浮動 label，56px"
             :color="currentColorRole"
           />
 

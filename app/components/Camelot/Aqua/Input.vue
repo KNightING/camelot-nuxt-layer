@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex h-11 w-full items-center rounded-aqua-control px-4 transition-all duration-200 ease-spring aqua-track"
+    class="flex min-h-10.5 w-full items-center rounded-aqua-control px-4 transition-all duration-200 ease-spring aqua-track"
     :class="{ 'aqua-glow': isFocused }"
   >
     <slot name="before" />
@@ -8,7 +8,7 @@
     <input
       ref="input"
       v-model="modelValue"
-      class="w-full min-w-0 flex-1 border-none bg-transparent text-sm text-on-surface outline-none placeholder:text-on-surface-variant"
+      class="w-full min-w-0 flex-1 border-none bg-transparent py-2 text-on-surface outline-none placeholder:text-on-surface-variant"
       :placeholder="placeholder"
       :type="type"
       :disabled="disabled"

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="inline-block"
+    class="inline-block text-base"
     :class="roleColorClass"
   >
     <CamelotScifiButton

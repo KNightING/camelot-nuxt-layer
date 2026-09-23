@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex w-fit min-w-10 flex-col gap-1.5"
+    class="flex w-fit min-w-10 flex-col gap-1.5 text-base"
     :class="[roleColorClass, { 'cursor-not-allowed opacity-50': disabled }]"
   >
     <slot
@@ -14,58 +14,64 @@
       />
     </slot>
 
-    <div
-      class="flex h-8 min-w-fit items-center px-1 transition-colors"
-      :class="[containerThemeClass, { 'pointer-events-none': disabled }]"
+    <CamelotInternalFieldFrame
+      :focused="isFocus"
+      :disabled="disabled"
     >
-      <button
-        type="button"
-        class="outline-none"
-        :disabled="disabled"
-        @click="onMinusClick"
+      <!-- 高度公式與 Input 相同（行高 1.5em + 上下 1rem + 框線）：± 按鈕 1.5em + 0.5rem，容器 py-1 補足另外 0.5rem，字級放大時等高 -->
+      <div
+        class="flex min-w-fit items-center px-1 py-1 transition-colors"
+        :class="[containerThemeClass, { 'pointer-events-none': disabled }]"
       >
-        <slot name="minus">
-          <CamelotRippleEffect
-            class="flex h-6 aspect-square flex-col items-center justify-center text-[var(--cml-color-current-color)]"
-            :class="themeMode === 'scifi' ? 'rounded-none' : 'rounded-full'"
-          >
-            <span class="text-base font-bold select-none">-</span>
-          </CamelotRippleEffect>
-        </slot>
-      </button>
+        <button
+          type="button"
+          class="outline-none"
+          :disabled="disabled"
+          @click="onMinusClick"
+        >
+          <slot name="minus">
+            <CamelotRippleEffect
+              class="flex h-[calc(1.5em+0.5rem)] aspect-square flex-col items-center justify-center text-[var(--cml-color-current-color)]"
+              :class="themeMode === 'scifi' ? 'rounded-none' : 'rounded-full'"
+            >
+              <span class="font-bold select-none">-</span>
+            </CamelotRippleEffect>
+          </slot>
+        </button>
 
-      <input
-        ref="input"
-        v-model="model"
-        type="number"
-        class="m-0 min-w-[4ch] flex-1 appearance-none bg-transparent text-center text-on-surface caret-[var(--cml-color-current-color)] outline-none"
-        :placeholder="placeholder"
-        :step="step"
-        :min="min"
-        :max="max"
-        :disabled="disabled"
-        :inputmode="inputmode"
-        @blur="isFocus = false"
-        @focus="isFocus = true"
-        @click="onInputClick"
-      >
+        <input
+          ref="input"
+          v-model="model"
+          type="number"
+          class="m-0 min-w-[4ch] flex-1 appearance-none bg-transparent text-center text-on-surface caret-[var(--cml-color-current-color)] outline-none"
+          :placeholder="placeholder"
+          :step="step"
+          :min="min"
+          :max="max"
+          :disabled="disabled"
+          :inputmode="inputmode"
+          @blur="isFocus = false"
+          @focus="isFocus = true"
+          @click="onInputClick"
+        >
 
-      <button
-        type="button"
-        class="outline-none"
-        :disabled="disabled"
-        @click="onPlusClick"
-      >
-        <slot name="plus">
-          <CamelotRippleEffect
-            class="flex h-6 aspect-square flex-col items-center justify-center text-[var(--cml-color-current-color)]"
-            :class="themeMode === 'scifi' ? 'rounded-none' : 'rounded-full'"
-          >
-            <span class="text-base font-bold select-none">+</span>
-          </CamelotRippleEffect>
-        </slot>
-      </button>
-    </div>
+        <button
+          type="button"
+          class="outline-none"
+          :disabled="disabled"
+          @click="onPlusClick"
+        >
+          <slot name="plus">
+            <CamelotRippleEffect
+              class="flex h-[calc(1.5em+0.5rem)] aspect-square flex-col items-center justify-center text-[var(--cml-color-current-color)]"
+              :class="themeMode === 'scifi' ? 'rounded-none' : 'rounded-full'"
+            >
+              <span class="font-bold select-none">+</span>
+            </CamelotRippleEffect>
+          </slot>
+        </button>
+      </div>
+    </CamelotInternalFieldFrame>
   </div>
 </template>
 
@@ -107,25 +113,27 @@ const containerThemeClass = computed(() => {
   switch (themeMode.value) {
     case 'aqua':
       return [
-        'aqua-track rounded-aqua-control backdrop-blur-md',
+        'min-h-10.5 aqua-track rounded-aqua-control backdrop-blur-md',
         isFocus.value ? 'aqua-glow' : '',
       ]
     case 'cupertino':
       return [
-        'rounded-[10px] bg-surface-container-highest border',
-        isFocus.value ? 'border-[var(--cml-color-current-color)]' : 'border-outline-variant',
+        // 與 Cupertino Input 相同：無可見框線，聚焦時轉亮底並加 inset 主色框
+        'min-h-10.5 rounded-[10px] border border-transparent',
+        isFocus.value
+          ? 'bg-surface shadow-[inset_0_0_0_1px_var(--cml-color-current-color)]'
+          : 'bg-surface-container-highest',
       ]
     case 'scifi':
-      return [
-        'bg-[color-mix(in_srgb,var(--cml-color-current-color)_5%,transparent)] border',
-        isFocus.value
-          ? 'border-[var(--cml-color-current-color)] shadow-[0_0_10px_color-mix(in_srgb,var(--cml-color-current-color)_20%,transparent)]'
-          : 'border-[color-mix(in_srgb,var(--cml-color-current-color)_30%,transparent)]',
-      ]
+      // 外框與聚焦效果交給 CamelotScifiFrame，內容區扣掉 Frame 上下各 1px 外框
+      return ['min-h-10']
     default:
+      // Material：與 Material Input / Select 同為 Filled 欄位
       return [
-        'rounded-full bg-surface border',
-        isFocus.value ? 'border-[var(--cml-color-current-color)]' : 'border-outline-variant',
+        'min-h-10.5 rounded-t-[4px] bg-surface-container-highest border-y border-t-transparent',
+        isFocus.value
+          ? 'border-b-[var(--cml-color-current-color)] shadow-[inset_0_-1px_0_var(--cml-color-current-color)]'
+          : 'border-b-outline',
       ]
   }
 })

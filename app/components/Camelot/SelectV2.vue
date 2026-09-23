@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex w-full min-w-0 flex-col gap-1.5"
+    class="flex w-full min-w-0 flex-col gap-1.5 text-base"
     :class="[roleColorClass, { 'cursor-not-allowed opacity-50': disabled }]"
   >
     <slot
@@ -44,7 +44,7 @@
               type="text"
               :placeholder="selectedLabel || placeholder"
               :disabled="disabled"
-              class="w-full bg-transparent outline-none border-none pl-4 pr-10 py-2 text-base text-on-surface"
+              class="w-full bg-transparent outline-none border-none min-h-10 py-2 pl-4 pr-10 text-on-surface"
               @input="(e: any) => handleSearchInput(e.target.value)"
             >
             <div class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center justify-center">
@@ -69,7 +69,7 @@
           <!-- Static Trigger -->
           <div
             v-else
-            class="w-full outline-none px-4 py-2 text-base flex items-center gap-2 text-on-surface"
+            class="w-full outline-none min-h-10 px-4 py-2 flex items-center gap-2 text-on-surface"
           >
             <span
               class="flex-1 truncate"
@@ -96,16 +96,16 @@
               type="text"
               :placeholder="selectedLabel || placeholder"
               :disabled="disabled"
-              class="w-full outline-none text-base transition-colors"
+              class="w-full min-h-10.5 py-2 outline-none transition-colors"
               :class="[
                 themeMode === 'cupertino'
-                  ? 'rounded-[10px] bg-surface-container-highest border border-outline-variant pl-4 pr-10 py-2 focus:border-[var(--cml-color-current-color)]'
+                  ? 'rounded-[10px] bg-surface-container-highest border border-transparent pl-4 pr-10 focus:bg-surface focus:shadow-[inset_0_0_0_1px_var(--cml-color-current-color)]'
                   : themeMode === 'material'
-                    ? 'h-[56px] rounded-t-[4px] rounded-b-none bg-surface-container-highest border-b border-t-0 border-x-0 border-outline pl-4 pr-10 focus:border-b-2 focus:border-[var(--cml-color-current-color)]'
+                    ? 'rounded-t-[4px] rounded-b-none bg-surface-container-highest border-y border-x-0 border-t-transparent border-b-outline pl-4 pr-10 focus:border-b-[var(--cml-color-current-color)] focus:shadow-[inset_0_-1px_0_var(--cml-color-current-color)]'
                     : themeMode === 'aqua'
-                      ? 'aqua-track rounded-aqua-control pl-4 pr-10 py-2.5 backdrop-blur-md focus:aqua-glow'
-                      : 'border border-stroke rounded-lg pl-4 pr-10 py-2 focus:border-[var(--cml-color-current-color)]',
-                open && themeMode !== 'aqua' ? 'border-[var(--cml-color-current-color)]' : '',
+                      ? 'aqua-track rounded-aqua-control pl-4 pr-10 backdrop-blur-md focus:aqua-glow'
+                      : 'border border-stroke rounded-lg pl-4 pr-10 focus:border-[var(--cml-color-current-color)]',
+                openBorderClass,
                 open ? 'pointer-events-auto' : 'pointer-events-none',
                 disabled ? 'text-on-surface-variant' : 'text-on-surface',
               ]"
@@ -133,16 +133,16 @@
           <!-- Static Trigger -->
           <div
             v-else
-            class="w-full outline-none text-base flex items-center gap-2 transition-colors"
+            class="w-full min-h-10.5 py-2 outline-none flex items-center gap-2 transition-colors"
             :class="[
               themeMode === 'cupertino'
-                ? 'rounded-[10px] bg-surface-container-highest border border-outline-variant px-4 py-2'
+                ? 'rounded-[10px] bg-surface-container-highest border border-transparent px-4'
                 : themeMode === 'material'
-                  ? 'h-[56px] rounded-t-[4px] rounded-b-none bg-surface-container-highest border-b border-t-0 border-x-0 border-outline px-4'
+                  ? 'rounded-t-[4px] rounded-b-none bg-surface-container-highest border-y border-x-0 border-t-transparent border-b-outline px-4'
                   : themeMode === 'aqua'
-                    ? 'aqua-track rounded-aqua-control px-4 py-2.5 backdrop-blur-md'
-                    : 'border border-stroke rounded-lg px-4 py-2',
-              open && themeMode !== 'aqua' ? 'border-[var(--cml-color-current-color)]' : '',
+                    ? 'aqua-track rounded-aqua-control px-4 backdrop-blur-md'
+                    : 'border border-stroke rounded-lg px-4',
+              openBorderClass,
               disabled ? 'text-on-surface-variant' : 'text-on-surface',
             ]"
           >
@@ -421,6 +421,14 @@ const {
 )
 
 const { themeMode } = useCamelotTheme()
+
+// 展開時的觸發器框線：Material 只染下框線並加 1px 內陰影（視覺 2px，不推擠版面）；Cupertino 同 Cupertino Input 的 inset 主色框；Aqua 由 aqua-glow 負責
+const openBorderClass = computed(() => {
+  if (!open.value || themeMode.value === 'aqua') return ''
+  if (themeMode.value === 'material') return 'border-b-[var(--cml-color-current-color)] shadow-[inset_0_-1px_0_var(--cml-color-current-color)]'
+  if (themeMode.value === 'cupertino') return 'bg-surface shadow-[inset_0_0_0_1px_var(--cml-color-current-color)]'
+  return 'border-[var(--cml-color-current-color)]'
+})
 
 // 陰影改畫在 popup 外層容器（位於 Expanded 的 overflow-hidden 之外，不會被方形裁切），
 // 且圓角需與選單面板一致。面板本身的落影改為移除，僅保留不會被裁切的內高光。

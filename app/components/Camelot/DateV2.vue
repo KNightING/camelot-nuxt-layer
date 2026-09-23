@@ -1,15 +1,13 @@
 <template>
   <div
-    class="flex w-full flex-col gap-1.5"
+    class="flex w-full flex-col gap-1.5 text-base"
     :class="roleColorClass"
   >
-    <span
-      v-if="label"
-      class="pl-1 text-sm font-medium text-on-surface"
-    >{{ label }}<span
-      v-if="required"
-      class="ml-0.5 text-error"
-    >*</span></span>
+    <CamelotFieldLabel
+      :label="label"
+      :required="required"
+      class="pl-1"
+    />
 
     <CamelotPopupV2
       v-model:open="open"
@@ -23,37 +21,41 @@
     >
       <!-- .prevent：點在 icon／分隔符等非 input 子元素時，label 的啟用行為會再對內層 input 補發一次 click，
            冒泡回來把剛開的浮層又關掉；阻止預設即可（input 為 readonly，無其他副作用） -->
-      <label
-        ref="triggerRef"
-        class="group flex w-full min-w-[16ch] cursor-pointer items-center gap-2 px-4 py-2 transition-colors"
-        :class="[
-          triggerClass,
-          {
-            'border-[var(--cml-color-current-color)]': open && themeMode !== 'aqua',
-            'aqua-glow': open && themeMode === 'aqua',
-            'border-error!': isError,
-            'bg-gray-200! opacity-50': disabled,
-          },
-        ]"
-        @click.prevent="togglePopup"
+      <CamelotInternalFieldFrame
+        :focused="open"
+        :disabled="disabled"
       >
-        <IMaterialSymbolsCalendarMonthRounded
-          class="w-5 h-5 text-outline group-hover:text-[var(--cml-color-current-color)] transition-colors"
-        />
-        <input
-          v-bind="$attrs"
-          v-model="inputModel"
-          type="text"
-          class="min-w-0 w-0 flex-1 text-on-surface bg-transparent placeholder:text-on-surface outline-none text-base caret-[var(--cml-color-current-color)] appearance-none cursor-pointer"
-          :class="{
-            'text-black!': disabled,
-          }"
-          :maxlength="enableTime ? 25 : 10"
-          :placeholder="placeholder"
-          readonly
+        <label
+          ref="triggerRef"
+          class="group flex w-full min-w-[16ch] cursor-pointer items-center gap-2 px-4 py-2 transition-colors"
+          :class="[
+            triggerClass,
+            open ? triggerOpenClass : '',
+            {
+              'border-error!': isError,
+              'bg-gray-200! opacity-50': disabled,
+            },
+          ]"
+          @click.prevent="togglePopup"
         >
+          <IMaterialSymbolsCalendarMonthRounded
+            class="size-[1.25em] text-outline group-hover:text-[var(--cml-color-current-color)] transition-colors"
+          />
+          <input
+            v-bind="$attrs"
+            v-model="inputModel"
+            type="text"
+            class="min-w-0 w-0 flex-1 text-on-surface bg-transparent placeholder:text-on-surface outline-none caret-[var(--cml-color-current-color)] appearance-none cursor-pointer"
+            :class="{
+              'text-black!': disabled,
+            }"
+            :maxlength="enableTime ? 25 : 10"
+            :placeholder="placeholder"
+            readonly
+          >
 
-      </label>
+        </label>
+      </CamelotInternalFieldFrame>
 
       <CamelotBaseDialogV2
         v-if="showType === 'dialog'"
@@ -233,7 +235,7 @@ const open = ref(false)
 const viewDate = ref(new Date())
 
 const {
-  themeMode, triggerClass, panelClass,
+  themeMode, triggerClass, triggerOpenClass, panelClass,
 } = useCamelotPickerTheme()
 
 // 落影改畫在 popup 外層容器（位於 Expanded 的 overflow-hidden 之外，不會被方形裁切），
