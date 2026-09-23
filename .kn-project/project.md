@@ -11,7 +11,7 @@
 - **框架**: Nuxt 4 + Vue 3 (Composition API, `<script setup>`)
 - **樣式**: Tailwind CSS v4 (主題定義於 `app/assets/css/tailwind.css`)
 - **狀態管理**: Pinia + pinia-plugin-persistedstate
-- **多語系**: @nuxtjs/i18n。Layer 的 `nuxt.config.ts` 宣告 `locales: []`，**語系全部由消費端註冊**（CLDR 代碼如 `zh-Hant-TW`、`zh-Hans-CN`），完整範例見 `.playground/i18n/`。Layer 目錄下的 `en` / `zh` 基底字典目前不會被註冊，詳見 [i18n wiki](./wiki/features/i18n-locales.md)
+- **多語系**: @nuxtjs/i18n。Layer 的 `nuxt.config.ts` 宣告 `locales: []`，**語系全部由消費端註冊**（CLDR 代碼如 `zh-Hant-TW`、`zh-Hans-CN`），完整範例見 `.playground/i18n/`。Layer 目錄下的 `en` / `zh` 基底字典目前不會被註冊，詳見 [i18n wiki](./wiki/platform/i18n-locales.md)
 - **日期處理**: date-fns
 - **圖示**: unplugin-icons (Material Symbols)
 - **工具集**: @vueuse/core, @vueuse/nuxt
@@ -46,7 +46,7 @@ camelot-nuxt-layer/
 
 | Module | Path | Description |
 | :--- | :--- | :--- |
-| UI Components | `app/components/Camelot/` | 核心 UI 元件，涵蓋表單（Input, Select, Date）、對話框/側欄（Dialog, BottomSheet, Drawer, Popup）、版面/資料/導覽（Tree, Table, Menu）、動畫（Reveal, Ripple, Skeleton）、日期選擇（DateV2, DateRangeV2）；支援 Material、Cupertino、Sci-Fi、**Aqua（Frosted Glass，預設）** 四種主題。詳見 [主題系統 wiki](./wiki/features/theme-system.md) |
+| UI Components | `app/components/Camelot/` | 核心 UI 元件，涵蓋表單（Input, Select, Date）、對話框/側欄（Dialog, BottomSheet, Drawer, Popup）、版面/資料/導覽（Tree, Table, Menu）、動畫（Reveal, Ripple, Skeleton）、日期選擇（DateV2, DateRangeV2）；支援 Material、Cupertino、Sci-Fi、**Aqua（Frosted Glass，預設）** 四種主題。詳見 [主題系統 wiki](./wiki/platform/theme-system.md) |
 | Internal Components | `app/components/Camelot/Internal/` | DateV2/DateRangeV2 共用日曆核心（Calendar）、Tree 遞迴節點（TreeNode）、Menu 遞迴項目（MenuItem） |
 | Composables | `app/composables/` | 40+ 個共用 Composables，涵蓋 API 封裝、路由管理、色彩主題、表單驗證、串流請求等 |
 | Theme Manager | `app/composables/useCamelotTheme` | 全域風格選擇的狀態管理（預設主題 = aqua） |
@@ -60,12 +60,11 @@ camelot-nuxt-layer/
 | 分類 | 連結 |
 | :--- | :--- |
 | 📋 Wiki 首頁 | [wiki/index.md](./wiki/index.md) |
-| 🎨 主題系統（四風格 + Aqua） | [wiki/features/theme-system.md](./wiki/features/theme-system.md) |
-| 🧱 Drawer/Tree/Table/Menu | [wiki/features/layout-data-components.md](./wiki/features/layout-data-components.md) |
+| 🎨 主題系統（四風格 + Aqua） | [wiki/features/theme-system.md](./wiki/platform/theme-system.md) |
 | 🗓️ 日期選擇器系統 | [wiki/features/calendar.md](./wiki/features/calendar.md) |
-| 🎨 色彩主題系統 | [wiki/features/color-scheme.md](./wiki/features/color-scheme.md) |
-| 🚨 錯誤處理系統（佇列 + 轉換器） | [wiki/features/error-handling.md](./wiki/features/error-handling.md) |
-| 📦 Layer 整合與必裝依賴 | [wiki/features/layer-integration.md](./wiki/features/layer-integration.md) |
+| 🎨 色彩主題系統 | [wiki/features/color-scheme.md](./wiki/platform/color-scheme.md) |
+| 🚨 錯誤處理系統（佇列 + 轉換器） | [wiki/features/error-handling.md](./wiki/platform/error-handling.md) |
+| 📦 Layer 整合與必裝依賴 | [wiki/features/layer-integration.md](./wiki/dev/layer-integration.md) |
 | ⚙️ 環境變數 | [wiki/environment.md](./wiki/environment.md) |
 
 ---

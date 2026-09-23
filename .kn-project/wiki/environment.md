@@ -1,127 +1,101 @@
-# ⚙️ 環境變數 (Environment Variables)
+# 環境變數
 
-本頁記錄 Camelot Nuxt Layer 使用的所有 Runtime Config 與環境設定。
+## Summary
 
-> [!NOTE]
-> 本專案為 **Nuxt Layer**，各環境變數需由**消費端應用程式**的 `nuxt.config.ts` 或 `.env` 覆蓋設定。Layer 本身的 `nuxt.config.ts` 僅定義預設值與結構。
+Camelot Nuxt Layer 的設定全部走 Nuxt runtimeConfig：Layer 的 Nuxt 設定只定義預設值與結構，實際值由消費端的 Nuxt 設定或 `NUXT_` 開頭的環境變數覆寫。本 repo 沒有 `.env.example`，也不分 flavor。支付 SDK 與 Google 字型由 Nuxt 模組在建置期讀取，只能在消費端的 Nuxt 設定裡改；安全性插件與公開設定在執行期讀取，可用環境變數覆寫。缺值時一律套用下表的預設值，不會啟動失敗。
 
----
+## 變數
 
-## 分組一：支付模組 (Payment)
+### 支付與字型
 
-### `NUXT_TAPPAY_ADD_SCRIPT`
-| 項目 | 說明 |
-| :--- | :--- |
-| **Config 路徑** | `runtimeConfig.tappay.addScript` |
-| **型別** | `boolean` |
-| **預設值** | `false` |
-| **用途** | 控制是否在 `<head>` 中自動注入 TapPay SDK script (`https://js.tappaysdk.com/sdk/tpdirect/v5.17.0`)。 |
-| **影響** | 若設為 `false`，頁面不會載入 TapPay SDK，信用卡支付功能無法使用。 |
-| **環境範例** | `NUXT_TAPPAY_ADD_SCRIPT=true` |
+這三個值由 Layer 的 Nuxt 模組在建置期讀取設定檔裡的值，執行期環境變數改不到，請寫在消費端 Nuxt 設定的 runtimeConfig。
 
-### `NUXT_GOOGLE_PAY_ADD_SCRIPT`
-| 項目 | 說明 |
-| :--- | :--- |
-| **Config 路徑** | `runtimeConfig.googlePay.addScript` |
-| **型別** | `boolean` |
-| **預設值** | `false` |
-| **用途** | 控制是否在 `<head>` 中自動注入 Google Pay JS SDK (`https://pay.google.com/gp/p/js/pay.js`)。 |
-| **影響** | 若設為 `false`，Google Pay 支付功能無法使用。 |
-| **環境範例** | `NUXT_GOOGLE_PAY_ADD_SCRIPT=true` |
+| 變數 | 用途 | 缺省影響 | 範例 |
+|---|---|---|---|
+| `tappay.addScript` | 在 head 注入 TapPay SDK 5.17.0 的 script | 預設 `false`：不載入 TapPay，信用卡支付無法使用 | `true` |
+| `googlePay.addScript` | 在 head 注入 Google Pay JS SDK 的 script | 預設 `false`：Google Pay 無法使用 | `true` |
+| `googleFont.disabled` | 停用 Noto Sans TC 的 Google 字型 preconnect 與樣式表 | 預設 `false`：會載入 Google 字型 | `true` |
 
----
+來源：1. [nuxt.config.ts][]　2. [tappay.ts][]　3. [googleFont.ts][]
 
-## 分組二：安全性插件 (Security Plugin)
+### 安全性插件
 
-### `NUXT_SECURITY_PLUGIN_ENABLED`
-| 項目 | 說明 |
-| :--- | :--- |
-| **Config 路徑** | `runtimeConfig.securityPlugin.enabled` |
-| **型別** | `boolean` |
-| **預設值** | `true` |
-| **用途** | 啟用/停用 Server Side Security Plugin（CSP Headers、安全標頭注入）。 |
-| **影響** | 停用後，伺服器不會設定任何 CSP 或安全 HTTP 標頭，**建議僅在開發或 Playground 環境下設為 `false`**。 |
-| **環境範例** | `NUXT_SECURITY_PLUGIN_ENABLED=false` |
+| 變數 | 用途 | 缺省影響 | 範例 |
+|---|---|---|---|
+| `NUXT_SECURITY_PLUGIN_ENABLED` | 啟用伺服器端安全性插件，設定 CSP 與安全 HTTP 標頭 | 預設 `true`；設為 `false` 時不送任何 CSP 或安全標頭，建議只在開發或 playground 關閉 | `false` |
+| `NUXT_SECURITY_PLUGIN_USE_NONCE` | 每個請求產生隨機 nonce，注入 script、style、link 標籤 | 預設 `true`；關閉時 script-src 不帶 nonce 與 strict-dynamic，只剩 self 與 unsafe-inline | `true` |
 
-### `NUXT_SECURITY_PLUGIN_USE_NONCE`
-| 項目 | 說明 |
-| :--- | :--- |
-| **Config 路徑** | `runtimeConfig.securityPlugin.useNonce` |
-| **型別** | `boolean` |
-| **預設值** | `true` |
-| **用途** | 是否為每個請求生成隨機 Nonce，並注入所有 `<script>`、`<style>`、`<link>` 標籤。 |
-| **影響** | 開啟後，CSP `script-src` 將使用 `'nonce-{random}' 'strict-dynamic'` 模式，提升安全性；關閉後退回 `'unsafe-inline'`。 |
-| **環境範例** | `NUXT_SECURITY_PLUGIN_USE_NONCE=true` |
+來源：1. [nuxt.config.ts][]　2. [securityPlugin.ts][]
 
-### CSP 規則 (securityPlugin.contentSecurityPolicy)
+### CSP 追加來源
 
-以下欄位允許消費端應用程式**追加**自定 CSP 來源（基底來源由 Layer 內建）：
+`securityPlugin.contentSecurityPolicy` 底下的陣列讓消費端追加 CSP 來源，Layer 內建的基底來源一律保留。
 
-| Config 路徑 | 型別 | 基底內建值 | 說明 |
-| :--- | :--- | :--- | :--- |
-| `.connect` | `string[]` | `'self'` | `connect-src`：API 請求來源 |
-| `.font` | `string[]` | `'self', 'data:', fonts.gstatic.com` | `font-src`：字體來源 |
-| `.frame` | `string[]` | `'self', 'unsafe-inline'` | `frame-src`：Frame 來源 |
-| `.frameAncestors` | `string[]` | `'self'` | `frame-ancestors`：允許嵌入本站的父頁面 |
-| `.img` | `string[]` | `'self', 'data:'` | `img-src`：圖片來源 |
-| `.manifest` | `string[]` | `'self'` | `manifest-src`：Web App Manifest 來源 |
-| `.media` | `string[]` | `'self'` | `media-src`：媒體來源 |
-| `.object` | `string[]` | `'self'` | `object-src`：物件來源 |
-| `.script` | `string[]` | `'self', 'unsafe-inline'` | `script-src`：腳本來源（Nonce 模式下額外加強） |
-| `.style` | `string[]` | `'self', fonts.googleapis.com, 'unsafe-inline'` | `style-src`：樣式來源 |
-| `.worker` | `string[]` | `'self', 'unsafe-inline', 'wasm-unsafe-eval', 'blob:'` | `worker-src`：Worker 腳本來源 |
+每條指令都含 self，全域 default-src 為 self。
 
----
+| 設定鍵 | 對應指令 | 基底來源 |
+|---|---|---|
+| `connect` | connect-src | self |
+| `font` | font-src | self、data、fonts.gstatic.com 的 http 與 https |
+| `frame` | frame-src | self、unsafe-inline |
+| `frameAncestors` | frame-ancestors | self |
+| `img` | img-src | self、data |
+| `manifest` | manifest-src | self |
+| `media` | media-src | self |
+| `object` | object-src | self |
+| `script` | script-src | self、unsafe-inline；nonce 模式另加 nonce 與 strict-dynamic |
+| `style` | style-src | self、fonts.googleapis.com、unsafe-inline |
+| `worker` | worker-src | self、unsafe-inline、wasm-unsafe-eval、blob |
 
-## 分組三：Public 公開設定
+來源：1. [securityPlugin.ts][]
 
-### `NUXT_PUBLIC_VERSION`
-| 項目 | 說明 |
-| :--- | :--- |
-| **Config 路徑** | `runtimeConfig.public.version` |
-| **型別** | `string` |
-| **預設值** | `'1.0.0'` |
-| **用途** | 應用程式版本號，可透過 `GET /api/version` 查詢。 |
-| **環境範例** | `NUXT_PUBLIC_VERSION=4.3.1.12` |
+### 公開設定
 
-### `NUXT_PUBLIC_ENV`
-| 項目 | 說明 |
-| :--- | :--- |
-| **Config 路徑** | `runtimeConfig.public.env` |
-| **型別** | `string` |
-| **預設值** | `'development'` |
-| **用途** | 應用程式當前環境識別字串（如 `production`, `staging`, `development`）。 |
-| **環境範例** | `NUXT_PUBLIC_ENV=production` |
+| 變數 | 用途 | 缺省影響 | 範例 |
+|---|---|---|---|
+| `NUXT_PUBLIC_VERSION` | 應用程式版本號，由版本 API 回傳 | 預設 `1.0.0` | `4.3.1.12` |
+| `NUXT_PUBLIC_ENV` | 環境識別字串；Layer 內沒有程式讀取，供消費端使用 | 預設 `development` | `production` |
+| `NUXT_PUBLIC_REPLACE_END_SPLASH` | 全域 middleware 移除路徑末尾的斜線，根路徑除外 | 預設 `true`；設為 `false` 時不正規化，同一頁可能有兩個網址 | `true` |
 
-### `NUXT_PUBLIC_REPLACE_END_SLASH`
-| 項目 | 說明 |
-| :--- | :--- |
-| **Config 路徑** | `runtimeConfig.public.replaceEndSplash` |
-| **型別** | `boolean` |
-| **預設值** | `true` |
-| **用途** | 若為 `true`，Global Middleware `00.replacePath.global.ts` 會自動移除 URL 末尾的斜線（`/path/` → `/path`），避免重複路由。 |
-| **影響** | 設為 `false` 後，不會進行 URL 正規化，可能導致路由判斷問題。 |
-| **環境範例** | `NUXT_PUBLIC_REPLACE_END_SLASH=true` |
+設定鍵名是 `replaceEndSplash`，所以環境變數是 SPLASH 而不是 SLASH。
+
+來源：1. [nuxt.config.ts][]　2. [index.get.ts][]　3. [$00.replacePath.ts][]
+
+## 來源與載入順序
+
+1. Layer 的 Nuxt 設定提供預設值。
+2. 消費端的 Nuxt 設定覆寫 Layer 預設值。
+3. 執行期的 `NUXT_` 環境變數覆寫前兩者；建置期由模組讀取的支付與字型設定不受影響。
+
+來源：1. [nuxt.config.ts][]
+
+## 環境差異
+
+無：本 repo 不分 flavor，各環境的值由消費端決定。
+
+## Changelog
+
+| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
+|---|---|---|---|---|---|
+| 2026-09-23 | — | [2609231616-wiki-lint-migration](../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
+
+## References
+
+| 來源 | 位置 |
+|---|---|
+| nuxt.config.ts | [nuxt.config.ts](../../nuxt.config.ts) |
+| tappay.ts | [modules/tappay.ts](../../modules/tappay.ts) |
+| googleFont.ts | [modules/googleFont.ts](../../modules/googleFont.ts) |
+| securityPlugin.ts | [server/plugins/securityPlugin.ts](../../server/plugins/securityPlugin.ts) |
+| index.get.ts | [server/api/version/index.get.ts](../../server/api/version/index.get.ts) |
+| $00.replacePath.ts | [app/middleware/$00.replacePath.ts](../../app/middleware/$00.replacePath.ts) |
+
+[nuxt.config.ts]: #references
+[tappay.ts]: #references
+[googleFont.ts]: #references
+[securityPlugin.ts]: #references
+[index.get.ts]: #references
+[$00.replacePath.ts]: #references
 
 ---
-
-## 建議 `.env.example` 範本
-
-```env
-# 支付模組
-NUXT_TAPPAY_ADD_SCRIPT=false
-NUXT_GOOGLE_PAY_ADD_SCRIPT=false
-
-# 安全性插件
-NUXT_SECURITY_PLUGIN_ENABLED=true
-NUXT_SECURITY_PLUGIN_USE_NONCE=true
-
-# 公開設定
-NUXT_PUBLIC_VERSION=1.0.0
-NUXT_PUBLIC_ENV=development
-NUXT_PUBLIC_REPLACE_END_SLASH=true
-```
-
----
-
 [🏠 Wiki](index.md)

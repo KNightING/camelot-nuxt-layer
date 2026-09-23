@@ -2,11 +2,7 @@
 
 ## Summary
 
-帶標準按鈕列的確認對話框，最多三顆按鈕（反向 / 中立 / 正向），預設只有「確認」且點擊即關閉。
-
-**匯入名稱**：`CamelotConfirmDialog`
-
-組合 [BaseDialogV2](./BaseDialogV2.md) 與 [Button](./Button.md)。兩者本身已依 `themeMode` 分派 scifi / cupertino / aqua / material，因此本元件不另外實作版面。
+ConfirmDialog 是帶標準按鈕列的確認對話框，匯入名稱 `CamelotConfirmDialog`。最多三顆按鈕（反向、中立、正向），預設只有「確認」且點擊即關閉；它組合 [BaseDialogV2](./BaseDialogV2.md) 與 [Button](./Button.md)，兩者已依主題切換外觀，所以本元件不另外實作版面。
 
 ## Props
 | Prop | 型別 | 預設 | 說明 |
@@ -20,10 +16,10 @@
 | `neutralColor` | `CamelotColorRole` | `'primary'` | 中立按鈕色彩角色（以 container 樣式呈現） |
 | `negativeColor` | `CamelotColorRole` | `'error'` | 反向按鈕色彩角色（以 container 樣式呈現） |
 | `autoClose` | `boolean` | `true` | 點擊任一按鈕後是否自動關閉 |
-| `closeByMask` | `boolean` | `true` | 透傳 `BaseDialogV2` |
-| `tag` | `string` | — | 透傳 `BaseDialogV2` |
-| `zIndex` | `number` | — | 透傳 `BaseDialogV2` |
-| `query` | `CamelotDialogQuery` | — | 透傳 `BaseDialogV2`，用於網址查詢字串同步 |
+| `closeByMask` | `boolean` | `true` | 透傳給 BaseDialogV2 |
+| `tag` | `string` | — | 透傳給 BaseDialogV2 |
+| `zIndex` | `number` | — | 透傳給 BaseDialogV2 |
+| `query` | `CamelotDialogQuery` | — | 透傳給 BaseDialogV2，用於網址查詢字串同步 |
 
 ## Emits
 | 事件 | 參數 | 說明 |
@@ -31,7 +27,7 @@
 | `positive` | — | 點擊正向按鈕 |
 | `neutral` | — | 點擊中立按鈕 |
 | `negative` | — | 點擊反向按鈕 |
-| `cancel` | — | 透過遮罩或 Esc 關閉（由 `BaseDialogV2` 轉發） |
+| `cancel` | — | 透過遮罩或 Esc 關閉（由 BaseDialogV2 轉發） |
 
 ## v-model
 | Model | 型別 | 說明 |
@@ -76,11 +72,34 @@
 />
 ```
 
-## 備註
-- **按鈕顯示規則**：依 label 是否設定決定。`positiveLabel` 有預設值故預設顯示；`neutralLabel` / `negativeLabel` 未設定即不渲染。
-- **按鈕順序固定為 反向 → 中立 → 正向 並靠右**，四種風格一致。風格差異由 `CamelotButton` 的外觀承擔，使用端不必為了切換風格重新思考按鈕位置。
-- `autoClose` 為 `false` 時，按鈕仍會 emit 事件但不關閉，由使用端自行控制 `v-model:open`（適用於送出前需驗證或等待 API 的情境）。
-- 內容請只放內容：外框與內距已由 `BaseDialogV2` 負責。
+## 運作方式
+
+### 按鈕列
+
+1. 依 label 是否有值決定每顆按鈕是否渲染；正向按鈕有預設文字，所以預設顯示。
+2. 按鈕順序固定為反向、中立、正向並靠右，四種主題一致；外觀差異由 Button 承擔。
+3. 反向與中立按鈕以容器色呈現，正向按鈕用一般色。
+4. 點擊按鈕先送出對應事件；`autoClose` 為 true 時接著關閉。
+
+`autoClose` 設為 false 時按鈕只送出事件不關閉，由使用端自行控制開關，適用於送出前需驗證或等待 API 的情境。
+
+內容只放內容即可：外框與內距已由 BaseDialogV2 負責。
+
+來源：1. [ConfirmDialog.vue][]
+
+## Changelog
+
+| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
+|---|---|---|---|---|---|
+| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
+
+## References
+
+| 來源 | 位置 |
+|---|---|
+| ConfirmDialog.vue | [app/components/Camelot/ConfirmDialog.vue](../../../../app/components/Camelot/ConfirmDialog.vue) |
+
+[ConfirmDialog.vue]: #references
 
 ---
-[🗂️ 元件清單](../components.md) ・ [🏠 Wiki](../../index.md)
+[⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

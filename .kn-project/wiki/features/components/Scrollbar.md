@@ -2,31 +2,48 @@
 
 ## Summary
 
-自訂捲軸容器，隱藏原生捲軸並於捲動時顯示可拖曳的細捲軸，支援垂直與水平模式。
+自訂捲軸容器：隱藏原生捲軸，捲動時淡入一條可拖曳的細捲軸，停止捲動後自動淡出，支援垂直與水平兩種模式。匯入名稱為 `CamelotScrollbar`（Nuxt 自動匯入）。
 
-**匯入名稱**：`CamelotScrollbar`
+## 運作方式
+
+1. 原生捲軸以樣式隱藏，內容仍可正常捲動。
+2. 捲動時捲軸淡入；停止捲動 1 秒後淡出。
+3. 捲軸滑塊的長度與位置依可視範圍占總內容的比例計算。
+4. 按住滑塊拖曳時，依拖曳距離換算並同步內容的捲動位置。
+5. 捲動與視窗縮放觸發的量測合併到下一個畫面幀，每幀最多重算一次；捲動監聽為 passive。
+6. 掛載時立即量測一次。
+
+來源：1. [Scrollbar.vue][]
 
 ## Props
 | Prop | 型別 | 預設 | 說明 |
 | :--- | :--- | :---: | :--- |
-| `horizontal` | `boolean` | — | 是否為水平捲動模式（否則為垂直） |
+| `horizontal` | `boolean` | — | 是否為水平捲動模式，否則為垂直。 |
 
 ## Slots
 | Slot | 作用域參數 | 說明 |
 | :--- | :--- | :--- |
-| `default` | — | 捲動容器內容 |
+| `default` | — | 捲動容器內容。 |
 
 ## Exposed
 | 名稱 | 說明 |
 | :--- | :--- |
-| `scrollToTop(options?)` | 捲動至頂端；`options.behavior` 預設 `'smooth'` |
-| `scrollToBottom(options?)` | 捲動至底端；`options.behavior` 預設 `'smooth'` |
+| `scrollToTop(options?)` | 捲動至頂端；`options.behavior` 預設 `'smooth'`。 |
+| `scrollToBottom(options?)` | 捲動至底端；`options.behavior` 預設 `'smooth'`。 |
 
-## 備註
-- 原生捲軸以 `scrollbar-width: none` 與 `::-webkit-scrollbar { display: none }` 隱藏。
-- 捲動時捲軸淡入，停止捲動 1 秒後自動淡出。
-- thumb 可用滑鼠拖曳，拖曳時同步更新 `scrollLeft` / `scrollTop`。
-- 捲動與 `resize` 觸發的量測以單一 pending `requestAnimationFrame` 合併，每幀最多重算一次 thumb 尺寸與位置；捲動監聽為 passive。掛載時的首次量測為同步呼叫，不經排程。
+## Changelog
+
+| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
+|---|---|---|---|---|---|
+| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
+
+## References
+
+| 來源 | 位置 |
+|---|---|
+| Scrollbar.vue | [app/components/Camelot/Scrollbar.vue](../../../../app/components/Camelot/Scrollbar.vue) |
+
+[Scrollbar.vue]: #references
 
 ---
-[🏠 Wiki](../../index.md)
+[⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

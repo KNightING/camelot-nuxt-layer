@@ -2,28 +2,21 @@
 
 ## Summary
 
-提供物件工具集：遞迴差異比較（`diff`，用於 RESTful PATCH 差份更新）、深拷貝、日期判斷、undefined 判斷。
+useObject 提供一組物件工具：diff 遞迴比較新舊物件並只回傳有差異的欄位，用於 RESTful PATCH 差份更新；deepClone 深拷貝物件、陣列與 Date；另有 isDate、isUndefined、isNotUndefined 判斷函式。全部是純函式，不建立響應式狀態。
 
-## 簽章
+## 介面
+
+### 簽章
+
 ```ts
-export const useObject = () => ({
-  diff,
-  isDate,
-  deepClone,
-  isUndefined,
-  isNotUndefined,
-})
+const useObject: () => {
+  diff: <T>(oldObj: T, newObj: T) => PartialRecursive<T>
+  isDate: (val: any) => val is Date
+  deepClone: <T>(source: T) => T
+  isUndefined: (obj: any) => boolean
+  isNotUndefined: (obj: any) => boolean
+}
 
-// 內部函式型別
-const diff: <T>(oldObj: T, newObj: T) => PartialRecursive<T>
-const isDate: (val: any) => val is Date
-const deepClone: <T>(source: T) => T
-const isUndefined: (obj: any) => boolean
-const isNotUndefined: (obj: any) => boolean
-```
-
-其中：
-```ts
 export type PartialRecursive<T> = {
   [P in keyof T]?: T[P] extends Array<infer U>
     ? Array<PartialRecursive<U>>
@@ -33,28 +26,64 @@ export type PartialRecursive<T> = {
 }
 ```
 
-## 回傳
+### 回傳
+
 | 名稱 | 型別 | 說明 |
 | --- | --- | --- |
-| `diff` | `<T>(oldObj: T, newObj: T) => PartialRecursive<T>` | 比較兩物件差異，回傳僅含差異欄位的（遞迴）部分物件。 |
-| `isDate` | `(val: any) => val is Date` | 判斷是否為 `Date` 實例。 |
-| `deepClone` | `<T>(source: T) => T` | 深拷貝（支援物件、陣列、`Date`）。 |
-| `isUndefined` | `(obj: any) => boolean` | 判斷是否為 `undefined`。 |
-| `isNotUndefined` | `(obj: any) => boolean` | `isUndefined` 的反向。 |
+| `diff` | `<T>(oldObj, newObj) => PartialRecursive<T>` | 回傳只含差異欄位的部分物件，巢狀物件也只留差異 |
+| `isDate` | `(val) => val is Date` | 以 `instanceof Date` 判斷 |
+| `deepClone` | `<T>(source) => T` | 深拷貝物件、陣列、`Date`，其餘值原樣回傳 |
+| `isUndefined` | `(obj) => boolean` | 是否為 `undefined` |
+| `isNotUndefined` | `(obj) => boolean` | `isUndefined` 的反向 |
+
+來源：1. [useObject.ts][]
 
 ## 用法
+
 ```ts
 const { diff, deepClone } = useObject()
 
-const patch = diff(oldUser, newUser) // 僅含變更欄位
+const patch = diff(oldUser, newUser) // 只含變更欄位
 const copy = deepClone(oldUser)
 ```
 
-## 備註
-- `diff` 以 `newObj` 的 key 為主：`oldObj` 有、但 `newObj` 沒有的 key 不會被視為需更新（此類疑似刪除情境請在 RESTful 用 DELETE）。
-- 陣列：長度不同或其中任一元素有差異時，整組陣列替換。
-- `Date` 以 `getTime()` 比較是否相同。
-- `deepClone` 遇到不支援的型別會拋出 `Unable to copy obj! Its type isn't supported.`。
+## 規則
+
+### diff
+
+| 情境 | 結果 |
+| --- | --- |
+| 只看新物件的鍵 | 舊物件有、新物件沒有的鍵不列入；這類刪除在 RESTful 上改用 DELETE |
+| 舊值為 `undefined` | 直接採用新值 |
+| 兩邊都是陣列 | 長度不同或任一元素有差異時，整組陣列換成新值 |
+| 兩邊都是 `Date` | 以時間戳比較，不同時採用新值 |
+| 新值是物件 | 遞迴比較，只留有差異的子欄位 |
+| 其他值 | 以 `!==` 比較 |
+| 舊值為 `null`、新值為物件 | 遞迴時讀取 `null` 的屬性而拋出 TypeError |
+
+### deepClone
+
+| 情境 | 結果 |
+| --- | --- |
+| `null`、原始值 | 原樣回傳 |
+| `Date` | 複製成新的 `Date` |
+| 陣列、一般物件 | 逐項遞迴複製 |
+| Map、Set 等內建物件 | 被當成一般物件，複製成空物件 |
+| 無原型的物件 | 拋出 `Unable to copy obj! Its type isn't supported.` |
+
+## Changelog
+
+| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
+|---|---|---|---|---|---|
+| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
+
+## References
+
+| 來源 | 位置 |
+|---|---|
+| useObject.ts | [app/composables/useObject.ts](../../../../app/composables/useObject.ts) |
+
+[useObject.ts]: #references
 
 ---
-[🏠 Wiki](../../index.md)
+[⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

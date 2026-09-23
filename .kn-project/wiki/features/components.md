@@ -1,13 +1,20 @@
-# 🧩 元件清單矩陣 (Components)
+# 🧩 元件清單
 
 ## Summary
 
-本頁是 Camelot Nuxt Layer 全部元件的分類索引，依表單／版面／覆蓋層／回饋／媒體／主題變體／內部分組，每個元件連到自己的 API 頁（Props / Emits / v-model / Slots / Exposed）。
-元件匯入名稱為 `Camelot<Name>`，由 Nuxt 自動匯入，不需手動 import。主題子元件（Aqua / Material / Cupertino / Scifi）與 `Internal/` 為實作細節，通常由公開元件依 `themeMode` 自動選用。
+Camelot Nuxt Layer 全部元件的分類索引，依表單、版面資料導覽、覆蓋層、回饋進度、媒體檔案、標籤、效果工具、主題 Provider、內部元件與主題實作變體分組，每個元件連到自己的 API 頁（Props、Emits、v-model、Slots、Exposed）。元件以 `Camelot<Name>` 名稱由 Nuxt 自動匯入，不需手動 import；主題變體與內部元件是實作細節，通常由公開元件依目前主題自動選用。
 
----
+## 運作方式
 
-## 📝 表單 (Form)
+1. 元件放在 Camelot 目錄下，Nuxt 依路徑加上 `Camelot` 前綴自動匯入，例如按鈕是 `CamelotButton`。
+2. 子目錄會併入名稱：內部元件以 CamelotInternal 開頭，主題變體以 CamelotAqua、CamelotMaterial 等開頭。
+3. 公開元件依目前主題選用對應的主題變體，使用端只需要寫公開元件。
+
+來源：1. [components/Camelot][]
+
+## 元件清單
+
+### 表單
 
 | 元件 | 說明 | API |
 | :--- | :--- | :--- |
@@ -28,7 +35,7 @@
 | `DateRangeV2` | 日期範圍選擇器 | [詳情](./components/DateRangeV2.md) |
 | `TimeV2` | 純時間選擇器 | [詳情](./components/TimeV2.md) |
 
-## 🧱 版面 / 資料 / 導覽 (Layout / Data / Nav)
+### 版面、資料、導覽
 
 | 元件 | 說明 | API |
 | :--- | :--- | :--- |
@@ -47,7 +54,7 @@
 | `Expanded` | 展開/收合區塊 | [詳情](./components/Expanded.md) |
 | `Drawer` | 側邊抽屜 | [詳情](./components/Drawer.md) |
 
-## 🪟 覆蓋層 / 捲軸 (Overlay / Scrollbar)
+### 覆蓋層、捲軸
 
 | 元件 | 說明 | API |
 | :--- | :--- | :--- |
@@ -61,7 +68,7 @@
 | `OverlayScrollbar` | 附著容器的自訂 overlay 捲軸（H/V） | [詳情](./components/OverlayScrollbar.md) |
 | `Scrollbar` | 包裝式自訂捲軸 | [詳情](./components/Scrollbar.md) |
 
-## 🔄 回饋 / 進度 (Feedback / Progress)
+### 回饋、進度
 
 | 元件 | 說明 | API |
 | :--- | :--- | :--- |
@@ -71,7 +78,7 @@
 | `ProgressCircle` | 環形進度 | [詳情](./components/ProgressCircle.md) |
 | `ProgressStage` | 階段進度 | [詳情](./components/ProgressStage.md) |
 
-## 🖼️ 媒體 / 檔案 (Media / File)
+### 媒體、檔案
 
 | 元件 | 說明 | API |
 | :--- | :--- | :--- |
@@ -86,14 +93,14 @@
 | `CarouselIndicator` | 輪播指示器 | [詳情](./components/CarouselIndicator.md) |
 | `RichTextEditor` | TipTap 富文本編輯器 | [詳情](./components/RichTextEditor.md) |
 
-## 🏷️ 標籤 (Tag)
+### 標籤
 
 | 元件 | 說明 | API |
 | :--- | :--- | :--- |
 | `Tag` | 標籤 | [詳情](./components/Tag.md) |
 | `TagGroup` | 標籤群組 | [詳情](./components/TagGroup.md) |
 
-## ✨ 效果 / 工具 (Effect / Util)
+### 效果、工具
 
 | 元件 | 說明 | API |
 | :--- | :--- | :--- |
@@ -103,7 +110,7 @@
 | `Gpu` | GPU 加速動畫容器 | [詳情](./components/Gpu.md) |
 | `Breakpoints` | 斷點顯示（開發用） | [詳情](./components/Breakpoints.md) |
 
-## 🎨 主題 Provider (Theme Provider)
+### 主題 Provider
 
 | 元件 | 說明 | API |
 | :--- | :--- | :--- |
@@ -111,23 +118,22 @@
 | `CustomColorSchemeProvider` | 自訂色彩方案 Provider | [詳情](./components/CustomColorSchemeProvider.md) |
 | `Material3Provider` | Material Design 3 Provider | [詳情](./components/Material3Provider.md) |
 
----
-
-## 🔧 內部元件 (Internal — 實作細節)
+### 內部元件
 
 | 元件 | 說明 | API |
 | :--- | :--- | :--- |
-| `Internal/Calendar` | 日曆核心（DateV2/DateRangeV2 共用） | [詳情](./components/Internal-Calendar.md) |
-| `Internal/CascadeMenuPanel` | CascadeMenu 遞迴飛出面板 | [詳情](./components/Internal-CascadeMenuPanel.md) |
-| `Internal/MenuItem` | Menu 遞迴項目 | [詳情](./components/Internal-MenuItem.md) |
-| `Internal/PasswordToggle` | Input 密碼顯示切換鈕 | [詳情](./components/Internal-PasswordToggle.md) |
-| `Internal/SheetHandle` | BottomSheet 拖曳把手 | [詳情](./components/Internal-SheetHandle.md) |
-| `Internal/TimeField` | 時/分/秒欄位 | [詳情](./components/Internal-TimeField.md) |
-| `Internal/TimeRow` | 時間列 | [詳情](./components/Internal-TimeRow.md) |
-| `Internal/TreeNode` | Tree 遞迴節點 | [詳情](./components/Internal-TreeNode.md) |
-| `Internal/editor/ResizableImageView` | RichTextEditor 可縮放圖片 node view | [詳情](./components/Internal-editor-ResizableImageView.md) |
+| Internal/Calendar | 日曆核心（DateV2/DateRangeV2 共用） | [詳情](./components/Internal-Calendar.md) |
+| Internal/CascadeMenuPanel | CascadeMenu 遞迴飛出面板 | [詳情](./components/Internal-CascadeMenuPanel.md) |
+| Internal/FieldFrame | 表單欄位外框：Scifi 主題套 HUD 外框，其他主題直接渲染內容 | [詳情](./components/Internal-FieldFrame.md) |
+| Internal/MenuItem | Menu 遞迴項目 | [詳情](./components/Internal-MenuItem.md) |
+| Internal/PasswordToggle | Input 密碼顯示切換鈕 | [詳情](./components/Internal-PasswordToggle.md) |
+| Internal/SheetHandle | BottomSheet 拖曳把手 | [詳情](./components/Internal-SheetHandle.md) |
+| Internal/TimeField | 時/分/秒欄位 | [詳情](./components/Internal-TimeField.md) |
+| Internal/TimeRow | 時間列 | [詳情](./components/Internal-TimeRow.md) |
+| Internal/TreeNode | Tree 遞迴節點 | [詳情](./components/Internal-TreeNode.md) |
+| Internal/editor/ResizableImageView | RichTextEditor 可縮放圖片 node view | [詳情](./components/Internal-editor-ResizableImageView.md) |
 
-## 🎭 主題實作變體 (Theme Variants — 由公開元件自動選用)
+### 主題實作變體
 
 | 主題 | 元件 |
 | :--- | :--- |
@@ -136,6 +142,24 @@
 | **Cupertino** | [Button](./components/Cupertino-Button.md)・[Input](./components/Cupertino-Input.md)・[Switch](./components/Cupertino-Switch.md)・[Checkbox](./components/Cupertino-Checkbox.md)・[Radio](./components/Cupertino-Radio.md) |
 | **Scifi** | [Button](./components/Scifi-Button.md)・[Input](./components/Scifi-Input.md)・[Switch](./components/Scifi-Switch.md)・[Checkbox](./components/Scifi-Checkbox.md)・[Radio](./components/Scifi-Radio.md)・[Frame](./components/Scifi-Frame.md)・[Reticle](./components/Scifi-Reticle.md) |
 
----
+## 相關頁面
 
-[🪝 Composable 清單](./composables.md) | [🏠 Wiki](../index.md)
+- [Composable 清單](./composables.md)
+- [主題系統](../platform/theme-system.md)
+
+## Changelog
+
+| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
+|---|---|---|---|---|---|
+| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
+
+## References
+
+| 來源 | 位置 |
+|---|---|
+| components/Camelot | [app/components/Camelot](../../../app/components/Camelot) |
+
+[components/Camelot]: #references
+
+---
+[⚙️ Env](../environment.md) | [🏠 Wiki](../index.md)

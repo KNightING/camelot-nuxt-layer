@@ -122,7 +122,7 @@ export default defineNuxtConfig({
 })
 ```
 
-完整可跑的範例（含 fallback 鏈設定）見 [`.playground/i18n/`](./.playground/i18n/)。
+完整可跑的範例（含 fallback 鏈設定）見 [`.playground/i18n/`](.playground/i18n)。
 
 > [!WARNING]
 > **已知限制：Layer 的基底字典目前不會被註冊。**
@@ -131,7 +131,7 @@ export default defineNuxtConfig({
 >
 > 這是 Layer 端的缺陷，消費端無法繞過。**目前的因應方式是消費端自帶完整詞條**，不要依賴 Layer 的基底字典。修復需在 Layer 的 `nuxt.config.ts` 補回 `{ code: 'zh', file: 'zh.json' }` / `{ code: 'en', file: 'en.json' }`，已另案追蹤。
 
-詳見 [i18n 語系系統 Wiki](./.kn-project/wiki/features/i18n-locales.md)。
+詳見 [i18n 語系系統 Wiki](.kn-project/wiki/platform/i18n-locales.md)。
 
 ---
 
@@ -148,7 +148,7 @@ export default defineNuxtConfig({
 
 風格為全站單一狀態，透過 `useCamelotTheme()` 切換並持久化於 `localStorage`（鍵 `cml-theme-mode`）。色彩主題（明暗、色系）另由 `useCustomColorScheme` / `useCamelotColorMode` 管理。
 
-完整說明見 [主題系統 Wiki](./.kn-project/wiki/features/theme-system.md) 與 [色彩主題 Wiki](./.kn-project/wiki/features/color-scheme.md)。
+完整說明見 [主題系統 Wiki](.kn-project/wiki/platform/theme-system.md) 與 [色彩主題 Wiki](.kn-project/wiki/platform/color-scheme.md)。
 
 ---
 
@@ -181,22 +181,22 @@ export default defineNuxtConfig({
 
 Layer 定義了 `tappay`、`googlePay`、`googleFont`、`securityPlugin` 以及 `public.{version,env,replaceEndSplash}` 的預設值，由消費端以 `nuxt.config.ts` 或 `NUXT_*` 環境變數覆寫。
 
-完整環境變數表見 [環境變數 Wiki](./.kn-project/wiki/environment.md)。
+完整環境變數表見 [環境變數 Wiki](.kn-project/wiki/environment.md)。
 
 ---
 
 ## 📚 文件導覽
 
-深度文件統一維護在 [`.kn-project/wiki/`](./.kn-project/wiki/)，本 README 僅作入口：
+深度文件統一維護在 [`.kn-project/wiki/`](.kn-project/wiki)，本 README 僅作入口：
 
 | 入口 | 內容 |
 | :--- | :--- |
-| [🏠 Wiki 首頁](./.kn-project/wiki/index.md) | 架構圖、主題頁清單、模組總覽 |
-| [🧩 元件清單矩陣](./.kn-project/wiki/features/components.md) | 全部元件，每個一頁（Props / Emits / v-model / Slots / Exposed） |
-| [🪝 Composable 清單矩陣](./.kn-project/wiki/features/composables.md) | 全部 composables，每個一頁（簽章 / 回傳） |
-| [⚙️ 環境變數](./.kn-project/wiki/environment.md) | 全部 Runtime Config 與 `NUXT_*` 對照 |
+| [🏠 Wiki 首頁](.kn-project/wiki/index.md) | 架構圖、主題頁清單、模組總覽 |
+| [🧩 元件清單矩陣](.kn-project/wiki/features/components.md) | 全部元件，每個一頁（Props / Emits / v-model / Slots / Exposed） |
+| [🪝 Composable 清單矩陣](.kn-project/wiki/features/composables.md) | 全部 composables，每個一頁（簽章 / 回傳） |
+| [⚙️ 環境變數](.kn-project/wiki/environment.md) | 全部 Runtime Config 與 `NUXT_*` 對照 |
 
-> 主題頁（Calendar、OverlayScrollbar、FileDropzone、Timeline…）的完整清單由 [Wiki 首頁](./.kn-project/wiki/index.md) 維護，此處不重複列出以免失同步。
+> 主題頁（Calendar、OverlayScrollbar、FileDropzone、Timeline…）的完整清單由 [Wiki 首頁](.kn-project/wiki/index.md) 維護，此處不重複列出以免失同步。
 
 ---
 
