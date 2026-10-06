@@ -25,13 +25,13 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 # minimumReleaseAge (default 24h), which would abort the build on a dependency
 # published shortly before it. The lockfile is resolved locally under that
 # policy and reviewed, so it is the trusted base here.
-RUN pnpm install --frozen-lockfile --ignore-scripts --trust-lockfile
+RUN pnpm install --frozen-lockfile --trust-lockfile
 
 FROM base AS build
 LABEL stage=build
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-RUN pnpm run build
+RUN pnpm build
 
 FROM node:${NODE_VERSION} AS runner
 LABEL stage=build
