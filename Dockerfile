@@ -20,7 +20,7 @@ LABEL stage=build
 # .npmrc is required: it sets shamefully-hoist=true, without which `vue` is not
 # at node_modules/vue and Rollup cannot resolve it from unplugin-icons' virtual
 # `~icons/*` modules during `nuxt build`.
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 # --trust-lockfile skips pnpm 11 re-validating every lockfile entry against
 # minimumReleaseAge (default 24h), which would abort the build on a dependency
 # published shortly before it. The lockfile is resolved locally under that
