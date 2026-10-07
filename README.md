@@ -9,6 +9,7 @@
 | 項目 | 內容 |
 | :--- | :--- |
 | 框架 | Nuxt 4 + Vue 3（Composition API、`<script setup>`） |
+| 執行環境 | Node.js `^22.22.3 \|\| ^24.15.0 \|\| >=26`（Nuxt 4.6 的要求） |
 | 樣式 | Tailwind CSS v4（主題定義於 `app/assets/css/tailwind.css`） |
 | 狀態管理 | Pinia + `pinia-plugin-persistedstate` |
 | 多語系 | `@nuxtjs/i18n`（Layer 提供 `en` / `zh` 語言層級基底） |
@@ -47,7 +48,7 @@ export default defineNuxtConfig({
     "@nuxtjs/i18n": "^10.6.0",
     "@pinia/nuxt": "^1.0.0",
     "@vueuse/nuxt": "^14.4.0",
-    "nuxt": "^4.5.0",
+    "nuxt": "^4.6.0",
     "typescript": "^6.0.0",
     "unplugin-icons": "^23.0.0",
     "unplugin-vue-components": "^32.0.0"
