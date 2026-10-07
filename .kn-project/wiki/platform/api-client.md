@@ -85,7 +85,7 @@ export const useOrderApi = () => new OrderApi()
 | 要點 | 說明 |
 | :--- | :--- |
 | 方法內不呼叫 `fetch` | 回傳請求物件；頁面要響應式用 `useBFetch`，要命令式用 `fetch`，同一支端點兩種情境共用 |
-| URL 一律用 getter | URL 型別支援字串、Request、Ref 與 getter；getter 才能讓路徑中的變數參與響應式重取 |
+| URL 一律用 getter | URL 型別支援字串、Ref 與 getter；getter 才能讓路徑中的變數參與響應式重取 |
 | `query` 與 `body` 收 `MaybeRefOrGetter` | 搭配 `useFetch` 系列時，來源變動會自動重取 |
 | 型別放在泛型參數 | 回應型別寫在方法的泛型參數上，即端點契約 |
 
@@ -191,6 +191,7 @@ playground 有一份可執行的同型範例。
 
 | 日期 | 版本 | 計畫 | 變動 | Issue | PR |
 |---|---|---|---|---|---|
+| 2026-10-07 | 4.6.0.0 | [2610071040-upgrade-nuxt-4-6-0](../../archive/2610071040-upgrade-nuxt-4-6-0.md) | 升級 nuxt 至 4.6.0，Url 型別收窄為字串、Ref 與 getter | [#53](https://github.com/KNightING/camelot-nuxt-layer/issues/53) | [PR #54](https://github.com/KNightING/camelot-nuxt-layer/pull/54) |
 | 2026-09-23 | — | [2609231616-wiki-lint-migration](../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
 
 ## References

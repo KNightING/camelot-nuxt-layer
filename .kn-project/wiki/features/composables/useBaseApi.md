@@ -75,7 +75,7 @@ useBaseApi(baseOptions: ApiFetchOptions<any>): {
   del: <DataT>(url: Url, options?: ApiFetchOptions<DataT>) => ApiFetch<DataT>
 }
 
-type Url = string | Request | Ref<string | Request> | (() => string | Request)
+type Url = string | Ref<string> | (() => string)
 
 enum ContentType { Json, MultiPartFormData }
 ```
@@ -143,6 +143,7 @@ enum ContentType { Json, MultiPartFormData }
 
 | 日期 | 版本 | 計畫 | 變動 | Issue | PR |
 |---|---|---|---|---|---|
+| 2026-10-07 | 4.6.0.0 | [2610071040-upgrade-nuxt-4-6-0](../../../archive/2610071040-upgrade-nuxt-4-6-0.md) | 升級 nuxt 至 4.6.0，Url 型別收窄為字串、Ref 與 getter | [#53](https://github.com/KNightING/camelot-nuxt-layer/issues/53) | [PR #54](https://github.com/KNightING/camelot-nuxt-layer/pull/54) |
 | 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
 
 ## References
