@@ -1,5 +1,5 @@
 import type { Dispatcher } from 'undici'
-import type { UseFetchOptions } from 'nuxt/app'
+import type { AnyServerRouteMethod, NuxtError, UseFetchOptions } from 'nuxt/app'
 import type { FetchContext, FetchResponse, FetchError, ResponseType } from 'ofetch'
 import type { NitroFetchOptions } from 'nitropack/types'
 
@@ -45,7 +45,7 @@ const executeRefreshWithLock = async (handler: RefreshTokenHandler): Promise<boo
   return promise
 }
 
-export type Url = string | Request | Ref<string | Request> | (() => string | Request)
+export type Url = string | Ref<string> | (() => string)
 
 export enum ContentType {
   Json,
@@ -176,7 +176,9 @@ const useApiFetch = <DataT>(
   const _shouldRefresh = options.shouldRefreshToken ?? defaultShouldRefreshToken
 
   const use = (coverOptions: ApiFetchOptions<DataT> = {}) => {
-    const result = useFetch(
+    // nuxt 4.6 的 useFetch 以泛型逐呼叫點推導路徑與 method；DataT 與 method 在此皆為執行期才定的值，
+    // 推導會停在尚未求值的條件型別，故依序明列：回應、錯誤、路徑、method、baseURL、_ReqT、_ResT、DataT
+    const result = useFetch<DataT, NuxtError<unknown>, string & {}, AnyServerRouteMethod, string, string, DataT, DataT>(
       url,
       {
         ...options,
@@ -331,10 +333,7 @@ const useApiFetch = <DataT>(
       realUrl = toValue(url)
     }
 
-    if (realUrl instanceof Request) {
-      realUrl = realUrl.url
-    }
-    else if (realUrl instanceof Function) {
+    if (realUrl instanceof Function) {
       realUrl = realUrl()
     }
 

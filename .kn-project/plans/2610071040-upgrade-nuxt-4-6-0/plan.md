@@ -27,6 +27,8 @@
 - `package.json:25` (`"@vue/compiler-sfc": "3.5.40"`) — 對齊升級後 `vue` 解析版本（nuxt 4.6.0 要求 `vue ^3.5.43`）
 - `package.json:31`、`package.json:35` (`unimport` 6.4.0、`vue-tsc`) — 若與 nuxt 4.6.0 的相依範圍衝突才調整，否則不動
 - `pnpm-lock.yaml` — 重新鎖定（`nuxt@4.5.2` 見第 61、8280 行等多處）
+- `app/composables/useBaseApi.ts:48` (`Url`)、`:179` (`useApiFetch` 內的 `useFetch` 呼叫)、`:331` (`_doFetch` 的 `Request` 分支) — nuxt 4.6.0 重寫 `useFetch` 型別後 `pnpm typecheck` 報 TS2769（4.5.2 基線無此錯誤）；改為符合新型別規範：`Url` 收斂為 `string | Ref<string> | (() => string)`（**公開型別收窄，破壞性**）、`useFetch` 明列泛型、移除 `_doFetch` 已無用的 `Request` 分支
+- `.kn-project/wiki/features/composables/useBaseApi.md:78`、`.kn-project/wiki/platform/api-client.md:88` — 兩處仍寫 `Url` 支援 `Request`，歸檔時依 wikification Prune 改寫
 - `.kn-project/project.md:6` — 僅是「撰寫時為 `4.5.2.0`」的歷史註記，語意為版本以 package.json 為準，**預設不動**（Q2 決議）
 
 ## App-Flow Screens
@@ -55,6 +57,7 @@
 - **[Q2]** `package.json` version 改為 `4.6.0.0` — 理由：前三碼跟隨 nuxt（使用者說明）。
 - **[範圍]** 方案 1：只升 4.6.0，不啟用 Nuxt 5 預設值與任何新功能 — 理由：本專案是 layer，旗標會被下游繼承；Nuxt 5 預覽行為仍可能調整。
 - **[執行中]** `@vue/compiler-sfc` 3.5.40 → 3.5.43 — 理由：升級後 vue 解析為 3.5.43（nuxt 4.6.0 要求 `^3.5.43`），釘版對齊；`unimport` 6.4.0、`vue-tsc` 3.3.11 無相依衝突，未動；`pnpm dedupe` 已套用。
+- **[執行中]** 不採用 `useFetchLoose` 轉型，改為符合 4.6.0 `useFetch` 規範（使用者指示，下游也必須是 4.6.0 並符合新規範）：`Url` 移除 `Request` 分支（4.6.0 的路徑簽章只接受字串／Ref／getter）；`useFetch<DataT, NuxtError<unknown>, string & {}, AnyServerRouteMethod, string, string, DataT, DataT>` 明列泛型，因 DataT 與 method 為執行期值，推導會停在未求值的條件型別。`Request` 在 repo 內無任何使用；`_doFetch` 的 `instanceof Request` 分支一併移除。此為**破壞性變更**，commit 與 PR 標註 BREAKING CHANGE。
 - **[環境]** 本機 Node 已改用 nvm v26.10.0（4.6.0 要求 `^24.15.0 || >=26`）；本 session 需重啟後才生效。
 
 ## Git Completion Policy
