@@ -48,7 +48,7 @@ export default defineNuxtConfig({
     "@nuxtjs/i18n": "^10.6.0",
     "@pinia/nuxt": "^1.0.0",
     "@vueuse/nuxt": "^14.4.0",
-    "nuxt": "^4.6.0",
+    "nuxt": "^4.6.1",
     "typescript": "^6.0.0",
     "unplugin-icons": "^23.0.0",
     "unplugin-vue-components": "^32.0.0"
