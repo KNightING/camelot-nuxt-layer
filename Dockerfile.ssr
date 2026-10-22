@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.7
 
-ARG NODE_VERSION=26-alpine
+ARG NODE_VERSION=26.12.1-alpine
 
 FROM node:${NODE_VERSION} AS base
 LABEL stage=build
