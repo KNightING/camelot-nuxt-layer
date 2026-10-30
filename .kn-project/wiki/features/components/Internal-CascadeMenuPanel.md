@@ -48,10 +48,10 @@ CascadeMenuPanel（匯入名稱 `CamelotInternalCascadeMenuPanel`）是 [Cascade
 
 面板經 [useCamelotTeleportTarget](../composables/useCamelotTeleportTarget.md) 送進最近的 dialog，沒有則送到 body，以 fixed 定位。
 
-1. 掛載當下同步量測錨點並凍結位置，首幀即正確；量到之前先隱藏，避免在左上角閃一下。
-2. 視窗縮放時重新量測；捲動時整個選單會關閉，所以不監聽捲動。
-3. 根面板右側不足時改為右對齊觸發器，下方不足時翻到上方。
-4. 子面板右側不足時翻到左側，下方不足時往上移進視窗。
+1. 瀏覽器支援 CSS Anchor Positioning 時，以 [useCamelotAnchor](../composables/useCamelotAnchor.md) 產生唯一名稱並寫到錨點元素，面板以 position-area 對齊錨點、以 position-try-fallbacks 翻轉；錨點被捲出可視範圍時面板一併隱藏，卸載時移除錨點名稱。
+2. 根面板貼齊觸發器下緣、左對齊，右側不足時改為右對齊，下方不足時翻到上方。
+3. 子面板出現在該列右側、頂端對齊，右側不足時翻到左側，下方不足時往上翻。
+4. 不支援時退回 JS：掛載當下同步量測錨點並凍結位置，首幀即正確，量到之前先隱藏，避免在左上角閃一下；視窗縮放與錨點所在內層容器捲動時重新量測，視窗捲動時整個選單會關閉，所以不處理視窗捲動。
 
 層級未指定基礎值時為 popup 層級加上 level，每深一層高一級。
 

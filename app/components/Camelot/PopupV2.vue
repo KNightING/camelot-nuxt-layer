@@ -1,6 +1,7 @@
 <template>
   <div
     ref="targetRef"
+    :style="anchorTargetStyle"
   >
     <div @click="onTargetClick">
       <slot />
@@ -16,14 +17,7 @@
       <CamelotGpu
         data-camelot-popup
         class="fixed pointer-events-none"
-        :style="{
-          zIndex: zIndex ?? 'var(--cml-z-popup)',
-          width: `${width}px`,
-          height: `${height}px`,
-          top: `${y}px`,
-          left: `${x}px`,
-          transform: `translate3d(${vvOffsetX}px, ${vvOffsetY}px, 0px)`,
-        }"
+        :style="gpuStyle"
       >
         <div
           class="absolute pointer-events-auto"
@@ -38,10 +32,7 @@
             },
             popupClass,
           ]"
-          :style="{
-            width: props.popupWidthMode === 'same-target' ? `${width}px` : 'max-content',
-            minWidth: props.popupWidthMode === 'min-target' ? `${width}px` : undefined,
-          }"
+          :style="popupWidthStyle"
         >
           <CamelotExpanded
             ref="popupRef"
@@ -136,6 +127,17 @@ const {
   x, y, width, height, bottom, update,
 } = useElementBounding(targetRef)
 
+/**
+ * 支援 CSS Anchor Positioning 時，外層容器的座標與尺寸由瀏覽器依 target 原生同步計算，
+ * 捲動（含合成器捲動）不會落後；不支援才用上面 JS 量到的數值。
+ * 量測仍保留，只供 isBottom／isRight 判斷翻轉，不再逐幀驅動位置。
+ */
+const {
+  supported: anchorSupported,
+  targetStyle: anchorTargetStyle,
+  floatingStyle: anchorFloatingStyle,
+} = useCamelotAnchor()
+
 const {
   height: windowHeight, width: windowWidth,
 } = useWindowSize()
@@ -175,6 +177,48 @@ const isRight = computed(() => {
   return false
 })
 
+const gpuStyle = computed(() => {
+  const base = {
+    zIndex: props.zIndex ?? 'var(--cml-z-popup)',
+    transform: `translate3d(${vvOffsetX.value}px, ${vvOffsetY.value}px, 0px)`,
+  }
+
+  if (anchorSupported.value) {
+    return {
+      ...base,
+      ...anchorFloatingStyle.value,
+      top: 'anchor(top)',
+      left: 'anchor(left)',
+      width: 'anchor-size(width)',
+      height: 'anchor-size(height)',
+    }
+  }
+
+  return {
+    ...base,
+    width: `${width.value}px`,
+    height: `${height.value}px`,
+    top: `${y.value}px`,
+    left: `${x.value}px`,
+  }
+})
+
+// 外層容器與 target 同寬（anchor 模式由 anchor-size 隨 target 即時變化），內層以百分比對齊它
+const popupWidthStyle = computed(() => {
+  const mode = props.popupWidthMode
+  if (anchorSupported.value) {
+    return {
+      width: mode === 'same-target' ? '100%' : 'max-content',
+      minWidth: mode === 'min-target' ? '100%' : undefined,
+    }
+  }
+
+  return {
+    width: mode === 'same-target' ? `${width.value}px` : 'max-content',
+    minWidth: mode === 'min-target' ? `${width.value}px` : undefined,
+  }
+})
+
 const onTargetClick = () => {
   if (props.manual) {
     return
@@ -196,8 +240,9 @@ onUpdated(() => {
 })
 
 /**
- * 目標位置以每幀輪詢追蹤（目標可能因祖先動畫、版面重排而位移，無單一事件可攔）。
+ * 退回路徑：目標位置以每幀輪詢追蹤（目標可能因祖先動畫、版面重排而位移，無單一事件可攔）。
  * 但輪詢只在浮層開啟期間有意義——關閉時算出的座標無人讀取，卸載後更會連同元件 scope 一起洩漏。
+ * 支援 anchor positioning 時位置由瀏覽器負責，不需要輪詢。
  */
 let trackingFrameId: number | null = null
 
@@ -208,7 +253,7 @@ const trackTargetBounding = () => {
 
 const startTracking = () => {
   // watch 為 immediate，初始 open 即為 true 時會在 SSR 期間跑到這裡，該環境沒有 rAF
-  if (!isClient || trackingFrameId !== null) {
+  if (!isClient || trackingFrameId !== null || anchorSupported.value) {
     return
   }
   trackTargetBounding()
@@ -258,6 +303,13 @@ useEventListener(scrollParent, 'scroll', () => {
     open.value = false
   }
 }, { passive: true })
+
+// 支援狀態於 onMounted 才確定；開啟中已先啟動的輪詢在此收掉
+watch(anchorSupported, (supported) => {
+  if (supported) {
+    stopTracking()
+  }
+})
 
 watchImmediate(open, (isOpen) => {
   if (isOpen) {

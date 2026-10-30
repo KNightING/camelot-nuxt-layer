@@ -81,6 +81,7 @@ camelot-nuxt-layer/
 ## 版本紀錄
 只記併回主幹，發佈狀態以 GitHub Release 為準。
 
+- 4.6.3.1 — 併回主幹 2026-10-30（Patch/Minor 套件升級並 dedupe prosemirror，浮層改用 CSS Anchor Positioning 消除跟隨延遲）
 - 4.6.3.0 — 併回主幹 2026-10-30（nuxt 4.6.2 升級到 4.6.3，含 5 項 GHSA 安全性修正）
 - 4.6.2.0 — 併回主幹 2026-10-22（nuxt 4.6.1 升級到 4.6.2，Dockerfile 釘選 Node 26.12.1）
 - 4.6.1.0 — 併回主幹 2026-10-10（nuxt 4.6.0 升級到 4.6.1，layer 版本改為 4.6.1.0）
