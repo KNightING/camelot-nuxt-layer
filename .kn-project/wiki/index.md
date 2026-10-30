@@ -117,6 +117,7 @@
 - [useBlobDownload](features/composables/useBlobDownload.md)
 - [useCamelotColorMode](features/composables/useCamelotColorMode.md)
 - [useCamelotError](features/composables/useCamelotError.md)
+- [浮層錨點定位](features/composables/useCamelotAnchor.md)
 - [useCamelotFileDrop](features/composables/useCamelotFileDrop.md)
 - [選單項主題](features/composables/useCamelotMenuItemTheme.md)
 - [覆蓋式捲軸](features/composables/useCamelotOverlayScrollbar.md)
