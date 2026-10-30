@@ -174,11 +174,44 @@ const onRowClick = (item: CamelotCascadeMenuItem, e: MouseEvent) => {
   ctx.select(item)
 }
 
-/* ---------- 飛出定位（fixed，僅在掛載/視窗變動時量測一次並凍結） ----------
-   不依賴 anchor 的「即時」量測：避免 (1) 開啟首幀 anchor 尚未量到 → 抖動；
-   (2) 兄弟子選單切換時舊面板 anchor 卸載 → 位置重算成 (0,0) 飛到左上角。 */
+/* ---------- 飛出定位 ----------
+   支援 CSS Anchor Positioning 時，由瀏覽器依 anchor（根面板為觸發器、子面板為被 hover 的列）
+   原生同步定位與翻轉，anchor 位移、內層容器捲動都會跟著走；不支援才退回下方的 JS 量測。
+   anchor 是外部元素（觸發器、選項列），名稱以命令式寫入，卸載時移除。 */
 const GAP = 4
 const EDGE = 8
+
+const {
+  name: anchorName,
+  supported: anchorSupported,
+  floatingStyle: anchorFloatingStyle,
+} = useCamelotAnchor()
+
+const registerAnchorName = () => {
+  props.anchor?.style.setProperty('anchor-name', anchorName)
+}
+
+const unregisterAnchorName = () => {
+  const el = props.anchor
+  // 只移除自己寫的；同一元素若已被別的面板接手，不能把人家的名字清掉
+  if (el?.style.getPropertyValue('anchor-name') === anchorName) {
+    el.style.removeProperty('anchor-name')
+  }
+}
+
+// 根面板：貼齊觸發器下緣、左對齊；右側不足改右對齊、下方不足翻到上方
+// 子面板：出現在該列右側、頂端對齊；右側不足翻到左側、下方不足往上翻
+const anchoredStyle = computed(() => {
+  const isRoot = props.placement === 'root'
+  return {
+    ...anchorFloatingStyle.value,
+    positionArea: isRoot ? 'bottom span-right' : 'right span-bottom',
+    positionTryFallbacks: 'flip-inline, flip-block, flip-block flip-inline',
+    // 只留與 anchor 之間的間距；貼視窗邊緣的留白交給翻轉處理
+    marginBlock: isRoot ? `${GAP}px` : undefined,
+    marginInline: isRoot ? undefined : `${GAP}px`,
+  }
+})
 
 const pos = ref<{ top: number, left: number } | null>(null)
 
@@ -223,6 +256,12 @@ const panelStyle = computed(() => {
   const z = ctx.baseZIndex === undefined
     ? `calc(var(--cml-z-popup) + ${props.level})`
     : ctx.baseZIndex + props.level
+  if (anchorSupported.value) {
+    return {
+      ...anchoredStyle.value,
+      zIndex: z,
+    }
+  }
   // 尚未定位前隱藏（仍佔版面可量測），避免 (0,0) 錯誤幀
   if (!pos.value) {
     return {
@@ -241,17 +280,35 @@ const panelStyle = computed(() => {
 
 onMounted(() => {
   if (panelRef.value) ctx.registerPanel(panelRef.value)
+  if (anchorSupported.value) {
+    registerAnchorName()
+    return
+  }
   // onMounted 於瀏覽器繪製前執行：同步定位 → 首幀即正確、無抖動
   computePosition()
 })
 
 onBeforeUnmount(() => {
   if (panelRef.value) ctx.unregisterPanel(panelRef.value)
+  unregisterAnchorName()
   clearTimers()
 })
 
-// 視窗尺寸變動時重算（捲動時整個選單會關閉，故無需監聽 scroll）
-useEventListener('resize', computePosition)
+// 視窗尺寸變動時重算（視窗捲動時整個選單會關閉，故無需監聽視窗 scroll）
+useEventListener('resize', () => {
+  if (!anchorSupported.value) computePosition()
+})
+
+// 退回路徑：anchor 所在的內層捲動容器捲動時 anchor 會位移，也要重算；
+// scroll 不冒泡，改用 capture 攔截；面板自己的清單捲動不影響 anchor，略過
+useEventListener(window, 'scroll', (e: Event) => {
+  if (anchorSupported.value) return
+  if (panelRef.value?.contains(e.target as Node)) return
+  computePosition()
+}, {
+  capture: true,
+  passive: true,
+})
 
 /* ---------- 四風格外觀（消費 CurrentColor） ---------- */
 const surfaceClass = computed(() => {

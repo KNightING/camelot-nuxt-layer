@@ -6,6 +6,7 @@
   <div
     ref="triggerRef"
     :class="[block ? 'block min-w-0' : 'inline-block', { 'touch-none select-none': isPressing }]"
+    :style="anchorTargetStyle"
     :aria-describedby="open ? tooltipId : undefined"
     @pointerenter="onPointerEnter"
     @pointerleave="onPointerLeave"
@@ -35,12 +36,7 @@
           data-camelot-popup
           class="pointer-events-none fixed max-w-[280px] px-3 py-1.5 text-xs leading-relaxed whitespace-pre-line"
           :class="[themeClass, resolvedPlacement === 'top' ? 'origin-bottom' : 'origin-top']"
-          :style="{
-            left: `${pos.x}px`,
-            top: `${pos.y}px`,
-            zIndex: zIndex ?? 'var(--cml-z-popup)',
-            visibility: positioned ? 'visible' : 'hidden',
-          }"
+          :style="tipStyle"
         >
           <slot name="content">
             {{ content }}
@@ -92,6 +88,14 @@ const tipRef = useTemplateRef<HTMLElement>('tipRef')
 
 const { teleportTarget } = useCamelotTeleportTarget(triggerRef)
 
+// 支援 CSS Anchor Positioning 時位置由瀏覽器依觸發器原生同步計算（含捲動、翻轉、夾進視窗），
+// 不再逐幀量測；不支援才走下方的 JS 退回路徑
+const {
+  supported: anchorSupported,
+  targetStyle: anchorTargetStyle,
+  floatingStyle: anchorFloatingStyle,
+} = useCamelotAnchor()
+
 const themeClass = computed(() => {
   switch (themeMode.value) {
     case 'aqua':
@@ -114,6 +118,33 @@ const pos = ref({
 const resolvedPlacement = ref<'top' | 'bottom'>('top')
 const positioned = ref(false)
 let rafId: number | null = null
+
+const tipStyle = computed(() => {
+  const zIndex = props.zIndex ?? 'var(--cml-z-popup)'
+
+  if (anchorSupported.value) {
+    // 偏好上方、空間不足時由 flip-block 翻到下方；block 方向外側留 VIEWPORT_MARGIN，貼觸發器的一側留 offset。
+    // flip 時邏輯屬性的 margin 會一起翻面，不需另外處理。
+    return {
+      ...anchorFloatingStyle.value,
+      zIndex,
+      positionArea: props.placement === 'bottom' ? 'bottom' : 'top',
+      positionTryFallbacks: props.placement === 'auto' ? 'flip-block' : 'none',
+      justifySelf: 'safe anchor-center',
+      marginInline: `${VIEWPORT_MARGIN}px`,
+      marginBlock: props.placement === 'bottom'
+        ? `${props.offset}px ${VIEWPORT_MARGIN}px`
+        : `${VIEWPORT_MARGIN}px ${props.offset}px`,
+    }
+  }
+
+  return {
+    left: `${pos.value.x}px`,
+    top: `${pos.value.y}px`,
+    zIndex,
+    visibility: positioned.value ? 'visible' as const : 'hidden' as const,
+  }
+})
 
 const updatePosition = () => {
   const trigger = triggerRef.value
@@ -150,7 +181,19 @@ const updatePosition = () => {
   positioned.value = true
 }
 
+// anchor 模式沒有輪詢可告訴我們是否翻面；開啟後量一次，只用來決定進出場動畫的 transform-origin
+const syncResolvedPlacement = () => {
+  const trigger = triggerRef.value
+  const tip = tipRef.value
+  if (!trigger || !tip) return
+  resolvedPlacement.value = tip.getBoundingClientRect().top < trigger.getBoundingClientRect().top ? 'top' : 'bottom'
+}
+
 const startTracking = () => {
+  if (anchorSupported.value) {
+    nextTick(syncResolvedPlacement)
+    return
+  }
   const tick = () => {
     updatePosition()
     rafId = requestAnimationFrame(tick)
