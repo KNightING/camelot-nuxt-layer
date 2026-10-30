@@ -49,7 +49,7 @@
     "@vueuse/integrations": "^14.4.0",
     "change-case": "^5.4.4",
     "date-fns": "^4.4.0",
-    "nuxt": "4.6.2",
+    "nuxt": "4.6.3",
     "pinia": "^4.0.3",
     "pinia-plugin-persistedstate": "^4.7.1",
     "tailwindcss": "^4.3.3"
