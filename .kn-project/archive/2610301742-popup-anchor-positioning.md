@@ -38,9 +38,9 @@
 
 | 頁面 | 日期 | 版本 | 變動 | Issue | PR |
 |---|---|---|---|---|---|
-| `features/components/CascadeMenu.md` | 2026-10-30 | 4.6.3.1 | 浮層改用 CSS Anchor Positioning,支援時由瀏覽器原生同步定位 | [#68](https://github.com/KNightING/camelot-nuxt-layer/issues/68) | [PR #0](https://github.com/KNightING/camelot-nuxt-layer/pull/0) |
-| `features/components/Internal-CascadeMenuPanel.md` | 2026-10-30 | 4.6.3.1 | 浮層改用 CSS Anchor Positioning,支援時由瀏覽器原生同步定位 | [#68](https://github.com/KNightING/camelot-nuxt-layer/issues/68) | [PR #0](https://github.com/KNightING/camelot-nuxt-layer/pull/0) |
-| `features/components/PopupV2.md` | 2026-10-30 | 4.6.3.1 | 浮層改用 CSS Anchor Positioning,支援時由瀏覽器原生同步定位 | [#68](https://github.com/KNightING/camelot-nuxt-layer/issues/68) | [PR #0](https://github.com/KNightING/camelot-nuxt-layer/pull/0) |
-| `features/components/Tooltip.md` | 2026-10-30 | 4.6.3.1 | 浮層改用 CSS Anchor Positioning,支援時由瀏覽器原生同步定位 | [#68](https://github.com/KNightING/camelot-nuxt-layer/issues/68) | [PR #0](https://github.com/KNightING/camelot-nuxt-layer/pull/0) |
-| `features/composables.md` | 2026-10-30 | 4.6.3.1 | 浮層改用 CSS Anchor Positioning,支援時由瀏覽器原生同步定位 | [#68](https://github.com/KNightING/camelot-nuxt-layer/issues/68) | [PR #0](https://github.com/KNightING/camelot-nuxt-layer/pull/0) |
-| `features/composables/useCamelotAnchor.md` | 2026-10-30 | 4.6.3.1 | 建立 | [#68](https://github.com/KNightING/camelot-nuxt-layer/issues/68) | [PR #0](https://github.com/KNightING/camelot-nuxt-layer/pull/0) |
+| `features/components/CascadeMenu.md` | 2026-10-30 | 4.6.3.1 | 浮層改用 CSS Anchor Positioning,支援時由瀏覽器原生同步定位 | [#68](https://github.com/KNightING/camelot-nuxt-layer/issues/68) | [PR #0](https://github.com/KNightING/camelot-nuxt-layer/pull/69) |
+| `features/components/Internal-CascadeMenuPanel.md` | 2026-10-30 | 4.6.3.1 | 浮層改用 CSS Anchor Positioning,支援時由瀏覽器原生同步定位 | [#68](https://github.com/KNightING/camelot-nuxt-layer/issues/68) | [PR #0](https://github.com/KNightING/camelot-nuxt-layer/pull/69) |
+| `features/components/PopupV2.md` | 2026-10-30 | 4.6.3.1 | 浮層改用 CSS Anchor Positioning,支援時由瀏覽器原生同步定位 | [#68](https://github.com/KNightING/camelot-nuxt-layer/issues/68) | [PR #0](https://github.com/KNightING/camelot-nuxt-layer/pull/69) |
+| `features/components/Tooltip.md` | 2026-10-30 | 4.6.3.1 | 浮層改用 CSS Anchor Positioning,支援時由瀏覽器原生同步定位 | [#68](https://github.com/KNightING/camelot-nuxt-layer/issues/68) | [PR #0](https://github.com/KNightING/camelot-nuxt-layer/pull/69) |
+| `features/composables.md` | 2026-10-30 | 4.6.3.1 | 浮層改用 CSS Anchor Positioning,支援時由瀏覽器原生同步定位 | [#68](https://github.com/KNightING/camelot-nuxt-layer/issues/68) | [PR #0](https://github.com/KNightING/camelot-nuxt-layer/pull/69) |
+| `features/composables/useCamelotAnchor.md` | 2026-10-30 | 4.6.3.1 | 建立 | [#68](https://github.com/KNightING/camelot-nuxt-layer/issues/68) | [PR #0](https://github.com/KNightING/camelot-nuxt-layer/pull/69) |
