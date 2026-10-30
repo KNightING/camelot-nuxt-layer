@@ -17,7 +17,7 @@
 - **[完成後]** commit + 開 PR(預設)。
 
 ## Deviations
-無。`pnpm-workspace.yaml` 的 `minimumReleaseAgeExclude` 未被擋,無需更動;build 產生的 `.playground/app/components.d.ts` 雜訊已還原未提交。
+Iteration:升級 tiptap 3.32.1 後 lockfile 出現兩份 `prosemirror-model`(1.25.11/1.25.12),dev 執行時 tiptap 警告「loaded more than once」;以 `pnpm dedupe` 合併為 1.25.12(lockfile 另有其他套件重複項一併合併),重驗 lint、typecheck、build 與 playground 皆通過。`pnpm-workspace.yaml` 的 `minimumReleaseAgeExclude` 未被擋,無需更動;build 產生的 `.playground/app/components.d.ts` 雜訊已還原未提交。
 
 ## Impact Files
 - `package.json:23-25,28,35,39,41-47,53` — 上列套件版本字串
