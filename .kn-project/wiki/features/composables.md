@@ -36,6 +36,7 @@ Camelot Nuxt Layer 全部 composable 的分類索引，依主題色彩、元件�
 | `useCamelotVirtual` | 虛擬滾動核心（可變列高） | [詳情](./composables/useCamelotVirtual.md) |
 | `useCamelotOverlayScrollbar` | 自訂 overlay 捲軸核心（方向感知） | [詳情](./composables/useCamelotOverlayScrollbar.md) |
 | `useCamelotTeleportTarget` | 浮層 Teleport 目標判定（最近 `<dialog>`，否則 `body`） | [詳情](./composables/useCamelotTeleportTarget.md) |
+| `useCamelotAnchor` | 浮層 CSS Anchor Positioning 支援偵測與唯一 anchor 名稱 | [詳情](./composables/useCamelotAnchor.md) |
 | `useCamelotFileDrop` | 檔案拖曳 headless 核心 | [詳情](./composables/useCamelotFileDrop.md) |
 | `useCamelotRouter` | 擴展 Vue Router（歷史堆疊） | [詳情](./composables/useCamelotRouter.md) |
 | `useLocale` | 語系格式正規化（bcp47/cldr/l10n） | [詳情](./composables/useLocale.md) |
