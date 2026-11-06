@@ -69,7 +69,6 @@ export default defineNuxtConfig({
       join(currentDir, '/app/stores/**'),
       join(currentDir, '/app/shared/**'),
       join(currentDir, '/app/**'),
-      '/app/**',
     ],
   },
 
