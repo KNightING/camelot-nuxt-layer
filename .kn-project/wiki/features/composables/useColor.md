@@ -17,7 +17,7 @@
 | hexToRgba 未傳 alpha | 沿用色碼本身的透明度；6 碼色碼為 1 |
 | 調整後的大小寫 | 紅綠藍三段輸出小寫 |
 
-來源：1. [useColor.ts][]
+來源：1. [useColor.ts](../../../../app/composables/useColor.ts)
 
 ## 用法
 
@@ -49,21 +49,6 @@ type CamelotRgbaTuple = [number, number, number, number]
 | `shade` | `(hex: string \| undefined, amt: number) => string \| undefined` | 各通道加上 amt 調整明暗，amt 可為負 |
 | `lightness` | `(hex: string \| undefined) => string \| undefined` | 等同 shade 加 40 |
 | `darkness` | `(hex: string \| undefined) => string \| undefined` | 等同 shade 減 40 |
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231702-fix-wiki-review-code-defects](../../../archive/2609231702-fix-wiki-review-code-defects.md) | 修正程式碼缺陷後更新為修正後的行為 | [#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47) | — |
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useColor.ts | [app/composables/useColor.ts](../../../../app/composables/useColor.ts) |
-
-[useColor.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

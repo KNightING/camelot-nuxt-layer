@@ -30,21 +30,7 @@ Aqua Checkbox 是 Aqua 主題（毛玻璃風格）的核取方塊外觀實作，
 | 未定且未勾選 | 玻璃填色，顯示橫線標記 |
 | 停用 | 半透明並灰階，點擊無效、不觸發 change |
 
-來源：1. [Aqua/Checkbox.vue][]
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| Aqua/Checkbox.vue | [app/components/Camelot/Aqua/Checkbox.vue](../../../../app/components/Camelot/Aqua/Checkbox.vue) |
-
-[Aqua/Checkbox.vue]: #references
+來源：1. [Aqua/Checkbox.vue](../../../../app/components/Camelot/Aqua/Checkbox.vue)
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

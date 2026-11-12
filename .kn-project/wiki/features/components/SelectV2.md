@@ -20,7 +20,7 @@
 2. 可搜尋時觸發器是輸入欄：展開後輸入文字即過濾，有文字時右側出現清除鈕。
 3. 關閉面板時清空搜尋文字。
 
-來源：1. [SelectV2.vue][]
+來源：1. [SelectV2.vue](../../../../app/components/Camelot/SelectV2.vue)
 
 ### 選項與預設值
 
@@ -30,7 +30,7 @@
 4. 選取值改變時發出變更事件，帶入整筆選項資料。
 5. 開啟選取後不關閉時，再點一次已選中的項目仍會關閉，視為確認。
 
-來源：1. [SelectV2.vue][]　2. [selectOptions.ts][]
+來源：1. [SelectV2.vue](../../../../app/components/Camelot/SelectV2.vue)　2. [selectOptions.ts](../../../../shared/types/selectOptions.ts)
 
 ### 選項面板
 
@@ -41,13 +41,13 @@
 5. 選中與懸停樣式和 [CascadeMenu](./CascadeMenu.md) 共用同一組主題設定。
 6. 面板陰影畫在浮層外層，避免被面板的溢出裁切切成方形。
 
-來源：1. [SelectV2.vue][]　2. [useCamelotMenuItemTheme.ts][]
+來源：1. [SelectV2.vue](../../../../app/components/Camelot/SelectV2.vue)　2. [useCamelotMenuItemTheme.ts](../../../../app/composables/useCamelotMenuItemTheme.ts)
 
 ### Sci-Fi 面板差異
 
 Sci-Fi 主題的選項面板包在 HUD 外框內，固定最高 200px，不支援虛擬滾動，也不支援依值指定的選項插槽。
 
-來源：1. [SelectV2.vue][]
+來源：1. [SelectV2.vue](../../../../app/components/Camelot/SelectV2.vue)
 
 ### 停用
 
@@ -60,7 +60,7 @@ Sci-Fi 主題的選項面板包在 HUD 外框內，固定最高 200px，不支�
 
 自訂選項插槽自行送出的點擊也會被擋下，停用選項無法藉此被選取。
 
-來源：1. [SelectV2.vue][]
+來源：1. [SelectV2.vue](../../../../app/components/Camelot/SelectV2.vue)
 
 ## Props
 | Prop | 型別 | 預設 | 說明 |
@@ -111,24 +111,6 @@ Sci-Fi 主題的選項面板包在 HUD 外框內，固定最高 200px，不支�
 - [FieldLabel](./FieldLabel.md)
 - [PopupV2](./PopupV2.md)
 - [CascadeMenu](./CascadeMenu.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| SelectV2.vue | [app/components/Camelot/SelectV2.vue](../../../../app/components/Camelot/SelectV2.vue) |
-| selectOptions.ts | [shared/types/selectOptions.ts](../../../../shared/types/selectOptions.ts) |
-| useCamelotMenuItemTheme.ts | [app/composables/useCamelotMenuItemTheme.ts](../../../../app/composables/useCamelotMenuItemTheme.ts) |
-
-[SelectV2.vue]: #references
-[selectOptions.ts]: #references
-[useCamelotMenuItemTheme.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

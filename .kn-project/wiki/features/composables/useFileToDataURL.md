@@ -24,7 +24,7 @@ const useFileToDataURL: (file: File) => AsyncData<string, …>
 | --- | --- | --- |
 | 回傳值 | useAsyncData 的回傳型別 | `data` 為 Data URL 字串，另有 `pending`、`error`、`refresh` 等 |
 
-來源：1. [useFileToDataURL.ts][]　2. [useFileKey.ts][]
+來源：1. [useFileToDataURL.ts](../../../../app/composables/useFileToDataURL.ts)　2. [useFileKey.ts](../../../../app/composables/useFileKey.ts)
 
 ## 用法
 
@@ -44,23 +44,6 @@ const { data, pending } = await useFileToDataURL(file)
 ## 相關頁面
 
 - [useFileKey](./useFileKey.md)：檔案識別字串。
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231702-fix-wiki-review-code-defects](../../../archive/2609231702-fix-wiki-review-code-defects.md) | 修正程式碼缺陷後更新為修正後的行為 | [#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47) | — |
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useFileToDataURL.ts | [app/composables/useFileToDataURL.ts](../../../../app/composables/useFileToDataURL.ts) |
-| useFileKey.ts | [app/composables/useFileKey.ts](../../../../app/composables/useFileKey.ts) |
-
-[useFileToDataURL.ts]: #references
-[useFileKey.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

@@ -12,7 +12,7 @@
 2. 逐一走訪色彩方案的鍵，值不是字串就略過。
 3. 依下方命名規則寫入內部變數；一般寫入器另寫一個 Tailwind 覆蓋變數指向它。
 
-來源：1. [useColorSchemeCssVars.ts][]
+來源：1. [useColorSchemeCssVars.ts](../../../../app/composables/useColorSchemeCssVars.ts)
 
 ### 變數命名規則
 
@@ -26,7 +26,7 @@ Tailwind 覆蓋變數             → --color-primary: var(--cml-c-m3-primary)
 2. 屬於 Material3 色鍵集合的鍵加上 m3 前綴，其餘鍵只加 Camelot 前綴。
 3. Tailwind v4 把主題色放在 `:root`，直接改會被蓋掉，因此採雙變數：內部變數存實際色值，覆蓋變數指向內部變數。
 
-來源：1. [useColorSchemeCssVars.ts][]
+來源：1. [useColorSchemeCssVars.ts](../../../../app/composables/useColorSchemeCssVars.ts)
 
 ### 兩支寫入函式的差異
 
@@ -40,7 +40,7 @@ Tailwind 覆蓋變數             → --color-primary: var(--cml-c-m3-primary)
 
 兩者值格式不同，刻意不合併，只共用鍵名的 kebab-case 快取。
 
-來源：1. [useColorSchemeCssVars.ts][]
+來源：1. [useColorSchemeCssVars.ts](../../../../app/composables/useColorSchemeCssVars.ts)
 
 ### 設計考量
 
@@ -49,7 +49,7 @@ Tailwind 覆蓋變數             → --color-primary: var(--cml-c-m3-primary)
 | 不用 useElCssVar | 寫入是單向動作；逐鍵建立 ref 與 watcher 會在主題切換這條熱路徑上產生大量永不回收的 watcher |
 | Material3 鍵集合延遲建立 | 本模組與 useMaterial3ColorScheme 互相匯入，模組載入當下建立集合會撞上尚未初始化的鍵清單，因此首次寫入時才建立 |
 
-來源：1. [useColorSchemeCssVars.ts][]
+來源：1. [useColorSchemeCssVars.ts](../../../../app/composables/useColorSchemeCssVars.ts)
 
 ## 用法
 
@@ -74,20 +74,6 @@ applyColorSchemeCssVars(el, { primary: '#6750a4', rippleColor: '#111827' })
 - [useMaterial3ColorScheme](./useMaterial3ColorScheme.md)
 - [useElCssVar](./useElCssVar.md)
 - [色彩主題系統](../../platform/color-scheme.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useColorSchemeCssVars.ts | [app/composables/useColorSchemeCssVars.ts](../../../../app/composables/useColorSchemeCssVars.ts) |
-
-[useColorSchemeCssVars.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

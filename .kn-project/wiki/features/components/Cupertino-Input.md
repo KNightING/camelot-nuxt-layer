@@ -35,21 +35,7 @@ Cupertino Input 是 Cupertino 主題（iOS 風格）的輸入框外觀實作，�
 | 外觀 | 淺灰填色底、10px 圓角、無外框 |
 | 聚焦 | 背景改為 surface 色，並顯示目前角色色的內框線 |
 
-來源：1. [Cupertino/Input.vue][]
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| Cupertino/Input.vue | [app/components/Camelot/Cupertino/Input.vue](../../../../app/components/Camelot/Cupertino/Input.vue) |
-
-[Cupertino/Input.vue]: #references
+來源：1. [Cupertino/Input.vue](../../../../app/components/Camelot/Cupertino/Input.vue)
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

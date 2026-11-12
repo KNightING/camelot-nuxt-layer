@@ -32,21 +32,7 @@ CarouselIndicator 是輪播指標（圓點）元件，匯入名稱 `CamelotCarou
 | 其他點 | 半透明圓點，hover 時加深 |
 | Scifi 主題 | 當前點附帶同色發光陰影 |
 
-來源：1. [CarouselIndicator.vue][]
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| CarouselIndicator.vue | [app/components/Camelot/CarouselIndicator.vue](../../../../app/components/Camelot/CarouselIndicator.vue) |
-
-[CarouselIndicator.vue]: #references
+來源：1. [CarouselIndicator.vue](../../../../app/components/Camelot/CarouselIndicator.vue)
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

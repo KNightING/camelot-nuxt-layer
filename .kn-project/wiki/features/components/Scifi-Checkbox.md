@@ -31,7 +31,7 @@
 | hover | 方框周圍顯示準星 |
 | 停用 | 透明度 30%、灰階，不接受點擊 |
 
-來源：1. [Scifi/Checkbox.vue][]
+來源：1. [Scifi/Checkbox.vue](../../../../app/components/Camelot/Scifi/Checkbox.vue)
 
 ### 點擊
 
@@ -39,26 +39,12 @@
 2. 半選狀態下點擊，切換的是勾選值；因為半選外觀與勾選相同，畫面可能看不出變化，半選旗標要由外部清除。
 3. 停用時不接受點擊，不發出 `change`。
 
-來源：1. [Scifi/Checkbox.vue][]
+來源：1. [Scifi/Checkbox.vue](../../../../app/components/Camelot/Scifi/Checkbox.vue)
 
 ## 相關頁面
 
 - [Checkbox](./Checkbox.md)
 - [Scifi Reticle](./Scifi-Reticle.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| Scifi/Checkbox.vue | [app/components/Camelot/Scifi/Checkbox.vue](../../../../app/components/Camelot/Scifi/Checkbox.vue) |
-
-[Scifi/Checkbox.vue]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

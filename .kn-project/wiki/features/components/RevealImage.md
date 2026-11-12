@@ -24,7 +24,7 @@
 3. 播放時遮罩的可見比例從 0% 推到 100%，播完停在全彩。
 4. `hover` 模式只在滑鼠停留期間播放，移出後回到黑白。
 
-來源：1. [RevealImage.vue][]
+來源：1. [RevealImage.vue](../../../../app/components/Camelot/RevealImage.vue)
 
 ### 漸進與減少動態
 
@@ -33,22 +33,7 @@
 | 漸進效果 | 元件自行把遮罩比例註冊為百分比型別，揭示過程平滑推進，不依賴其他元件 |
 | 減少動態 | 使用者偏好減少動態時，彩色層直接完整顯示，不播放揭示動畫 |
 
-來源：1. [RevealImage.vue][]
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231702-fix-wiki-review-code-defects](../../../archive/2609231702-fix-wiki-review-code-defects.md) | 修正程式碼缺陷後更新為修正後的行為 | [#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47) | — |
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| RevealImage.vue | [app/components/Camelot/RevealImage.vue](../../../../app/components/Camelot/RevealImage.vue) |
-
-[RevealImage.vue]: #references
+來源：1. [RevealImage.vue](../../../../app/components/Camelot/RevealImage.vue)
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

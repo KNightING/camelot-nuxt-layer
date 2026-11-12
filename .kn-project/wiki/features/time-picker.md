@@ -14,7 +14,7 @@
 4. 按「確認」關閉選擇器；若從未改過時間就按確認，會以目前欄位值（預設 00:00）寫入。
 5. 浮層模式點外面也會關閉。
 
-來源：1. [TimeV2.vue][]　2. [TimeRow.vue][]
+來源：1. [TimeV2.vue](../../../app/components/Camelot/TimeV2.vue)　2. [TimeRow.vue](../../../app/components/Camelot/Internal/TimeRow.vue)
 
 ### 值與顯示格式
 
@@ -26,15 +26,15 @@
 | 範例 | 值 `14:30:00`、12 小時制、秒精細度，顯示 `02:30:00 PM` |
 | `hour` 精細度 | 觸發框只顯示時，v-model 仍是 `HH:mm` |
 
-來源：1. [TimeV2.vue][]
+來源：1. [TimeV2.vue](../../../app/components/Camelot/TimeV2.vue)
 
 ### 主題
 
-1. 觸發框、開啟態與面板樣式來自共用的 picker 主題，四主題與 DateV2 一致。
+1. 觸發框、開啟態與面板樣式來自共用的 picker 主題，五主題與 DateV2 一致。
 2. scifi 主題下，觸發框外層套上表單欄位共用的 HUD 外框，開啟時呈 focus 態；其他主題不加外框。
 3. 浮層陰影與圓角依主題設定在浮層外層，避免被面板裁切；錯誤態時邊框改為錯誤色。
 
-來源：1. [TimeV2.vue][]　2. [useCamelotPickerTheme.ts][]　3. [FieldFrame.vue][]
+來源：1. [TimeV2.vue](../../../app/components/Camelot/TimeV2.vue)　2. [useCamelotPickerTheme.ts](../../../app/composables/useCamelotPickerTheme.ts)　3. [FieldFrame.vue](../../../app/components/Camelot/Internal/FieldFrame.vue)
 
 ## Props
 
@@ -52,7 +52,7 @@
 | `timePrecision` | `'minute'` | `'hour'`、`'minute'` 或 `'second'` |
 | `hourFormat` | `'24'` | `'12'` 或 `'24'` |
 
-來源：1. [TimeV2.vue][]
+來源：1. [TimeV2.vue](../../../app/components/Camelot/TimeV2.vue)
 
 ## 相關頁面
 
@@ -61,26 +61,6 @@
 - [Internal/TimeField](./components/Internal-TimeField.md)
 - [日期選擇器](./calendar.md)
 - [主題系統](../platform/theme-system.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| TimeV2.vue | [app/components/Camelot/TimeV2.vue](../../../app/components/Camelot/TimeV2.vue) |
-| TimeRow.vue | [app/components/Camelot/Internal/TimeRow.vue](../../../app/components/Camelot/Internal/TimeRow.vue) |
-| useCamelotPickerTheme.ts | [app/composables/useCamelotPickerTheme.ts](../../../app/composables/useCamelotPickerTheme.ts) |
-| FieldFrame.vue | [app/components/Camelot/Internal/FieldFrame.vue](../../../app/components/Camelot/Internal/FieldFrame.vue) |
-
-[TimeV2.vue]: #references
-[TimeRow.vue]: #references
-[useCamelotPickerTheme.ts]: #references
-[FieldFrame.vue]: #references
 
 ---
 [⚙️ Env](../environment.md) | [🏠 Wiki](../index.md)

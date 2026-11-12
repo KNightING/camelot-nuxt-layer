@@ -52,7 +52,7 @@ type BaseOptions = Omit<UseFetchStreamOptions, 'onChunk' | 'onFinish'>
 | `clear` | `() => void` | 清空 `data` 與行緩衝，並中止、重置底層串流 |
 | 其餘 | — | 展開自底層 useFetchStream，含 `status`、`isStreaming`、`error`、`abort` |
 
-來源：1. [useFetchJSONLinesStream.ts][]　2. [useFetchStream.ts][]
+來源：1. [useFetchJSONLinesStream.ts](../../../../app/composables/useFetchJSONLinesStream.ts)　2. [useFetchStream.ts](../../../../app/composables/useFetchStream.ts)
 
 ## 用法
 
@@ -81,23 +81,6 @@ await refresh()
 ## 相關頁面
 
 - [useFetchStream](./useFetchStream.md)：底層的位元組串流讀取。
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231702-fix-wiki-review-code-defects](../../../archive/2609231702-fix-wiki-review-code-defects.md) | 修正程式碼缺陷後更新為修正後的行為 | [#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47) | — |
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useFetchJSONLinesStream.ts | [app/composables/useFetchJSONLinesStream.ts](../../../../app/composables/useFetchJSONLinesStream.ts) |
-| useFetchStream.ts | [app/composables/useFetchStream.ts](../../../../app/composables/useFetchStream.ts) |
-
-[useFetchJSONLinesStream.ts]: #references
-[useFetchStream.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

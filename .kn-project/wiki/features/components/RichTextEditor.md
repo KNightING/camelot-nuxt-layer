@@ -38,7 +38,7 @@
 
 工具列固定在編輯區頂端，捲動時不離開。介面文案內建繁體中文，沒有接 i18n。
 
-來源：1. [RichTextEditor.vue][]
+來源：1. [RichTextEditor.vue](../../../../app/components/Camelot/RichTextEditor.vue)
 
 ### 貼上與鍵盤
 
@@ -48,7 +48,7 @@
 4. 在清單內按 Tab 會調整清單層級；在程式碼區塊內插入兩個半形空白；其他地方插入一個全形空白，Shift＋Tab 刪除它。
 5. 連結在編輯區內點擊不會開啟，方便編輯文字。
 
-來源：1. [RichTextEditor.vue][]　2. [paste-sanitize.ts][]　3. [tab-indent.ts][]
+來源：1. [RichTextEditor.vue](../../../../app/components/Camelot/RichTextEditor.vue)　2. [paste-sanitize.ts](../../../../app/components/Camelot/Internal/editor/paste-sanitize.ts)　3. [tab-indent.ts](../../../../app/components/Camelot/Internal/editor/tab-indent.ts)
 
 ### 圖片暫存與上傳
 
@@ -60,7 +60,7 @@
 6. 選取圖片後，拖曳右下角的把手可調整寬度。
 7. 元件卸載時釋放所有暫存網址並銷毀編輯器。
 
-來源：1. [RichTextEditor.vue][]　2. [resizable-image.ts][]　3. [ResizableImageView.vue][]
+來源：1. [RichTextEditor.vue](../../../../app/components/Camelot/RichTextEditor.vue)　2. [resizable-image.ts](../../../../app/components/Camelot/Internal/editor/resizable-image.ts)　3. [ResizableImageView.vue](../../../../app/components/Camelot/Internal/editor/ResizableImageView.vue)
 
 ### 各主題外框
 
@@ -71,29 +71,7 @@
 | cupertino | 14px 圓角、淺色容器底與較深陰影 |
 | material | 12px 圓角、表面底色與輕陰影 |
 
-來源：1. [RichTextEditor.vue][]
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| RichTextEditor.vue | [app/components/Camelot/RichTextEditor.vue](../../../../app/components/Camelot/RichTextEditor.vue) |
-| paste-sanitize.ts | [app/components/Camelot/Internal/editor/paste-sanitize.ts](../../../../app/components/Camelot/Internal/editor/paste-sanitize.ts) |
-| tab-indent.ts | [app/components/Camelot/Internal/editor/tab-indent.ts](../../../../app/components/Camelot/Internal/editor/tab-indent.ts) |
-| resizable-image.ts | [app/components/Camelot/Internal/editor/resizable-image.ts](../../../../app/components/Camelot/Internal/editor/resizable-image.ts) |
-| ResizableImageView.vue | [app/components/Camelot/Internal/editor/ResizableImageView.vue](../../../../app/components/Camelot/Internal/editor/ResizableImageView.vue) |
-
-[RichTextEditor.vue]: #references
-[paste-sanitize.ts]: #references
-[tab-indent.ts]: #references
-[resizable-image.ts]: #references
-[ResizableImageView.vue]: #references
+來源：1. [RichTextEditor.vue](../../../../app/components/Camelot/RichTextEditor.vue)
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

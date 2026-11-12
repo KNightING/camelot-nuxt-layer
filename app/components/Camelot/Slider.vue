@@ -259,6 +259,8 @@ const radiusClass = computed(() => (themeMode.value === 'scifi' ? 'rounded-none'
 
 const trackClass = computed(() => {
   switch (themeMode.value) {
+    case 'tactile':
+      return 'tactile-well'
     case 'aqua':
       return 'aqua-track backdrop-blur-md'
     case 'scifi':
@@ -281,6 +283,8 @@ const fillClass = computed(() => {
 
 const thumbClass = computed(() => {
   switch (themeMode.value) {
+    case 'tactile':
+      return 'tactile-thumb rounded-full'
     case 'aqua':
       return 'aqua-thumb rounded-full border border-white/60'
     case 'scifi':

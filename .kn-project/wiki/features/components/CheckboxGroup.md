@@ -41,24 +41,10 @@ CheckboxGroup 以選項清單渲染一組核取方塊，匯入名稱 `CamelotChe
 | 水平排列 | 自動換行，項目間距 24px |
 | 垂直排列 | 由上而下，項目間距 8px |
 
-來源：1. [CheckboxGroup.vue][]
+來源：1. [CheckboxGroup.vue](../../../../app/components/Camelot/CheckboxGroup.vue)
 
 ## 相關頁面
 - [FieldLabel](./FieldLabel.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| CheckboxGroup.vue | [app/components/Camelot/CheckboxGroup.vue](../../../../app/components/Camelot/CheckboxGroup.vue) |
-
-[CheckboxGroup.vue]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

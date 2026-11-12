@@ -33,7 +33,7 @@ BaseBottomSheetV2 是由畫面底部滑入的底部彈出面板（Bottom Sheet�
 
 內容只放內容即可：外框、內距與寬度已由本元件負責，插槽內再包一層完整盒子會造成雙層邊框與寬度溢出。
 
-來源：1. [BaseBottomSheetV2.vue][]
+來源：1. [BaseBottomSheetV2.vue](../../../../app/components/Camelot/BaseBottomSheetV2.vue)
 
 ### 手勢關閉
 
@@ -51,7 +51,7 @@ BaseBottomSheetV2 是由畫面底部滑入的底部彈出面板（Bottom Sheet�
 
 拖曳位移放在面板外層之內的另一層：外層的滑入動畫會保留最後的 transform，蓋過同一元素上的行內位移。
 
-來源：1. [BaseBottomSheetV2.vue][]
+來源：1. [BaseBottomSheetV2.vue](../../../../app/components/Camelot/BaseBottomSheetV2.vue)
 
 ### 尺寸與疊層
 
@@ -60,24 +60,10 @@ BaseBottomSheetV2 是由畫面底部滑入的底部彈出面板（Bottom Sheet�
 | 寬度 | 面板用撐滿父層寬度，不用視窗寬度單位；視窗寬度含捲軸寬，會產生水平捲軸 |
 | 疊層 | 使用 sheet 層級，低於 popup，面板內的選單浮層會疊在面板之上 |
 
-來源：1. [BaseBottomSheetV2.vue][]
+來源：1. [BaseBottomSheetV2.vue](../../../../app/components/Camelot/BaseBottomSheetV2.vue)
 
 ## 相關頁面
 - [疊層刻度](../../platform/layering.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| BaseBottomSheetV2.vue | [app/components/Camelot/BaseBottomSheetV2.vue](../../../../app/components/Camelot/BaseBottomSheetV2.vue) |
-
-[BaseBottomSheetV2.vue]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

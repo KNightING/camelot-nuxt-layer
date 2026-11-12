@@ -53,7 +53,7 @@ Carousel 是泛型輪播元件，匯入名稱 `CamelotCarousel`。支援六種�
 2. 只有距離落在可視半徑內的投影片會被渲染，半徑依特效與 `peek` 決定。
 3. slide、coverflow、zoom 可用 `peek` 在兩側露出前後各 N 張鄰項。
 
-來源：1. [Carousel.vue][]
+來源：1. [Carousel.vue](../../../../app/components/Camelot/Carousel.vue)
 
 ### 拖曳換頁
 
@@ -71,7 +71,7 @@ Carousel 是泛型輪播元件，匯入名稱 `CamelotCarousel`。支援六種�
 | 位移順序 | 拖曳位移接在置中之後、特效位移之前；coverflow 的旋轉才不會讓位移歪掉 |
 | 觸控 | 水平輪播把垂直捲動留給瀏覽器，垂直輪播反之，滑動換頁不會擋住頁面捲動 |
 
-來源：1. [Carousel.vue][]
+來源：1. [Carousel.vue](../../../../app/components/Camelot/Carousel.vue)
 
 ### 自動播放
 
@@ -83,7 +83,7 @@ Carousel 是泛型輪播元件，匯入名稱 `CamelotCarousel`。支援六種�
 4. 未因 `pauseOnHover` 而處於滑鼠移入狀態。
 5. 不在拖曳中。
 
-來源：1. [Carousel.vue][]
+來源：1. [Carousel.vue](../../../../app/components/Camelot/Carousel.vue)
 
 ### 箭頭與指標
 
@@ -91,21 +91,7 @@ Carousel 是泛型輪播元件，匯入名稱 `CamelotCarousel`。支援六種�
 2. 要完全移除時把 `showArrows` 或 `showDots` 設為 false；只想改長相則用 prev、next、dot 插槽。
 3. 指標使用獨立的 [CarouselIndicator](./CarouselIndicator.md)，方向與角色色沿用輪播設定。
 
-來源：1. [Carousel.vue][]
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| Carousel.vue | [app/components/Camelot/Carousel.vue](../../../../app/components/Camelot/Carousel.vue) |
-
-[Carousel.vue]: #references
+來源：1. [Carousel.vue](../../../../app/components/Camelot/Carousel.vue)
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

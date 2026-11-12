@@ -47,7 +47,7 @@ ImageDropzone（匯入名稱 `CamelotImageDropzone`）是圖片專用的拖放�
 
 拖放、類型過濾、張數上限與縮圖生命週期都由 [useCamelotFileDrop](../composables/useCamelotFileDrop.md) 處理，元件只負責畫面。
 
-來源：1. [ImageDropzone.vue][]　2. [useCamelotFileDrop.ts][]
+來源：1. [ImageDropzone.vue](../../../../app/components/Camelot/ImageDropzone.vue)　2. [useCamelotFileDrop.ts](../../../../app/composables/useCamelotFileDrop.ts)
 
 ### 狀態與主題
 
@@ -60,28 +60,12 @@ ImageDropzone（匯入名稱 `CamelotImageDropzone`）是圖片專用的拖放�
 | Cupertino | 0.75rem | 0.375rem |
 | Material | 0.5rem | 0.375rem |
 
-來源：1. [ImageDropzone.vue][]
+來源：1. [ImageDropzone.vue](../../../../app/components/Camelot/ImageDropzone.vue)
 
 ## 相關頁面
 
 - [FileDropzone](./FileDropzone.md)
 - [檔案拖放](../file-drop.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| ImageDropzone.vue | [app/components/Camelot/ImageDropzone.vue](../../../../app/components/Camelot/ImageDropzone.vue) |
-| useCamelotFileDrop.ts | [app/composables/useCamelotFileDrop.ts](../../../../app/composables/useCamelotFileDrop.ts) |
-
-[ImageDropzone.vue]: #references
-[useCamelotFileDrop.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

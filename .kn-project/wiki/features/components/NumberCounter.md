@@ -46,7 +46,7 @@
 
 停用時整個元件半透明、游標顯示禁止，並且不接受點擊。
 
-來源：1. [NumberCounter.vue][]　2. [FieldFrame.vue][]
+來源：1. [NumberCounter.vue](../../../../app/components/Camelot/NumberCounter.vue)　2. [FieldFrame.vue](../../../../app/components/Camelot/Internal/FieldFrame.vue)
 
 ### 步進值
 
@@ -56,7 +56,7 @@
 4. 同時開啟 `usedMinStepByValue` 時，若算出的步進比目前步進大，保留目前較小的步進。
 5. 開啟 minStepByValue 但目前值是整數時，有 step 就用 step，否則沿用上一次的步進。
 
-來源：1. [NumberCounter.vue][]
+來源：1. [NumberCounter.vue](../../../../app/components/Camelot/NumberCounter.vue)
 
 ### 加減與輸入
 
@@ -66,25 +66,7 @@
 4. 行動裝置上，按加減號造成的聚焦不會彈出鍵盤；使用者點擊輸入框後才切成小數鍵盤，失焦後恢復。
 5. 原生數字輸入框的上下箭頭已隱藏。
 
-來源：1. [NumberCounter.vue][]　2. [useFloat.ts][]
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| NumberCounter.vue | [app/components/Camelot/NumberCounter.vue](../../../../app/components/Camelot/NumberCounter.vue) |
-| FieldFrame.vue | [app/components/Camelot/Internal/FieldFrame.vue](../../../../app/components/Camelot/Internal/FieldFrame.vue) |
-| useFloat.ts | [app/composables/useFloat.ts](../../../../app/composables/useFloat.ts) |
-
-[NumberCounter.vue]: #references
-[FieldFrame.vue]: #references
-[useFloat.ts]: #references
+來源：1. [NumberCounter.vue](../../../../app/components/Camelot/NumberCounter.vue)　2. [useFloat.ts](../../../../app/composables/useFloat.ts)
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

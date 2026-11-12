@@ -123,9 +123,11 @@ onBeforeUnmount(() => {
 <style scoped>
 .cml-file-chip { border-radius: 0.75rem; }
 .cml-file-chip[data-cml-theme="aqua"] { border-radius: 1rem; }
+.cml-file-chip[data-cml-theme="tactile"] { border-radius: 0.875rem; }
 .cml-file-chip[data-cml-theme="scifi"] { border-radius: 0; }
 
 .cml-file-chip-icon { border-radius: 0.5rem; }
 .cml-file-chip[data-cml-theme="aqua"] .cml-file-chip-icon { border-radius: 0.625rem; }
+.cml-file-chip[data-cml-theme="tactile"] .cml-file-chip-icon { border-radius: 0.625rem; }
 .cml-file-chip[data-cml-theme="scifi"] .cml-file-chip-icon { border-radius: 0; }
 </style>

@@ -1,0 +1,9 @@
+WIKI_PAGE("features/components/Scifi-Checkbox.md",{
+"title":"ScifiCheckbox",
+"summary":"`CamelotScifiCheckbox` 是 Sci-Fi 主題的核取方塊：18px 的 HUD 方框，勾選時中央亮起帶光暈的方塊並有一道掃描線反覆掃過，hover 時顯示準星。半選狀態與勾選狀態外觀相同。一般不直接使用，而是由 `CamelotCheckbox` 在 Sci-Fi 主題下自動選用；標籤與色彩角色由外層元件提供。",
+"svgs":{},
+"seq":{},
+"ext":["archive/2609231616-wiki-lint-migration.md"],
+"changelog":[{"plan": "2609231616-wiki-lint-migration", "date": "2026-09-23", "version": "—", "note": "改寫為新版 wiki 格式並依原始碼校正內容", "issue": "[#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45)", "pr": "—"}],
+"md":"# ScifiCheckbox\n\n## Summary\n\n`CamelotScifiCheckbox` 是 Sci-Fi 主題的核取方塊：18px 的 HUD 方框，勾選時中央亮起帶光暈的方塊並有一道掃描線反覆掃過，hover 時顯示準星。半選狀態與勾選狀態外觀相同。一般不直接使用，而是由 `CamelotCheckbox` 在 Sci-Fi 主題下自動選用；標籤與色彩角色由外層元件提供。\n\n## Props\n| Prop | 型別 | 預設 | 說明 |\n| :--- | :--- | :---: | :--- |\n| `disabled` | `boolean` | `false` | 是否停用 |\n| `indeterminate` | `boolean` | `false` | 半選（未定）狀態，外觀與勾選相同 |\n\n## Emits\n| 事件 | 參數 | 說明 |\n| :--- | :--- | :--- |\n| `change` | `checked: boolean` | 勾選狀態切換時觸發，帶入切換後的值 |\n\n## v-model\n| Model | 型別 | 說明 |\n| :--- | :--- | :--- |\n| `modelValue` | `boolean`（預設 `false`） | 是否為勾選狀態 |\n\n## 運作方式\n\n### 狀態外觀\n\n| 狀態 | 外觀 |\n| :--- | :--- |\n| 未勾選 | 淡色細框，左右兩側有較深的括號狀邊 |\n| 勾選或半選 | 括號邊改為實色並發光，中央 10px 方塊亮起，掃描線每秒掃過一次 |\n| hover | 方框周圍顯示準星 |\n| 停用 | 透明度 30%、灰階，不接受點擊 |\n\n來源：1. [Scifi/Checkbox.vue](../../../../app/components/Camelot/Scifi/Checkbox.vue)\n\n### 點擊\n\n1. 點擊即切換勾選狀態，並以新值發出 `change`；與 Radio 不同，已勾選時點擊會取消。\n2. 半選狀態下點擊，切換的是勾選值；因為半選外觀與勾選相同，畫面可能看不出變化，半選旗標要由外部清除。\n3. 停用時不接受點擊，不發出 `change`。\n\n來源：1. [Scifi/Checkbox.vue](../../../../app/components/Camelot/Scifi/Checkbox.vue)\n\n## 相關頁面\n\n- [Checkbox](./Checkbox.md)\n- [Scifi Reticle](./Scifi-Reticle.md)\n\n---\n[⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)\n"
+});

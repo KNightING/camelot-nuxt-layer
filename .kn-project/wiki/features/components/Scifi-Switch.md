@@ -11,7 +11,7 @@ Sci-Fi 主題的開關切換元件：滑塊旁顯示 ON 或 OFF 狀態字，外�
 3. 準星裝飾平時半透明，懸停或開啟時完整顯示。
 4. 停用時忽略點擊、不發出事件，外觀轉為灰階半透明。
 
-來源：1. [Scifi/Switch.vue][]
+來源：1. [Scifi/Switch.vue](../../../../app/components/Camelot/Scifi/Switch.vue)
 
 ## Props
 | Prop | 型別 | 預設 | 說明 |
@@ -32,20 +32,6 @@ Sci-Fi 主題的開關切換元件：滑塊旁顯示 ON 或 OFF 狀態字，外�
 
 - [Scifi Reticle](./Scifi-Reticle.md)
 - [Switch](./Switch.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| Scifi/Switch.vue | [app/components/Camelot/Scifi/Switch.vue](../../../../app/components/Camelot/Scifi/Switch.vue) |
-
-[Scifi/Switch.vue]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

@@ -26,7 +26,7 @@ const useRandomCatImg: () => {
 https://cataas.com/cat?<隨機碼>
 ```
 
-來源：1. [useRandomCatImg.ts][]
+來源：1. [useRandomCatImg.ts](../../../../app/composables/useRandomCatImg.ts)
 
 ## 用法
 
@@ -47,20 +47,6 @@ const { url, newCat } = useRandomCatImg()
 | --- | --- |
 | 初始值 | 建立時自動呼叫一次 `newCat` |
 | 隨機碼 | `Math.random` 轉 36 進位後取第 2 到 14 位 |
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useRandomCatImg.ts | [app/composables/useRandomCatImg.ts](../../../../app/composables/useRandomCatImg.ts) |
-
-[useRandomCatImg.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

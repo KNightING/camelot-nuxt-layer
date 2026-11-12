@@ -5,6 +5,7 @@
     :class="[
       roleColorClass,
       {
+        'relative inline-flex w-auto max-w-full gap-0 rounded-2xl p-1 tactile-well': themeMode === 'tactile',
         'relative inline-flex w-auto max-w-full gap-0 rounded-full p-[5px] aqua-track': themeMode === 'aqua',
         'relative w-full gap-6 border-b border-outline-variant px-2': themeMode === 'material',
         'relative inline-flex w-auto max-w-full gap-0.5 rounded-lg bg-surface-container-highest p-0.5': themeMode === 'cupertino',
@@ -16,6 +17,7 @@
     <div
       class="pointer-events-none absolute left-0 z-0 transition-[transform,width,opacity] duration-300 ease-spring motion-reduce:transition-none"
       :class="{
+        'top-1 h-[calc(100%-8px)] rounded-xl tactile-fill': themeMode === 'tactile',
         'aqua-fill top-[5px] h-[calc(100%-10px)] rounded-full': themeMode === 'aqua',
         'top-0.5 h-[calc(100%-4px)] rounded-md bg-surface shadow-[0_1px_3px_rgba(0,0,0,0.1)]': themeMode === 'cupertino',
         'bottom-0 h-[3px] rounded-t-full bg-[var(--cml-color-current-color)]': themeMode === 'material',
@@ -40,9 +42,21 @@
         :index="index"
         :is-selected="isSelected(option.value)"
       >
+        <!-- Tactile Segmented Theme Tab -->
+        <div
+          v-if="themeMode === 'tactile'"
+          class="relative z-[1] cursor-pointer rounded-xl px-5 py-2 text-sm font-semibold whitespace-nowrap transition-[color,transform] duration-200 active:scale-95"
+          :class="{
+            'text-[var(--cml-color-current-on-color)]': isSelected(option.value),
+            'text-on-surface-variant hover:text-on-surface': !isSelected(option.value),
+          }"
+        >
+          {{ getText(option) }}
+        </div>
+
         <!-- Aqua Pill Theme Tab -->
         <div
-          v-if="themeMode === 'aqua'"
+          v-else-if="themeMode === 'aqua'"
           class="relative z-[1] cursor-pointer rounded-full px-6 py-[9px] text-sm font-semibold whitespace-nowrap transition-[color,transform] duration-200 active:scale-95"
           :class="isSelected(option.value) ? 'text-[var(--cml-color-current-on-color)]' : 'text-on-surface-variant hover:text-[var(--cml-color-current-color)]'"
         >

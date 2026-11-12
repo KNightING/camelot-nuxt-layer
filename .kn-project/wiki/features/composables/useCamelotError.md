@@ -14,7 +14,7 @@
 4. 攔截：依優先權執行攔截器，任一個回傳 true 即視為已處理，不入列、handle 回傳 undefined。
 5. 入列：補上隨機 id 並回傳，顯示層一次呈現佇列第一筆。
 
-來源：1. [useCamelotError.ts][]
+來源：1. [useCamelotError.ts](../../../../app/composables/useCamelotError.ts)
 
 ### 轉換器與攔截器規則
 
@@ -34,7 +34,7 @@
 | `camelot:native-error` | 是 Error 實例 | message 取錯誤訊息，data 為錯誤本身 |
 | `camelot:string` | 是字串 | message 為該字串 |
 
-來源：1. [useCamelotError.ts][]
+來源：1. [useCamelotError.ts](../../../../app/composables/useCamelotError.ts)
 
 ### 呼叫端選項與關閉
 
@@ -44,7 +44,7 @@
 4. dismiss 先把錯誤移出佇列，再執行它的 onConfirm。
 5. runAction 先執行按鈕 handler；除非 close 明確為 false，否則接著 dismiss。
 
-來源：1. [useCamelotError.ts][]
+來源：1. [useCamelotError.ts](../../../../app/composables/useCamelotError.ts)
 
 ## 用法
 
@@ -120,20 +120,6 @@ useCamelotError(): {
 - [ErrorDialog](../components/ErrorDialog.md)：顯示佇列的對話框元件。
 - [useErrorRef](./useErrorRef.md)：只把多個錯誤 ref 匯總成一個，不含佇列、轉換與顯示。
 - [Composables 清單](../composables.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useCamelotError.ts | [app/composables/useCamelotError.ts](../../../../app/composables/useCamelotError.ts) |
-
-[useCamelotError.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

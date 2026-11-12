@@ -13,7 +13,7 @@
 3. 堆疊裡已有同一位置：視為返回或替換，截掉它之後的紀錄，並把路徑更新為含 query 的完整路徑。
 4. 沒有同一位置：新增一筆，記錄路徑、路由名稱與位置。
 
-來源：1. [useCamelotRouter.ts][]　2. [camelotRouter.ts][]
+來源：1. [useCamelotRouter.ts](../../../../app/composables/useCamelotRouter.ts)　2. [camelotRouter.ts](../../../../app/plugins/camelotRouter.ts)
 
 ### single 單例導覽
 
@@ -32,14 +32,14 @@
 
 比對規則：開啟名稱比對且目標有路由名稱時先比名稱，否則比對路徑或解析後的路徑。
 
-來源：1. [useCamelotRouter.ts][]
+來源：1. [useCamelotRouter.ts](../../../../app/composables/useCamelotRouter.ts)
 
 ### 返回
 
 1. canBack 讀 router 歷史狀態的 back 欄位，有值才算可返回。
 2. back 預設只在可返回時呼叫 router.back；傳入 false 時不檢查、直接返回。
 
-來源：1. [useCamelotRouter.ts][]
+來源：1. [useCamelotRouter.ts](../../../../app/composables/useCamelotRouter.ts)
 
 ### CamelotPath
 
@@ -54,7 +54,7 @@
 | `single(options?)` | 呼叫 single，options 可另帶 queryAndHash |
 | `append(path)` | 串接子路徑，回傳新的 CamelotPath |
 
-來源：1. [useCamelotRouter.ts][]
+來源：1. [useCamelotRouter.ts](../../../../app/composables/useCamelotRouter.ts)
 
 ## 用法
 
@@ -98,22 +98,6 @@ type CamelotHistory = { path: string; name?: string | symbol | null; pos: number
 ## 相關頁面
 
 - [BaseDialogV2](../components/BaseDialogV2.md)：關閉以 query 綁定的對話框時，以 canBack 決定返回上一頁或改為移除 query。
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useCamelotRouter.ts | [app/composables/useCamelotRouter.ts](../../../../app/composables/useCamelotRouter.ts) |
-| camelotRouter.ts | [app/plugins/camelotRouter.ts](../../../../app/plugins/camelotRouter.ts) |
-
-[useCamelotRouter.ts]: #references
-[camelotRouter.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

@@ -2,7 +2,7 @@
 
 ## Summary
 
-`useCamelotTheme()` 管理 Camelot 的主題風格、深淺色與品牌色。主題風格有 material、cupertino、scifi、aqua 四種，預設 aqua，存在 localStorage；切換風格、深淺色或色系時，全站顏色以漸變過場。狀態與副作用都是模組層單例，數百個元件同時呼叫也只有一份。
+`useCamelotTheme()` 管理 Camelot 的主題風格、深淺色與品牌色。主題風格有 material、cupertino、scifi、aqua、tactile 五種，預設 aqua，存在 localStorage；切換風格、深淺色或色系時，全站顏色以漸變過場。狀態與副作用都是模組層單例，數百個元件同時呼叫也只有一份。
 
 ## 運作方式
 
@@ -15,7 +15,7 @@
 
 主題風格 ref 與全域 watcher 掛在模組層的獨立 effect scope 上，不會因第一個呼叫的元件卸載而失效。
 
-來源：1. [useCamelotTheme.ts][]　2. [useCamelotColorMode.ts][]　3. [useCustomColorScheme.ts][]
+來源：1. [useCamelotTheme.ts](../../../../app/composables/useCamelotTheme.ts)　2. [useCamelotColorMode.ts](../../../../app/composables/useCamelotColorMode.ts)　3. [useCustomColorScheme.ts](../../../../app/composables/useCustomColorScheme.ts)
 
 ### 全域副作用
 
@@ -26,7 +26,7 @@
 | 主題風格 | 立即執行，之後每次變動 | 寫入 html 的 `--cml-active-ui-style` 與 `data-camelot-theme-mode` |
 | 主題風格與深淺色 | 變動時，初次載入不觸發 | 觸發顏色漸變過場 |
 
-來源：1. [useCamelotTheme.ts][]
+來源：1. [useCamelotTheme.ts](../../../../app/composables/useCamelotTheme.ts)
 
 ### 顏色漸變過場
 
@@ -36,7 +36,7 @@
 
 設定品牌色或任一色鍵時也會觸發過場。此函式另可獨立匯入使用。
 
-來源：1. [useCamelotTheme.ts][]
+來源：1. [useCamelotTheme.ts](../../../../app/composables/useCamelotTheme.ts)
 
 ## 用法
 
@@ -60,7 +60,7 @@ useCamelotTheme(): {
   triggerThemeTransition: () => void
 }
 
-type CamelotThemeMode = 'material' | 'cupertino' | 'scifi' | 'aqua'
+type CamelotThemeMode = 'material' | 'cupertino' | 'scifi' | 'aqua' | 'tactile'
 ```
 
 ## 回傳
@@ -79,24 +79,6 @@ type CamelotThemeMode = 'material' | 'cupertino' | 'scifi' | 'aqua'
 
 - [主題系統](../../platform/theme-system.md)
 - [色彩主題系統](../../platform/color-scheme.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useCamelotTheme.ts | [app/composables/useCamelotTheme.ts](../../../../app/composables/useCamelotTheme.ts) |
-| useCamelotColorMode.ts | [app/composables/useCamelotColorMode.ts](../../../../app/composables/useCamelotColorMode.ts) |
-| useCustomColorScheme.ts | [app/composables/useCustomColorScheme.ts](../../../../app/composables/useCustomColorScheme.ts) |
-
-[useCamelotTheme.ts]: #references
-[useCamelotColorMode.ts]: #references
-[useCustomColorScheme.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

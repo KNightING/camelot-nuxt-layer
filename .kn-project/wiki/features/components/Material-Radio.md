@@ -28,31 +28,17 @@
 2. 已選取時點擊：只有 `deselectable` 為真才會取消選取；否則不動作。
 3. 停用時不接受點擊，透明度降為 38%。
 
-來源：1. [Material/Radio.vue][]
+來源：1. [Material/Radio.vue](../../../../app/components/Camelot/Material/Radio.vue)
 
 ### 外觀
 
 外圈為 2px 框線；選取時內部圓點由中心放大到框內寬度的 62.5%，框線與圓點都用色彩角色，未選取時框線為外框線色。
 
-來源：1. [Material/Radio.vue][]
+來源：1. [Material/Radio.vue](../../../../app/components/Camelot/Material/Radio.vue)
 
 ## 相關頁面
 
 - [Radio](./Radio.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| Material/Radio.vue | [app/components/Camelot/Material/Radio.vue](../../../../app/components/Camelot/Material/Radio.vue) |
-
-[Material/Radio.vue]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

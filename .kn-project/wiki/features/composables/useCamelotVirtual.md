@@ -14,7 +14,7 @@
 4. 以二分搜尋找出上下緣所在的索引，前後各加 overscan 項，得到渲染範圍。
 5. 前方留白為範圍起點的位置，後方留白為總尺寸扣掉範圍終點的位置。
 
-來源：1. [useCamelotVirtual.ts][]
+來源：1. [useCamelotVirtual.ts](../../../../app/composables/useCamelotVirtual.ts)
 
 ### 尺寸回報與效能
 
@@ -26,7 +26,7 @@
 | 不用 computed | 前綴和快取重用同一個陣列參照，computed 以 Object.is 比對會停止更新；改由各 computed 自行讀取版本計數 |
 | 忽略的回報 | 尺寸小於等於 0、與快取相同，或索引超出範圍時略過 |
 
-來源：1. [useCamelotVirtual.ts][]
+來源：1. [useCamelotVirtual.ts](../../../../app/composables/useCamelotVirtual.ts)
 
 ### 捲動監聽
 
@@ -34,7 +34,7 @@
 2. 監聽容器的 scroll 事件，並以 ResizeObserver 觀察容器尺寸，兩者都重新讀取。
 3. 容器更換或卸載時移除監聽；沒有 window 時不掛載。
 
-來源：1. [useCamelotVirtual.ts][]
+來源：1. [useCamelotVirtual.ts](../../../../app/composables/useCamelotVirtual.ts)
 
 ## 用法
 
@@ -97,20 +97,6 @@ useCamelotVirtual(
 
 - [VirtualScroll](../components/VirtualScroll.md)
 - [Table](../components/Table.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useCamelotVirtual.ts | [app/composables/useCamelotVirtual.ts](../../../../app/composables/useCamelotVirtual.ts) |
-
-[useCamelotVirtual.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

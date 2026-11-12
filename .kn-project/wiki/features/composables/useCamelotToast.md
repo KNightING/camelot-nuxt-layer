@@ -16,7 +16,7 @@
 
 open 接受字串或通知物件，字串會轉成只有 message 的通知，再走同樣流程。
 
-來源：1. [useCamelotToast.ts][]
+來源：1. [useCamelotToast.ts](../../../../app/composables/useCamelotToast.ts)
 
 ### 移除與清空
 
@@ -24,7 +24,7 @@ open 接受字串或通知物件，字串會轉成只有 message 的通知，再
 2. 有 id 時先清掉該則的計時器，移出佇列，再呼叫它的 onClose。
 3. clear 清掉所有計時器並清空佇列，不呼叫任何 onClose。
 
-來源：1. [useCamelotToast.ts][]
+來源：1. [useCamelotToast.ts](../../../../app/composables/useCamelotToast.ts)
 
 ## 用法
 
@@ -76,25 +76,11 @@ useCamelotToast(): {
 | `color` | — | 直接指定色彩角色，優先於類型對應的狀態色 |
 | `position` | `'bottom'` | 顯示位置 |
 
-來源：1. [useCamelotToast.ts][]
+來源：1. [useCamelotToast.ts](../../../../app/composables/useCamelotToast.ts)
 
 ## 相關頁面
 
 - [Toast](../components/Toast.md)：顯示佇列的元件。
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useCamelotToast.ts | [app/composables/useCamelotToast.ts](../../../../app/composables/useCamelotToast.ts) |
-
-[useCamelotToast.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

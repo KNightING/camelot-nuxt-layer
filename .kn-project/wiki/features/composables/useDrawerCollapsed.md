@@ -11,7 +11,7 @@
 3. 伺服器端渲染時，每個請求各自一份狀態，請求之間互不影響。
 4. 狀態不持久化，重新整理後回到收合。
 
-來源：1. [useDrawerCollapsed.ts][]
+來源：1. [useDrawerCollapsed.ts](../../../../app/composables/useDrawerCollapsed.ts)
 
 ## 用法
 
@@ -31,21 +31,6 @@ useDrawerCollapsed(): Ref<boolean>
 | 名稱 | 型別 | 說明 |
 | --- | --- | --- |
 | （回傳值） | `Ref<boolean>` | 共享的收合狀態，`true` 為收合 |
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231702-fix-wiki-review-code-defects](../../../archive/2609231702-fix-wiki-review-code-defects.md) | 修正程式碼缺陷後更新為修正後的行為 | [#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47) | — |
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useDrawerCollapsed.ts | [app/composables/useDrawerCollapsed.ts](../../../../app/composables/useDrawerCollapsed.ts) |
-
-[useDrawerCollapsed.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

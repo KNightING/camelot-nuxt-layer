@@ -1,0 +1,9 @@
+WIKI_PAGE("features/composables/useSessionStorageProxy.md",{
+"title":"sessionStorage 代理",
+"summary":"useSessionStorageProxy 以 VueUse 的 useSessionStorage 為底，建立一個 sessionStorage 代理物件：用 value 讀寫、用 del 刪除，也可透過 storage 取得底層 ref。代理類別 SessionStorageProxy 有匯出，也可直接 new 出實例。",
+"svgs":{},
+"seq":{},
+"ext":["archive/2609231616-wiki-lint-migration.md"],
+"changelog":[{"plan": "2609231616-wiki-lint-migration", "date": "2026-09-23", "version": "—", "note": "改寫為新版 wiki 格式並依原始碼校正內容", "issue": "[#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45)", "pr": "—"}],
+"md":"# sessionStorage 代理\n\n## Summary\n\nuseSessionStorageProxy 以 VueUse 的 useSessionStorage 為底，建立一個 sessionStorage 代理物件：用 value 讀寫、用 del 刪除，也可透過 storage 取得底層 ref。代理類別 SessionStorageProxy 有匯出，也可直接 new 出實例。\n\n## 介面\n\n### 簽章\n\n```ts\nconst useSessionStorageProxy: <T>(\n  key: string,\n  initialValue: MaybeRefOrGetter<T>,\n  options?: UseStorageOptions<T>,\n) => SessionStorageProxy<T>\n\nexport class SessionStorageProxy<T> { /* storage、value、del */ }\n```\n\n### 參數\n\n| 參數 | 型別 | 預設 | 說明 |\n| --- | --- | --- | --- |\n| `key` | `string` | 必填 | sessionStorage 鍵名 |\n| `initialValue` | `MaybeRefOrGetter<T>` | 必填 | 初始值 |\n| `options` | `UseStorageOptions<T>` | — | 原樣傳給 `useSessionStorage` |\n\n### 回傳\n\n| 名稱 | 型別 | 說明 |\n| --- | --- | --- |\n| `storage` | `RemovableRef<T>` | 底層 ref，唯讀 getter |\n| `value` | `T` | 讀寫存取值，等同 `storage.value` |\n| `del` | `() => void` | 把值設為 `null`，由 VueUse 移除該鍵 |\n\n來源：1. [useSessionStorageProxy.ts](../../../../app/composables/useSessionStorageProxy.ts)\n\n## 用法\n\n```ts\nconst draft = useSessionStorageProxy('draft', '')\ndraft.value = 'hello'\ndraft.del()\n```\n\n## 規則\n\n| 規則 | 說明 |\n| --- | --- |\n| 刪除後的值 | `del` 之後 `value` 為 `null`，不在 `T` 的型別範圍內，讀取端要自行處理 |\n| 同類工具 | localStorage 用 [useLocalStorageProxy](./useLocalStorageProxy.md)，非同步儲存用 [useStorageProxy](./useStorageProxy.md) |\n\n---\n[⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)\n"
+});

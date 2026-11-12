@@ -26,7 +26,7 @@ TreeNode（匯入名稱 `CamelotInternalTreeNode`）是 [Tree](./Tree.md) 樹狀
 
 兩種模式點整列時都會通知 Tree 的節點點擊處理；停用的節點半透明且不可點。
 
-來源：1. [TreeNode.vue][]　2. [tree.ts][]
+來源：1. [TreeNode.vue](../../../../app/components/Camelot/Internal/TreeNode.vue)　2. [tree.ts](../../../../shared/types/tree.ts)
 
 ### 勾選框與標籤
 
@@ -34,7 +34,7 @@ TreeNode（匯入名稱 `CamelotInternalTreeNode`）是 [Tree](./Tree.md) 樹狀
 2. 有自訂 node 插槽時，勾選框不帶標籤，後面接插槽內容。
 3. 勾選框支援半選狀態，顏色跟隨 Tree 的色彩角色。
 
-來源：1. [TreeNode.vue][]
+來源：1. [TreeNode.vue](../../../../app/components/Camelot/Internal/TreeNode.vue)
 
 ### 展開
 
@@ -42,23 +42,7 @@ TreeNode（匯入名稱 `CamelotInternalTreeNode`）是 [Tree](./Tree.md) 樹狀
 
 node 插槽的型別需明確宣告：元件把自己的插槽遞迴轉給子節點，沒有宣告時 TypeScript 會循環推導而報錯。
 
-來源：1. [TreeNode.vue][]
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| TreeNode.vue | [app/components/Camelot/Internal/TreeNode.vue](../../../../app/components/Camelot/Internal/TreeNode.vue) |
-| tree.ts | [shared/types/tree.ts](../../../../shared/types/tree.ts) |
-
-[TreeNode.vue]: #references
-[tree.ts]: #references
+來源：1. [TreeNode.vue](../../../../app/components/Camelot/Internal/TreeNode.vue)
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

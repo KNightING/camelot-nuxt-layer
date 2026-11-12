@@ -111,6 +111,11 @@ const isFocus = ref(false)
 
 const containerThemeClass = computed(() => {
   switch (themeMode.value) {
+    case 'tactile':
+      return [
+        'min-h-10.5 tactile-well rounded-tactile-control',
+        isFocus.value ? 'shadow-[0_0_0_2px_var(--cml-color-current-color,var(--color-primary))]' : '',
+      ]
     case 'aqua':
       return [
         'min-h-10.5 aqua-track rounded-aqua-control backdrop-blur-md',

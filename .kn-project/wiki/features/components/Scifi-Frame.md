@@ -12,7 +12,7 @@ Sci-Fi 主題的 HUD 外框容器，以切角、格線、掃描線、脈衝與�
 4. 外框內建一個準星裝飾，由啟用準星的設定控制收合與發光。
 5. 內容區的最低高度繼承外框本身，讓外層設定的高度能傳到內容。
 
-來源：1. [Scifi/Frame.vue][]　2. [Scifi/Reticle.vue][]
+來源：1. [Scifi/Frame.vue](../../../../app/components/Camelot/Scifi/Frame.vue)　2. [Scifi/Reticle.vue](../../../../app/components/Camelot/Scifi/Reticle.vue)
 
 ## Props
 | Prop | 型別 | 預設 | 說明 |
@@ -38,22 +38,6 @@ Sci-Fi 主題的 HUD 外框容器，以切角、格線、掃描線、脈衝與�
 
 - [Scifi Reticle](./Scifi-Reticle.md)
 - [Scifi Input](./Scifi-Input.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| Scifi/Frame.vue | [app/components/Camelot/Scifi/Frame.vue](../../../../app/components/Camelot/Scifi/Frame.vue) |
-| Scifi/Reticle.vue | [app/components/Camelot/Scifi/Reticle.vue](../../../../app/components/Camelot/Scifi/Reticle.vue) |
-
-[Scifi/Frame.vue]: #references
-[Scifi/Reticle.vue]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

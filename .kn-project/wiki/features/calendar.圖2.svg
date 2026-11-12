@@ -1,13 +1,11 @@
-<!-- wiki-diagram 241676ffc45c78f35371372031ff259292c434b37e8f62783064a9e74a6a6a02 5f0d5b94395502bf460ef0262e58d92378395bb9243a7167da21b6c43ad59b49 -->
+<!-- wiki-diagram 241676ffc45c78f35371372031ff259292c434b37e8f62783064a9e74a6a6a02 4ae6160602a32b419d294053f31780286cf6b956a7722799fd76bb34ed06d50b -->
 <svg class="dg lc" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 759 218" width="759" height="218" role="img" aria-label="pickerMode 生命週期">
 <title>pickerMode 生命週期</title>
 <style>
 svg.dg{font-family:-apple-system,"PingFang TC","Noto Sans TC",Segoe UI,Roboto,sans-serif;
-  --ink:#1f2328;--ink2:#444c56;--ink3:#6e7781;--line:#d0d7de;--line2:#8c959f;--surf:#f6f8fa;--surf2:#eaeef2;--surf3:#dfe4ea;
-  --prim:#ddf4ff;--prim-ink:#0550ae;--tert:#8250df;--tert-bg:#fbefff;--tert-ink:#3e1f79;--err:#cf222e;--warn:#9a6700;--warn-bg:#fff8c5;--ok:#1a7f37;--key:#41546B;--mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+  --ink:#1f2328;--ink2:#444c56;--ink3:#6e7781;--line:#d0d7de;--line2:#8c959f;--surf:#f6f8fa;--surf2:#eaeef2;--surf3:#dfe4ea;--prim:#ddf4ff;--prim-ink:#0550ae;--tert:#8250df;--tert-bg:#fbefff;--tert-ink:#3e1f79;--err:#cf222e;--warn:#9a6700;--warn-bg:#fff8c5;--ok:#1a7f37;--key:#41546B;--mono:ui-monospace,SFMono-Regular,Menlo,monospace;
   color:var(--ink2);background:transparent}
-@media (prefers-color-scheme:dark){svg.dg{--ink:#e6edf3;--ink2:#c9d1d9;--ink3:#8b949e;--line:#30363d;--line2:#484f58;--surf:#161b22;--surf2:#1f2630;--surf3:#2a3340;
-  --prim:#0c2d6b;--prim-ink:#79c0ff;--tert:#a371f7;--tert-bg:#2a1a4a;--tert-ink:#d2b8ff;--err:#f85149;--warn:#d29922;--warn-bg:#3a2e00;--ok:#3fb950;--key:#6e8aa8}}
+@media (prefers-color-scheme:dark){svg.dg{--ink:#e6edf3;--ink2:#c9d1d9;--ink3:#8b949e;--line:#30363d;--line2:#484f58;--surf:#161b22;--surf2:#1f2630;--surf3:#2a3340;--prim:#0c2d6b;--prim-ink:#79c0ff;--tert:#a371f7;--tert-bg:#2a1a4a;--tert-ink:#d2b8ff;--err:#f85149;--warn:#d29922;--warn-bg:#3a2e00;--ok:#3fb950;--key:#6e8aa8}}
 .seq .life{stroke:var(--line);stroke-width:1.2;stroke-dasharray:4 4}
 .seq .act{fill:var(--surf);stroke:var(--line);stroke-width:1.2}.seq .act.ext{stroke-dasharray:4 3}.seq .act.db{fill:var(--surf2)}.seq .act.bus{fill:var(--prim);stroke:transparent}.seq .act.auth{fill:var(--warn-bg)}
 .seq .actx{font-size:12.5px;font-weight:700;fill:var(--ink)}

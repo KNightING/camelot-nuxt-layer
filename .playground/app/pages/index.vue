@@ -92,7 +92,7 @@
         <!-- Rich Text Editor (WYSIWYG) Card -->
         <div :class="[cardClass, 'col-span-1 md:col-span-2 lg:col-span-3']">
           <h2 :class="cardTitleClass">
-            Rich Text Editor (TipTap・四主題)
+            Rich Text Editor (TipTap・五主題)
           </h2>
           <span class="text-xs text-slate-400">工具列跟隨主題與色彩角色；圖片上傳可插拔（此處用 demo handler 模擬）</span>
           <CamelotRichTextEditor
@@ -113,7 +113,7 @@
         <!-- Image Dropzone Card -->
         <div :class="cardClass">
           <h2 :class="cardTitleClass">
-            Image Dropzone (拖曳/選擇・四主題)
+            Image Dropzone (拖曳/選擇・五主題)
           </h2>
           <span class="text-xs text-slate-400">grid 多格：圖片佔格、新增格在右側，達 {{ dropzoneMax }} 張後消失（也可拖曳）</span>
           <CamelotImageDropzone
@@ -1238,6 +1238,89 @@
               disabled
               :color="currentColorRole"
             />
+          </div>
+        </div>
+
+        <!-- Accordion / Avatar / ChatBubble Card -->
+        <div :class="cardClass">
+          <h2 :class="cardTitleClass">
+            Accordion / Avatar / ChatBubble
+          </h2>
+          <CamelotAccordion
+            v-model="accordionExpanded"
+            :items="accordionItems"
+            :color="currentColorRole"
+          />
+          <div class="mt-4 flex flex-wrap items-center gap-4">
+            <CamelotAvatarGroup
+              :items="avatarItems"
+              :max="4"
+              :color="currentColorRole"
+            />
+            <CamelotAvatar
+              name="Camelot"
+              size="lg"
+              :color="currentColorRole"
+            />
+            <CamelotAvatar
+              name="王"
+              size="sm"
+              color="tertiary"
+            />
+          </div>
+          <div class="mt-4 flex flex-col gap-2">
+            <CamelotChatBubble text="小鼓聽起來有點悶，要不要換一支麥？" />
+            <CamelotChatBubble
+              side="end"
+              text="好，換 57 試試看"
+              :color="currentColorRole"
+            >
+              <template #meta>
+                14:02
+              </template>
+            </CamelotChatBubble>
+          </div>
+        </div>
+
+        <!-- Waveform / LevelMeter / Button loading Card -->
+        <div :class="cardClass">
+          <h2 :class="cardTitleClass">
+            Waveform / LevelMeter / Button loading
+          </h2>
+          <CamelotWaveform
+            v-model:progress="waveProgress"
+            :peaks="wavePeaks"
+            :color="currentColorRole"
+          />
+          <div class="mt-3 flex flex-col gap-1.5">
+            <CamelotLevelMeter
+              label="L"
+              :level="waveLevel"
+              :color="currentColorRole"
+            />
+            <CamelotLevelMeter
+              label="R"
+              :level="waveLevel * 0.8"
+              :color="currentColorRole"
+            />
+          </div>
+          <p class="mt-2 text-xs text-slate-500">
+            progress: {{ waveProgress.toFixed(2) }}（點擊、拖曳或方向鍵跳轉）
+          </p>
+          <div class="mt-4 flex flex-wrap gap-3">
+            <CamelotButton
+              :loading="isButtonLoading"
+              :color="currentColorRole"
+              @click="runButtonLoading"
+            >
+              送出（loading 1.5 秒）
+            </CamelotButton>
+            <CamelotButton
+              loading
+              :color="currentColorRole"
+            >
+              處理中
+            </CamelotButton>
           </div>
         </div>
 
@@ -2776,6 +2859,65 @@ function onDropzoneSelect(files: File[]) {
   console.log('dropzone selected', files.map(f => f.name))
 }
 
+// Accordion / Avatar / Waveform / Button loading 展示
+const accordionExpanded = ref<CamelotAccordionValue[]>(['early'])
+const accordionItems: CamelotAccordionItem[] = [
+  {
+    value: 'early',
+    title: '可以提早進場架設嗎？',
+    content: '可以，預約時段前 15 分鐘開放進場，不另外計費。',
+  },
+  {
+    value: 'files',
+    title: '錄好的檔案怎麼拿？',
+    content: '結束後會給一條下載連結，分軌 WAV 保留 14 天。',
+  },
+  {
+    value: 'cancel',
+    title: '臨時取消會收費嗎？',
+    content: '24 小時前取消全額退款，之後收一小時場地費。',
+    disabled: true,
+  },
+]
+const avatarItems: CamelotAvatarItem[] = [
+  { name: '林予安' },
+  {
+    name: '陳柏翰',
+    color: 'secondary',
+  },
+  {
+    name: 'Wu',
+    color: 'tertiary',
+  },
+  {
+    name: '張家瑋',
+    color: 'info',
+  },
+  {
+    name: '許芷寧',
+    color: 'success',
+  },
+  {
+    name: '黃品睿',
+    color: 'warning',
+  },
+]
+const WAVE_BAR_COUNT = 56
+// 展示用的假波形：幾個不同頻率的正弦疊加，固定可重現
+const wavePeaks = Array.from({ length: WAVE_BAR_COUNT }, (_, index) =>
+  Math.min(1, 0.2 + Math.abs(Math.sin(index * 0.55) * 0.4 + Math.sin(index * 1.9 + 1) * 0.25 + Math.sin(index * 0.13) * 0.15)),
+)
+const waveProgress = ref(0.35)
+const waveLevel = computed(() => wavePeaks[Math.min(WAVE_BAR_COUNT - 1, Math.floor(waveProgress.value * WAVE_BAR_COUNT))] ?? 0)
+const BUTTON_LOADING_DEMO_MS = 1500
+const isButtonLoading = ref(false)
+const runButtonLoading = () => {
+  isButtonLoading.value = true
+  setTimeout(() => {
+    isButtonLoading.value = false
+  }, BUTTON_LOADING_DEMO_MS)
+}
+
 // 控制面板選項（以 Camelot 元件渲染，跟著主題切換）
 const themeOptions = [
   {
@@ -2793,6 +2935,10 @@ const themeOptions = [
   {
     value: 'aqua',
     label: 'Aqua',
+  },
+  {
+    value: 'tactile',
+    label: 'Tactile',
   },
 ] as const
 const colorModeOptions = [
@@ -3139,6 +3285,10 @@ const cascadeMenuItems = ref<CamelotCascadeMenuItem[]>([
           {
             label: 'Aqua',
             value: 'appearance-theme-aqua',
+          },
+          {
+            label: 'Tactile',
+            value: 'appearance-theme-tactile',
           },
         ],
       },

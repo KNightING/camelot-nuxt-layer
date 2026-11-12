@@ -32,7 +32,7 @@ const useInfinitePage: (options: {
 
 無。
 
-來源：1. [useInfinitePage.ts][]　2. [useScrollOnBottom.ts][]
+來源：1. [useInfinitePage.ts](../../../../app/composables/useInfinitePage.ts)　2. [useScrollOnBottom.ts](../../../../app/composables/useScrollOnBottom.ts)
 
 ## 用法
 
@@ -59,23 +59,6 @@ useInfinitePage({
 ## 相關頁面
 
 - [useScrollOnBottom](./useScrollOnBottom.md)：到底偵測。
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231702-fix-wiki-review-code-defects](../../../archive/2609231702-fix-wiki-review-code-defects.md) | 修正程式碼缺陷後更新為修正後的行為 | [#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47) | — |
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useInfinitePage.ts | [app/composables/useInfinitePage.ts](../../../../app/composables/useInfinitePage.ts) |
-| useScrollOnBottom.ts | [app/composables/useScrollOnBottom.ts](../../../../app/composables/useScrollOnBottom.ts) |
-
-[useInfinitePage.ts]: #references
-[useScrollOnBottom.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

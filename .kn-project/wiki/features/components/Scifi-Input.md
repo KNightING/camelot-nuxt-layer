@@ -15,7 +15,7 @@ Sci-Fi 主題的輸入框實作：以 HUD 外框包住原生輸入欄，依聚�
 
 內容區最低高度 40px，輸入欄本身不設字級，沿用外層字級。
 
-來源：1. [Scifi/Input.vue][]　2. [Scifi/Frame.vue][]
+來源：1. [Scifi/Input.vue](../../../../app/components/Camelot/Scifi/Input.vue)　2. [Scifi/Frame.vue](../../../../app/components/Camelot/Scifi/Frame.vue)
 
 ## Props
 | Prop | 型別 | 預設 | 說明 |
@@ -43,22 +43,6 @@ Sci-Fi 主題的輸入框實作：以 HUD 外框包住原生輸入欄，依聚�
 ## 相關頁面
 
 - [Scifi Frame](./Scifi-Frame.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| Scifi/Input.vue | [app/components/Camelot/Scifi/Input.vue](../../../../app/components/Camelot/Scifi/Input.vue) |
-| Scifi/Frame.vue | [app/components/Camelot/Scifi/Frame.vue](../../../../app/components/Camelot/Scifi/Frame.vue) |
-
-[Scifi/Input.vue]: #references
-[Scifi/Frame.vue]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

@@ -21,7 +21,7 @@
 2. 進度弧從缺口的一端順時針畫起，長度等於目前階段除以總階段，夾在 0 到 1；總階段小於等於 0 時為 0。
 3. 階段變化時以彈性曲線過渡；使用者偏好減少動態時關閉過渡。
 
-來源：1. [ProgressStage.vue][]
+來源：1. [ProgressStage.vue](../../../../app/components/Camelot/ProgressStage.vue)
 
 ### 數字排版
 
@@ -33,7 +33,7 @@
 
 目前階段的位置與字級是固定像素，不隨 `size` 縮放；改變尺寸時需自行確認排版。
 
-來源：1. [ProgressStage.vue][]
+來源：1. [ProgressStage.vue](../../../../app/components/Camelot/ProgressStage.vue)
 
 ### 各主題外觀
 
@@ -43,21 +43,7 @@
 | scifi | 18% 角色色 | 角色色加外光暈 |
 | cupertino、material | 淡外框線色 | 角色色 |
 
-來源：1. [ProgressStage.vue][]
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| ProgressStage.vue | [app/components/Camelot/ProgressStage.vue](../../../../app/components/Camelot/ProgressStage.vue) |
-
-[ProgressStage.vue]: #references
+來源：1. [ProgressStage.vue](../../../../app/components/Camelot/ProgressStage.vue)
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

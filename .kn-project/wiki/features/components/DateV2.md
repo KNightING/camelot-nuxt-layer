@@ -58,7 +58,7 @@ DateV2（匯入名稱 `CamelotDateV2`）是單一日期選擇器：點觸發欄�
 
 觸發欄位是 label 元素且阻止預設點擊行為：否則點到圖示時，瀏覽器會再對內層輸入框補發一次點擊，把剛開的月曆又關掉。
 
-來源：1. [DateV2.vue][]　2. [useCamelotPickerTheme.ts][]　3. [FieldFrame.vue][]
+來源：1. [DateV2.vue](../../../../app/components/Camelot/DateV2.vue)　2. [useCamelotPickerTheme.ts](../../../../app/composables/useCamelotPickerTheme.ts)　3. [FieldFrame.vue](../../../../app/components/Camelot/Internal/FieldFrame.vue)
 
 ### 顯示格式
 
@@ -72,7 +72,7 @@ DateV2（匯入名稱 `CamelotDateV2`）是單一日期選擇器：點觸發欄�
 
 時間精細度為 hour 時省略分與秒，為 minute 時省略秒。
 
-來源：1. [DateV2.vue][]
+來源：1. [DateV2.vue](../../../../app/components/Camelot/DateV2.vue)
 
 ### 選取流程
 
@@ -81,7 +81,7 @@ DateV2（匯入名稱 `CamelotDateV2`）是單一日期選擇器：點觸發欄�
 3. 含時間：月曆下方出現時間列與「確認」按鈕，選日期與調時間都即時寫回 v-model。
 4. 含時間時月曆保持開啟，按「確認」或點外部才關閉。
 
-來源：1. [DateV2.vue][]
+來源：1. [DateV2.vue](../../../../app/components/Camelot/DateV2.vue)
 
 ### 停用日
 
@@ -96,7 +96,7 @@ DateV2（匯入名稱 `CamelotDateV2`）是單一日期選擇器：點觸發欄�
 
 停用星期或不在允許清單時，保留使用端的其他屬性，只把該日設為停用。
 
-來源：1. [DateV2.vue][]
+來源：1. [DateV2.vue](../../../../app/components/Camelot/DateV2.vue)
 
 ### 手機對話框
 
@@ -108,7 +108,7 @@ showType 為 auto 時，手機斷點改用置中的 [BaseDialogV2](./BaseDialogV
 
 浮層的落影畫在外層容器上並對齊面板圓角，避免被內層的裁切容器切出方角。
 
-來源：1. [DateV2.vue][]
+來源：1. [DateV2.vue](../../../../app/components/Camelot/DateV2.vue)
 
 ## 相關頁面
 
@@ -116,25 +116,6 @@ showType 為 auto 時，手機斷點改用置中的 [BaseDialogV2](./BaseDialogV
 - [FieldFrame](./Internal-FieldFrame.md)
 - [FieldLabel](./FieldLabel.md)
 - [月曆與日期選擇](../calendar.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231702-fix-wiki-review-code-defects](../../../archive/2609231702-fix-wiki-review-code-defects.md) | 修正程式碼缺陷後更新為修正後的行為 | [#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47) | — |
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| DateV2.vue | [app/components/Camelot/DateV2.vue](../../../../app/components/Camelot/DateV2.vue) |
-| useCamelotPickerTheme.ts | [app/composables/useCamelotPickerTheme.ts](../../../../app/composables/useCamelotPickerTheme.ts) |
-| FieldFrame.vue | [app/components/Camelot/Internal/FieldFrame.vue](../../../../app/components/Camelot/Internal/FieldFrame.vue) |
-
-[DateV2.vue]: #references
-[useCamelotPickerTheme.ts]: #references
-[FieldFrame.vue]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

@@ -29,21 +29,7 @@ Cupertino Radio 是 Cupertino 主題（iOS 風格）的單選圓鈕外觀實作�
 | 已選取再點 | 預設不變；開啟可取消選取時改回未選取 |
 | 停用 | 半透明並灰階，點擊無效 |
 
-來源：1. [Cupertino/Radio.vue][]
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| Cupertino/Radio.vue | [app/components/Camelot/Cupertino/Radio.vue](../../../../app/components/Camelot/Cupertino/Radio.vue) |
-
-[Cupertino/Radio.vue]: #references
+來源：1. [Cupertino/Radio.vue](../../../../app/components/Camelot/Cupertino/Radio.vue)
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

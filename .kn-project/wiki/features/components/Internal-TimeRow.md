@@ -32,7 +32,7 @@ TimeRow（匯入名稱 `CamelotInternalTimeRow`）是時間輸入列，屬內部
 | minute | 時、分 |
 | second | 時、分、秒 |
 
-來源：1. [TimeRow.vue][]
+來源：1. [TimeRow.vue](../../../../app/components/Camelot/Internal/TimeRow.vue)
 
 ### 12 小時制
 
@@ -43,21 +43,7 @@ TimeRow（匯入名稱 `CamelotInternalTimeRow`）是時間輸入列，屬內部
 | 改時 | 依目前上午或下午換算回 24 小時制寫回 |
 | AM、PM 鈕 | 小時加 12 後取 24 的餘數，切換上下午 |
 
-來源：1. [TimeRow.vue][]
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| TimeRow.vue | [app/components/Camelot/Internal/TimeRow.vue](../../../../app/components/Camelot/Internal/TimeRow.vue) |
-
-[TimeRow.vue]: #references
+來源：1. [TimeRow.vue](../../../../app/components/Camelot/Internal/TimeRow.vue)
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

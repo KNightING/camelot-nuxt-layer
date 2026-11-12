@@ -33,7 +33,7 @@ const useValueValidation: (
 | --- | --- | --- |
 | 回傳值 | `ComputedRef<boolean>` | 值是否通過驗證 |
 
-來源：1. [useValueValidation.ts][]
+來源：1. [useValueValidation.ts](../../../../app/composables/useValueValidation.ts)
 
 ## 用法
 
@@ -74,21 +74,6 @@ email 的帳號可含英數、底線、點、連字號與加號，網域各段�
 3. 乘積為兩位數時，十位數與個位數相加。
 4. 全部加總可被 5 整除即合法。
 5. 第 7 碼為 7 時，總和加 1 可被 5 整除也視為合法。
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231702-fix-wiki-review-code-defects](../../../archive/2609231702-fix-wiki-review-code-defects.md) | 修正程式碼缺陷後更新為修正後的行為 | [#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47) | — |
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useValueValidation.ts | [app/composables/useValueValidation.ts](../../../../app/composables/useValueValidation.ts) |
-
-[useValueValidation.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

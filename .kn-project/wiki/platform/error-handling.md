@@ -57,7 +57,7 @@ Camelot 的全域錯誤機制由 `useCamelotError` 的佇列與 `CamelotErrorDia
 
 註冊表是模組層的 Map，同名視為覆蓋，註冊函式回傳註銷函式。
 
-來源：1. [useCamelotError.ts][]　2. [ErrorDialog.vue][]
+來源：1. [useCamelotError.ts](../../../app/composables/useCamelotError.ts)　2. [ErrorDialog.vue](../../../app/components/Camelot/ErrorDialog.vue)
 
 ### 消費端註冊
 
@@ -106,7 +106,7 @@ registerErrorResolver<ApiErrorPayload>({
 })
 ```
 
-來源：1. [useCamelotError.ts][]
+來源：1. [useCamelotError.ts](../../../app/composables/useCamelotError.ts)
 
 ### 呼叫端控制
 
@@ -124,7 +124,7 @@ useCamelotError().watch(error, { onConfirm: () => router.back() })
 | 動作欄位 `positive`、`neutral`、`negative` | 呼叫端覆寫錯誤自帶的 | 呼叫端比轉換器更貼近當下情境 |
 | `onConfirm` | 串接：呼叫端的先跑，錯誤自帶的後跑 | 攔截器掛的多為導頁這類終結動作，排最後才不會跳過呼叫端邏輯 |
 
-來源：1. [useCamelotError.ts][]
+來源：1. [useCamelotError.ts](../../../app/composables/useCamelotError.ts)
 
 ### 多動作按鈕與重試
 
@@ -151,7 +151,7 @@ const retry = async () => {
 
 playground 首頁的 Global Error Queue 卡片有可操作的示範。
 
-來源：1. [useCamelotError.ts][]　2. [index.vue][]
+來源：1. [useCamelotError.ts](../../../app/composables/useCamelotError.ts)　2. [index.vue](../../../.playground/app/pages/index.vue)
 
 ## 與其他機制的分工
 
@@ -169,24 +169,6 @@ playground 首頁的 Global Error Queue 卡片有可操作的示範。
 - [ErrorDialog](../features/components/ErrorDialog.md)
 - [ConfirmDialog](../features/components/ConfirmDialog.md)
 - [API 用戶端](./api-client.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useCamelotError.ts | [app/composables/useCamelotError.ts](../../../app/composables/useCamelotError.ts) |
-| ErrorDialog.vue | [app/components/Camelot/ErrorDialog.vue](../../../app/components/Camelot/ErrorDialog.vue) |
-| index.vue | [.playground/app/pages/index.vue](../../../.playground/app/pages/index.vue) |
-
-[useCamelotError.ts]: #references
-[ErrorDialog.vue]: #references
-[index.vue]: #references
 
 ---
 [⚙️ Env](../environment.md) | [🏠 Wiki](../index.md)

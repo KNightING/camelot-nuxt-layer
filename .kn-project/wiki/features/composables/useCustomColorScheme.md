@@ -17,7 +17,7 @@
 
 全域目標是共用的 html，單一呼叫端的唯讀意圖不足以代表其餘呼叫端，所以 editable 只對區域目標有效。全域 watcher 掛在獨立的 effect scope，不隨第一個呼叫的元件卸載而停止。
 
-來源：1. [useCustomColorScheme.ts][]
+來源：1. [useCustomColorScheme.ts](../../../../app/composables/useCustomColorScheme.ts)
 
 ### 深淺色判定
 
@@ -27,7 +27,7 @@
 
 變數命名與寫入方式見[色彩方案變數](./useColorSchemeCssVars.md)。
 
-來源：1. [useCustomColorScheme.ts][]　2. [useCamelotColorMode.ts][]
+來源：1. [useCustomColorScheme.ts](../../../../app/composables/useCustomColorScheme.ts)　2. [useCamelotColorMode.ts](../../../../app/composables/useCamelotColorMode.ts)
 
 ### 規則
 
@@ -38,7 +38,7 @@
 | 伺服器端 | 三個方案都指向全域深色方案，不寫入任何 DOM |
 | 色鍵清單 | 匯出的 `CamelotColorSchemeKeys` 由 Camelot 額外色的鍵推導 |
 
-來源：1. [useCustomColorScheme.ts][]
+來源：1. [useCustomColorScheme.ts](../../../../app/composables/useCustomColorScheme.ts)
 
 ## 用法
 
@@ -102,22 +102,6 @@ type CustomColorScheme<T = any> = Material3ColorSchemePartial
 - [useMaterial3ColorScheme](./useMaterial3ColorScheme.md)
 - [CustomColorSchemeProvider](../components/CustomColorSchemeProvider.md)
 - [色彩主題系統](../../platform/color-scheme.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useCustomColorScheme.ts | [app/composables/useCustomColorScheme.ts](../../../../app/composables/useCustomColorScheme.ts) |
-| useCamelotColorMode.ts | [app/composables/useCamelotColorMode.ts](../../../../app/composables/useCamelotColorMode.ts) |
-
-[useCustomColorScheme.ts]: #references
-[useCamelotColorMode.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

@@ -30,13 +30,13 @@ FileChip（匯入名稱 `CamelotFileChip`）是單一檔案的附件晶片：左
 2. 類型標籤與圖示底色來自共用的檔案分類規則，大小以同一套規則格式化。
 3. 檔名過長時截斷，最寬 10rem。
 
-來源：1. [FileChip.vue][]　2. [useCamelotFileDrop.ts][]
+來源：1. [FileChip.vue](../../../../app/components/Camelot/FileChip.vue)　2. [useCamelotFileDrop.ts](../../../../app/composables/useCamelotFileDrop.ts)
 
 ### 縮圖生命週期
 
 外部傳入 url 時直接使用。沒有傳入且檔案是圖片時，元件自行產生 objectURL，並在 file 或 url 變動、以及卸載時回收，避免記憶體洩漏。
 
-來源：1. [FileChip.vue][]
+來源：1. [FileChip.vue](../../../../app/components/Camelot/FileChip.vue)
 
 ### 主題圓角
 
@@ -46,27 +46,11 @@ FileChip（匯入名稱 `CamelotFileChip`）是單一檔案的附件晶片：左
 | Sci-Fi | 直角 | 直角 |
 | 其他 | 0.75rem | 0.5rem |
 
-來源：1. [FileChip.vue][]
+來源：1. [FileChip.vue](../../../../app/components/Camelot/FileChip.vue)
 
 ## 相關頁面
 
 - [檔案拖放](../file-drop.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| FileChip.vue | [app/components/Camelot/FileChip.vue](../../../../app/components/Camelot/FileChip.vue) |
-| useCamelotFileDrop.ts | [app/composables/useCamelotFileDrop.ts](../../../../app/composables/useCamelotFileDrop.ts) |
-
-[FileChip.vue]: #references
-[useCamelotFileDrop.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

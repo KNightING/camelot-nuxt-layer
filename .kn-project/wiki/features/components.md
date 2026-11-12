@@ -10,7 +10,7 @@ Camelot Nuxt Layer 全部元件的分類索引，依表單、版面資料導覽�
 2. 子目錄會併入名稱：內部元件以 CamelotInternal 開頭，主題變體以 CamelotAqua、CamelotMaterial 等開頭。
 3. 公開元件依目前主題選用對應的主題變體，使用端只需要寫公開元件。
 
-來源：1. [components/Camelot][]
+來源：1. [components/Camelot](../../../app/components/Camelot)
 
 ## 元件清單
 
@@ -18,7 +18,7 @@ Camelot Nuxt Layer 全部元件的分類索引，依表單、版面資料導覽�
 
 | 元件 | 說明 | API |
 | :--- | :--- | :--- |
-| `Button` | 按鈕（四風格、color 角色、is-container） | [詳情](./components/Button.md) |
+| `Button` | 按鈕（五風格、color 角色、is-container、loading） | [詳情](./components/Button.md) |
 | `Input` | 輸入框 | [詳情](./components/Input.md) |
 | `Textarea` | 多行輸入（autosize、字數） | [詳情](./components/Textarea.md) |
 | `Checkbox` | 勾選框（indeterminate） | [詳情](./components/Checkbox.md) |
@@ -52,6 +52,8 @@ Camelot Nuxt Layer 全部元件的分類索引，依表單、版面資料導覽�
 | `Timeline` | 時間軸 | [詳情](./components/Timeline.md) |
 | `VirtualScroll` | 虛擬滾動 | [詳情](./components/VirtualScroll.md) |
 | `Expanded` | 展開/收合區塊 | [詳情](./components/Expanded.md) |
+| `Accordion` | 可收合項目群組（單開或多開） | [詳情](./components/Accordion.md) |
+| `AccordionItem` | Accordion 的單一項目 | [詳情](./components/AccordionItem.md) |
 | `Drawer` | 側邊抽屜 | [詳情](./components/Drawer.md) |
 
 ### 覆蓋層、捲軸
@@ -100,6 +102,16 @@ Camelot Nuxt Layer 全部元件的分類索引，依表單、版面資料導覽�
 | `Tag` | 標籤 | [詳情](./components/Tag.md) |
 | `TagGroup` | 標籤群組 | [詳情](./components/TagGroup.md) |
 
+### 人物、對話、音訊
+
+| 元件 | 說明 | API |
+| :--- | :--- | :--- |
+| `Avatar` | 頭像（圖片或姓名縮寫） | [詳情](./components/Avatar.md) |
+| `AvatarGroup` | 頭像重疊堆疊（超出以 +N 表示） | [詳情](./components/AvatarGroup.md) |
+| `ChatBubble` | 訊息對話泡泡 | [詳情](./components/ChatBubble.md) |
+| `Waveform` | 音訊波形（播放進度、跳轉） | [詳情](./components/Waveform.md) |
+| `LevelMeter` | 分段音量表 | [詳情](./components/LevelMeter.md) |
+
 ### 效果、工具
 
 | 元件 | 說明 | API |
@@ -137,6 +149,7 @@ Camelot Nuxt Layer 全部元件的分類索引，依表單、版面資料導覽�
 | 主題 | 元件 |
 | :--- | :--- |
 | **Aqua** | [Button](./components/Aqua-Button.md)・[Input](./components/Aqua-Input.md)・[Switch](./components/Aqua-Switch.md)・[Checkbox](./components/Aqua-Checkbox.md)・[Radio](./components/Aqua-Radio.md) |
+| **Tactile** | [Button](./components/Tactile-Button.md)・[Input](./components/Tactile-Input.md)・[Switch](./components/Tactile-Switch.md)・[Checkbox](./components/Tactile-Checkbox.md)・[Radio](./components/Tactile-Radio.md) |
 | **Material** | [Button](./components/Material-Button.md)・[Input](./components/Material-Input.md)・[Switch](./components/Material-Switch.md)・[Checkbox](./components/Material-Checkbox.md)・[Radio](./components/Material-Radio.md) |
 | **Cupertino** | [Button](./components/Cupertino-Button.md)・[Input](./components/Cupertino-Input.md)・[Switch](./components/Cupertino-Switch.md)・[Checkbox](./components/Cupertino-Checkbox.md)・[Radio](./components/Cupertino-Radio.md) |
 | **Scifi** | [Button](./components/Scifi-Button.md)・[Input](./components/Scifi-Input.md)・[Switch](./components/Scifi-Switch.md)・[Checkbox](./components/Scifi-Checkbox.md)・[Radio](./components/Scifi-Radio.md)・[Frame](./components/Scifi-Frame.md)・[Reticle](./components/Scifi-Reticle.md) |
@@ -145,21 +158,6 @@ Camelot Nuxt Layer 全部元件的分類索引，依表單、版面資料導覽�
 
 - [Composable 清單](./composables.md)
 - [主題系統](../platform/theme-system.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231801-playground-reveal-slide-demos](../../archive/2609231801-playground-reveal-slide-demos.md) | 移除 SlideTransitionGroup（由 Carousel 取代） | [#49](https://github.com/KNightING/camelot-nuxt-layer/issues/49) | — |
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| components/Camelot | [app/components/Camelot](../../../app/components/Camelot) |
-
-[components/Camelot]: #references
 
 ---
 [⚙️ Env](../environment.md) | [🏠 Wiki](../index.md)

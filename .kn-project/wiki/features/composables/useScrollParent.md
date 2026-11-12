@@ -24,7 +24,7 @@ function useScrollParent(target?: MaybeElementRef): ComputedRef<HTMLElement | nu
 | --- | --- | --- |
 | 回傳值 | `ComputedRef<HTMLElement \| null>` | 找到的捲動容器；找不到或目標為空時為 `null` |
 
-來源：1. [useScrollParent.ts][]
+來源：1. [useScrollParent.ts](../../../../app/composables/useScrollParent.ts)
 
 ## 用法
 
@@ -41,20 +41,6 @@ const scrollParent = useScrollParent(el)
 | 起點 | 包含目標元素自己；目標本身可捲動時直接回傳它 |
 | 方向 | 只判斷垂直方向 |
 | 重算時機 | 目標元素改變時；內容高度變化不會觸發 |
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useScrollParent.ts | [app/composables/useScrollParent.ts](../../../../app/composables/useScrollParent.ts) |
-
-[useScrollParent.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

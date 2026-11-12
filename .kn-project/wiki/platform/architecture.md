@@ -18,7 +18,7 @@ Camelot Nuxt Layer（套件名稱 `camelot-nuxt3-layer`）是以 Nuxt Layer 形�
 | 多語系 | @nuxtjs/i18n；語系全部由消費端註冊，細節見 [i18n 語系系統](./i18n-locales.md) |
 | 套件管理 | pnpm |
 
-來源：1. [package.json][]　2. [nuxt.config.ts][]
+來源：1. [package.json](../../../package.json)　2. [nuxt.config.ts](../../../nuxt.config.ts)
 
 ### Layer 組成
 
@@ -90,7 +90,7 @@ UI 元件依用途分成五群；共用日曆核心供各日期與時間選擇�
 | 共用日曆核心 | 內部 Calendar |
 | 版面資料導覽 | Tree、Table、Menu、OverlayScrollbar |
 
-主題提供四種風格與共用工具，核心 composable 則負責 API、路由與色彩。
+主題提供五種風格與共用工具，核心 composable 則負責 API、路由與色彩。
 
 ```json diagram id=圖3
 {
@@ -100,7 +100,7 @@ UI 元件依用途分成五群；共用日曆核心供各日期與時間選擇�
   "desc": "Tailwind 主題與 Composables 各自提供的核心能力",
   "nodes": [
     {"id": "H", "text": "Tailwind 主題", "key": true},
-    {"id": "H1", "text": "四風格主題"},
+    {"id": "H1", "text": "五風格主題"},
     {"id": "H2", "text": "Aqua 共用工具"},
     {"id": "D", "text": "Composables", "key": true},
     {"id": "D1", "text": "API 封裝"},
@@ -121,7 +121,7 @@ UI 元件依用途分成五群；共用日曆核心供各日期與時間選擇�
 
 | 節點 | 說明 |
 | :--- | :--- |
-| 四風格主題 | material、cupertino、scifi、aqua，預設 aqua |
+| 五風格主題 | material、cupertino、scifi、aqua、tactile，預設 aqua |
 | Aqua 共用工具 | 玻璃面板、填滿態、軌道等 Tailwind 工具 |
 | API 封裝 | [useBaseApi](../features/composables/useBaseApi.md) |
 | 路由管理 | [useCamelotRouter](../features/composables/useCamelotRouter.md) |
@@ -129,7 +129,7 @@ UI 元件依用途分成五群；共用日曆核心供各日期與時間選擇�
 
 元件以 Nuxt 自動匯入，名稱為 Camelot 加上元件名。主題子元件（Aqua、Material、Cupertino、Scifi）與內部元件是實作細節，由公開元件依主題自動選用。主題機制見 [主題系統](./theme-system.md)。
 
-來源：1. [nuxt.config.ts][]
+來源：1. [nuxt.config.ts](../../../nuxt.config.ts)
 
 ### Nuxt 模組
 
@@ -142,7 +142,7 @@ Layer 自帶的模組放在模組目錄，由 Nuxt 自動載入；開關讀 runt
 | buildHook | 🟢 | 建置期 hook |
 | echartModule | 🟢 | 把 ECharts 相關套件加入 transpile |
 
-來源：1. [tappay.ts][]　2. [googleFont.ts][]　3. [buildHook.ts][]　4. [echartModule.ts][]
+來源：1. [tappay.ts](../../../modules/tappay.ts)　2. [googleFont.ts](../../../modules/googleFont.ts)　3. [buildHook.ts](../../../modules/buildHook.ts)　4. [echartModule.ts](../../../modules/echartModule.ts)
 
 ### 伺服器功能
 
@@ -159,7 +159,7 @@ GET /api/version
 GET /api/health
 ```
 
-來源：1. [securityPlugin.ts][]　2. [version/index.get.ts][]　3. [health/index.get.ts][]
+來源：1. [securityPlugin.ts](../../../server/plugins/securityPlugin.ts)　2. [version/index.get.ts](../../../server/api/version/index.get.ts)　3. [health/index.get.ts](../../../server/api/health/index.get.ts)
 
 ### 清單矩陣
 
@@ -169,36 +169,6 @@ GET /api/health
 | :--- | :--- |
 | [元件清單矩陣](../features/components.md) | 全部元件，依表單、版面、覆蓋層、回饋、媒體、主題變體、內部分組 |
 | [Composable 清單矩陣](../features/composables.md) | 全部 composable，依主題、元件相關、API、驗證、儲存、路由、DOM、工具分組 |
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../archive/2609231616-wiki-lint-migration.md) | 建立 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| package.json | [package.json](../../../package.json) |
-| nuxt.config.ts | [nuxt.config.ts](../../../nuxt.config.ts) |
-| tappay.ts | [modules/tappay.ts](../../../modules/tappay.ts) |
-| googleFont.ts | [modules/googleFont.ts](../../../modules/googleFont.ts) |
-| buildHook.ts | [modules/buildHook.ts](../../../modules/buildHook.ts) |
-| echartModule.ts | [modules/echartModule.ts](../../../modules/echartModule.ts) |
-| securityPlugin.ts | [server/plugins/securityPlugin.ts](../../../server/plugins/securityPlugin.ts) |
-| version/index.get.ts | [server/api/version/index.get.ts](../../../server/api/version/index.get.ts) |
-| health/index.get.ts | [server/api/health/index.get.ts](../../../server/api/health/index.get.ts) |
-
-[package.json]: #references
-[nuxt.config.ts]: #references
-[tappay.ts]: #references
-[googleFont.ts]: #references
-[buildHook.ts]: #references
-[echartModule.ts]: #references
-[securityPlugin.ts]: #references
-[version/index.get.ts]: #references
-[health/index.get.ts]: #references
 
 ---
 [⚙️ Env](../environment.md) | [🏠 Wiki](../index.md)

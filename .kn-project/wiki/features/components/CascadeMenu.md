@@ -48,7 +48,7 @@ CascadeMenu 是浮層飛出式選單，子層往側邊展開；行內手風琴�
 
 兄弟項目切換時，子面板以展開項的值作為 key 重建，舊面板不會殘留，也不會在淡出時飛到角落。
 
-來源：1. [CascadeMenuPanel.vue][]
+來源：1. [CascadeMenuPanel.vue](../../../../app/components/Camelot/Internal/CascadeMenuPanel.vue)
 
 ### 定位
 
@@ -65,7 +65,7 @@ CascadeMenu 是浮層飛出式選單，子層往側邊展開；行內手風琴�
 
 面板與視窗邊緣至少保留 8px。
 
-來源：1. [CascadeMenuPanel.vue][]
+來源：1. [CascadeMenuPanel.vue](../../../../app/components/Camelot/Internal/CascadeMenuPanel.vue)
 
 ### 捲動
 
@@ -73,7 +73,7 @@ CascadeMenu 是浮層飛出式選單，子層往側邊展開；行內手風琴�
 
 捲動容器放在內層，面板本身裁切內容，捲軸貼齊面板內緣且不破壞圓角。
 
-來源：1. [CascadeMenuPanel.vue][]
+來源：1. [CascadeMenuPanel.vue](../../../../app/components/Camelot/Internal/CascadeMenuPanel.vue)
 
 ### 外觀
 
@@ -86,13 +86,13 @@ CascadeMenu 是浮層飛出式選單，子層往側邊展開；行內手風琴�
 
 選中與 hover 樣式和 [SelectV2](./SelectV2.md) 的下拉選項共用同一組主題設定，兩者效果一致。
 
-來源：1. [CascadeMenuPanel.vue][]　2. [useCamelotMenuItemTheme.ts][]
+來源：1. [CascadeMenuPanel.vue](../../../../app/components/Camelot/Internal/CascadeMenuPanel.vue)　2. [useCamelotMenuItemTheme.ts](../../../../app/composables/useCamelotMenuItemTheme.ts)
 
 ### 型別放置
 
 選項資料契約放在 shared 型別目錄。面板之間的上下文型別與注入 key 含 DOM 型別，只能放在 app 端的型別目錄，規則見 [Layer 整合](../../dev/layer-integration.md)。
 
-來源：1. [shared/types/cascadeMenu.ts][]　2. [app/types/cascadeMenu.ts][]
+來源：1. [shared/types/cascadeMenu.ts](../../../../shared/types/cascadeMenu.ts)　2. [app/types/cascadeMenu.ts](../../../../app/types/cascadeMenu.ts)
 
 ### 關閉與共享設定
 
@@ -107,29 +107,7 @@ CascadeMenu 是浮層飛出式選單，子層往側邊展開；行內手風琴�
 | 色彩角色 | 面板傳送出去後 CSS 變數繼承中斷，每個面板各自套用角色色 class 補回 |
 | 傳送目標 | 經 [useCamelotTeleportTarget](../composables/useCamelotTeleportTarget.md) 找最近的對話框，沒有則用 body |
 
-來源：1. [CascadeMenu.vue][]　2. [CascadeMenuPanel.vue][]
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| CascadeMenu.vue | [app/components/Camelot/CascadeMenu.vue](../../../../app/components/Camelot/CascadeMenu.vue) |
-| CascadeMenuPanel.vue | [app/components/Camelot/Internal/CascadeMenuPanel.vue](../../../../app/components/Camelot/Internal/CascadeMenuPanel.vue) |
-| useCamelotMenuItemTheme.ts | [app/composables/useCamelotMenuItemTheme.ts](../../../../app/composables/useCamelotMenuItemTheme.ts) |
-| shared/types/cascadeMenu.ts | [shared/types/cascadeMenu.ts](../../../../shared/types/cascadeMenu.ts) |
-| app/types/cascadeMenu.ts | [app/types/cascadeMenu.ts](../../../../app/types/cascadeMenu.ts) |
-
-[CascadeMenu.vue]: #references
-[CascadeMenuPanel.vue]: #references
-[useCamelotMenuItemTheme.ts]: #references
-[shared/types/cascadeMenu.ts]: #references
-[app/types/cascadeMenu.ts]: #references
+來源：1. [CascadeMenu.vue](../../../../app/components/Camelot/CascadeMenu.vue)　2. [CascadeMenuPanel.vue](../../../../app/components/Camelot/Internal/CascadeMenuPanel.vue)
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

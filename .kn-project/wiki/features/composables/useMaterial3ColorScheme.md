@@ -56,7 +56,7 @@ export type Material3ColorSchemePartial = Partial<Material3ColorScheme>
 | `defaultDarkColorScheme` | `Material3ColorScheme` | 預設深色 M3 色票 |
 | `Material3ColorSchemeKeys` | `(keyof Material3ColorScheme)[]` | 所有 M3 色鍵名 |
 
-來源：1. [useMaterial3ColorScheme.ts][]　2. [useColorSchemeCssVars.ts][]
+來源：1. [useMaterial3ColorScheme.ts](../../../../app/composables/useMaterial3ColorScheme.ts)　2. [useColorSchemeCssVars.ts](../../../../app/composables/useColorSchemeCssVars.ts)
 
 ## 用法
 
@@ -74,7 +74,7 @@ useMaterial3ColorScheme(el, { lightColorScheme: { primary: '#005ac1' } })
 
 Material3Provider 元件在掛載後以自己的容器為目標呼叫它，把 props 的淺深色配置套用到容器內。
 
-來源：1. [Material3Provider.vue][]
+來源：1. [Material3Provider.vue](../../../../app/components/Camelot/Material3Provider.vue)
 
 ## 規則
 
@@ -92,24 +92,6 @@ Material3Provider 元件在掛載後以自己的容器為目標呼叫它，把 p
 
 - [useColorSchemeCssVars](./useColorSchemeCssVars.md)：CSS 變數單向寫入器。
 - [useCamelotColorMode](./useCamelotColorMode.md)：共用色彩模式。
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useMaterial3ColorScheme.ts | [app/composables/useMaterial3ColorScheme.ts](../../../../app/composables/useMaterial3ColorScheme.ts) |
-| useColorSchemeCssVars.ts | [app/composables/useColorSchemeCssVars.ts](../../../../app/composables/useColorSchemeCssVars.ts) |
-| Material3Provider.vue | [app/components/Camelot/Material3Provider.vue](../../../../app/components/Camelot/Material3Provider.vue) |
-
-[useMaterial3ColorScheme.ts]: #references
-[useColorSchemeCssVars.ts]: #references
-[Material3Provider.vue]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

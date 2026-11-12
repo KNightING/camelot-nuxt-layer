@@ -39,7 +39,7 @@ export interface UseCssVarOptions extends ConfigurableWindow {
 | --- | --- | --- |
 | 回傳值 | `Ref<string>` | CSS 變數的響應式 ref；寫入時以 `setProperty` 設到目標元素 |
 
-來源：1. [useElCssVar.ts][]
+來源：1. [useElCssVar.ts](../../../../app/composables/useElCssVar.ts)
 
 ## 用法
 
@@ -61,20 +61,6 @@ console.log(primary.value) // 讀取目前值
 > [!WARNING]
 > 只在 setup 期建立，不要在 watcher 或迴圈內建立實例。在 watcher callback 內建立時不屬於任何 effect scope，永遠不會被回收。
 > 需要一次寫入多個變數（如整組色彩方案）時，改用單向寫入的 [useColorSchemeCssVars](./useColorSchemeCssVars.md)，寫入不需要響應式 ref。
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useElCssVar.ts | [app/composables/useElCssVar.ts](../../../../app/composables/useElCssVar.ts) |
-
-[useElCssVar.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

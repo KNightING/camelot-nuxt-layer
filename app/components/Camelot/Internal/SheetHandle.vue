@@ -24,6 +24,7 @@ const barClass = computed(() => {
       return 'h-1 w-12 bg-primary/30'
     case 'cupertino':
       return 'h-1.5 w-10 bg-slate-400/50'
+    case 'tactile':
     case 'aqua':
       return 'h-1.5 w-10 bg-on-surface/20'
     default:

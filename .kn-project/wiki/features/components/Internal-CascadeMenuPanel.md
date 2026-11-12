@@ -20,7 +20,7 @@ CascadeMenuPanel（匯入名稱 `CamelotInternalCascadeMenuPanel`）是 [Cascade
 
 選項區最大高度取設定值與「視窗高減 16px」的較小者，超過時內部捲動。
 
-來源：1. [CascadeMenuPanel.vue][]　2. [cascadeMenu.ts][]
+來源：1. [CascadeMenuPanel.vue](../../../../app/components/Camelot/Internal/CascadeMenuPanel.vue)　2. [cascadeMenu.ts](../../../../app/types/cascadeMenu.ts)
 
 ### 子選單開合
 
@@ -31,7 +31,7 @@ CascadeMenuPanel（匯入名稱 `CamelotInternalCascadeMenuPanel`）是 [Cascade
 
 停用的列不回應滑入與點擊。
 
-來源：1. [CascadeMenuPanel.vue][]
+來源：1. [CascadeMenuPanel.vue](../../../../app/components/Camelot/Internal/CascadeMenuPanel.vue)
 
 ### 跨層延遲收合
 
@@ -42,7 +42,7 @@ CascadeMenuPanel（匯入名稱 `CamelotInternalCascadeMenuPanel`）是 [Cascade
 3. 移進子面板的情況下，第 2 步緊接在第 1 步之後發生，整條鏈都不會收起。
 4. click 模式下這兩個處理器直接略過。
 
-來源：1. [CascadeMenuPanel.vue][]
+來源：1. [CascadeMenuPanel.vue](../../../../app/components/Camelot/Internal/CascadeMenuPanel.vue)
 
 ### 定位
 
@@ -55,7 +55,7 @@ CascadeMenuPanel（匯入名稱 `CamelotInternalCascadeMenuPanel`）是 [Cascade
 
 層級未指定基礎值時為 popup 層級加上 level，每深一層高一級。
 
-來源：1. [CascadeMenuPanel.vue][]
+來源：1. [CascadeMenuPanel.vue](../../../../app/components/Camelot/Internal/CascadeMenuPanel.vue)
 
 ### 外觀
 
@@ -68,23 +68,7 @@ CascadeMenuPanel（匯入名稱 `CamelotInternalCascadeMenuPanel`）是 [Cascade
 
 列的選中與懸停效果與 SelectV2 的選項共用同一套主題樣式，展開中的父列以選中樣式呈現。
 
-來源：1. [CascadeMenuPanel.vue][]
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| CascadeMenuPanel.vue | [app/components/Camelot/Internal/CascadeMenuPanel.vue](../../../../app/components/Camelot/Internal/CascadeMenuPanel.vue) |
-| cascadeMenu.ts | [app/types/cascadeMenu.ts](../../../../app/types/cascadeMenu.ts) |
-
-[CascadeMenuPanel.vue]: #references
-[cascadeMenu.ts]: #references
+來源：1. [CascadeMenuPanel.vue](../../../../app/components/Camelot/Internal/CascadeMenuPanel.vue)
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

@@ -30,7 +30,7 @@ type ErrorRefType = FetchError | Error | any | null
 | --- | --- | --- | --- |
 | `errors` | `Ref<ErrorRefType> \| Ref<ErrorRefType>[]` | 必填 | 要監聽的錯誤 ref；傳陣列時逐一監聽 |
 
-來源：1. [useErrorRef.ts][]
+來源：1. [useErrorRef.ts](../../../../app/composables/useErrorRef.ts)
 
 ## 用法
 
@@ -51,20 +51,6 @@ watch([fetchAError, fetchBError])
 
 - [useCamelotError](./useCamelotError.md)：多筆錯誤累積並逐一彈窗。
 - [錯誤處理系統](../../platform/error-handling.md)：整體錯誤處理流程。
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useErrorRef.ts | [app/composables/useErrorRef.ts](../../../../app/composables/useErrorRef.ts) |
-
-[useErrorRef.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

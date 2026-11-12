@@ -38,7 +38,7 @@ Layer 整合規範說明消費端以 `extends: ['github:KNightING/camelot-nuxt-l
 
 Layer 自己的依賴宣告對消費端沒有約束力：它不是 peer dependency，也不會被安裝。消費端必須自己重建這份清單。
 
-來源：1. [nuxt.config.ts][]　2. [package.json][]
+來源：1. [nuxt.config.ts](../../../nuxt.config.ts)　2. [package.json](../../../package.json)
 
 ### 必裝依賴清單
 
@@ -56,7 +56,7 @@ Layer 自己的依賴宣告對消費端沒有約束力：它不是 peer dependen
 
 具體版本以 Layer 的依賴宣告為準；README 的安裝章節有可直接複製的片段。
 
-來源：1. [package.json][]　2. [nuxt.config.ts][]　3. [buildHook.ts][]　4. [RichTextEditor.vue][]　5. [DateV2.vue][]　6. [useColorSchemeCssVars.ts][]　7. [Breadcrumb.vue][]　8. [usePiniaClear.ts][]
+來源：1. [package.json](../../../package.json)　2. [nuxt.config.ts](../../../nuxt.config.ts)　3. [buildHook.ts](../../../modules/buildHook.ts)　4. [RichTextEditor.vue](../../../app/components/Camelot/RichTextEditor.vue)　5. [DateV2.vue](../../../app/components/Camelot/DateV2.vue)　6. [useColorSchemeCssVars.ts](../../../app/composables/useColorSchemeCssVars.ts)　7. [Breadcrumb.vue](../../../app/components/Camelot/Breadcrumb.vue)　8. [usePiniaClear.ts](../../../app/composables/usePiniaClear.ts)
 
 ### 失敗模式
 
@@ -72,7 +72,7 @@ Layer 自己的依賴宣告對消費端沒有約束力：它不是 peer dependen
 
 補齊時要照整份清單補，不要只裝報錯的那一個。
 
-來源：1. [nuxt.config.ts][]
+來源：1. [nuxt.config.ts](../../../nuxt.config.ts)
 
 ### @nuxt/kit 為何是硬性中止點
 
@@ -82,7 +82,7 @@ pnpm 的嚴格 node_modules 不提升傳遞依賴，消費端未直接宣告時�
 
 Layer 自身的依賴宣告也沒有列 @nuxt/kit，只由 nuxt 傳遞取得，屬同一類脆弱性。
 
-來源：1. [buildHook.ts][]　2. [echartModule.ts][]　3. [tappay.ts][]　4. [package.json][]
+來源：1. [buildHook.ts](../../../modules/buildHook.ts)　2. [echartModule.ts](../../../modules/echartModule.ts)　3. [tappay.ts](../../../modules/tappay.ts)　4. [package.json](../../../package.json)
 
 ## 型別放置規則
 
@@ -105,7 +105,7 @@ Cannot find name 'HTMLElement'.
 
 app 型別目錄的型別同樣會被自動匯入：Nuxt 設定的 imports.dirs 已涵蓋整個 app 目錄，元件不需手動 import。
 
-來源：1. [shared/types/cascadeMenu.ts][]　2. [app/types/cascadeMenu.ts][]　3. [nuxt.config.ts][]
+來源：1. [shared/types/cascadeMenu.ts](../../../shared/types/cascadeMenu.ts)　2. [app/types/cascadeMenu.ts](../../../app/types/cascadeMenu.ts)　3. [nuxt.config.ts](../../../nuxt.config.ts)
 
 > [!WARNING]
 > 本 repo 的 `pnpm typecheck` 擋不住這一條。本專案的 shared project 經相依套件的 dom reference 指令間接載入了 DOM lib，屬碰巧通過；消費端相依圖不同就會失敗。
@@ -120,48 +120,12 @@ app 型別目錄的型別同樣會被自動匯入：Nuxt 設定的 imports.dirs 
 
 兩者可直接作為 CI 門檻。
 
-來源：1. [package.json][]
+來源：1. [package.json](../../../package.json)
 
 ## 相關頁面
 
 - [i18n 語系系統](../platform/i18n-locales.md)：i18n 註冊分工與已知缺陷
 - [c12 extends 說明](https://github.com/unjs/c12#extending-configuration)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| nuxt.config.ts | [nuxt.config.ts](../../../nuxt.config.ts) |
-| package.json | [package.json](../../../package.json) |
-| buildHook.ts | [modules/buildHook.ts](../../../modules/buildHook.ts) |
-| RichTextEditor.vue | [app/components/Camelot/RichTextEditor.vue](../../../app/components/Camelot/RichTextEditor.vue) |
-| DateV2.vue | [app/components/Camelot/DateV2.vue](../../../app/components/Camelot/DateV2.vue) |
-| useColorSchemeCssVars.ts | [app/composables/useColorSchemeCssVars.ts](../../../app/composables/useColorSchemeCssVars.ts) |
-| Breadcrumb.vue | [app/components/Camelot/Breadcrumb.vue](../../../app/components/Camelot/Breadcrumb.vue) |
-| usePiniaClear.ts | [app/composables/usePiniaClear.ts](../../../app/composables/usePiniaClear.ts) |
-| echartModule.ts | [modules/echartModule.ts](../../../modules/echartModule.ts) |
-| tappay.ts | [modules/tappay.ts](../../../modules/tappay.ts) |
-| shared/types/cascadeMenu.ts | [shared/types/cascadeMenu.ts](../../../shared/types/cascadeMenu.ts) |
-| app/types/cascadeMenu.ts | [app/types/cascadeMenu.ts](../../../app/types/cascadeMenu.ts) |
-
-[nuxt.config.ts]: #references
-[package.json]: #references
-[buildHook.ts]: #references
-[RichTextEditor.vue]: #references
-[DateV2.vue]: #references
-[useColorSchemeCssVars.ts]: #references
-[Breadcrumb.vue]: #references
-[usePiniaClear.ts]: #references
-[echartModule.ts]: #references
-[tappay.ts]: #references
-[shared/types/cascadeMenu.ts]: #references
-[app/types/cascadeMenu.ts]: #references
 
 ---
 [⚙️ Env](../environment.md) | [🏠 Wiki](../index.md)

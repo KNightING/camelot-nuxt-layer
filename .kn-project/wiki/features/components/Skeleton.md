@@ -14,7 +14,7 @@
 
 元件不自動繼承屬性，傳入的 class 等屬性會轉交給實際的骨架容器。
 
-來源：1. [Skeleton.vue][]
+來源：1. [Skeleton.vue](../../../../app/components/Camelot/Skeleton.vue)
 
 ## Props
 | Prop | 型別 | 預設 | 說明 |
@@ -29,20 +29,6 @@
 ## 相關頁面
 
 - [Scifi Frame](./Scifi-Frame.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| Skeleton.vue | [app/components/Camelot/Skeleton.vue](../../../../app/components/Camelot/Skeleton.vue) |
-
-[Skeleton.vue]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

@@ -1,14 +1,12 @@
-<!-- wiki-diagram fe0fb8bccc92dcca44bdebf6e5acd41e4d4dfcc2cabe2f5d982ee8a1962e829f 99371e3096332517a1f430d115ca546b6dd7a5842a6d5c982eb3e4c6947cb3c2 -->
+<!-- wiki-diagram fe0fb8bccc92dcca44bdebf6e5acd41e4d4dfcc2cabe2f5d982ee8a1962e829f 05bbe901d348378e7cf87cd74a6d5d50020d289cf8f22ddc69b774615c51440a -->
 <svg class="dg seq" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 702 314" width="702" height="314" role="img" aria-label="範圍選擇 內部時序">
 <title>範圍選擇 內部時序</title>
 <desc>第一次點擊設定起日，第二次點擊依先後排成起訖；兩端都有值時 DateRangeV2 寫回 v-model</desc>
 <style>
 svg.dg{font-family:-apple-system,"PingFang TC","Noto Sans TC",Segoe UI,Roboto,sans-serif;
-  --ink:#1f2328;--ink2:#444c56;--ink3:#6e7781;--line:#d0d7de;--line2:#8c959f;--surf:#f6f8fa;--surf2:#eaeef2;--surf3:#dfe4ea;
-  --prim:#ddf4ff;--prim-ink:#0550ae;--tert:#8250df;--tert-bg:#fbefff;--tert-ink:#3e1f79;--err:#cf222e;--warn:#9a6700;--warn-bg:#fff8c5;--ok:#1a7f37;--key:#41546B;--mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+  --ink:#1f2328;--ink2:#444c56;--ink3:#6e7781;--line:#d0d7de;--line2:#8c959f;--surf:#f6f8fa;--surf2:#eaeef2;--surf3:#dfe4ea;--prim:#ddf4ff;--prim-ink:#0550ae;--tert:#8250df;--tert-bg:#fbefff;--tert-ink:#3e1f79;--err:#cf222e;--warn:#9a6700;--warn-bg:#fff8c5;--ok:#1a7f37;--key:#41546B;--mono:ui-monospace,SFMono-Regular,Menlo,monospace;
   color:var(--ink2);background:transparent}
-@media (prefers-color-scheme:dark){svg.dg{--ink:#e6edf3;--ink2:#c9d1d9;--ink3:#8b949e;--line:#30363d;--line2:#484f58;--surf:#161b22;--surf2:#1f2630;--surf3:#2a3340;
-  --prim:#0c2d6b;--prim-ink:#79c0ff;--tert:#a371f7;--tert-bg:#2a1a4a;--tert-ink:#d2b8ff;--err:#f85149;--warn:#d29922;--warn-bg:#3a2e00;--ok:#3fb950;--key:#6e8aa8}}
+@media (prefers-color-scheme:dark){svg.dg{--ink:#e6edf3;--ink2:#c9d1d9;--ink3:#8b949e;--line:#30363d;--line2:#484f58;--surf:#161b22;--surf2:#1f2630;--surf3:#2a3340;--prim:#0c2d6b;--prim-ink:#79c0ff;--tert:#a371f7;--tert-bg:#2a1a4a;--tert-ink:#d2b8ff;--err:#f85149;--warn:#d29922;--warn-bg:#3a2e00;--ok:#3fb950;--key:#6e8aa8}}
 .seq .life{stroke:var(--line);stroke-width:1.2;stroke-dasharray:4 4}
 .seq .act{fill:var(--surf);stroke:var(--line);stroke-width:1.2}.seq .act.ext{stroke-dasharray:4 3}.seq .act.db{fill:var(--surf2)}.seq .act.bus{fill:var(--prim);stroke:transparent}.seq .act.auth{fill:var(--warn-bg)}
 .seq .actx{font-size:12.5px;font-weight:700;fill:var(--ink)}
@@ -52,16 +50,28 @@ svg.dg{font-family:-apple-system,"PingFang TC","Noto Sans TC",Segoe UI,Roboto,sa
 <rect class="act in" x="58" y="14" width="64" height="34" rx="6"/><text class="actx" x="90" y="36" text-anchor="middle">User</text>
 <rect class="act in" x="211" y="14" width="99" height="34" rx="6"/><text class="actx" x="260" y="36" text-anchor="middle">DateRangeV2</text>
 <rect class="act in" x="391" y="14" width="78" height="34" rx="6"/><text class="actx" x="430" y="36" text-anchor="middle">Calendar</text>
+<g data-step="1">
 <line class="msg " x1="90" y1="90" x2="424" y2="90" marker-end="url(#seqAr)"/>
 <text class="lab" x="260" y="84" text-anchor="middle">點擊第一個日期</text>
+</g>
+<g data-step="2">
 <path class="msg " d="M430 124 h28 v18 h-28" marker-end="url(#seqAr)"/>
 <text class="lab" x="464" y="136">rangeValue 設為起日、迄日清空</text>
+</g>
+<g data-step="3">
 <line class="msg " x1="90" y1="158" x2="424" y2="158" marker-end="url(#seqAr)"/>
 <text class="lab" x="260" y="152" text-anchor="middle">點擊第二個日期</text>
+</g>
+<g data-step="4">
 <path class="msg " d="M430 192 h28 v18 h-28" marker-end="url(#seqAr)"/>
 <text class="lab" x="464" y="204">較早者為起日、較晚者為迄日</text>
+</g>
+<g data-step="5">
 <line class="msg  reply" x1="430" y1="226" x2="266" y2="226" marker-end="url(#seqAr)"/>
 <text class="lab" x="345" y="220" text-anchor="middle">更新 rangeValue</text>
+</g>
+<g data-step="6">
 <line class="msg  reply" x1="260" y1="260" x2="96" y2="260" marker-end="url(#seqAr)"/>
 <text class="lab" x="175" y="254" text-anchor="middle">寫回 v-model</text>
+</g>
 </svg>

@@ -36,7 +36,7 @@ props 直接採用 Tiptap 的 NodeViewProps，由 NodeView 渲染器傳入，常
 2. 水平置中對齊圖片，並夾在視窗內。
 3. 顯示期間監聽視窗捲動、縮放與圖片尺寸變化，隱藏後解除。
 
-來源：1. [ResizableImageView.vue][]
+來源：1. [ResizableImageView.vue](../../../../app/components/Camelot/Internal/editor/ResizableImageView.vue)
 
 ### 拖拉縮放
 
@@ -46,7 +46,7 @@ props 直接採用 Tiptap 的 NodeViewProps，由 NodeView 渲染器傳入，常
 2. 拖曳中只改畫面上的寬度。
 3. 放開時把最終寬度寫回節點的 width 屬性。
 
-來源：1. [ResizableImageView.vue][]
+來源：1. [ResizableImageView.vue](../../../../app/components/Camelot/Internal/editor/ResizableImageView.vue)
 
 ### 圖片說明
 
@@ -55,29 +55,13 @@ props 直接採用 Tiptap 的 NodeViewProps，由 NodeView 渲染器傳入，常
 3. 輸入時同步寫入節點的說明與替代文字；清空時兩者都移除。
 4. 編輯框使用本地狀態，打字時不因節點重繪而失焦；外部改動說明時，只在編輯框沒有焦點時同步回來。
 
-來源：1. [ResizableImageView.vue][]
+來源：1. [ResizableImageView.vue](../../../../app/components/Camelot/Internal/editor/ResizableImageView.vue)
 
 ### 節點屬性與樣式
 
 pending 屬性會輸出成 data-pending，沿用既有的上傳暫存機制。元件內含全域樣式，控制編輯區內圖片的文繞圖、對齊與說明外觀。
 
-來源：1. [ResizableImageView.vue][]　2. [resizable-image.ts][]
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| ResizableImageView.vue | [app/components/Camelot/Internal/editor/ResizableImageView.vue](../../../../app/components/Camelot/Internal/editor/ResizableImageView.vue) |
-| resizable-image.ts | [app/components/Camelot/Internal/editor/resizable-image.ts](../../../../app/components/Camelot/Internal/editor/resizable-image.ts) |
-
-[ResizableImageView.vue]: #references
-[resizable-image.ts]: #references
+來源：1. [ResizableImageView.vue](../../../../app/components/Camelot/Internal/editor/ResizableImageView.vue)　2. [resizable-image.ts](../../../../app/components/Camelot/Internal/editor/resizable-image.ts)
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

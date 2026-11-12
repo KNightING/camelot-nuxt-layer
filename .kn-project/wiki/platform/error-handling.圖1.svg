@@ -1,14 +1,12 @@
-<!-- wiki-diagram 2d18d6a5527dc881b31b51d691dfdbc71f7831f995a1582ac813a7ece1ab749f 91f05f67022d147a2abc84a273e274b3b6e80be114d42aa43c8b63314b65bbb4 -->
+<!-- wiki-diagram 2d18d6a5527dc881b31b51d691dfdbc71f7831f995a1582ac813a7ece1ab749f f117da64a6233a40438a41ceae4b779f894fcbc1a9d6d9e8e5893afe6f151e69 -->
 <svg class="dg flow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1340 186" width="1340" height="186" role="img" aria-label="錯誤處理管線">
 <title>錯誤處理管線</title>
 <desc>原始錯誤先經轉換器鏈轉成統一型別，再經攔截器鏈決定是否靜默，否則入列由錯誤對話框逐一顯示</desc>
 <style>
 svg.dg{font-family:-apple-system,"PingFang TC","Noto Sans TC",Segoe UI,Roboto,sans-serif;
-  --ink:#1f2328;--ink2:#444c56;--ink3:#6e7781;--line:#d0d7de;--line2:#8c959f;--surf:#f6f8fa;--surf2:#eaeef2;--surf3:#dfe4ea;
-  --prim:#ddf4ff;--prim-ink:#0550ae;--tert:#8250df;--tert-bg:#fbefff;--tert-ink:#3e1f79;--err:#cf222e;--warn:#9a6700;--warn-bg:#fff8c5;--ok:#1a7f37;--key:#41546B;--mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+  --ink:#1f2328;--ink2:#444c56;--ink3:#6e7781;--line:#d0d7de;--line2:#8c959f;--surf:#f6f8fa;--surf2:#eaeef2;--surf3:#dfe4ea;--prim:#ddf4ff;--prim-ink:#0550ae;--tert:#8250df;--tert-bg:#fbefff;--tert-ink:#3e1f79;--err:#cf222e;--warn:#9a6700;--warn-bg:#fff8c5;--ok:#1a7f37;--key:#41546B;--mono:ui-monospace,SFMono-Regular,Menlo,monospace;
   color:var(--ink2);background:transparent}
-@media (prefers-color-scheme:dark){svg.dg{--ink:#e6edf3;--ink2:#c9d1d9;--ink3:#8b949e;--line:#30363d;--line2:#484f58;--surf:#161b22;--surf2:#1f2630;--surf3:#2a3340;
-  --prim:#0c2d6b;--prim-ink:#79c0ff;--tert:#a371f7;--tert-bg:#2a1a4a;--tert-ink:#d2b8ff;--err:#f85149;--warn:#d29922;--warn-bg:#3a2e00;--ok:#3fb950;--key:#6e8aa8}}
+@media (prefers-color-scheme:dark){svg.dg{--ink:#e6edf3;--ink2:#c9d1d9;--ink3:#8b949e;--line:#30363d;--line2:#484f58;--surf:#161b22;--surf2:#1f2630;--surf3:#2a3340;--prim:#0c2d6b;--prim-ink:#79c0ff;--tert:#a371f7;--tert-bg:#2a1a4a;--tert-ink:#d2b8ff;--err:#f85149;--warn:#d29922;--warn-bg:#3a2e00;--ok:#3fb950;--key:#6e8aa8}}
 .seq .life{stroke:var(--line);stroke-width:1.2;stroke-dasharray:4 4}
 .seq .act{fill:var(--surf);stroke:var(--line);stroke-width:1.2}.seq .act.ext{stroke-dasharray:4 3}.seq .act.db{fill:var(--surf2)}.seq .act.bus{fill:var(--prim);stroke:transparent}.seq .act.auth{fill:var(--warn-bg)}
 .seq .actx{font-size:12.5px;font-weight:700;fill:var(--ink)}
@@ -44,50 +42,68 @@ svg.dg{font-family:-apple-system,"PingFang TC","Noto Sans TC",Segoe UI,Roboto,sa
 .er .rel{fill:none;stroke:var(--ink2);stroke-width:1.3;color:var(--ink2)}.er .rl{font-size:11px;fill:var(--ink2)}.er .rlbg{fill:var(--surf);fill-opacity:.92}
 </style>
 <defs><marker id="flAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5 0 10z" fill="currentColor"/></marker></defs>
+<g data-step="2">
 <path class="e" d="M118 93 L168 93" marker-end="url(#flAr)"/>
+</g>
+<g data-step="4">
 <path class="e" d="M314 93 L545 93" marker-end="url(#flAr)"/>
 <rect class="elbg" x="394" y="77" width="76" height="17" rx="3"/>
 <text class="el" x="432" y="89" text-anchor="middle">第一個命中者</text>
+</g>
+<g data-step="3">
 <path class="e" d="M314 93 L375 93" marker-end="url(#flAr)"/>
 <rect class="elbg" x="320" y="77" width="54" height="17" rx="3"/>
 <text class="el" x="347" y="89" text-anchor="middle">全部落空</text>
+</g>
+<g data-step="4">
 <path class="e" d="M484 93 L545 93" marker-end="url(#flAr)"/>
+</g>
+<g data-step="5">
 <path class="e" d="M678 93 L712 93 L712 136 L739 136" marker-end="url(#flAr)"/>
 <rect class="elbg" x="679" y="120" width="63" height="17" rx="3"/>
 <text class="el" x="711" y="132" text-anchor="middle">回傳 true</text>
+</g>
+<g data-step="5">
 <path class="e" d="M678 93 L712 93 L712 56 L739 56" marker-end="url(#flAr)"/>
 <rect class="elbg" x="701" y="39" width="21" height="17" rx="3"/>
 <text class="el" x="711" y="51" text-anchor="middle">否</text>
+</g>
+<g data-step="6">
 <path class="e" d="M823 56 L851 56 L851 93 L873 93" marker-end="url(#flAr)"/>
+</g>
+<g data-step="7">
 <path class="e" d="M994 93 L1055 93" marker-end="url(#flAr)"/>
 <rect class="elbg" x="1000" y="77" width="54" height="17" rx="3"/>
 <text class="el" x="1027" y="89" text-anchor="middle">按下按鈕</text>
+</g>
+<g data-step="8">
 <path class="e" d="M1164 93 L1214 93" marker-end="url(#flAr)"/>
-<g class="n stadium"><rect class="shape" x="30" y="73" width="88" height="39" rx="19"/>
+</g>
+<g class="n stadium" data-step="1"><rect class="shape" x="30" y="73" width="88" height="39" rx="19"/>
 <text x="74" y="97" text-anchor="middle">原始錯誤</text>
 </g>
-<g class="n diamond"><path class="shape" d="M244 62 L314 93 L244 123 L174 93 Z"/>
+<g class="n diamond" data-step="2"><path class="shape" d="M244 62 L314 93 L244 123 L174 93 Z"/>
 <text x="244" y="97" text-anchor="middle">有轉換器命中?</text>
 </g>
-<g class="n rect"><rect class="shape" x="381" y="73" width="103" height="39" rx="3"/>
+<g class="n rect" data-step="3"><rect class="shape" x="381" y="73" width="103" height="39" rx="3"/>
 <text x="432" y="97" text-anchor="middle">保底錯誤型別</text>
 </g>
-<g class="n diamond"><path class="shape" d="M614 62 L678 93 L614 123 L551 93 Z"/>
+<g class="n diamond" data-step="4"><path class="shape" d="M614 62 L678 93 L614 123 L551 93 Z"/>
 <text x="614" y="97" text-anchor="middle">攔截器攔下?</text>
 </g>
-<g class="n rect success terminal"><rect class="shape" x="745" y="117" width="78" height="39" rx="3"/>
+<g class="n rect success terminal" data-step="5"><rect class="shape" x="745" y="117" width="78" height="39" rx="3"/>
 <text x="784" y="140" text-anchor="middle">靜默處理</text>
 </g>
-<g class="n db data"><path class="shape" d="M745 37 v37 a39 7 0 0 0 78 0 v-37"/><ellipse class="shape" cx="784" cy="37" rx="39" ry="7"/>
+<g class="n db data" data-step="5"><path class="shape" d="M745 37 v37 a39 7 0 0 0 78 0 v-37"/><ellipse class="shape" cx="784" cy="37" rx="39" ry="7"/>
 <text x="784" y="59" text-anchor="middle">加入佇列</text>
 </g>
-<g class="n rect key"><rect class="shape" x="879" y="73" width="115" height="39" rx="3"/>
+<g class="n rect key" data-step="6"><rect class="shape" x="879" y="73" width="115" height="39" rx="3"/>
 <text x="936" y="97" text-anchor="middle">對話框逐一顯示</text>
 </g>
-<g class="n rect"><rect class="shape" x="1061" y="73" width="103" height="39" rx="3"/>
+<g class="n rect" data-step="7"><rect class="shape" x="1061" y="73" width="103" height="39" rx="3"/>
 <text x="1112" y="97" text-anchor="middle">執行動作按鈕</text>
 </g>
-<g class="n rect"><rect class="shape" x="1220" y="73" width="90" height="39" rx="3"/>
+<g class="n rect" data-step="8"><rect class="shape" x="1220" y="73" width="90" height="39" rx="3"/>
 <text x="1265" y="97" text-anchor="middle">關閉並回呼</text>
 </g>
 </svg>

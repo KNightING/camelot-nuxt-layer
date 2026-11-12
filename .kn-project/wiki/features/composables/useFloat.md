@@ -23,7 +23,7 @@ const useFloat: () => {
 | --- | --- | --- |
 | `plus` | `(value1Ref, value2Ref) => ComputedRef<number>` | 兩數相加，回傳避免浮點誤差的 computed |
 
-來源：1. [useFloat.ts][]
+來源：1. [useFloat.ts](../../../../app/composables/useFloat.ts)
 
 ## 用法
 
@@ -45,20 +45,6 @@ const sum = plus(0.1, 0.2) // sum.value === 0.3
 | --- | --- |
 | 整數相加 | 倍數為 1，直接相加 |
 | 科學記號 | 以字串找小數點，極小或極大的數轉成科學記號時不保證精度 |
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useFloat.ts | [app/composables/useFloat.ts](../../../../app/composables/useFloat.ts) |
-
-[useFloat.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

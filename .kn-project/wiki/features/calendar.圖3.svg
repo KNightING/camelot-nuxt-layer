@@ -1,14 +1,12 @@
-<!-- wiki-diagram 1d86c2499cb1d43fa038b043c20a047e2fdfd9a03b7628bbc20ee382eae3cd6b 19d958d9650a02841bb5b2610df9916eb6bea0f934d45a65abfe89440e87768b -->
+<!-- wiki-diagram 1d86c2499cb1d43fa038b043c20a047e2fdfd9a03b7628bbc20ee382eae3cd6b b279d4ddd2d97673c04a21fe3ea5435209b7c3c0b1bde9fcc40e993403f641d1 -->
 <svg class="dg seq" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 643 314" width="643" height="314" role="img" aria-label="單日選擇 內部時序">
 <title>單日選擇 內部時序</title>
 <desc>點日期格後日曆核心更新 modelValue，DateV2 寫回 v-model；未啟用時間時自動關閉浮層</desc>
 <style>
 svg.dg{font-family:-apple-system,"PingFang TC","Noto Sans TC",Segoe UI,Roboto,sans-serif;
-  --ink:#1f2328;--ink2:#444c56;--ink3:#6e7781;--line:#d0d7de;--line2:#8c959f;--surf:#f6f8fa;--surf2:#eaeef2;--surf3:#dfe4ea;
-  --prim:#ddf4ff;--prim-ink:#0550ae;--tert:#8250df;--tert-bg:#fbefff;--tert-ink:#3e1f79;--err:#cf222e;--warn:#9a6700;--warn-bg:#fff8c5;--ok:#1a7f37;--key:#41546B;--mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+  --ink:#1f2328;--ink2:#444c56;--ink3:#6e7781;--line:#d0d7de;--line2:#8c959f;--surf:#f6f8fa;--surf2:#eaeef2;--surf3:#dfe4ea;--prim:#ddf4ff;--prim-ink:#0550ae;--tert:#8250df;--tert-bg:#fbefff;--tert-ink:#3e1f79;--err:#cf222e;--warn:#9a6700;--warn-bg:#fff8c5;--ok:#1a7f37;--key:#41546B;--mono:ui-monospace,SFMono-Regular,Menlo,monospace;
   color:var(--ink2);background:transparent}
-@media (prefers-color-scheme:dark){svg.dg{--ink:#e6edf3;--ink2:#c9d1d9;--ink3:#8b949e;--line:#30363d;--line2:#484f58;--surf:#161b22;--surf2:#1f2630;--surf3:#2a3340;
-  --prim:#0c2d6b;--prim-ink:#79c0ff;--tert:#a371f7;--tert-bg:#2a1a4a;--tert-ink:#d2b8ff;--err:#f85149;--warn:#d29922;--warn-bg:#3a2e00;--ok:#3fb950;--key:#6e8aa8}}
+@media (prefers-color-scheme:dark){svg.dg{--ink:#e6edf3;--ink2:#c9d1d9;--ink3:#8b949e;--line:#30363d;--line2:#484f58;--surf:#161b22;--surf2:#1f2630;--surf3:#2a3340;--prim:#0c2d6b;--prim-ink:#79c0ff;--tert:#a371f7;--tert-bg:#2a1a4a;--tert-ink:#d2b8ff;--err:#f85149;--warn:#d29922;--warn-bg:#3a2e00;--ok:#3fb950;--key:#6e8aa8}}
 .seq .life{stroke:var(--line);stroke-width:1.2;stroke-dasharray:4 4}
 .seq .act{fill:var(--surf);stroke:var(--line);stroke-width:1.2}.seq .act.ext{stroke-dasharray:4 3}.seq .act.db{fill:var(--surf2)}.seq .act.bus{fill:var(--prim);stroke:transparent}.seq .act.auth{fill:var(--warn-bg)}
 .seq .actx{font-size:12.5px;font-weight:700;fill:var(--ink)}
@@ -52,16 +50,28 @@ svg.dg{font-family:-apple-system,"PingFang TC","Noto Sans TC",Segoe UI,Roboto,sa
 <rect class="act in" x="58" y="14" width="64" height="34" rx="6"/><text class="actx" x="90" y="36" text-anchor="middle">User</text>
 <rect class="act in" x="245" y="14" width="64" height="34" rx="6"/><text class="actx" x="277" y="36" text-anchor="middle">DateV2</text>
 <rect class="act in" x="408" y="14" width="78" height="34" rx="6"/><text class="actx" x="447" y="36" text-anchor="middle">Calendar</text>
+<g data-step="1">
 <line class="msg " x1="90" y1="90" x2="271" y2="90" marker-end="url(#seqAr)"/>
 <text class="lab" x="183" y="84" text-anchor="middle">點擊輸入框</text>
+</g>
+<g data-step="2">
 <line class="msg " x1="277" y1="124" x2="441" y2="124" marker-end="url(#seqAr)"/>
 <text class="lab" x="362" y="118" text-anchor="middle">開啟浮層並顯示月曆</text>
+</g>
+<g data-step="3">
 <line class="msg " x1="90" y1="158" x2="441" y2="158" marker-end="url(#seqAr)"/>
 <text class="lab" x="268" y="152" text-anchor="middle">點擊日期格</text>
+</g>
+<g data-step="4">
 <path class="msg " d="M447 192 h28 v18 h-28" marker-end="url(#seqAr)"/>
 <text class="lab" x="481" y="204">套用時間並選定日期</text>
+</g>
+<g data-step="5">
 <line class="msg  reply" x1="447" y1="226" x2="283" y2="226" marker-end="url(#seqAr)"/>
 <text class="lab" x="362" y="220" text-anchor="middle">更新 modelValue</text>
+</g>
+<g data-step="6">
 <line class="msg  reply" x1="277" y1="260" x2="96" y2="260" marker-end="url(#seqAr)"/>
 <text class="lab" x="183" y="254" text-anchor="middle">寫回 v-model，無時間則關閉</text>
+</g>
 </svg>

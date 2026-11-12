@@ -10,7 +10,7 @@
 2. 讀取 currentRoute 的值並直接回傳。
 3. 需要最新路由時要重新呼叫；要在模板或 computed 中追蹤變化，請在 computed 內呼叫。
 
-來源：1. [useCurrentRoute.ts][]
+來源：1. [useCurrentRoute.ts](../../../../app/composables/useCurrentRoute.ts)
 
 ## 用法
 
@@ -29,20 +29,6 @@ useCurrentRoute(): RouteLocationNormalizedLoaded
 | 名稱 | 型別 | 說明 |
 | --- | --- | --- |
 | （回傳值） | `RouteLocationNormalizedLoaded` | 呼叫當下的路由資訊 |
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useCurrentRoute.ts | [app/composables/useCurrentRoute.ts](../../../../app/composables/useCurrentRoute.ts) |
-
-[useCurrentRoute.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

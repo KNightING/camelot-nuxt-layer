@@ -1,0 +1,9 @@
+WIKI_PAGE("features/components/Internal-TimeRow.md",{
+"title":"TimeRow",
+"summary":"TimeRow（匯入名稱 `CamelotInternalTimeRow`）是時間輸入列，屬內部元件：前方時鐘圖示，接著時、分、秒三個 [TimeField](./Internal-TimeField.md) 欄位，12 小時制時尾端多一顆上午下午切換鈕。DateV2、DateRangeV2、TimeV2 與月曆用它選時間，數值一律以 24 小時制存放。",
+"svgs":{},
+"seq":{},
+"ext":["archive/2609231616-wiki-lint-migration.md"],
+"changelog":[{"plan": "2609231616-wiki-lint-migration", "date": "2026-09-23", "version": "—", "note": "改寫為新版 wiki 格式並依原始碼校正內容", "issue": "[#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45)", "pr": "—"}],
+"md":"# TimeRow\n\n## Summary\n\nTimeRow（匯入名稱 `CamelotInternalTimeRow`）是時間輸入列，屬內部元件：前方時鐘圖示，接著時、分、秒三個 [TimeField](./Internal-TimeField.md) 欄位，12 小時制時尾端多一顆上午下午切換鈕。DateV2、DateRangeV2、TimeV2 與月曆用它選時間，數值一律以 24 小時制存放。\n\n## Props\n| Prop | 型別 | 預設 | 說明 |\n| :--- | :--- | :---: | :--- |\n| `precision` | `'hour' \\| 'minute' \\| 'second'` | `'second'` | 顯示到時、分或秒 |\n| `hourFormat` | `'12' \\| '24'` | `'24'` | 小時制；12 時顯示 AM、PM 切換鈕 |\n\n## Emits\n| 事件 | 參數 | 說明 |\n| :--- | :--- | :--- |\n| `change` | — | 時、分、秒或上午下午任一變更時觸發 |\n\n## v-model\n| Model | 型別 | 說明 |\n| :--- | :--- | :--- |\n| `v-model:hours` | `number` | 小時，24 小時制，預設 `0` |\n| `v-model:minutes` | `number` | 分鐘，預設 `0` |\n| `v-model:seconds` | `number` | 秒，預設 `0` |\n\n## 運作方式\n\n### 精細度\n\n| precision | 顯示欄位 |\n| :--- | :--- |\n| hour | 時 |\n| minute | 時、分 |\n| second | 時、分、秒 |\n\n來源：1. [TimeRow.vue](../../../../app/components/Camelot/Internal/TimeRow.vue)\n\n### 12 小時制\n\n| 項目 | 行為 |\n| :--- | :--- |\n| 時欄位範圍 | 1 到 12；24 小時制為 0 到 23 |\n| 顯示 | 0 點與 12 點都顯示為 12 |\n| 改時 | 依目前上午或下午換算回 24 小時制寫回 |\n| AM、PM 鈕 | 小時加 12 後取 24 的餘數，切換上下午 |\n\n來源：1. [TimeRow.vue](../../../../app/components/Camelot/Internal/TimeRow.vue)\n\n---\n[⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)\n"
+});

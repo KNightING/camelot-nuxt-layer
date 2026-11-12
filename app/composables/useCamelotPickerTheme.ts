@@ -1,6 +1,6 @@
 /**
  * 日期選擇器（DateV2 / DateRangeV2 / Internal Calendar）各風格的共用樣式解析。
- * 集中於此避免在多個元件重複定義 material/cupertino/scifi/aqua 的 class 對應。
+ * 集中於此避免在多個元件重複定義 material/cupertino/scifi/aqua/tactile 的 class 對應。
  */
 export const useCamelotPickerTheme = () => {
   const { themeMode } = useCamelotTheme()
@@ -8,6 +8,8 @@ export const useCamelotPickerTheme = () => {
   // 觸發欄位（input 外框）：與同主題的 Input 同一套外觀；Sci-Fi 外框由 CamelotInternalFieldFrame 負責
   const triggerClass = computed(() => {
     switch (themeMode.value) {
+      case 'tactile':
+        return 'min-h-10.5 tactile-well rounded-tactile-control'
       case 'aqua':
         return 'min-h-10.5 aqua-track rounded-aqua-control backdrop-blur-md'
       case 'scifi':
@@ -22,6 +24,8 @@ export const useCamelotPickerTheme = () => {
   // 觸發欄位展開（聚焦）時的樣式，對應各主題 Input 的聚焦效果
   const triggerOpenClass = computed(() => {
     switch (themeMode.value) {
+      case 'tactile':
+        return 'shadow-[0_0_0_2px_var(--cml-color-current-color,var(--color-primary))]'
       case 'aqua':
         return 'aqua-glow'
       case 'scifi':
@@ -36,6 +40,8 @@ export const useCamelotPickerTheme = () => {
   // 日曆浮層 / 對話框容器表面
   const panelClass = computed(() => {
     switch (themeMode.value) {
+      case 'tactile':
+        return 'tactile-surface rounded-tactile-panel'
       case 'aqua':
         return 'aqua-glass rounded-aqua-panel'
       case 'scifi':
@@ -50,6 +56,8 @@ export const useCamelotPickerTheme = () => {
   // 選中態表面（日 / 月 / 年）
   const selectedSurfaceClass = computed(() => {
     switch (themeMode.value) {
+      case 'tactile':
+        return 'tactile-fill text-[var(--cml-color-current-on-color,var(--color-on-primary))]'
       case 'aqua':
         return 'aqua-fill text-[var(--cml-color-current-on-color)]'
       case 'scifi':
