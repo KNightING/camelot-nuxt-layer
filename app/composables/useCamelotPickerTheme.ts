@@ -57,7 +57,7 @@ export const useCamelotPickerTheme = () => {
   const selectedSurfaceClass = computed(() => {
     switch (themeMode.value) {
       case 'tactile':
-        return 'tactile-ink'
+        return 'tactile-fill text-[var(--cml-color-current-on-color,var(--color-on-primary))]'
       case 'aqua':
         return 'aqua-fill text-[var(--cml-color-current-on-color)]'
       case 'scifi':

@@ -690,7 +690,7 @@ const boxClass = computed(() => {
 const toolbarClass = computed(() => {
   switch (themeMode.value) {
     case 'tactile':
-      return 'bg-surface-container'
+      return 'bg-[color-mix(in_srgb,var(--cml-color-current-color,var(--color-primary))_8%,var(--color-surface-container))]'
     case 'aqua':
       return 'bg-[color-mix(in_srgb,var(--color-surface-container)_55%,transparent)] backdrop-blur-md'
     case 'scifi':
@@ -735,7 +735,7 @@ const idleBtnClass = computed(() => {
 const activeBtnClass = computed(() => {
   switch (themeMode.value) {
     case 'tactile':
-      return 'tactile-ink'
+      return 'tactile-fill text-[var(--cml-color-current-on-color)]'
     case 'aqua':
       // 玻璃填滿態：135deg 漸層 + 柔光（aqua-fill），與其他 aqua 選中態一致。
       // 關掉頂部內高光：.cml-rte-btn 帶一圈 1px 透明外框（為 scifi 的 active 邊框佔位），

@@ -56,7 +56,7 @@ const isEnd = computed(() => props.side === 'end')
 const endBubbleClass = computed(() => {
   switch (themeMode.value) {
     case 'tactile':
-      return 'tactile-ink rounded-[1.125rem] rounded-br-md'
+      return 'tactile-fill rounded-[1.125rem] rounded-br-md text-[var(--cml-color-current-on-color)]'
     case 'aqua':
       return 'aqua-fill rounded-2xl rounded-br-md text-[var(--cml-color-current-on-color)]'
     case 'scifi':

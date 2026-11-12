@@ -340,9 +340,9 @@
     0 14px 28px -18px var(--cml-tactile-shadow);
 }
 
-/* 軌道 / 未選態：實心灰階底、無邊框（輸入底、switch 關閉軌道、分段控制底） */
+/* 軌道 / 未選態：灰階底混入 10% 角色色，換主題色時軌道跟著染色（輸入底、分段控制底、滑桿軌道） */
 @utility tactile-well {
-  background-color: var(--color-surface-container-high);
+  background-color: color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 10%, var(--color-surface-container-high));
 }
 
 /* 填滿態：角色色平塗 + 同色柔影（主要按鈕、switch 開啟、勾選） */
@@ -351,7 +351,7 @@
   box-shadow: 0 6px 14px -8px color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 70%, transparent);
 }
 
-/* 墨色選中態：反相表面（日曆選中日、訊息泡泡的自己方） */
+/* 墨色反相表面：只給 Tooltip 這類浮層用，維持中性；選中態改用 tactile-fill 才會跟著主題色 */
 @utility tactile-ink {
   background-color: var(--color-inverse-surface);
   color: var(--color-inverse-on-surface);

@@ -125,9 +125,9 @@ Tabs、Switch、Radio、Checkbox、Slider thumb、Pagination 頁碼維持膠囊�
 | utility | 用途 |
 | :--- | :--- |
 | `tactile-surface` | 實心表面：最淺表面色、頂緣內高光與柔和落影，用於 Dialog、選項面板、Table、Drawer |
-| `tactile-well` | 軌道與未選態：實心灰階底、無邊框，用於輸入底、分頁底、滑桿軌道 |
+| `tactile-well` | 軌道與未選態：灰階底混入 10%% 角色色，用於輸入底、分頁底、滑桿軌道，換主題色時跟著染色 |
 | `tactile-fill` | 填滿態：角色色平塗加同色柔影，用於按鈕、開關開啟、勾選 |
-| `tactile-ink` | 墨色選中態：反相表面，用於日曆選中日、分頁頁碼、Tooltip、自己的訊息泡泡 |
+| `tactile-ink` | 墨色反相表面：只用於 Tooltip 這類浮層，維持中性 |
 | `tactile-thumb` | 實心白拇指，用於 switch 與 slider |
 | `tactile-ring` | 鍵盤焦點環，搭配 focus-visible 變體 |
 
@@ -142,7 +142,8 @@ Tabs、Switch、Radio、Checkbox、Slider thumb、Pagination 頁碼維持膠囊�
 | 按壓回饋 | 按鈕、勾選框、單選鈕按下時縮小，放開以彈簧回彈 |
 | 拇指拉伸 | 開關按住時拇指橫向拉長，開啟狀態下往軌道內側長 |
 | 勾選描線 | 勾號以描線方式出現 |
-| 選中文字 | 選單與下拉的選中項用一般文字色加粗，不用角色色，避免淺色角色色疊在灰底上看不清 |
+| 選中態 | 分頁滑塊、編輯器啟用鈕、頁碼、日期選中日與自己的訊息泡泡用角色色平塗，換主題色時一起變 |
+| 選單選中文字 | 選單與下拉的選中項用一般文字色加粗，不用角色色，避免淺色角色色疊在灰底上看不清 |
 | 減少動態 | 使用者偏好減少動態時，上述過場全部關閉 |
 
 來源：1. [tailwind.css](../../../app/assets/css/tailwind.css)　2. [Tactile/Switch.vue](../../../app/components/Camelot/Tactile/Switch.vue)　3. [Tactile/Checkbox.vue](../../../app/components/Camelot/Tactile/Checkbox.vue)

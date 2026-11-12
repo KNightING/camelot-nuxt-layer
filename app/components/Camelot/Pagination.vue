@@ -197,7 +197,7 @@ const itemShapeClass = computed(() => {
 const activeClass = computed(() => {
   switch (themeMode.value) {
     case 'tactile':
-      return 'tactile-ink font-semibold'
+      return 'tactile-fill text-[var(--cml-color-current-on-color)] font-semibold'
     case 'aqua':
       return 'aqua-fill text-on-primary font-semibold'
     case 'scifi':

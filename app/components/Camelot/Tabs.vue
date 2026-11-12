@@ -17,7 +17,7 @@
     <div
       class="pointer-events-none absolute left-0 z-0 transition-[transform,width,opacity] duration-300 ease-spring motion-reduce:transition-none"
       :class="{
-        'top-1 h-[calc(100%-8px)] rounded-xl bg-surface-bright shadow-[0_1px_2px_rgba(0,0,0,0.2),0_4px_10px_-2px_rgba(0,0,0,0.2)]': themeMode === 'tactile',
+        'top-1 h-[calc(100%-8px)] rounded-xl tactile-fill': themeMode === 'tactile',
         'aqua-fill top-[5px] h-[calc(100%-10px)] rounded-full': themeMode === 'aqua',
         'top-0.5 h-[calc(100%-4px)] rounded-md bg-surface shadow-[0_1px_3px_rgba(0,0,0,0.1)]': themeMode === 'cupertino',
         'bottom-0 h-[3px] rounded-t-full bg-[var(--cml-color-current-color)]': themeMode === 'material',
@@ -47,7 +47,7 @@
           v-if="themeMode === 'tactile'"
           class="relative z-[1] cursor-pointer rounded-xl px-5 py-2 text-sm font-semibold whitespace-nowrap transition-[color,transform] duration-200 active:scale-95"
           :class="{
-            'text-on-surface': isSelected(option.value),
+            'text-[var(--cml-color-current-on-color)]': isSelected(option.value),
             'text-on-surface-variant hover:text-on-surface': !isSelected(option.value),
           }"
         >

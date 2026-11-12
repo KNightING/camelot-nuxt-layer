@@ -10,6 +10,8 @@
 `tailwind.css` 新增 tactile 的緩動、圓角 token 與六個 utility；五個 router 元件加 `Tactile/` 子元件，三十多個元件與兩個主題 composable 加 tactile 分支。
 新元件為 Accordion、AccordionItem、Avatar、AvatarGroup、ChatBubble、Waveform、LevelMeter，五種風格都實作；playground 加入 Tactile 選項與新元件展示。
 
+迭代 1（PR 審查回饋）：tactile 的選中態與軌道底原本寫死中性色，換主題色時不會變；改為選中態用角色色平塗、軌道與編輯器工具列底混入角色色。
+
 ## Cross-Repo Scope
 無（單一 repo）
 
@@ -33,6 +35,7 @@
 - **[驗證]** `pnpm lint`、`pnpm typecheck` 通過；`pnpm test` 40 個測試全過，另有 `useDrawerCollapsed.test.ts`、`useFileToDataURL.test.ts` 兩個檔在 Windows 上因 `vi.mock` 路徑的反斜線被吃掉而載入失敗，本計畫未動 `tests/` 與 `vitest.config.ts`，屬既有問題。
 - **[完成後]** commit + 開 PR（使用者於核准閘選定）。
 - **[預設主題]** 維持 `aqua` — 不改變既有消費端的外觀。
+- **[Iteration 1]** tactile 配色跟著主題色 — 使用者在 PR #77 審查時回報 Rich Text Editor 與 Tabs／Steps 配色沒變，並選擇「跟著主題顏色變化」而非自帶固定中性色或固定強調色；選中態改 `tactile-fill`，軌道底混入 10% 角色色，`tactile-ink` 只留給 Tooltip。
 
 ## Deviations
 - 執行中補列 Steps、FileChip、FileDropzone、ImageDropzone 四個以 scoped CSS 分主題的元件（原計畫漏列，經使用者核准）。
@@ -41,6 +44,7 @@
 - 歸檔時 wiki 整份仍是舊格式，lint 無法通過；先以 wikification 內建腳本把 168 頁轉成行內來源與歸檔 Changelog（獨立一個 commit），再寫本計畫的 wiki 內容。
 - 各元件 wiki 頁內的逐主題對照表只更新了 Button、Input、Switch、Checkbox、Radio 與兩個主題 composable；其餘元件的 tactile 外觀集中記在主題系統頁，未逐頁補列。
 - 新元件在 cupertino 主題下只確認可渲染，未逐一目視檢查；tactile、aqua、scifi、material 已在 playground 檢視。
+- Iteration 1 取代了初版的「選中態用墨色反相、軌道用純中性灰」：初版不吃角色色，換主題色時 Tabs、Steps、編輯器看起來沒變。
 
 ## Impact Files
 ### 主題核心
@@ -138,3 +142,5 @@
 | `features/components/Tactile-Switch.md` | 2026-11-12 | 4.6.4.2 | 新增第五種主題風格 tactile、Button loading 與七個新元件 | [#76](https://github.com/KNightING/camelot-nuxt-layer/issues/76) | [PR #77](https://github.com/KNightING/camelot-nuxt-layer/pull/77) |
 | `features/components/Tactile-Checkbox.md` | 2026-11-12 | 4.6.4.2 | 新增第五種主題風格 tactile、Button loading 與七個新元件 | [#76](https://github.com/KNightING/camelot-nuxt-layer/issues/76) | [PR #77](https://github.com/KNightING/camelot-nuxt-layer/pull/77) |
 | `features/components/Tactile-Radio.md` | 2026-11-12 | 4.6.4.2 | 新增第五種主題風格 tactile、Button loading 與七個新元件 | [#76](https://github.com/KNightING/camelot-nuxt-layer/issues/76) | [PR #77](https://github.com/KNightING/camelot-nuxt-layer/pull/77) |
+- （Iteration 1）`app/assets/css/tailwind.css:355`（`tactile-well` 混入角色色、`tactile-ink` 改註解）
+- （Iteration 1）`app/components/Camelot/Tabs.vue:20`、`:47` — 滑塊與選中字；`Steps.vue:330-340` — 進行中節點；`RichTextEditor.vue:693`、`:738` — 工具列底與啟用鈕；`Pagination.vue:200`、`ChatBubble.vue:59`、`app/composables/useCamelotPickerTheme.ts:60` — 選中態改 `tactile-fill`

@@ -92,7 +92,7 @@
         <!-- Rich Text Editor (WYSIWYG) Card -->
         <div :class="[cardClass, 'col-span-1 md:col-span-2 lg:col-span-3']">
           <h2 :class="cardTitleClass">
-            Rich Text Editor (TipTap・四主題)
+            Rich Text Editor (TipTap・五主題)
           </h2>
           <span class="text-xs text-slate-400">工具列跟隨主題與色彩角色；圖片上傳可插拔（此處用 demo handler 模擬）</span>
           <CamelotRichTextEditor
@@ -113,7 +113,7 @@
         <!-- Image Dropzone Card -->
         <div :class="cardClass">
           <h2 :class="cardTitleClass">
-            Image Dropzone (拖曳/選擇・四主題)
+            Image Dropzone (拖曳/選擇・五主題)
           </h2>
           <span class="text-xs text-slate-400">grid 多格：圖片佔格、新增格在右側，達 {{ dropzoneMax }} 張後消失（也可拖曳）</span>
           <CamelotImageDropzone
