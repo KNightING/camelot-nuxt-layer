@@ -53,6 +53,7 @@ Camelot Nuxt Layer 全部元件的分類索引，依表單、版面資料導覽�
 | `Tabs` | 頁籤（滑動指示器） | [詳情](./components/Tabs.md) |
 | `RippleTabs` | 漣漪頁籤 | [詳情](./components/RippleTabs.md) |
 | `Timeline` | 時間軸 | [詳情](./components/Timeline.md) |
+| `Scheduler` | 行事曆與排班表（月週日、拖移、排班視圖） | [詳情](./components/Scheduler.md) |
 | `VirtualScroll` | 虛擬滾動 | [詳情](./components/VirtualScroll.md) |
 | `Expanded` | 展開/收合區塊 | [詳情](./components/Expanded.md) |
 | `Accordion` | 可收合項目群組（單開或多開） | [詳情](./components/Accordion.md) |
@@ -143,6 +144,12 @@ Camelot Nuxt Layer 全部元件的分類索引，依表單、版面資料導覽�
 | Internal/MenuItem | Menu 遞迴項目 | [詳情](./components/Internal-MenuItem.md) |
 | Internal/PasswordToggle | Input 密碼顯示切換鈕 | [詳情](./components/Internal-PasswordToggle.md) |
 | Internal/SheetHandle | BottomSheet 拖曳把手 | [詳情](./components/Internal-SheetHandle.md) |
+| Internal/SchedulerMonthView | Scheduler 月視圖 | [詳情](./components/Internal-SchedulerMonthView.md) |
+| Internal/SchedulerTimeGrid | Scheduler 週與日共用的時間軸 | [詳情](./components/Internal-SchedulerTimeGrid.md) |
+| Internal/SchedulerResourceWeek | Scheduler 排班週視圖 | [詳情](./components/Internal-SchedulerResourceWeek.md) |
+| Internal/SchedulerResourceDay | Scheduler 排班日視圖 | [詳情](./components/Internal-SchedulerResourceDay.md) |
+| Internal/SchedulerEventChip | Scheduler 的事件外觀 | [詳情](./components/Internal-SchedulerEventChip.md) |
+| Internal/SchedulerEditor | Scheduler 內建編輯面板 | [詳情](./components/Internal-SchedulerEditor.md) |
 | Internal/TimeField | 時/分/秒欄位 | [詳情](./components/Internal-TimeField.md) |
 | Internal/TimeRow | 時間列 | [詳情](./components/Internal-TimeRow.md) |
 | Internal/TreeNode | Tree 遞迴節點 | [詳情](./components/Internal-TreeNode.md) |

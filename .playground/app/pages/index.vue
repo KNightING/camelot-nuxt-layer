@@ -1964,6 +1964,27 @@
           </div>
         </div>
 
+        <!-- Scheduler Card -->
+        <div :class="[cardClass, 'col-span-1 md:col-span-2 lg:col-span-3']">
+          <h2 :class="cardTitleClass">
+            Scheduler（行事曆與排班表：新增、拖移、調整長度）
+          </h2>
+          <p class="text-xs text-slate-400">
+            空白處點一下新增、拖曳選取時段；拖事件換時間或換日；拖時間軸事件的下緣調整長度；點事件編輯。排班視圖可把班次拖到另一個人。
+          </p>
+          <CamelotScheduler
+            v-model:events="schedulerEvents"
+            v-model:date="schedulerDate"
+            v-model:view="schedulerView"
+            :resources="schedulerResources"
+            :color="currentColorRole"
+            :week-starts-on="1"
+            :start-hour="7"
+            :end-hour="22"
+            :scroll-to-hour="8"
+          />
+        </div>
+
         <!-- Date Pickers Card -->
         <div :class="cardClass">
           <h2 :class="cardTitleClass">
@@ -2948,6 +2969,95 @@ const calendarDate = ref<Date | null>(new Date())
 const CALENDAR_BUSY_DAYS = [3, 9, 14, 21, 27]
 const calendarDayAttributes = (date: Date) =>
   (CALENDAR_BUSY_DAYS.includes(date.getDate()) ? { dot: true } : undefined)
+
+// Scheduler 展示：以展示當天為基準排幾筆行事曆與班次
+const SCHEDULER_BASE_DAY = new Date()
+const schedulerAt = (dayOffset: number, hour: number, minute = 0): Date =>
+  new Date(SCHEDULER_BASE_DAY.getFullYear(), SCHEDULER_BASE_DAY.getMonth(), SCHEDULER_BASE_DAY.getDate() + dayOffset, hour, minute)
+const schedulerDate = ref(new Date())
+const schedulerView = ref<CamelotSchedulerView>('week')
+const schedulerResources: CamelotSchedulerResource[] = [
+  {
+    id: 'lin',
+    name: '林予安',
+  },
+  {
+    id: 'chen',
+    name: '陳柏翰',
+    color: 'secondary',
+  },
+  {
+    id: 'wu',
+    name: '吳以晴',
+    color: 'tertiary',
+  },
+]
+const schedulerEvents = ref<CamelotSchedulerEvent[]>([
+  {
+    id: 1,
+    title: '鼓組錄音',
+    start: schedulerAt(0, 10),
+    end: schedulerAt(0, 12),
+    resourceId: 'lin',
+  },
+  {
+    id: 2,
+    title: '貝斯錄音',
+    start: schedulerAt(0, 11),
+    end: schedulerAt(0, 13, 30),
+    resourceId: 'chen',
+    color: 'secondary',
+  },
+  {
+    id: 3,
+    title: '人聲',
+    start: schedulerAt(0, 14),
+    end: schedulerAt(0, 16),
+    resourceId: 'wu',
+    color: 'tertiary',
+  },
+  {
+    id: 4,
+    title: '混音討論',
+    start: schedulerAt(1, 9, 30),
+    end: schedulerAt(1, 10, 30),
+    resourceId: 'lin',
+    color: 'info',
+  },
+  {
+    id: 5,
+    title: '早班',
+    start: schedulerAt(2, 8),
+    end: schedulerAt(2, 12),
+    resourceId: 'chen',
+    color: 'success',
+  },
+  {
+    id: 6,
+    title: '晚班（鎖定）',
+    start: schedulerAt(2, 17),
+    end: schedulerAt(2, 21),
+    resourceId: 'wu',
+    color: 'warning',
+    locked: true,
+  },
+  {
+    id: 7,
+    title: '母帶交件',
+    start: schedulerAt(-1, 15),
+    end: schedulerAt(-1, 16),
+    resourceId: 'lin',
+    color: 'error',
+  },
+  {
+    id: 8,
+    title: '器材保養',
+    start: schedulerAt(3, 13),
+    end: schedulerAt(3, 15),
+    resourceId: 'chen',
+    color: 'info',
+  },
+])
 
 // Accordion / Avatar / Waveform / Button loading 展示
 const accordionExpanded = ref<CamelotAccordionValue[]>(['early'])

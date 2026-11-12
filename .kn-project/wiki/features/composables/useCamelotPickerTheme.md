@@ -31,7 +31,7 @@
 | 主題 | 面板 | 選中態表面 |
 | --- | --- | --- |
 | aqua | aqua-glass 玻璃，Aqua 面板圓角 | aqua-fill 填色，文字當前前景色 |
-| tactile | 實心表面，Tactile 面板圓角 | 反相表面，不跟角色色 |
+| tactile | 實心表面，Tactile 面板圓角 | 角色色填滿，文字當前前景色 |
 | scifi | 直角，主色 40% 邊框，主色 15% 光暈 | 當前色 85% 底，發光陰影 |
 | cupertino | surface 底，2xl 圓角 | 當前色實心底 |
 | material | surface 底，xl 圓角 | 當前色實心底，加小陰影 |
