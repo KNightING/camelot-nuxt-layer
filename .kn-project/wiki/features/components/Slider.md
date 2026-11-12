@@ -34,6 +34,8 @@
 
 Sci-Fi 主題的軌道與把手為直角，其他主題為圓角。
 
+Tactile 的把手是 26px 的亮底外環包著角色色圓點，按住時放大並以彈簧彈回；刻度只顯示等寬小字，不畫圓點。
+
 來源：1. [Slider.vue](../../../../app/components/Camelot/Slider.vue)
 
 ## Props
@@ -43,7 +45,7 @@ Sci-Fi 主題的軌道與把手為直角，其他主題為圓角。
 | `max` | `number` | `100` | 最大值。 |
 | `step` | `number` | `1` | 步進值，數值吸附到它的倍數。 |
 | `range` | `boolean` | `false` | 雙把手區間模式，值為 `[起, 迄]`。 |
-| `height` | `number` | `6` | 軌道高度，單位 px。 |
+| `height` | `number` | 無（Tactile 10，其餘 6） | 軌道高度，單位 px；指定後各風格都以它為準。 |
 | `marks` | `boolean \| { value: number, label?: string }[]` | `false` | 刻度與文字；`true` 時依步進自動產生。 |
 | `showTooltip` | `boolean` | `false` | 在把手上方顯示數值提示。 |
 | `color` | `CamelotColorRole` | `'primary'` | 色彩角色。 |

@@ -1,0 +1,9 @@
+WIKI_PAGE("features/components/Stepper.md",{
+"title":"Stepper",
+"summary":"Stepper 是步進器，匯入名稱 `CamelotStepper`：兩顆圓形按鈕夾著「數值加單位」的文字，點按鈕以固定的量增減，到達上下限時對應按鈕停用。它不是輸入框，數值只能靠按鈕改；需要直接輸入數字請用 [NumberCounter](./NumberCounter.md)。",
+"svgs":{},
+"seq":{},
+"ext":["archive/2611121510-tactile-showcase-parity.md"],
+"changelog":[{"plan": "2611121510-tactile-showcase-parity", "date": "2026-11-12", "version": "4.6.4.2", "note": "tactile 與展示頁對齊，新增步進器、大數字、可選取標籤與行內日曆", "issue": "[#80](https://github.com/KNightING/camelot-nuxt-layer/issues/80)", "pr": "[PR #81](https://github.com/KNightING/camelot-nuxt-layer/pull/81)"}],
+"md":"# Stepper\n\n## Summary\n\nStepper 是步進器，匯入名稱 `CamelotStepper`：兩顆圓形按鈕夾著「數值加單位」的文字，點按鈕以固定的量增減，到達上下限時對應按鈕停用。它不是輸入框，數值只能靠按鈕改；需要直接輸入數字請用 [NumberCounter](./NumberCounter.md)。\n\n## Props\n| Prop | 型別 | 預設 | 說明 |\n| :--- | :--- | :--- | :--- |\n| `min` | `number` | 無 | 最小值；未指定表示沒有下限 |\n| `max` | `number` | 無 | 最大值；未指定表示沒有上限 |\n| `step` | `number` | `1` | 每次增減的量，必須是整數 |\n| `unit` | `string` | `''` | 顯示在數值後面的單位，例如「小時」 |\n| `label` | `string` | `''` | 群組的無障礙名稱 |\n| `labels` | `CamelotStepperLabels` | 減少、增加 | 兩顆按鈕的無障礙名稱 |\n| `disabled` | `boolean` | `false` | 整組停用 |\n| `color` | `CamelotColorRole` | `'primary'` | 按鈕與焦點環的色彩角色 |\n\n## Emits\n| 事件 | 參數 | 說明 |\n| :--- | :--- | :--- |\n| `change` | `value: number` | 按鈕改變數值後觸發 |\n\n## v-model\n| Model | 型別 | 說明 |\n| :--- | :--- | :--- |\n| `modelValue` | `number`（預設 `0`） | 目前數值 |\n\n## Slots\n| Slot | 作用域參數 | 說明 |\n| :--- | :--- | :--- |\n| `default` | `value` | 取代中間的「數值加單位」文字 |\n| `minus` | — | 取代減少按鈕的圖示 |\n| `plus` | — | 取代增加按鈕的圖示 |\n\n## 規則\n| 規則 | 說明 |\n| :--- | :--- |\n| 整數運算 | 只做整數加減；步進量給小數會得到浮點誤差，需要小數請在外層處理 |\n| 上下限 | 結果會限制在 min 與 max 之間，到達時對應按鈕停用 |\n| 外觀 | Tactile 是灰階膠囊加立體圓鈕，按下縮小並以彈簧回彈；其他風格各有對應的容器與按鈕 |\n\n來源：1. [Stepper.vue](../../../../app/components/Camelot/Stepper.vue)\n\n---\n[⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)\n"
+});

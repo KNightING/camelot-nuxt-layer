@@ -1,0 +1,9 @@
+WIKI_PAGE("features/components/Calendar.md",{
+"title":"Calendar",
+"summary":"Calendar 是可以直接放在頁面上的行內日曆，匯入名稱 `CamelotCalendar`，把內部日曆核心包成公開元件。單日選取，可標記忙碌小點與節日，面板外觀與日期選擇器的彈出層一致。範圍與時間選取仍是 [DateV2](./DateV2.md) 系列的功能。",
+"svgs":{},
+"seq":{},
+"ext":["archive/2611121510-tactile-showcase-parity.md"],
+"changelog":[{"plan": "2611121510-tactile-showcase-parity", "date": "2026-11-12", "version": "4.6.4.2", "note": "tactile 與展示頁對齊，新增步進器、大數字、可選取標籤與行內日曆", "issue": "[#80](https://github.com/KNightING/camelot-nuxt-layer/issues/80)", "pr": "[PR #81](https://github.com/KNightING/camelot-nuxt-layer/pull/81)"}],
+"md":"# Calendar\n\n## Summary\n\nCalendar 是可以直接放在頁面上的行內日曆，匯入名稱 `CamelotCalendar`，把內部日曆核心包成公開元件。單日選取，可標記忙碌小點與節日，面板外觀與日期選擇器的彈出層一致。範圍與時間選取仍是 [DateV2](./DateV2.md) 系列的功能。\n\n## Props\n| Prop | 型別 | 預設 | 說明 |\n| :--- | :--- | :--- | :--- |\n| `minDate` | `Date \\| number` | 無 | 最早可選的日期 |\n| `maxDate` | `Date \\| number` | 無 | 最晚可選的日期 |\n| `getDayAttributes` | `(date, dayOfWeek) => CalendarDayAttributes` | 無 | 回傳某一天的標記：小點、節日、標籤、停用 |\n| `showDayLabel` | `boolean` | `false` | 是否顯示日期下方的標籤列 |\n| `locale` | `string` | 繁體中文 | 週名與月名的 BCP 47 語系 |\n| `weekStartsOn` | `0 \\| 1` | `0` | 週起始：0 週日、1 週一 |\n| `weekdayFormatter`、`monthFormatter`、`yearFormatter` | 函式 | 無 | 自訂週名、月名、年標題 |\n| `color` | `CamelotColorRole` | `'primary'` | 選中日的色彩角色 |\n\n## v-model\n| Model | 型別 | 說明 |\n| :--- | :--- | :--- |\n| `modelValue` | `Date \\| null`（預設 `null`） | 選中的日期 |\n\n## Slots\n| Slot | 作用域參數 | 說明 |\n| :--- | :--- | :--- |\n| 其餘 slot | 同內部日曆 | 原樣傳給內部日曆核心，例如自訂日期格的內容 |\n\n## 規則\n| 規則 | 說明 |\n| :--- | :--- |\n| 顯示月份 | 元件自己管理，起點是選中日期或今天；外部把選中日期改到別的月份時會跟著切過去 |\n| 小點位置 | 小點固定在日期格的左上角，「今天」的標記也在同一處 |\n| 外觀 | 面板用日期選擇器同一套樣式，Tactile 為實心表面，選中日為角色色填滿 |\n\n來源：1. [Calendar.vue](../../../../app/components/Camelot/Calendar.vue)　2. [Internal/Calendar.vue](../../../../app/components/Camelot/Internal/Calendar.vue)\n\n---\n[⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)\n"
+});

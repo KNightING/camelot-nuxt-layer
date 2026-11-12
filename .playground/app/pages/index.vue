@@ -1241,6 +1241,51 @@
           </div>
         </div>
 
+        <!-- Stepper / AnimatedNumber / ChipGroup / Calendar Card -->
+        <div :class="cardClass">
+          <h2 :class="cardTitleClass">
+            Stepper / AnimatedNumber / ChipGroup / Calendar
+          </h2>
+          <CamelotAnimatedNumber
+            :value="stepperTotal"
+            prefix="$"
+            :fraction-digits="2"
+            :color="currentColorRole"
+          />
+          <div class="mt-3">
+            <CamelotStepper
+              v-model="stepperHours"
+              :min="1"
+              :max="8"
+              unit="小時"
+              label="租用時數"
+              :color="currentColorRole"
+            />
+          </div>
+          <div class="mt-4 flex flex-col gap-3">
+            <CamelotChipGroup
+              v-model="chipSlot"
+              label="時段（單選）"
+              :options="chipSlotOptions"
+              :color="currentColorRole"
+            />
+            <CamelotChipGroup
+              v-model="chipGear"
+              label="加租器材（多選）"
+              multiple
+              :options="chipGearOptions"
+              :color="currentColorRole"
+            />
+          </div>
+          <div class="mt-4">
+            <CamelotCalendar
+              v-model="calendarDate"
+              :get-day-attributes="calendarDayAttributes"
+              :color="currentColorRole"
+            />
+          </div>
+        </div>
+
         <!-- Accordion / Avatar / ChatBubble Card -->
         <div :class="cardClass">
           <h2 :class="cardTitleClass">
@@ -2858,6 +2903,51 @@ function onDropzoneSelect(files: File[]) {
   // 實務上可在此上傳；此處僅示範取得 File 陣列
   console.log('dropzone selected', files.map(f => f.name))
 }
+
+// Stepper / AnimatedNumber / ChipGroup / Calendar 展示
+const STEPPER_HOURLY_RATE = 24
+const stepperHours = ref(6)
+// 展示用：單價與時數都是整數，乘積以整數運算；顯示時再補兩位小數
+const stepperTotal = computed(() => stepperHours.value * STEPPER_HOURLY_RATE)
+const chipSlot = ref<(string | number)[]>(['14'])
+const chipSlotOptions: CamelotGroupOption[] = [
+  {
+    label: '10:00',
+    value: '10',
+  },
+  {
+    label: '14:00',
+    value: '14',
+  },
+  {
+    label: '19:30',
+    value: '19',
+  },
+]
+const chipGear = ref<(string | number)[]>(['mic', 'preamp'])
+const chipGearOptions: CamelotGroupOption[] = [
+  {
+    label: '電容麥',
+    value: 'mic',
+  },
+  {
+    label: '鼓組',
+    value: 'drums',
+  },
+  {
+    label: '真空管前級',
+    value: 'preamp',
+  },
+  {
+    label: '平台鋼琴',
+    value: 'piano',
+  },
+]
+const calendarDate = ref<Date | null>(new Date())
+// 展示用：每月 3、9、14、21、27 號顯示「已有場次」小點
+const CALENDAR_BUSY_DAYS = [3, 9, 14, 21, 27]
+const calendarDayAttributes = (date: Date) =>
+  (CALENDAR_BUSY_DAYS.includes(date.getDate()) ? { dot: true } : undefined)
 
 // Accordion / Avatar / Waveform / Button loading 展示
 const accordionExpanded = ref<CamelotAccordionValue[]>(['early'])
