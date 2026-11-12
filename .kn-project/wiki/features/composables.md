@@ -9,7 +9,7 @@ Camelot Nuxt Layer 全部 composable 的分類索引，依主題色彩、元件�
 1. composables 目錄下每個檔案至少匯出一個與檔名同名的函式，由 Nuxt 自動匯入，元件與頁面可直接呼叫。
 2. 名稱以 `useCamelot` 開頭的是與本 layer 元件或主題綁定的 composable，其餘是通用工具。
 
-來源：1. [app/composables][]
+來源：1. [app/composables](../../../app/composables)
 
 ## Composable 清單
 
@@ -115,20 +115,6 @@ Camelot Nuxt Layer 全部 composable 的分類索引，依主題色彩、元件�
 
 - [元件清單](./components.md)
 - [API 呼叫](../platform/api-client.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| app/composables | [app/composables](../../../app/composables) |
-
-[app/composables]: #references
 
 ---
 [⚙️ Env](../environment.md) | [🏠 Wiki](../index.md)

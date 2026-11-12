@@ -18,7 +18,7 @@ SheetHandle（匯入名稱 `CamelotInternalSheetHandle`）是底部面板頂端�
 | tabindex | 0 |
 | aria-label | 拖曳關閉 |
 
-來源：1. [SheetHandle.vue][]
+來源：1. [SheetHandle.vue](../../../../app/components/Camelot/Internal/SheetHandle.vue)
 
 ### 指示條
 
@@ -29,21 +29,7 @@ SheetHandle（匯入名稱 `CamelotInternalSheetHandle`）是底部面板頂端�
 | Aqua | 40 × 6px | 20% 前景色 |
 | Material | 32 × 4px | 次要外框色 |
 
-來源：1. [SheetHandle.vue][]
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| SheetHandle.vue | [app/components/Camelot/Internal/SheetHandle.vue](../../../../app/components/Camelot/Internal/SheetHandle.vue) |
-
-[SheetHandle.vue]: #references
+來源：1. [SheetHandle.vue](../../../../app/components/Camelot/Internal/SheetHandle.vue)
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

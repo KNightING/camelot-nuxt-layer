@@ -77,7 +77,7 @@ type LoadingCloseable = () => void
 | `options` | `DebounceFilterOptions` | — | debounce 版選項 |
 | `trailing`、`leading`、`rejectOnCancel` | `boolean` | — | throttle 版選項，原樣傳給 VueUse |
 
-來源：1. [useLoading.ts][]
+來源：1. [useLoading.ts](../../../../app/composables/useLoading.ts)
 
 ## 用法
 
@@ -133,20 +133,6 @@ finally {
 | 錯誤會被吞掉 | `running` 捕捉所有例外交給 `errorFn`；沒給 `errorFn` 時錯誤被靜默忽略，回傳 `undefined` |
 | 結束順序 | `running` 在 finally 先執行 `finallyFn`，再把 `pending` 設回 `false` |
 | 監聽陣列 | `watch` 傳陣列時忽略傳入的標籤，改用字面字串 `tag:0`、`tag:1`… 作標籤，不同呼叫端會撞名 |
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useLoading.ts | [app/composables/useLoading.ts](../../../../app/composables/useLoading.ts) |
-
-[useLoading.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

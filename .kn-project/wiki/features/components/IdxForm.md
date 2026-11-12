@@ -20,7 +20,7 @@ IdxForm（匯入名稱 `CamelotIdxForm`）是依欄位順序移動焦點的表�
 
 表單掛載後，依文件順序替內容中所有 input 與 select 寫上 data-idx 索引，從 0 開始。編號只在掛載時做一次，之後才動態加入的欄位不會編號。
 
-來源：1. [IdxForm.vue][]
+來源：1. [IdxForm.vue](../../../../app/components/Camelot/IdxForm.vue)
 
 ### 鍵盤導覽
 
@@ -31,21 +31,7 @@ IdxForm（匯入名稱 `CamelotIdxForm`）是依欄位順序移動焦點的表�
 
 Enter 拆成 keydown 與 keypress 兩段處理，是為了避開中文輸入法組字時按 Enter 的衝突。
 
-來源：1. [IdxForm.vue][]
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| IdxForm.vue | [app/components/Camelot/IdxForm.vue](../../../../app/components/Camelot/IdxForm.vue) |
-
-[IdxForm.vue]: #references
+來源：1. [IdxForm.vue](../../../../app/components/Camelot/IdxForm.vue)
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

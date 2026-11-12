@@ -16,7 +16,7 @@ Camelot 的主題系統讓同一組元件介面切換成四種視覺風格：`ma
 | 全域標記 | html 元素寫入 `data-camelot-theme-mode` 屬性與 `--cml-active-ui-style` 變數 |
 | 樣式核心 | Tailwind CSS v4；共用樣式集中在全域樣式表的 `@utility` 與 `@theme` |
 
-來源：1. [useCamelotTheme.ts][]　2. [tailwind.css][]
+來源：1. [useCamelotTheme.ts](../../../app/composables/useCamelotTheme.ts)　2. [tailwind.css](../../../app/assets/css/tailwind.css)
 
 ### Router 元件
 
@@ -54,7 +54,7 @@ Button、Input、Switch、Checkbox 是 router 元件：本身不畫 UI，依目�
 
 ![Router 元件分派](theme-system.圖1.svg)
 
-來源：1. [Button.vue][]　2. [useCamelotRoleColorClass.ts][]
+來源：1. [Button.vue](../../../app/components/Camelot/Button.vue)　2. [useCamelotRoleColorClass.ts](../../../app/composables/useCamelotRoleColorClass.ts)
 
 ### 主題切換漸變
 
@@ -69,7 +69,7 @@ Button、Input、Switch、Checkbox 是 router 元件：本身不畫 UI，依目�
 
 品牌色與色系由設定主題色的函式觸發；需要手動觸發時可呼叫 `triggerThemeTransition`。
 
-來源：1. [useCamelotTheme.ts][]　2. [tailwind.css][]
+來源：1. [useCamelotTheme.ts](../../../app/composables/useCamelotTheme.ts)　2. [tailwind.css](../../../app/assets/css/tailwind.css)
 
 ## 表單控制項高度與字級
 
@@ -84,7 +84,7 @@ Input、Select、NumberCounter、DatePicker 系列與 Button 在四個主題都�
 | scifi | 欄位包在 HUD 外框裡 |
 | aqua | 半透明軌道底與 12px 圓角 |
 
-來源：1. [Input.vue][]　2. [NumberCounter.vue][]　3. [FieldFrame.vue][]　4. [useCamelotPickerTheme.ts][]
+來源：1. [Input.vue](../../../app/components/Camelot/Input.vue)　2. [NumberCounter.vue](../../../app/components/Camelot/NumberCounter.vue)　3. [FieldFrame.vue](../../../app/components/Camelot/Internal/FieldFrame.vue)　4. [useCamelotPickerTheme.ts](../../../app/composables/useCamelotPickerTheme.ts)
 
 ## Aqua 視覺語言
 
@@ -98,7 +98,7 @@ Input、Select、NumberCounter、DatePicker 系列與 Button 在四個主題都�
 | `aqua-glow` | 聚焦光暈，可搭配 focus 或 focus-within 變體 |
 | `aqua-thumb` | 玻璃光澤拖點，用於 switch thumb |
 
-來源：1. [tailwind.css][]
+來源：1. [tailwind.css](../../../app/assets/css/tailwind.css)
 
 ### 圓角 token
 
@@ -113,7 +113,7 @@ Aqua 表單控制項不用膠囊圓角，統一消費兩個圓角 token：
 
 Tabs、Switch、Radio、Checkbox、Slider thumb、Pagination 頁碼維持膠囊或圓形；Dialog 面板是大面積浮層，維持 `rounded-3xl`。
 
-來源：1. [tailwind.css][]
+來源：1. [tailwind.css](../../../app/assets/css/tailwind.css)
 
 ## 共用 token 與色彩規則
 
@@ -125,7 +125,7 @@ aqua 主題在根節點把它覆寫成角色色 12% 的淡色髮絲線。玻璃�
 
 玻璃面板頂部的內高光是 18% 白，底色是 72% 的 surface；個別元件可再覆寫底色，例如通知卡用 55%。
 
-來源：1. [tailwind.css][]
+來源：1. [tailwind.css](../../../app/assets/css/tailwind.css)
 
 ### 色彩角色與前景配對
 
@@ -137,7 +137,7 @@ aqua 主題在根節點把它覆寫成角色色 12% 的淡色髮絲線。玻璃�
 | Teleport 浮層 | 浮層離開原本的 DOM 位置後 CSS 變數不再繼承，要在浮層上重新套角色 class，或以 inline style 帶入目前的角色色 |
 | 狀態色預設值 | info、warning、success 在色系未設定時有內建的藍、橘、綠，前景為白，不會變成黑色 |
 
-來源：1. [useCamelotRoleColorClass.ts][]　2. [tailwind.css][]
+來源：1. [useCamelotRoleColorClass.ts](../../../app/composables/useCamelotRoleColorClass.ts)　2. [tailwind.css](../../../app/assets/css/tailwind.css)
 
 ### 樣式寫法
 
@@ -147,7 +147,7 @@ aqua 主題在根節點把它覆寫成角色色 12% 的淡色髮絲線。玻璃�
 | 共用動畫 | 共用 keyframes 如 `scifi-scan`，與緩動 `ease-spring`、`ease-ios` 集中在 `@theme` |
 | 保留 scoped CSS | 含 keyframes、原生捲軸樣式、transition-group 或 deep 選擇器的元件，例如 Scrollbar、RippleEffect、Reveal 系列、Sci-Fi 外框 |
 
-來源：1. [tailwind.css][]
+來源：1. [tailwind.css](../../../app/assets/css/tailwind.css)
 
 ## 相關 Composables 與型別
 
@@ -159,42 +159,12 @@ aqua 主題在根節點把它覆寫成角色色 12% 的淡色髮絲線。玻璃�
 | `CamelotColorRole` | 共用色彩角色 union：primary、secondary、tertiary、error、info、warning、success |
 | `CamelotInputType` | Input 原生 type union：text、password、email、number、tel、url、search |
 
-來源：1. [camelot.ts][]
+來源：1. [camelot.ts](../../../shared/types/camelot.ts)
 
 ## 相關頁面
 
 - [色彩主題](./color-scheme.md)
 - [元件清單](../features/components.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useCamelotTheme.ts | [app/composables/useCamelotTheme.ts](../../../app/composables/useCamelotTheme.ts) |
-| tailwind.css | [app/assets/css/tailwind.css](../../../app/assets/css/tailwind.css) |
-| Button.vue | [app/components/Camelot/Button.vue](../../../app/components/Camelot/Button.vue) |
-| useCamelotRoleColorClass.ts | [app/composables/useCamelotRoleColorClass.ts](../../../app/composables/useCamelotRoleColorClass.ts) |
-| Input.vue | [app/components/Camelot/Input.vue](../../../app/components/Camelot/Input.vue) |
-| NumberCounter.vue | [app/components/Camelot/NumberCounter.vue](../../../app/components/Camelot/NumberCounter.vue) |
-| FieldFrame.vue | [app/components/Camelot/Internal/FieldFrame.vue](../../../app/components/Camelot/Internal/FieldFrame.vue) |
-| useCamelotPickerTheme.ts | [app/composables/useCamelotPickerTheme.ts](../../../app/composables/useCamelotPickerTheme.ts) |
-| camelot.ts | [shared/types/camelot.ts](../../../shared/types/camelot.ts) |
-
-[useCamelotTheme.ts]: #references
-[tailwind.css]: #references
-[Button.vue]: #references
-[useCamelotRoleColorClass.ts]: #references
-[Input.vue]: #references
-[NumberCounter.vue]: #references
-[FieldFrame.vue]: #references
-[useCamelotPickerTheme.ts]: #references
-[camelot.ts]: #references
 
 ---
 [⚙️ Env](../environment.md) | [🏠 Wiki](../index.md)

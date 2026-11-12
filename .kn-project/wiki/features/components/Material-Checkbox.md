@@ -33,7 +33,7 @@
 
 方框固定為 2px 小圓角的方形，不提供形狀設定。
 
-來源：1. [Material/Checkbox.vue][]
+來源：1. [Material/Checkbox.vue](../../../../app/components/Camelot/Material/Checkbox.vue)
 
 ### 點擊
 
@@ -41,25 +41,11 @@
 2. 半選狀態下點擊，會切換為勾選；半選旗標本身由外部控制，元件不會改動它。
 3. 停用時忽略點擊，不發出 `change`。
 
-來源：1. [Material/Checkbox.vue][]
+來源：1. [Material/Checkbox.vue](../../../../app/components/Camelot/Material/Checkbox.vue)
 
 ## 相關頁面
 
 - [Checkbox](./Checkbox.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| Material/Checkbox.vue | [app/components/Camelot/Material/Checkbox.vue](../../../../app/components/Camelot/Material/Checkbox.vue) |
-
-[Material/Checkbox.vue]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

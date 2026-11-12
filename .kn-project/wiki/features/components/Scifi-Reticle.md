@@ -10,7 +10,7 @@ Sci-Fi 主題的四角瞄準框裝飾，啟用或滑鼠移入時四角向內收�
 2. 預設不接收滑鼠事件；開啟可懸停時改為接收，讓滑鼠移入也能觸發收合。
 3. 顏色取目前色彩變數，沒有時退回主題主色，再退回文字顏色。
 
-來源：1. [Scifi/Reticle.vue][]
+來源：1. [Scifi/Reticle.vue](../../../../app/components/Camelot/Scifi/Reticle.vue)
 
 ## Props
 | Prop | 型別 | 預設 | 說明 |
@@ -22,20 +22,6 @@ Sci-Fi 主題的四角瞄準框裝飾，啟用或滑鼠移入時四角向內收�
 
 - [Scifi Frame](./Scifi-Frame.md)
 - [Scifi Switch](./Scifi-Switch.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| Scifi/Reticle.vue | [app/components/Camelot/Scifi/Reticle.vue](../../../../app/components/Camelot/Scifi/Reticle.vue) |
-
-[Scifi/Reticle.vue]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

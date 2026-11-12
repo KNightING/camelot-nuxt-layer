@@ -10,7 +10,7 @@
 
 每個節點有顯示文字與唯一值，可另帶子節點、停用旗標與任意附帶資料。
 
-來源：1. [tree.ts][]
+來源：1. [tree.ts](../../../../shared/types/tree.ts)
 
 ### 勾選與展開狀態
 
@@ -20,7 +20,7 @@
 4. 展開清單記錄已展開節點的值。
 5. 開啟初始全部展開且展開清單為空時，掛載後展開所有含子節點的節點。
 
-來源：1. [Tree.vue][]
+來源：1. [Tree.vue](../../../../app/components/Camelot/Tree.vue)
 
 ### 點擊
 
@@ -29,7 +29,7 @@
 3. 兩種模式點擊後都會發出節點點擊事件。
 4. 停用節點半透明且不回應點擊。
 
-來源：1. [TreeNode.vue][]
+來源：1. [TreeNode.vue](../../../../app/components/Camelot/Internal/TreeNode.vue)
 
 ### 勾選框與自訂節點
 
@@ -43,7 +43,7 @@
 
 每一行最低 40px，每深一層縮排 20px，勾選時不會造成版面位移。
 
-來源：1. [Tree.vue][]　2. [TreeNode.vue][]
+來源：1. [Tree.vue](../../../../app/components/Camelot/Tree.vue)　2. [TreeNode.vue](../../../../app/components/Camelot/Internal/TreeNode.vue)
 
 ## Props
 | Prop | 型別 | 預設 | 說明 |
@@ -72,24 +72,6 @@
 ## 相關頁面
 
 - [Checkbox](./Checkbox.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| tree.ts | [shared/types/tree.ts](../../../../shared/types/tree.ts) |
-| Tree.vue | [app/components/Camelot/Tree.vue](../../../../app/components/Camelot/Tree.vue) |
-| TreeNode.vue | [app/components/Camelot/Internal/TreeNode.vue](../../../../app/components/Camelot/Internal/TreeNode.vue) |
-
-[tree.ts]: #references
-[Tree.vue]: #references
-[TreeNode.vue]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

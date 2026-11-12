@@ -36,7 +36,7 @@ const rows = computed(() => data.slice((page.value - 1) * pageSize.value, page.v
 
 總頁數最少為 1；兩者都沒給時也視為 1 頁。
 
-來源：1. [Pagination.vue][]
+來源：1. [Pagination.vue](../../../../app/components/Camelot/Pagination.vue)
 
 ### 頁碼折疊
 
@@ -44,7 +44,7 @@ const rows = computed(() => data.slice((page.value - 1) * pageSize.value, page.v
 2. 固定顯示目前頁左右各 `siblingCount` 個頁碼。
 3. 其餘頁碼折疊，相鄰頁碼間有缺口時顯示一個「…」。
 
-來源：1. [Pagination.vue][]
+來源：1. [Pagination.vue](../../../../app/components/Camelot/Pagination.vue)
 
 ### 換頁規則
 
@@ -58,7 +58,7 @@ const rows = computed(() => data.slice((page.value - 1) * pageSize.value, page.v
 
 每頁筆數選單使用關閉搜尋的 [SelectV2](./SelectV2.md)，選項顯示為「N / 頁」。
 
-來源：1. [Pagination.vue][]
+來源：1. [Pagination.vue](../../../../app/components/Camelot/Pagination.vue)
 
 ### 各主題頁碼樣式
 
@@ -69,21 +69,7 @@ const rows = computed(() => data.slice((page.value - 1) * pageSize.value, page.v
 | cupertino | 8px 圓角，hover 顯示淺底 | 角色色底 |
 | material | 6px 圓角，hover 顯示淺底 | 角色色底 |
 
-來源：1. [Pagination.vue][]
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| Pagination.vue | [app/components/Camelot/Pagination.vue](../../../../app/components/Camelot/Pagination.vue) |
-
-[Pagination.vue]: #references
+來源：1. [Pagination.vue](../../../../app/components/Camelot/Pagination.vue)
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

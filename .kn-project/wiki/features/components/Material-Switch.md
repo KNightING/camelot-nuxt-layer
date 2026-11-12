@@ -32,25 +32,11 @@
 1. 點擊軌道即切換狀態並發出 `change`。
 2. 停用時點擊不會切換，也不發出事件。
 
-來源：1. [Material/Switch.vue][]
+來源：1. [Material/Switch.vue](../../../../app/components/Camelot/Material/Switch.vue)
 
 ## 相關頁面
 
 - [Switch](./Switch.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| Material/Switch.vue | [app/components/Camelot/Material/Switch.vue](../../../../app/components/Camelot/Material/Switch.vue) |
-
-[Material/Switch.vue]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

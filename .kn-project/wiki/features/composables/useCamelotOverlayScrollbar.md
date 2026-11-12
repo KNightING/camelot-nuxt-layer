@@ -16,7 +16,7 @@
 4. thumb 長度依可視比例計算，最小 40px。
 5. 水平、允許浮動，且容器底部超出視窗時，改為浮動狀態。
 
-來源：1. [useCamelotOverlayScrollbar.ts][]
+來源：1. [useCamelotOverlayScrollbar.ts](../../../../app/composables/useCamelotOverlayScrollbar.ts)
 
 ### 定位與外觀
 
@@ -33,7 +33,7 @@
 
 thumb 只放隨拖曳變動的尺寸、位移與游標；bar 的視覺樣式分開計算，拖曳期間 bar 物件參照不變，CSS transition 不會被重啟。
 
-來源：1. [useCamelotOverlayScrollbar.ts][]
+來源：1. [useCamelotOverlayScrollbar.ts](../../../../app/composables/useCamelotOverlayScrollbar.ts)
 
 ### 拖曳
 
@@ -41,7 +41,7 @@ thumb 只放隨拖曳變動的尺寸、位移與游標；bar 的視覺樣式分�
 2. 移動：把指標位移依 thumb 可移動範圍換算成捲動距離，直接寫回容器。
 3. 放開：結束拖曳並釋放 capture。
 
-來源：1. [useCamelotOverlayScrollbar.ts][]
+來源：1. [useCamelotOverlayScrollbar.ts](../../../../app/composables/useCamelotOverlayScrollbar.ts)
 
 ### 重新量測時機
 
@@ -56,7 +56,7 @@ thumb 只放隨拖曳變動的尺寸、位移與游標；bar 的視覺樣式分�
 
 排入的量測以單一 pending 的 requestAnimationFrame 合併，每幀最多量測一次；scope 結束時取消尚未執行的那一幀。
 
-來源：1. [useCamelotOverlayScrollbar.ts][]
+來源：1. [useCamelotOverlayScrollbar.ts](../../../../app/composables/useCamelotOverlayScrollbar.ts)
 
 ## 用法
 
@@ -130,20 +130,6 @@ type CamelotScrollbarOrientation = 'horizontal' | 'vertical'
 
 - [OverlayScrollbar](../components/OverlayScrollbar.md)
 - [自訂捲軸系統](../../platform/overlay-scrollbar.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useCamelotOverlayScrollbar.ts | [app/composables/useCamelotOverlayScrollbar.ts](../../../../app/composables/useCamelotOverlayScrollbar.ts) |
-
-[useCamelotOverlayScrollbar.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

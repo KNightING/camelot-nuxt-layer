@@ -10,7 +10,7 @@
 
 每一項可以是純字串，或帶 label、color、variant、locked 的物件；物件沒給的欄位沿用群組預設。
 
-來源：1. [TagGroup.vue][]　2. [camelot.ts][]
+來源：1. [TagGroup.vue](../../../../app/components/Camelot/TagGroup.vue)　2. [camelot.ts](../../../../shared/types/camelot.ts)
 
 ### 新增
 
@@ -21,7 +21,7 @@
 5. 新增成功後發出新增與變更事件。
 6. 連續新增模式下輸入框保持開啟；關閉連續新增或達到上限時，新增後自動關閉。
 
-來源：1. [TagGroup.vue][]
+來源：1. [TagGroup.vue](../../../../app/components/Camelot/TagGroup.vue)
 
 ### 刪除與停用
 
@@ -33,7 +33,7 @@
 | 整組停用 | 隱藏新增按鈕，所有標籤都沒有關閉鈕 |
 | 達到數量上限 | 隱藏新增按鈕 |
 
-來源：1. [TagGroup.vue][]
+來源：1. [TagGroup.vue](../../../../app/components/Camelot/TagGroup.vue)
 
 ## Props
 | Prop | 型別 | 預設 | 說明 |
@@ -63,22 +63,6 @@
 ## 相關頁面
 
 - [Tag](./Tag.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| TagGroup.vue | [app/components/Camelot/TagGroup.vue](../../../../app/components/Camelot/TagGroup.vue) |
-| camelot.ts | [shared/types/camelot.ts](../../../../shared/types/camelot.ts) |
-
-[TagGroup.vue]: #references
-[camelot.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

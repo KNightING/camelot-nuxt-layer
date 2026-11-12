@@ -30,3 +30,9 @@ RevealImage、RevealText 各示範 auto、hover、manual 三種觸發；實測�
 - `.kn-project/wiki/features/components/SlideTransitionGroup.md` — 刪除
 - `.kn-project/wiki/features/components.md`、`.kn-project/wiki/index.md` — 移除對應列
 - `.kn-project/wiki.html` — 重新建置
+
+## Wiki Changes
+
+| 頁面 | 日期 | 版本 | 變動 | Issue | PR |
+|---|---|---|---|---|---|
+| `features/components.md` | 2026-09-23 | — | 移除 SlideTransitionGroup（由 Carousel 取代） | [#49](https://github.com/KNightING/camelot-nuxt-layer/issues/49) | — |

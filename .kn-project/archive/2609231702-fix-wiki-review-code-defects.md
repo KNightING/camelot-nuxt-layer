@@ -42,3 +42,28 @@
 - `package.json`、`pnpm-lock.yaml` — `test` script、happy-dom、unimport
 - `.playground/app/pages/index.vue` — 三個示範
 - `.kn-project/wiki/features/composables/*.md`（13 頁）、`.kn-project/wiki/features/components/*.md`（7 頁）、`.kn-project/wiki/dev/testing.md` (new)、`.kn-project/wiki/index.md`
+
+## Wiki Changes
+
+| 頁面 | 日期 | 版本 | 變動 | Issue | PR |
+|---|---|---|---|---|---|
+| `dev/testing.md` | 2026-09-23 | — | 修正程式碼缺陷後更新為修正後的行為 | [#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47) | — |
+| `features/components/DateV2.md` | 2026-09-23 | — | 修正程式碼缺陷後更新為修正後的行為 | [#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47) | — |
+| `features/components/ImageV2.md` | 2026-09-23 | — | 修正程式碼缺陷後更新為修正後的行為 | [#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47) | — |
+| `features/components/Input.md` | 2026-09-23 | — | 修正程式碼缺陷後更新為修正後的行為 | [#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47) | — |
+| `features/components/RevealImage.md` | 2026-09-23 | — | 修正程式碼缺陷後更新為修正後的行為 | [#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47) | — |
+| `features/components/RippleEffect.md` | 2026-09-23 | — | 修正程式碼缺陷後更新為修正後的行為 | [#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47) | — |
+| `features/components/Slider.md` | 2026-09-23 | — | 修正程式碼缺陷後更新為修正後的行為 | [#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47) | — |
+| `features/composables/useAutoLink.md` | 2026-09-23 | — | 修正程式碼缺陷後更新為修正後的行為 | [#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47) | — |
+| `features/composables/useBlobDownload.md` | 2026-09-23 | — | 修正程式碼缺陷後更新為修正後的行為 | [#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47) | — |
+| `features/composables/useCanvasConvert.md` | 2026-09-23 | — | 修正程式碼缺陷後更新為修正後的行為 | [#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47) | — |
+| `features/composables/useColor.md` | 2026-09-23 | — | 修正程式碼缺陷後更新為修正後的行為 | [#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47) | — |
+| `features/composables/useDrawerCollapsed.md` | 2026-09-23 | — | 修正程式碼缺陷後更新為修正後的行為 | [#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47) | — |
+| `features/composables/useFetchJSONLinesStream.md` | 2026-09-23 | — | 修正程式碼缺陷後更新為修正後的行為 | [#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47) | — |
+| `features/composables/useFileToDataURL.md` | 2026-09-23 | — | 修正程式碼缺陷後更新為修正後的行為 | [#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47) | — |
+| `features/composables/useInfinitePage.md` | 2026-09-23 | — | 修正程式碼缺陷後更新為修正後的行為 | [#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47) | — |
+| `features/composables/useInputValidationController.md` | 2026-09-23 | — | 修正程式碼缺陷後更新為修正後的行為 | [#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47) | — |
+| `features/composables/useIsValidKey.md` | 2026-09-23 | — | 修正程式碼缺陷後更新為修正後的行為 | [#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47) | — |
+| `features/composables/useLazyImage.md` | 2026-09-23 | — | 修正程式碼缺陷後更新為修正後的行為 | [#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47) | — |
+| `features/composables/useObject.md` | 2026-09-23 | — | 修正程式碼缺陷後更新為修正後的行為 | [#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47) | — |
+| `features/composables/useValueValidation.md` | 2026-09-23 | — | 修正程式碼缺陷後更新為修正後的行為 | [#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47) | — |

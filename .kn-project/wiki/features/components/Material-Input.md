@@ -39,7 +39,7 @@
 | 沒有 `label` | 欄位最低 42px，佔位文字隨時顯示 |
 | 有值的判斷 | 值不是 undefined 也不是空字串；數字 0 算有值 |
 
-來源：1. [Material/Input.vue][]
+來源：1. [Material/Input.vue](../../../../app/components/Camelot/Material/Input.vue)
 
 ### 聚焦與停用
 
@@ -47,27 +47,11 @@
 2. 欄位內任一元素取得焦點時，底線換成目前色彩角色，並在底部加一條 1px 的內陰影，讓底線看起來加粗。
 3. 停用時原生 input 停用；半透明與禁止游標由外層 `CamelotInput` 處理。
 
-來源：1. [Material/Input.vue][]　2. [Input.vue][]
+來源：1. [Material/Input.vue](../../../../app/components/Camelot/Material/Input.vue)　2. [Input.vue](../../../../app/components/Camelot/Input.vue)
 
 ## 相關頁面
 
 - [Input](./Input.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| Material/Input.vue | [app/components/Camelot/Material/Input.vue](../../../../app/components/Camelot/Material/Input.vue) |
-| Input.vue | [app/components/Camelot/Input.vue](../../../../app/components/Camelot/Input.vue) |
-
-[Material/Input.vue]: #references
-[Input.vue]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

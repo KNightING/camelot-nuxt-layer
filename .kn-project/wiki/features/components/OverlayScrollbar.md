@@ -21,7 +21,7 @@
 2. 把捲動容器的元素傳給 `container`；水平與垂直各放一個實例。
 3. 平時捲軸以絕對定位貼在外層內：水平貼底、垂直貼右，兩端各內縮 6px，會被外層的圓角裁切。
 
-來源：1. [OverlayScrollbar.vue][]　2. [Table.vue][]
+來源：1. [OverlayScrollbar.vue](../../../../app/components/Camelot/OverlayScrollbar.vue)　2. [Table.vue](../../../../app/components/Camelot/Table.vue)
 
 ### 顯示與浮動
 
@@ -34,7 +34,7 @@
 
 容器尺寸、內容尺寸、視窗捲動與縮放都會觸發重新量測，每個畫面幀最多量測一次。
 
-來源：1. [OverlayScrollbar.vue][]　2. [useCamelotOverlayScrollbar.ts][]
+來源：1. [OverlayScrollbar.vue](../../../../app/components/Camelot/OverlayScrollbar.vue)　2. [useCamelotOverlayScrollbar.ts](../../../../app/composables/useCamelotOverlayScrollbar.ts)
 
 ### 滑塊
 
@@ -43,25 +43,7 @@
 3. 平時滑塊是半寬、半透明的膠囊；hover 或拖曳時放大到全寬、改用實色並加一圈淡光暈。
 4. 顏色取全域的色彩角色變數，所以浮動到頁面最外層後仍維持同一顏色。
 
-來源：1. [OverlayScrollbar.vue][]　2. [useCamelotOverlayScrollbar.ts][]
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| OverlayScrollbar.vue | [app/components/Camelot/OverlayScrollbar.vue](../../../../app/components/Camelot/OverlayScrollbar.vue) |
-| Table.vue | [app/components/Camelot/Table.vue](../../../../app/components/Camelot/Table.vue) |
-| useCamelotOverlayScrollbar.ts | [app/composables/useCamelotOverlayScrollbar.ts](../../../../app/composables/useCamelotOverlayScrollbar.ts) |
-
-[OverlayScrollbar.vue]: #references
-[Table.vue]: #references
-[useCamelotOverlayScrollbar.ts]: #references
+來源：1. [OverlayScrollbar.vue](../../../../app/components/Camelot/OverlayScrollbar.vue)　2. [useCamelotOverlayScrollbar.ts](../../../../app/composables/useCamelotOverlayScrollbar.ts)
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

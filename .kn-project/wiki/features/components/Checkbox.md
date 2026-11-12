@@ -45,7 +45,7 @@ Checkbox 是核取方塊的公開元件，匯入名稱 `CamelotCheckbox`。它�
 | aqua | [Aqua Checkbox](./Aqua-Checkbox.md) |
 | 其他 | [Material Checkbox](./Material-Checkbox.md) |
 
-來源：1. [Checkbox.vue][]
+來源：1. [Checkbox.vue](../../../../app/components/Camelot/Checkbox.vue)
 
 ### 尺寸
 
@@ -56,33 +56,11 @@ Checkbox 是核取方塊的公開元件，匯入名稱 `CamelotCheckbox`。它�
 | cupertino | 22×22 | 12×8 |
 | scifi | 方塊指示器 | 不畫勾號 |
 
-來源：1. [Aqua/Checkbox.vue][]　2. [Material/Checkbox.vue][]　3. [Cupertino/Checkbox.vue][]　4. [Scifi/Checkbox.vue][]
+來源：1. [Aqua/Checkbox.vue](../../../../app/components/Camelot/Aqua/Checkbox.vue)　2. [Material/Checkbox.vue](../../../../app/components/Camelot/Material/Checkbox.vue)　3. [Cupertino/Checkbox.vue](../../../../app/components/Camelot/Cupertino/Checkbox.vue)　4. [Scifi/Checkbox.vue](../../../../app/components/Camelot/Scifi/Checkbox.vue)
 
 ## 相關頁面
 - [CheckboxGroup](./CheckboxGroup.md)
 - [FieldLabel](./FieldLabel.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| Checkbox.vue | [app/components/Camelot/Checkbox.vue](../../../../app/components/Camelot/Checkbox.vue) |
-| Aqua/Checkbox.vue | [app/components/Camelot/Aqua/Checkbox.vue](../../../../app/components/Camelot/Aqua/Checkbox.vue) |
-| Material/Checkbox.vue | [app/components/Camelot/Material/Checkbox.vue](../../../../app/components/Camelot/Material/Checkbox.vue) |
-| Cupertino/Checkbox.vue | [app/components/Camelot/Cupertino/Checkbox.vue](../../../../app/components/Camelot/Cupertino/Checkbox.vue) |
-| Scifi/Checkbox.vue | [app/components/Camelot/Scifi/Checkbox.vue](../../../../app/components/Camelot/Scifi/Checkbox.vue) |
-
-[Checkbox.vue]: #references
-[Aqua/Checkbox.vue]: #references
-[Material/Checkbox.vue]: #references
-[Cupertino/Checkbox.vue]: #references
-[Scifi/Checkbox.vue]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

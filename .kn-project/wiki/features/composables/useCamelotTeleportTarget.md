@@ -13,7 +13,7 @@
 3. 找到就回傳該元素，否則回傳字串 body，可直接綁到 Teleport 的 to。
 4. 兩者都是 computed，錨點變動時自動重算。
 
-來源：1. [useCamelotTeleportTarget.ts][]
+來源：1. [useCamelotTeleportTarget.ts](../../../../app/composables/useCamelotTeleportTarget.ts)
 
 ### 為什麼需要它
 
@@ -26,7 +26,7 @@ Teleport 到 body 的浮層無論 z-index 開多高，都會被壓在對話框�
 > [!IMPORTANT]
 > 兩者是先後關係：**沒有先修好 Teleport 目標，單獨調高 z-index 完全無效。**
 
-來源：1. [useCamelotTeleportTarget.ts][]
+來源：1. [useCamelotTeleportTarget.ts](../../../../app/composables/useCamelotTeleportTarget.ts)
 
 ### 使用者
 
@@ -38,7 +38,7 @@ Teleport 到 body 的浮層無論 z-index 開多高，都會被壓在對話框�
 
 [PopupV2](../components/PopupV2.md) 沒有使用本 composable，而是自行往上找對話框祖先，並提供 teleport prop 讓呼叫端指定目標。
 
-來源：1. [Tooltip.vue][]　2. [CascadeMenuPanel.vue][]　3. [TimeField.vue][]　4. [PopupV2.vue][]
+來源：1. [Tooltip.vue](../../../../app/components/Camelot/Tooltip.vue)　2. [CascadeMenuPanel.vue](../../../../app/components/Camelot/Internal/CascadeMenuPanel.vue)　3. [TimeField.vue](../../../../app/components/Camelot/Internal/TimeField.vue)　4. [PopupV2.vue](../../../../app/components/Camelot/PopupV2.vue)
 
 ### 注意事項
 
@@ -46,7 +46,7 @@ Teleport 到 body 的浮層無論 z-index 開多高，都會被壓在對話框�
 
 目前各元件在浮層面板上再套一次色彩角色 class，補回當前色變數。
 
-來源：1. [CascadeMenuPanel.vue][]
+來源：1. [CascadeMenuPanel.vue](../../../../app/components/Camelot/Internal/CascadeMenuPanel.vue)
 
 ## 用法
 
@@ -95,28 +95,6 @@ useCamelotTeleportTarget(
 
 - [疊層刻度](../../platform/layering.md)
 - [Composables 清單](../composables.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useCamelotTeleportTarget.ts | [app/composables/useCamelotTeleportTarget.ts](../../../../app/composables/useCamelotTeleportTarget.ts) |
-| Tooltip.vue | [app/components/Camelot/Tooltip.vue](../../../../app/components/Camelot/Tooltip.vue) |
-| CascadeMenuPanel.vue | [app/components/Camelot/Internal/CascadeMenuPanel.vue](../../../../app/components/Camelot/Internal/CascadeMenuPanel.vue) |
-| TimeField.vue | [app/components/Camelot/Internal/TimeField.vue](../../../../app/components/Camelot/Internal/TimeField.vue) |
-| PopupV2.vue | [app/components/Camelot/PopupV2.vue](../../../../app/components/Camelot/PopupV2.vue) |
-
-[useCamelotTeleportTarget.ts]: #references
-[Tooltip.vue]: #references
-[CascadeMenuPanel.vue]: #references
-[TimeField.vue]: #references
-[PopupV2.vue]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

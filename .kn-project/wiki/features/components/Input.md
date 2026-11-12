@@ -67,7 +67,7 @@ Input 本身不含原生 input，而是依主題渲染對應的主題輸入元�
 2. 同一時間只渲染其中一個，Input 以共用的 template ref 取得後轉成自己的 inputEl。
 3. 新增主題元件時必須一併公開 inputEl，否則該主題下 inputEl 會是 null。
 
-來源：1. [Input.vue][]
+來源：1. [Input.vue](../../../../app/components/Camelot/Input.vue)
 
 ### 標題與高度
 
@@ -79,7 +79,7 @@ Input 本身不含原生 input，而是依主題渲染對應的主題輸入元�
 
 字級 1rem 設在根節點，外部 CSS 可以覆蓋；字級變大時欄位跟著變高，42px 只是下限。
 
-來源：1. [Input.vue][]　2. [Material/Input.vue][]
+來源：1. [Input.vue](../../../../app/components/Camelot/Input.vue)　2. [Material/Input.vue](../../../../app/components/Camelot/Material/Input.vue)
 
 ### 下拉選單
 
@@ -92,7 +92,7 @@ mode 為 select 或 only-select 時，輸入框下方掛一個下拉選單，最
 
 only-select 模式的原生 input 設為停用且不接收指標事件，只能從選單選取。
 
-來源：1. [Input.vue][]
+來源：1. [Input.vue](../../../../app/components/Camelot/Input.vue)
 
 ### 密碼顯示
 
@@ -109,28 +109,7 @@ type 為 password 且 passwordToggle 開啟時，after 區域尾端出現 [Passw
 
 瀏覽器原生的密碼顯示與清除鈕已在全域樣式關閉，避免與內建眼睛鈕重複。
 
-來源：1. [Input.vue][]　2. [PasswordToggle.vue][]　3. [tailwind.css][]
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231702-fix-wiki-review-code-defects](../../../archive/2609231702-fix-wiki-review-code-defects.md) | 修正程式碼缺陷後更新為修正後的行為 | [#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47) | — |
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| Input.vue | [app/components/Camelot/Input.vue](../../../../app/components/Camelot/Input.vue) |
-| Material/Input.vue | [app/components/Camelot/Material/Input.vue](../../../../app/components/Camelot/Material/Input.vue) |
-| PasswordToggle.vue | [app/components/Camelot/Internal/PasswordToggle.vue](../../../../app/components/Camelot/Internal/PasswordToggle.vue) |
-| tailwind.css | [app/assets/css/tailwind.css](../../../../app/assets/css/tailwind.css) |
-
-[Input.vue]: #references
-[Material/Input.vue]: #references
-[PasswordToggle.vue]: #references
-[tailwind.css]: #references
+來源：1. [Input.vue](../../../../app/components/Camelot/Input.vue)　2. [PasswordToggle.vue](../../../../app/components/Camelot/Internal/PasswordToggle.vue)　3. [tailwind.css](../../../../app/assets/css/tailwind.css)
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

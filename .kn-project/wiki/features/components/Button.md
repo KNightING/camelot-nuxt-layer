@@ -37,31 +37,17 @@ Button 是依當前主題自動切換外觀的公開按鈕元件，匯入名稱 
 | aqua | [Aqua Button](./Aqua-Button.md) |
 | 其他（預設 material） | [Material Button](./Material-Button.md)，另外收到 color 與 isContainer 以決定漣漪顏色 |
 
-來源：1. [Button.vue][]
+來源：1. [Button.vue](../../../../app/components/Camelot/Button.vue)
 
 ### 尺寸
 
 四種主題最低高度都是 42px；字級變大時按鈕會跟著撐高，不會裁切文字。
 
-來源：1. [Button.vue][]
+來源：1. [Button.vue](../../../../app/components/Camelot/Button.vue)
 
 ## 相關頁面
 - [useCamelotTheme](../composables/useCamelotTheme.md)
 - [useCamelotRoleColorClass](../composables/useCamelotRoleColorClass.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| Button.vue | [app/components/Camelot/Button.vue](../../../../app/components/Camelot/Button.vue) |
-
-[Button.vue]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

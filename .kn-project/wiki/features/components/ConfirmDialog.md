@@ -85,21 +85,7 @@ ConfirmDialog 是帶標準按鈕列的確認對話框，匯入名稱 `CamelotCon
 
 內容只放內容即可：外框與內距已由 BaseDialogV2 負責。
 
-來源：1. [ConfirmDialog.vue][]
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| ConfirmDialog.vue | [app/components/Camelot/ConfirmDialog.vue](../../../../app/components/Camelot/ConfirmDialog.vue) |
-
-[ConfirmDialog.vue]: #references
+來源：1. [ConfirmDialog.vue](../../../../app/components/Camelot/ConfirmDialog.vue)
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

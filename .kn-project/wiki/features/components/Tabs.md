@@ -14,7 +14,7 @@
 4. 點到已選取的分頁不重複切換；切到新分頁時更新選取值，並發出變更事件。
 5. 分頁文字預設取選項的 name；有指定資料欄位名且選項資料含該欄位時，改取該欄位。
 
-來源：1. [Tabs.vue][]
+來源：1. [Tabs.vue](../../../../app/components/Camelot/Tabs.vue)
 
 ### 指示器與捲動
 
@@ -29,7 +29,7 @@
 2. 選取、選項或主題變更，容器尺寸變化，以及字型載入完成後都會重算。
 3. 元件更新時把選取分頁捲到中央；可選擇平滑捲動或直接跳過去。
 
-來源：1. [Tabs.vue][]
+來源：1. [Tabs.vue](../../../../app/components/Camelot/Tabs.vue)
 
 ## Props
 | Prop | 型別 | 預設 | 說明 |
@@ -56,20 +56,6 @@
 | Slot | 作用域參數 | 說明 |
 | :--- | :--- | :--- |
 | `default` | `{ item, option, data, text, index, isSelected }` | 自訂單一分頁內容。 |
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| Tabs.vue | [app/components/Camelot/Tabs.vue](../../../../app/components/Camelot/Tabs.vue) |
-
-[Tabs.vue]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

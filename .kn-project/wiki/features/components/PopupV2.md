@@ -45,7 +45,7 @@
 | 頁面捲動 | 關閉；`disabledCloseWhenScrolling` 開啟時不作用 |
 | 捲動父層捲動 | 關閉；在對話框內時一律關閉，不受 `disabledCloseWhenScrolling` 影響 |
 
-來源：1. [PopupV2.vue][]
+來源：1. [PopupV2.vue](../../../../app/components/Camelot/PopupV2.vue)
 
 ### 定位
 
@@ -58,7 +58,7 @@
 
 因為使用固定定位，祖先元素若設定 transform、perspective、filter 或 will-change，定位可能失效。
 
-來源：1. [PopupV2.vue][]
+來源：1. [PopupV2.vue](../../../../app/components/Camelot/PopupV2.vue)
 
 ### 寬度模式
 
@@ -68,7 +68,7 @@
 | `min-target` | 依內容寬度，但不小於觸發元素 |
 | `same-target` | 與觸發元素同寬 |
 
-來源：1. [PopupV2.vue][]
+來源：1. [PopupV2.vue](../../../../app/components/Camelot/PopupV2.vue)
 
 ### 掛載目標與疊層
 
@@ -78,27 +78,13 @@
 4. 浮層容器帶有 `data-camelot-popup` 屬性。掛進對話框後浮層落在對話框內容框之外，[BaseDialogV2](./BaseDialogV2.md) 靠這個標記把它與遮罩區分，點選單選項才不會被誤判成點遮罩而關閉對話框。自訂浮層要有相同行為時，也要帶上這個屬性。
 5. 預設層級高於 Drawer 與 BottomSheet，因為掛進對話框後三者互為同層兄弟節點，見[疊層刻度](../../platform/layering.md)。
 
-來源：1. [PopupV2.vue][]
+來源：1. [PopupV2.vue](../../../../app/components/Camelot/PopupV2.vue)
 
 ### 陰影
 
 陰影畫在帶 `popupClass` 的外層容器上，內容本身包在展開動畫容器裡並裁切溢出。要自訂浮層圓角時，把圓角 class 放進 `popupClass`，陰影才會跟著圓角，不會被裁成方形。
 
-來源：1. [PopupV2.vue][]
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| PopupV2.vue | [app/components/Camelot/PopupV2.vue](../../../../app/components/Camelot/PopupV2.vue) |
-
-[PopupV2.vue]: #references
+來源：1. [PopupV2.vue](../../../../app/components/Camelot/PopupV2.vue)
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

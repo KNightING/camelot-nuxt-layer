@@ -27,7 +27,7 @@ MenuItem（匯入名稱 `CamelotInternalMenuItem`）是 [Menu](./Menu.md) 側邊
 
 有子項時右側顯示箭頭，展開時轉 90 度；子層以 [Expanded](./Expanded.md) 做展開動畫。
 
-來源：1. [MenuItem.vue][]　2. [menu.ts][]
+來源：1. [MenuItem.vue](../../../../app/components/Camelot/Internal/MenuItem.vue)　2. [menu.ts](../../../../shared/types/menu.ts)
 
 ### 選中樣式
 
@@ -38,29 +38,13 @@ MenuItem（匯入名稱 `CamelotInternalMenuItem`）是 [Menu](./Menu.md) 側邊
 | Cupertino | 10% 角色色底、粗體角色色文字 |
 | Material | 10% 角色色底、中等字重角色色文字 |
 
-來源：1. [MenuItem.vue][]
+來源：1. [MenuItem.vue](../../../../app/components/Camelot/Internal/MenuItem.vue)
 
 ### 階層導引線
 
 子層向右縮排，左側畫一條垂直導引線，止於最後一個子項的中線，並以 L 形轉角指向它。子層保留內距，讓選中項的陰影不被裁切。
 
-來源：1. [MenuItem.vue][]
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| MenuItem.vue | [app/components/Camelot/Internal/MenuItem.vue](../../../../app/components/Camelot/Internal/MenuItem.vue) |
-| menu.ts | [shared/types/menu.ts](../../../../shared/types/menu.ts) |
-
-[MenuItem.vue]: #references
-[menu.ts]: #references
+來源：1. [MenuItem.vue](../../../../app/components/Camelot/Internal/MenuItem.vue)
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

@@ -41,7 +41,7 @@
 | 核心 composable | 抽象主軸與交叉軸：水平的主軸是 X，垂直的主軸是 Y；負責量測、thumb 幾何、拖曳、hover、停靠與浮動 |
 | 捲軸元件 | 呼叫核心，渲染 track、thumb 與 bar；水平浮動時 Teleport 到 body |
 
-來源：1. [useCamelotOverlayScrollbar.ts][]　2. [OverlayScrollbar.vue][]
+來源：1. [useCamelotOverlayScrollbar.ts](../../../app/composables/useCamelotOverlayScrollbar.ts)　2. [OverlayScrollbar.vue](../../../app/components/Camelot/OverlayScrollbar.vue)
 
 ### 行為
 
@@ -55,7 +55,7 @@
 
 換頁或資料變動時容器尺寸不變、內容高度改變，觀察內容元素才能即時重算並顯示捲軸。
 
-來源：1. [useCamelotOverlayScrollbar.ts][]　2. [OverlayScrollbar.vue][]
+來源：1. [useCamelotOverlayScrollbar.ts](../../../app/composables/useCamelotOverlayScrollbar.ts)　2. [OverlayScrollbar.vue](../../../app/components/Camelot/OverlayScrollbar.vue)
 
 ## Props
 
@@ -75,7 +75,7 @@
 2. 以 scrollbar-width 與 webkit 捲軸樣式隱藏雙軸原生捲軸。
 3. 疊上兩個 overlay 捲軸：水平的浮動開關由 Table 的 `floatingScrollbar` 帶入，垂直的起點偏移帶表頭高度。
 
-來源：1. [Table.vue][]
+來源：1. [Table.vue](../../../app/components/Camelot/Table.vue)
 
 ### 保留空間
 
@@ -85,7 +85,7 @@
 | 寬度 6px | 等於未 hover 的 bar 4px 加內縮 2px |
 | 可開關 | 關閉保留空間時不加 border，捲軸直接蓋在表格上 |
 
-來源：1. [Table.vue][]
+來源：1. [Table.vue](../../../app/components/Camelot/Table.vue)
 
 ### Table 捲軸相關 props
 
@@ -98,7 +98,7 @@
 | `reserveHorizontalScrollbar` | `boolean` | `true` | 是否保留水平捲軸 gutter |
 | `color` | `CamelotColorRole` | `primary` | 捲軸、列 hover 與表頭底線的色彩角色 |
 
-來源：1. [Table.vue][]
+來源：1. [Table.vue](../../../app/components/Camelot/Table.vue)
 
 ## 實作限制
 
@@ -109,31 +109,13 @@
 | 捲動容器的 padding 區會顯示捲動內容 | gutter 改用透明 border |
 | 只觀察容器尺寸時，內容變動不會重算 | ResizeObserver 也觀察內容元素 |
 
-來源：1. [OverlayScrollbar.vue][]　2. [useCamelotOverlayScrollbar.ts][]　3. [Table.vue][]
+來源：1. [OverlayScrollbar.vue](../../../app/components/Camelot/OverlayScrollbar.vue)　2. [useCamelotOverlayScrollbar.ts](../../../app/composables/useCamelotOverlayScrollbar.ts)　3. [Table.vue](../../../app/components/Camelot/Table.vue)
 
 ## 相關頁面
 
 - [Table](../features/components/Table.md)
 - [OverlayScrollbar](../features/components/OverlayScrollbar.md)
 - [Scrollbar](../features/components/Scrollbar.md)：包裝式捲軸
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useCamelotOverlayScrollbar.ts | [app/composables/useCamelotOverlayScrollbar.ts](../../../app/composables/useCamelotOverlayScrollbar.ts) |
-| OverlayScrollbar.vue | [app/components/Camelot/OverlayScrollbar.vue](../../../app/components/Camelot/OverlayScrollbar.vue) |
-| Table.vue | [app/components/Camelot/Table.vue](../../../app/components/Camelot/Table.vue) |
-
-[useCamelotOverlayScrollbar.ts]: #references
-[OverlayScrollbar.vue]: #references
-[Table.vue]: #references
 
 ---
 [⚙️ Env](../environment.md) | [🏠 Wiki](../index.md)

@@ -31,7 +31,7 @@ FieldFrame（匯入名稱 `CamelotInternalFieldFrame`）是表單欄位共用的
 
 其他主題時元件只輸出插槽內容，欄位的框線與底色由使用端自己的主題樣式負責。
 
-來源：1. [FieldFrame.vue][]
+來源：1. [FieldFrame.vue](../../../../app/components/Camelot/Internal/FieldFrame.vue)
 
 ### 使用端
 
@@ -42,29 +42,7 @@ FieldFrame（匯入名稱 `CamelotInternalFieldFrame`）是表單欄位共用的
 | [TimeV2](./TimeV2.md) | 時間面板開啟中 |
 | [NumberCounter](./NumberCounter.md) | 輸入框聚焦中 |
 
-來源：1. [DateV2.vue][]　2. [DateRangeV2.vue][]　3. [TimeV2.vue][]　4. [NumberCounter.vue][]
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 建立 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| FieldFrame.vue | [app/components/Camelot/Internal/FieldFrame.vue](../../../../app/components/Camelot/Internal/FieldFrame.vue) |
-| DateV2.vue | [app/components/Camelot/DateV2.vue](../../../../app/components/Camelot/DateV2.vue) |
-| DateRangeV2.vue | [app/components/Camelot/DateRangeV2.vue](../../../../app/components/Camelot/DateRangeV2.vue) |
-| TimeV2.vue | [app/components/Camelot/TimeV2.vue](../../../../app/components/Camelot/TimeV2.vue) |
-| NumberCounter.vue | [app/components/Camelot/NumberCounter.vue](../../../../app/components/Camelot/NumberCounter.vue) |
-
-[FieldFrame.vue]: #references
-[DateV2.vue]: #references
-[DateRangeV2.vue]: #references
-[TimeV2.vue]: #references
-[NumberCounter.vue]: #references
+來源：1. [DateV2.vue](../../../../app/components/Camelot/DateV2.vue)　2. [DateRangeV2.vue](../../../../app/components/Camelot/DateRangeV2.vue)　3. [TimeV2.vue](../../../../app/components/Camelot/TimeV2.vue)　4. [NumberCounter.vue](../../../../app/components/Camelot/NumberCounter.vue)
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

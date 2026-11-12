@@ -23,7 +23,7 @@
 2. `addNodeView()` 必須明寫回傳型別 `NodeViewRenderer`，否則會與 schema 形成循環推導。
 3. 插入圖片用 `insertContent` 帶 image 型別與屬性，而不用 `setImage()`：後者的選項型別容不下自訂的 `pending` 屬性，兩者行為相同。
 
-來源：1. [RichTextEditor.vue][]　2. [resizable-image.ts][]　3. [ResizableImageView.vue][]　4. [paste-sanitize.ts][]　5. [tab-indent.ts][]
+來源：1. [RichTextEditor.vue](../../../app/components/Camelot/RichTextEditor.vue)　2. [resizable-image.ts](../../../app/components/Camelot/Internal/editor/resizable-image.ts)　3. [ResizableImageView.vue](../../../app/components/Camelot/Internal/editor/ResizableImageView.vue)　4. [paste-sanitize.ts](../../../app/components/Camelot/Internal/editor/paste-sanitize.ts)　5. [tab-indent.ts](../../../app/components/Camelot/Internal/editor/tab-indent.ts)
 
 ### 圖片上傳
 
@@ -35,7 +35,7 @@
 4. 上傳中再次呼叫 `flush()` 會丟錯；上傳失敗時狀態列顯示錯誤並把錯誤往外丟，保留原始錯誤在 `cause`。
 5. 沒有 `uploadHandler` 時，圖片彈窗只能貼圖片網址，貼上與拖入圖片檔不會被攔截。
 
-來源：1. [RichTextEditor.vue][]
+來源：1. [RichTextEditor.vue](../../../app/components/Camelot/RichTextEditor.vue)
 
 ### 工具列與主題
 
@@ -46,7 +46,7 @@
 5. 啟用態依主題區分：aqua 漸層加柔光、scifi 霓虹底色加色彩角色邊框與光暈，其餘為實心。
 6. 顏色一律走主題 token 與色彩角色，邊框用 border token。
 
-來源：1. [RichTextEditor.vue][]
+來源：1. [RichTextEditor.vue](../../../app/components/Camelot/RichTextEditor.vue)
 
 ### RichTextEditor Props
 
@@ -64,7 +64,7 @@
 | `flush()` | 上傳所有仍在內容中的待上傳圖片 |
 | `hasPending` | 是否還有待上傳圖片 |
 
-來源：1. [RichTextEditor.vue][]
+來源：1. [RichTextEditor.vue](../../../app/components/Camelot/RichTextEditor.vue)
 
 ### ImageDropzone
 
@@ -99,13 +99,13 @@
 
 整個元件都是拖放目標；邊框走 border token，hover 與拖入時改用色彩角色。
 
-來源：1. [ImageDropzone.vue][]
+來源：1. [ImageDropzone.vue](../../../app/components/Camelot/ImageDropzone.vue)
 
 ### 開發環境
 
 playground 的 Nuxt 設定開頭會把開發時的暫存目錄導到短路徑。macOS 預設暫存目錄太長，vite-node 建立的 unix socket 路徑會超過約 104 字元上限而連線失敗。這個設定只在 playground 開發時生效，不隨 layer 發佈。
 
-來源：1. [nuxt.config.ts][]
+來源：1. [nuxt.config.ts](../../../.playground/nuxt.config.ts)
 
 ## 相關頁面
 
@@ -115,32 +115,6 @@ playground 的 Nuxt 設定開頭會把開發時的暫存目錄導到短路徑。
 - [ResizableImageView](./components/Internal-editor-ResizableImageView.md)
 - [檔案拖曳](./file-drop.md)
 - [主題系統](../platform/theme-system.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| RichTextEditor.vue | [app/components/Camelot/RichTextEditor.vue](../../../app/components/Camelot/RichTextEditor.vue) |
-| resizable-image.ts | [app/components/Camelot/Internal/editor/resizable-image.ts](../../../app/components/Camelot/Internal/editor/resizable-image.ts) |
-| ResizableImageView.vue | [app/components/Camelot/Internal/editor/ResizableImageView.vue](../../../app/components/Camelot/Internal/editor/ResizableImageView.vue) |
-| paste-sanitize.ts | [app/components/Camelot/Internal/editor/paste-sanitize.ts](../../../app/components/Camelot/Internal/editor/paste-sanitize.ts) |
-| tab-indent.ts | [app/components/Camelot/Internal/editor/tab-indent.ts](../../../app/components/Camelot/Internal/editor/tab-indent.ts) |
-| ImageDropzone.vue | [app/components/Camelot/ImageDropzone.vue](../../../app/components/Camelot/ImageDropzone.vue) |
-| nuxt.config.ts | [.playground/nuxt.config.ts](../../../.playground/nuxt.config.ts) |
-
-[RichTextEditor.vue]: #references
-[resizable-image.ts]: #references
-[ResizableImageView.vue]: #references
-[paste-sanitize.ts]: #references
-[tab-indent.ts]: #references
-[ImageDropzone.vue]: #references
-[nuxt.config.ts]: #references
 
 ---
 [⚙️ Env](../environment.md) | [🏠 Wiki](../index.md)

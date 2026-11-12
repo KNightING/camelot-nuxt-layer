@@ -18,7 +18,7 @@
 | Email | 一般 Email 格式 | mailto 連結 |
 | 電話 | 數字與橫線、點、空白、括號的簡化組合 | tel 連結；移除分隔符號後至少 7 碼才轉換，未達時保留原文 |
 
-來源：1. [useAutoLink.ts][]
+來源：1. [useAutoLink.ts](../../../../app/composables/useAutoLink.ts)
 
 ## 用法
 
@@ -30,7 +30,7 @@ const html = useAutoLink(() => props.text, { disabledPhone: true })
 <p v-html="html" />
 ```
 
-來源：1. [useAutoLink.ts][]
+來源：1. [useAutoLink.ts](../../../../app/composables/useAutoLink.ts)
 
 ## 簽章
 
@@ -71,22 +71,7 @@ type AutoLinkOptions = {
 | 網址含長數字 | 網址整段轉成連結，其中的數字不會再被當成電話 |
 | 電話格式 | 規則為簡化版，7 碼以上的編號等數字串仍可能被誤判 |
 
-來源：1. [useAutoLink.ts][]
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231702-fix-wiki-review-code-defects](../../../archive/2609231702-fix-wiki-review-code-defects.md) | 修正程式碼缺陷後更新為修正後的行為 | [#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47) | — |
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useAutoLink.ts | [app/composables/useAutoLink.ts](../../../../app/composables/useAutoLink.ts) |
-
-[useAutoLink.ts]: #references
+來源：1. [useAutoLink.ts](../../../../app/composables/useAutoLink.ts)
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

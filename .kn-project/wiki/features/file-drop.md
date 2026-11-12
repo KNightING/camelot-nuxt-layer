@@ -42,7 +42,7 @@
 | 拖曳區外觀完全自訂 | `useCamelotFileDrop` 綁到任意元素 |
 | 只要顯示一個檔案 | FileChip |
 
-來源：1. [useCamelotFileDrop.ts][]　2. [ImageDropzone.vue][]　3. [FileDropzone.vue][]　4. [FileChip.vue][]
+來源：1. [useCamelotFileDrop.ts](../../../app/composables/useCamelotFileDrop.ts)　2. [ImageDropzone.vue](../../../app/components/Camelot/ImageDropzone.vue)　3. [FileDropzone.vue](../../../app/components/Camelot/FileDropzone.vue)　4. [FileChip.vue](../../../app/components/Camelot/FileChip.vue)
 
 ### 核心 useCamelotFileDrop
 
@@ -83,7 +83,7 @@
 
 同一個模組另匯出 `camelotFileMeta` 與 `camelotFormatFileSize`，可單獨取得檔案的型別分類與大小文字。
 
-來源：1. [useCamelotFileDrop.ts][]
+來源：1. [useCamelotFileDrop.ts](../../../app/composables/useCamelotFileDrop.ts)
 
 ### FileChip
 
@@ -107,7 +107,7 @@
 | video | mp4、mov、avi、mkv、webm，或影片 MIME | cyan-600 |
 | file | 其他 | slate-500 |
 
-來源：1. [FileChip.vue][]　2. [useCamelotFileDrop.ts][]
+來源：1. [FileChip.vue](../../../app/components/Camelot/FileChip.vue)　2. [useCamelotFileDrop.ts](../../../app/composables/useCamelotFileDrop.ts)
 
 ### FileDropzone
 
@@ -130,7 +130,7 @@
 | `#chip` | 替換單一晶片，scope 為 `file`、`url`、`index`、`remove` |
 | `select` | 清單變動時 emit 目前的檔案陣列 |
 
-來源：1. [FileDropzone.vue][]
+來源：1. [FileDropzone.vue](../../../app/components/Camelot/FileDropzone.vue)
 
 ### ImageDropzone 與核心的關係
 
@@ -141,7 +141,7 @@ ImageDropzone 的拖曳、過濾與縮圖同樣由核心提供，只是在 grid 
 | `multiple` | `multiple` 或版面為 grid |
 | `thumbnails` | `preview` 或版面為 grid |
 
-來源：1. [ImageDropzone.vue][]
+來源：1. [ImageDropzone.vue](../../../app/components/Camelot/ImageDropzone.vue)
 
 ## 相關頁面
 
@@ -150,26 +150,6 @@ ImageDropzone 的拖曳、過濾與縮圖同樣由核心提供，只是在 grid 
 - [ImageDropzone](./components/ImageDropzone.md)
 - [useCamelotFileDrop](./composables/useCamelotFileDrop.md)
 - [RichTextEditor 與 ImageDropzone](./richtext-editor-image-dropzone.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useCamelotFileDrop.ts | [app/composables/useCamelotFileDrop.ts](../../../app/composables/useCamelotFileDrop.ts) |
-| ImageDropzone.vue | [app/components/Camelot/ImageDropzone.vue](../../../app/components/Camelot/ImageDropzone.vue) |
-| FileDropzone.vue | [app/components/Camelot/FileDropzone.vue](../../../app/components/Camelot/FileDropzone.vue) |
-| FileChip.vue | [app/components/Camelot/FileChip.vue](../../../app/components/Camelot/FileChip.vue) |
-
-[useCamelotFileDrop.ts]: #references
-[ImageDropzone.vue]: #references
-[FileDropzone.vue]: #references
-[FileChip.vue]: #references
 
 ---
 [⚙️ Env](../environment.md) | [🏠 Wiki](../index.md)

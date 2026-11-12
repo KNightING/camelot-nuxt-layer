@@ -42,7 +42,7 @@
 3. 日曆核心內建的時間區一律以 `hideTime` 關閉，時間列改由外層放在月曆下方，與「確認」鈕同一區塊。
 4. DateRangeV2 在 `multiCalendars` 開啟且非手機寬度時並排兩個月曆：左月曆隱藏下個月箭頭與下個月日期格，右月曆隱藏上個月的。
 
-來源：1. [Calendar.vue][]　2. [DateV2.vue][]　3. [DateRangeV2.vue][]
+來源：1. [Calendar.vue](../../../app/components/Camelot/Internal/Calendar.vue)　2. [DateV2.vue](../../../app/components/Camelot/DateV2.vue)　3. [DateRangeV2.vue](../../../app/components/Camelot/DateRangeV2.vue)
 
 ### 單日選擇
 
@@ -71,7 +71,7 @@
 2. 停用的日期格（`disabled`、早於 `minDate`、晚於 `maxDate`）不可點。
 3. 啟用時間時選日期不會關閉浮層；時間列改值即時寫回，「確認」鈕只負責關閉。
 
-來源：1. [Calendar.vue][]　2. [DateV2.vue][]
+來源：1. [Calendar.vue](../../../app/components/Camelot/Internal/Calendar.vue)　2. [DateV2.vue](../../../app/components/Camelot/DateV2.vue)
 
 ### 範圍選擇
 
@@ -100,7 +100,7 @@
 2. 並排的兩個月曆共用同一組 `rangeValue`，點哪一個月曆都可以。
 3. 起訖兩端都有值才寫回 v-model；`autoApply` 開啟且未啟用時間時自動關閉浮層。
 
-來源：1. [Calendar.vue][]　2. [DateRangeV2.vue][]
+來源：1. [Calendar.vue](../../../app/components/Camelot/Internal/Calendar.vue)　2. [DateRangeV2.vue](../../../app/components/Camelot/DateRangeV2.vue)
 
 ### 年月切換
 
@@ -133,7 +133,7 @@
 2. 年份頁與月份頁不顯示月曆的左右月份箭頭。
 3. `pickerMode` 是 v-model，DateRangeV2 用它讓兩個月曆其中一個進入年／月選擇時，另一個月曆隱藏。
 
-來源：1. [Calendar.vue][]　2. [DateRangeV2.vue][]
+來源：1. [Calendar.vue](../../../app/components/Camelot/Internal/Calendar.vue)　2. [DateRangeV2.vue](../../../app/components/Camelot/DateRangeV2.vue)
 
 ## 日曆核心 Props
 
@@ -159,7 +159,7 @@
 | `monthFormatter` | `(monthIndex) => string` | — | 自訂月名，用於月份格與月標題 |
 | `yearFormatter` | `(year) => string` | — | 自訂年標題 |
 
-來源：1. [Calendar.vue][]
+來源：1. [Calendar.vue](../../../app/components/Camelot/Internal/Calendar.vue)
 
 ## v-model
 
@@ -170,7 +170,7 @@
 | `viewDate` | `Date`（必填） | 目前顯示的月份 |
 | `pickerMode` | `'calendar' \| 'month' \| 'year'` | 目前檢視，預設 `'calendar'` |
 
-來源：1. [Calendar.vue][]
+來源：1. [Calendar.vue](../../../app/components/Camelot/Internal/Calendar.vue)
 
 ## Slots
 
@@ -184,7 +184,7 @@
 
 DateV2 與 DateRangeV2 會把自己收到的 slot 全部轉給日曆核心，所以在外層元件上直接寫這些 slot 即可。
 
-來源：1. [Calendar.vue][]　2. [DateV2.vue][]
+來源：1. [Calendar.vue](../../../app/components/Camelot/Internal/Calendar.vue)　2. [DateV2.vue](../../../app/components/Camelot/DateV2.vue)
 
 ## 規則
 
@@ -203,7 +203,7 @@ DateV2 與 DateRangeV2 會把自己收到的 slot 全部轉給日曆核心，所
 2. 選中表面樣式來自各主題的 picker 樣式，日期、月份與年份格共用。
 3. 元件的色彩角色由外層元件的 `color` 決定。
 
-來源：1. [Calendar.vue][]　2. [useCamelotPickerTheme.ts][]
+來源：1. [Calendar.vue](../../../app/components/Camelot/Internal/Calendar.vue)　2. [useCamelotPickerTheme.ts](../../../app/composables/useCamelotPickerTheme.ts)
 
 ### 節日標記
 
@@ -218,7 +218,7 @@ DateV2 與 DateRangeV2 會把自己收到的 slot 全部轉給日曆核心，所
 | `{ dot: true, dotColor }` | 左上角小點，可自訂顏色 |
 | `{ labelClass, class }` | label 與日期格的額外 class |
 
-來源：1. [Calendar.vue][]
+來源：1. [Calendar.vue](../../../app/components/Camelot/Internal/Calendar.vue)
 
 ### 緊湊模式與 label 截斷
 
@@ -227,7 +227,7 @@ DateV2 與 DateRangeV2 會把自己收到的 slot 全部轉給日曆核心，所
 3. 被截斷的 label 在 hover 或觸控長壓時以 Tooltip 顯示完整文字；沒被截斷的不出現 Tooltip。
 4. Tooltip 會 teleport 進 picker 的 dialog，dialog 模式下也看得到。
 
-來源：1. [Calendar.vue][]
+來源：1. [Calendar.vue](../../../app/components/Camelot/Internal/Calendar.vue)
 
 ### 語系與週起始
 
@@ -241,7 +241,7 @@ DateV2 與 DateRangeV2 會把自己收到的 slot 全部轉給日曆核心，所
 | 佛曆 | 泰文語系由 Intl 顯示佛曆年 |
 | RTL | 未支援，佈局固定 LTR |
 
-來源：1. [Calendar.vue][]
+來源：1. [Calendar.vue](../../../app/components/Camelot/Internal/Calendar.vue)
 
 ## 相關頁面
 
@@ -250,26 +250,6 @@ DateV2 與 DateRangeV2 會把自己收到的 slot 全部轉給日曆核心，所
 - [Internal/Calendar](./components/Internal-Calendar.md)
 - [TimeV2 時間選擇器](./time-picker.md)
 - [Tooltip](./components/Tooltip.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| Calendar.vue | [app/components/Camelot/Internal/Calendar.vue](../../../app/components/Camelot/Internal/Calendar.vue) |
-| DateV2.vue | [app/components/Camelot/DateV2.vue](../../../app/components/Camelot/DateV2.vue) |
-| DateRangeV2.vue | [app/components/Camelot/DateRangeV2.vue](../../../app/components/Camelot/DateRangeV2.vue) |
-| useCamelotPickerTheme.ts | [app/composables/useCamelotPickerTheme.ts](../../../app/composables/useCamelotPickerTheme.ts) |
-
-[Calendar.vue]: #references
-[DateV2.vue]: #references
-[DateRangeV2.vue]: #references
-[useCamelotPickerTheme.ts]: #references
 
 ---
 [⚙️ Env](../environment.md) | [🏠 Wiki](../index.md)

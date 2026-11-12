@@ -31,7 +31,7 @@
 2. 不確定模式用 40% 寬的填滿段做掃描動畫，一輪 1.4 秒。
 3. 使用者開啟減少動態時，過場與掃描動畫都關閉。
 
-來源：1. [ProgressBar.vue][]　2. [tailwind.css][]
+來源：1. [ProgressBar.vue](../../../app/components/Camelot/ProgressBar.vue)　2. [tailwind.css](../../../app/assets/css/tailwind.css)
 
 ### ProgressCircle
 
@@ -56,7 +56,7 @@ SVG 環形進度，由軌道圈與進度圈疊成；進度圈的虛線偏移量�
 
 svg 設為溢出可見，避免光暈被裁切；不確定模式用 Tailwind 內建的旋轉動畫。
 
-來源：1. [ProgressCircle.vue][]
+來源：1. [ProgressCircle.vue](../../../app/components/Camelot/ProgressCircle.vue)
 
 ### ProgressStage
 
@@ -79,7 +79,7 @@ svg 設為溢出可見，避免光暈被裁切；不確定模式用 Tailwind 內
 | 總階段 | 斜體，字級為直徑的 26% |
 | 主題 | aqua 漸層描邊、scifi 加光暈，其餘用色彩角色描邊；線端一律圓頭 |
 
-來源：1. [ProgressStage.vue][]
+來源：1. [ProgressStage.vue](../../../app/components/Camelot/ProgressStage.vue)
 
 ## 相關頁面
 
@@ -87,26 +87,6 @@ svg 設為溢出可見，避免光暈被裁切；不確定模式用 Tailwind 內
 - [ProgressCircle](./components/ProgressCircle.md)
 - [ProgressStage](./components/ProgressStage.md)
 - [主題系統](../platform/theme-system.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| ProgressBar.vue | [app/components/Camelot/ProgressBar.vue](../../../app/components/Camelot/ProgressBar.vue) |
-| tailwind.css | [app/assets/css/tailwind.css](../../../app/assets/css/tailwind.css) |
-| ProgressCircle.vue | [app/components/Camelot/ProgressCircle.vue](../../../app/components/Camelot/ProgressCircle.vue) |
-| ProgressStage.vue | [app/components/Camelot/ProgressStage.vue](../../../app/components/Camelot/ProgressStage.vue) |
-
-[ProgressBar.vue]: #references
-[tailwind.css]: #references
-[ProgressCircle.vue]: #references
-[ProgressStage.vue]: #references
 
 ---
 [⚙️ Env](../environment.md) | [🏠 Wiki](../index.md)

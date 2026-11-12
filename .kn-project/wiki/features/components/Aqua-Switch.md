@@ -27,21 +27,7 @@ Aqua Switch 是 Aqua 主題（毛玻璃風格）的開關外觀實作，匯入�
 | 開 | 玻璃填色，圓鈕滑到右側 |
 | 停用 | 半透明並灰階，點擊不切換 |
 
-來源：1. [Aqua/Switch.vue][]
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| Aqua/Switch.vue | [app/components/Camelot/Aqua/Switch.vue](../../../../app/components/Camelot/Aqua/Switch.vue) |
-
-[Aqua/Switch.vue]: #references
+來源：1. [Aqua/Switch.vue](../../../../app/components/Camelot/Aqua/Switch.vue)
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

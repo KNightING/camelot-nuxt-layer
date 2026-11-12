@@ -29,21 +29,7 @@ PasswordToggle（匯入名稱 `CamelotInternalPasswordToggle`）是密碼顯示�
 
 顯示策略 hide-on-change 與 persistent 不在此元件，由 Input 的 passwordRevealMode 控制。
 
-來源：1. [PasswordToggle.vue][]
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| PasswordToggle.vue | [app/components/Camelot/Internal/PasswordToggle.vue](../../../../app/components/Camelot/Internal/PasswordToggle.vue) |
-
-[PasswordToggle.vue]: #references
+來源：1. [PasswordToggle.vue](../../../../app/components/Camelot/Internal/PasswordToggle.vue)
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

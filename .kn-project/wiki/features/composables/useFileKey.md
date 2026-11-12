@@ -24,7 +24,7 @@ const useFileKey: (file: File) => string
 | --- | --- | --- |
 | 回傳值 | `string` | 以底線串接 `type`、`name`、`size`、`lastModified` |
 
-來源：1. [useFileKey.ts][]
+來源：1. [useFileKey.ts](../../../../app/composables/useFileKey.ts)
 
 ## 用法
 
@@ -39,20 +39,6 @@ const key = useFileKey(file)
 | --- | --- |
 | 相同判定 | 四個欄位都相同就得到相同字串，內容不同但欄位相同也會撞 key |
 | 使用者 | useFileToDataURL 以它作為 useAsyncData 的 key |
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useFileKey.ts | [app/composables/useFileKey.ts](../../../../app/composables/useFileKey.ts) |
-
-[useFileKey.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

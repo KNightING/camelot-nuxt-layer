@@ -25,21 +25,7 @@ Gpu（匯入名稱 `CamelotGpu`）是強制 GPU 合成的包裹容器：把內�
 | 零位移 3D transform | 未關閉時 | 強制內容獨立成合成層 |
 | 觸控慣性捲動 | 未關閉時 | 讓 iOS Safari 內的捲動有慣性 |
 
-來源：1. [Gpu.vue][]
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| Gpu.vue | [app/components/Camelot/Gpu.vue](../../../../app/components/Camelot/Gpu.vue) |
-
-[Gpu.vue]: #references
+來源：1. [Gpu.vue](../../../../app/components/Camelot/Gpu.vue)
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

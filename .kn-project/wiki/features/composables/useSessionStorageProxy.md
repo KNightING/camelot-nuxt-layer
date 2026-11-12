@@ -34,7 +34,7 @@ export class SessionStorageProxy<T> { /* storage、value、del */ }
 | `value` | `T` | 讀寫存取值，等同 `storage.value` |
 | `del` | `() => void` | 把值設為 `null`，由 VueUse 移除該鍵 |
 
-來源：1. [useSessionStorageProxy.ts][]
+來源：1. [useSessionStorageProxy.ts](../../../../app/composables/useSessionStorageProxy.ts)
 
 ## 用法
 
@@ -50,20 +50,6 @@ draft.del()
 | --- | --- |
 | 刪除後的值 | `del` 之後 `value` 為 `null`，不在 `T` 的型別範圍內，讀取端要自行處理 |
 | 同類工具 | localStorage 用 [useLocalStorageProxy](./useLocalStorageProxy.md)，非同步儲存用 [useStorageProxy](./useStorageProxy.md) |
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useSessionStorageProxy.ts | [app/composables/useSessionStorageProxy.ts](../../../../app/composables/useSessionStorageProxy.ts) |
-
-[useSessionStorageProxy.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

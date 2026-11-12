@@ -26,7 +26,7 @@
 2. 水平方向容器預設撐滿父層寬度；垂直方向必須由使用端給容器高度，否則內容永遠不會超出容器，也就不會捲動。
 3. 因為內容會渲染兩份，slot 內的元件也會建立兩個實例；有狀態或有副作用的元件要留意。
 
-來源：1. [Marquee.vue][]
+來源：1. [Marquee.vue](../../../../app/components/Camelot/Marquee.vue)
 
 ### 捲動速度與循環
 
@@ -35,7 +35,7 @@
 3. 每圈位移一份內容加一個間距的長度，第二份剛好接到第一份的起點，看起來沒有接縫。
 4. `right` 與 `down` 是把同一個動畫反向播放。
 
-來源：1. [Marquee.vue][]
+來源：1. [Marquee.vue](../../../../app/components/Camelot/Marquee.vue)
 
 ### 暫停
 
@@ -45,21 +45,7 @@
 | `paused` 為真 | 暫停，改回假後從原位繼續 |
 | 內容未超出、`speed` 為 0 或偏好減少動態 | 不捲動，只保留一份內容 |
 
-來源：1. [Marquee.vue][]
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| Marquee.vue | [app/components/Camelot/Marquee.vue](../../../../app/components/Camelot/Marquee.vue) |
-
-[Marquee.vue]: #references
+來源：1. [Marquee.vue](../../../../app/components/Camelot/Marquee.vue)
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

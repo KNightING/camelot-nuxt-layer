@@ -14,7 +14,7 @@
 4. center 以頂端錨在畫面中央往下堆疊，新增通知時既有通知不會跳動。
 5. 容器只在瀏覽器端渲染，並掛到 body 底下。
 
-來源：1. [Toast.vue][]　2. [useCamelotToast.ts][]
+來源：1. [Toast.vue](../../../../app/components/Camelot/Toast.vue)　2. [useCamelotToast.ts](../../../../app/composables/useCamelotToast.ts)
 
 ### 狀態色
 
@@ -24,7 +24,7 @@
 | type 為 success、error、warning | 同名的狀態色 |
 | type 為 info 或未指定 | primary |
 
-來源：1. [Toast.vue][]
+來源：1. [Toast.vue](../../../../app/components/Camelot/Toast.vue)
 
 ### 外觀
 
@@ -33,7 +33,7 @@
 3. 有標題時標題在上、訊息用次要文字色；沒有標題時訊息用主要文字色。
 4. 預設動作按鈕的文字跟隨色彩角色；點擊時執行動作並關閉該通知。
 
-來源：1. [Toast.vue][]
+來源：1. [Toast.vue](../../../../app/components/Camelot/Toast.vue)
 
 ### 只做淡入淡出的原因
 
@@ -43,7 +43,7 @@
 
 進場 300ms、退場 260ms。
 
-來源：1. [Toast.vue][]
+來源：1. [Toast.vue](../../../../app/components/Camelot/Toast.vue)
 
 ## Props
 | Prop | 型別 | 預設 | 說明 |
@@ -59,22 +59,6 @@
 ## 相關頁面
 
 - [useCamelotToast](../composables/useCamelotToast.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| Toast.vue | [app/components/Camelot/Toast.vue](../../../../app/components/Camelot/Toast.vue) |
-| useCamelotToast.ts | [app/composables/useCamelotToast.ts](../../../../app/composables/useCamelotToast.ts) |
-
-[Toast.vue]: #references
-[useCamelotToast.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

@@ -23,14 +23,14 @@
 
 小尺寸用較小字級與內距，預設為中尺寸。
 
-來源：1. [Tag.vue][]
+來源：1. [Tag.vue](../../../../app/components/Camelot/Tag.vue)
 
 ### 關閉與停用
 
 1. 開啟可關閉時，文字後方顯示關閉按鈕；點擊發出關閉事件，不會冒泡到外層。
 2. 停用時整個標籤半透明，關閉按鈕不可點。
 
-來源：1. [Tag.vue][]
+來源：1. [Tag.vue](../../../../app/components/Camelot/Tag.vue)
 
 ## Props
 | Prop | 型別 | 預設 | 說明 |
@@ -56,20 +56,6 @@
 ## 相關頁面
 
 - [TagGroup](./TagGroup.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| Tag.vue | [app/components/Camelot/Tag.vue](../../../../app/components/Camelot/Tag.vue) |
-
-[Tag.vue]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

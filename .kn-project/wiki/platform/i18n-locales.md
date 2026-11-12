@@ -19,7 +19,7 @@
 > 消費端不可假設 Layer 基底字典存在，fallback 鏈的終點詞條必須自己備齊。
 > fallback 目標必須是已註冊的語系：指向未註冊語系的鏈在執行期不成立，`nuxt typecheck` 也會報型別錯誤。
 
-來源：1. [nuxt.config.ts][]　2. [i18n/i18n.config.ts][]　3. [.playground/nuxt.config.ts][]
+來源：1. [nuxt.config.ts](../../../nuxt.config.ts)　2. [i18n/i18n.config.ts](../../../i18n/i18n.config.ts)　3. [.playground/nuxt.config.ts](../../../.playground/nuxt.config.ts)
 
 ### Fallback 鏈
 
@@ -80,7 +80,7 @@ fallbackLocale: {
 
 Layer 的 i18n 設定不設 `fallbackLocale`：Layer 不註冊語系，無從得知消費端會註冊哪些，也就無法指定落點。
 
-來源：1. [.playground/i18n/i18n.config.ts][]　2. [zh-Hant-TW.json][]　3. [i18n/i18n.config.ts][]
+來源：1. [.playground/i18n/i18n.config.ts](../../../.playground/i18n/i18n.config.ts)　2. [zh-Hant-TW.json](../../../.playground/i18n/locales/zh-Hant-TW.json)　3. [i18n/i18n.config.ts](../../../i18n/i18n.config.ts)
 
 ## 已知缺陷
 
@@ -95,7 +95,7 @@ Layer 的 en 與 zh 兩份字典存在，但不會進入任何消費端的語系
 
 這是 Layer 端缺陷，消費端無法繞過。
 
-來源：1. [nuxt.config.ts][]　2. [en.json][]　3. [zh.json][]
+來源：1. [nuxt.config.ts](../../../nuxt.config.ts)　2. [en.json](../../../i18n/locales/en.json)　3. [zh.json](../../../i18n/locales/zh.json)
 
 ### 因應與修法
 
@@ -106,7 +106,7 @@ Layer 的 en 與 zh 兩份字典存在，但不會進入任何消費端的語系
 | 未修原因 | 修復會讓 zh 與 en 開始註冊，改變既有消費端的 fallback 鏈與語系選單，屬公開契約的行為變更，需獨立驗證 |
 | 字典檔保留原因 | 以 zh 或 en 為語系代碼的消費端仍會取用 Layer 同名檔案 |
 
-來源：1. [nuxt.config.ts][]
+來源：1. [nuxt.config.ts](../../../nuxt.config.ts)
 
 ## 陷阱
 
@@ -116,7 +116,7 @@ Layer 的 en 與 zh 兩份字典存在，但不會進入任何消費端的語系
 4. 因此區域語系必須排在通用基底之前，否則初始語系會落在 zh-Hant 而非 zh-Hant-TW。
 5. Nuxt 設定裡的 i18n 區塊不在 HMR 範圍，改動需重啟 dev server。
 
-來源：1. [nuxt.config.ts][]　2. [.playground/nuxt.config.ts][]
+來源：1. [nuxt.config.ts](../../../nuxt.config.ts)　2. [.playground/nuxt.config.ts](../../../.playground/nuxt.config.ts)
 
 ## 相關頁面
 
@@ -124,32 +124,6 @@ Layer 的 en 與 zh 兩份字典存在，但不會進入任何消費端的語系
 - [Layer 整合與必裝依賴](../dev/layer-integration.md)
 - [vue-i18n Fallbacking](https://vue-i18n.intlify.dev/guide/essentials/fallback.html)
 - [@nuxtjs/i18n locales 選項](https://i18n.nuxtjs.org/docs/api/options#locales)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| nuxt.config.ts | [nuxt.config.ts](../../../nuxt.config.ts) |
-| i18n/i18n.config.ts | [i18n/i18n.config.ts](../../../i18n/i18n.config.ts) |
-| .playground/nuxt.config.ts | [.playground/nuxt.config.ts](../../../.playground/nuxt.config.ts) |
-| .playground/i18n/i18n.config.ts | [.playground/i18n/i18n.config.ts](../../../.playground/i18n/i18n.config.ts) |
-| zh-Hant-TW.json | [.playground/i18n/locales/zh-Hant-TW.json](../../../.playground/i18n/locales/zh-Hant-TW.json) |
-| en.json | [i18n/locales/en.json](../../../i18n/locales/en.json) |
-| zh.json | [i18n/locales/zh.json](../../../i18n/locales/zh.json) |
-
-[nuxt.config.ts]: #references
-[i18n/i18n.config.ts]: #references
-[.playground/nuxt.config.ts]: #references
-[.playground/i18n/i18n.config.ts]: #references
-[zh-Hant-TW.json]: #references
-[en.json]: #references
-[zh.json]: #references
 
 ---
 [⚙️ Env](../environment.md) | [🏠 Wiki](../index.md)

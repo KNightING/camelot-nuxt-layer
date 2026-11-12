@@ -10,7 +10,7 @@ Camelot Nuxt Layer 全部元件的分類索引，依表單、版面資料導覽�
 2. 子目錄會併入名稱：內部元件以 CamelotInternal 開頭，主題變體以 CamelotAqua、CamelotMaterial 等開頭。
 3. 公開元件依目前主題選用對應的主題變體，使用端只需要寫公開元件。
 
-來源：1. [components/Camelot][]
+來源：1. [components/Camelot](../../../app/components/Camelot)
 
 ## 元件清單
 
@@ -145,21 +145,6 @@ Camelot Nuxt Layer 全部元件的分類索引，依表單、版面資料導覽�
 
 - [Composable 清單](./composables.md)
 - [主題系統](../platform/theme-system.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231801-playground-reveal-slide-demos](../../archive/2609231801-playground-reveal-slide-demos.md) | 移除 SlideTransitionGroup（由 Carousel 取代） | [#49](https://github.com/KNightING/camelot-nuxt-layer/issues/49) | — |
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| components/Camelot | [app/components/Camelot](../../../app/components/Camelot) |
-
-[components/Camelot]: #references
 
 ---
 [⚙️ Env](../environment.md) | [🏠 Wiki](../index.md)

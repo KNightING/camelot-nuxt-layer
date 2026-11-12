@@ -12,7 +12,7 @@
 2. 未指定時補上預設：JSON 內容型別、不使用快取、加上安全標頭。
 3. refresh 相關設定與 transDateKeys 在建立請求物件時就固定，之後取用方式共用同一份。
 
-來源：1. [useBaseApi.ts][]
+來源：1. [useBaseApi.ts](../../../../app/composables/useBaseApi.ts)
 
 ### 請求與回應攔截
 
@@ -21,7 +21,7 @@
 3. 依陣列順序執行 `onRequests`。
 4. 回應後依序執行 `onResponses`；回應錯誤時依序執行 `onResponseErrors`。
 
-來源：1. [useBaseApi.ts][]
+來源：1. [useBaseApi.ts](../../../../app/composables/useBaseApi.ts)
 
 ### 自動 refresh token
 
@@ -40,7 +40,7 @@
 | 重送的中止訊號 | `fetch()` 重送時不帶原本的 AbortSignal |
 | 相容忽略錯誤模式 | `ignoreResponseError` 開啟時同樣能觸發刷新 |
 
-來源：1. [useBaseApi.ts][]
+來源：1. [useBaseApi.ts](../../../../app/composables/useBaseApi.ts)
 
 ### 日期還原與回應解析
 
@@ -48,13 +48,13 @@
 2. 只處理第一層欄位；值為字串、數字或 Date 時轉成 Date 物件。
 3. `fetch()` 一律以 JSON 解析回應本文，再套用 transform。
 
-來源：1. [useBaseApi.ts][]
+來源：1. [useBaseApi.ts](../../../../app/composables/useBaseApi.ts)
 
 ### 快取
 
 `cachePolicy` 為 cache 時，useFetch 系列先以 useNuxtData 依 key 取已有資料，有資料就不重新請求；需要自行設定 key。
 
-來源：1. [useBaseApi.ts][]
+來源：1. [useBaseApi.ts](../../../../app/composables/useBaseApi.ts)
 
 ## 用法
 
@@ -132,27 +132,12 @@ enum ContentType { Json, MultiPartFormData }
 | `RefreshTokenHandler`、`ShouldRefreshTokenFn` | refresh token 相關函式型別 |
 | `OnRequest`、`OnResponse`、`OnResponseError` | 攔截器函式型別 |
 
-來源：1. [useBaseApi.ts][]
+來源：1. [useBaseApi.ts](../../../../app/composables/useBaseApi.ts)
 
 ## 相關頁面
 
 - [API 用戶端](../../platform/api-client.md)：應用層 API 類別、取用方式的選擇與 refresh token 接法。
 - [錯誤處理系統](../../platform/error-handling.md)：無法回復的錯誤如何提示。
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-10-07 | 4.6.0.0 | [2610071040-upgrade-nuxt-4-6-0](../../../archive/2610071040-upgrade-nuxt-4-6-0.md) | 升級 nuxt 至 4.6.0，Url 型別收窄為字串、Ref 與 getter | [#53](https://github.com/KNightING/camelot-nuxt-layer/issues/53) | [PR #54](https://github.com/KNightING/camelot-nuxt-layer/pull/54) |
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useBaseApi.ts | [app/composables/useBaseApi.ts](../../../../app/composables/useBaseApi.ts) |
-
-[useBaseApi.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

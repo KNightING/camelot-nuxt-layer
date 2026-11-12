@@ -24,34 +24,18 @@
 3. 目前是暗色模式時套用暗色方案，否則套用明亮方案；色彩模式為自動時依系統偏好判斷。
 4. 色彩模式切換時，容器上的 CSS 變數跟著換成另一組方案。
 
-來源：1. [Material3Provider.vue][]　2. [useMaterial3ColorScheme.ts][]
+來源：1. [Material3Provider.vue](../../../../app/components/Camelot/Material3Provider.vue)　2. [useMaterial3ColorScheme.ts](../../../../app/composables/useMaterial3ColorScheme.ts)
 
 ### 限制
 
 配色只在掛載時讀取一次；掛載後再修改 `lightColorScheme` 或 `darkColorScheme`，不會更新到容器上。需要換配色時，重新掛載元件（例如變更 `key`）。
 
-來源：1. [Material3Provider.vue][]
+來源：1. [Material3Provider.vue](../../../../app/components/Camelot/Material3Provider.vue)
 
 ## 相關頁面
 
 - [配色系統](../../platform/color-scheme.md)
 - [ColorSchemeProvider](./ColorSchemeProvider.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| Material3Provider.vue | [app/components/Camelot/Material3Provider.vue](../../../../app/components/Camelot/Material3Provider.vue) |
-| useMaterial3ColorScheme.ts | [app/composables/useMaterial3ColorScheme.ts](../../../../app/composables/useMaterial3ColorScheme.ts) |
-
-[Material3Provider.vue]: #references
-[useMaterial3ColorScheme.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

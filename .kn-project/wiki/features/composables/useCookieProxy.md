@@ -11,7 +11,7 @@
 3. patch 把目前值與新值展開合併後寫回，只覆寫傳入的欄位，適用物件型別的 cookie。
 4. del 把值設為 `undefined`，由 useCookie 刪除該 cookie。
 
-來源：1. [useCookieProxy.ts][]
+來源：1. [useCookieProxy.ts](../../../../app/composables/useCookieProxy.ts)
 
 ## 用法
 
@@ -47,20 +47,6 @@ type ReadOnlyCookeOptions<T> = CookieOptions<T> & { readonly?: false | undefined
 | `value` | `T \| undefined` | 取得或設定 cookie 值 |
 | `patch` | `(newValue: T) => void` | 展開合併後寫回 |
 | `del` | `() => void` | 刪除 cookie |
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useCookieProxy.ts | [app/composables/useCookieProxy.ts](../../../../app/composables/useCookieProxy.ts) |
-
-[useCookieProxy.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

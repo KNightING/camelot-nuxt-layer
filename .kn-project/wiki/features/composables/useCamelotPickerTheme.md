@@ -12,7 +12,7 @@
 4. 內部日曆只取選中態表面 class，用在選中的日、月、年。
 5. Sci-Fi 的觸發欄位外框由 FieldFrame 內部元件負責，這裡只給最低高度。
 
-來源：1. [useCamelotPickerTheme.ts][]　2. [DateV2.vue][]　3. [DateRangeV2.vue][]　4. [TimeV2.vue][]　5. [Calendar.vue][]　6. [FieldFrame.vue][]
+來源：1. [useCamelotPickerTheme.ts](../../../../app/composables/useCamelotPickerTheme.ts)　2. [DateV2.vue](../../../../app/components/Camelot/DateV2.vue)　3. [DateRangeV2.vue](../../../../app/components/Camelot/DateRangeV2.vue)　4. [TimeV2.vue](../../../../app/components/Camelot/TimeV2.vue)　5. [Calendar.vue](../../../../app/components/Camelot/Internal/Calendar.vue)　6. [FieldFrame.vue](../../../../app/components/Camelot/Internal/FieldFrame.vue)
 
 ### 觸發欄位
 
@@ -23,7 +23,7 @@
 | cupertino | 最低 42px，10px 圓角，透明邊框，surface-container-highest 底 | 改 surface 底，加 1px 當前色內框線 |
 | material | 最低 42px，上緣 4px 圓角，底線 outline 色，surface-container-highest 底 | 底線與 1px 內陰影改當前色 |
 
-來源：1. [useCamelotPickerTheme.ts][]
+來源：1. [useCamelotPickerTheme.ts](../../../../app/composables/useCamelotPickerTheme.ts)
 
 ### 面板與選中態
 
@@ -36,7 +36,7 @@
 
 選中態在 aqua 以外的主題，沒有注入當前色時退回主色與主色前景色。
 
-來源：1. [useCamelotPickerTheme.ts][]
+來源：1. [useCamelotPickerTheme.ts](../../../../app/composables/useCamelotPickerTheme.ts)
 
 ## 用法
 
@@ -77,30 +77,6 @@ useCamelotPickerTheme(): {
 - [TimeV2](../components/TimeV2.md)
 - [Internal Calendar](../components/Internal-Calendar.md)
 - [useCamelotTheme](./useCamelotTheme.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useCamelotPickerTheme.ts | [app/composables/useCamelotPickerTheme.ts](../../../../app/composables/useCamelotPickerTheme.ts) |
-| DateV2.vue | [app/components/Camelot/DateV2.vue](../../../../app/components/Camelot/DateV2.vue) |
-| DateRangeV2.vue | [app/components/Camelot/DateRangeV2.vue](../../../../app/components/Camelot/DateRangeV2.vue) |
-| TimeV2.vue | [app/components/Camelot/TimeV2.vue](../../../../app/components/Camelot/TimeV2.vue) |
-| Calendar.vue | [app/components/Camelot/Internal/Calendar.vue](../../../../app/components/Camelot/Internal/Calendar.vue) |
-| FieldFrame.vue | [app/components/Camelot/Internal/FieldFrame.vue](../../../../app/components/Camelot/Internal/FieldFrame.vue) |
-
-[useCamelotPickerTheme.ts]: #references
-[DateV2.vue]: #references
-[DateRangeV2.vue]: #references
-[TimeV2.vue]: #references
-[Calendar.vue]: #references
-[FieldFrame.vue]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

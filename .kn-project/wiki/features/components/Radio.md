@@ -39,7 +39,7 @@
 | aqua | Aqua Radio |
 | 其他（含 material） | [Material Radio](./Material-Radio.md) |
 
-來源：1. [Radio.vue][]
+來源：1. [Radio.vue](../../../../app/components/Camelot/Radio.vue)
 
 ### 點擊
 
@@ -49,21 +49,7 @@
 4. 停用時不接受點擊，標籤半透明並顯示禁止游標。
 5. 沒有 `label` 也沒有 label slot 時，不渲染標籤區。
 
-來源：1. [Radio.vue][]
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| Radio.vue | [app/components/Camelot/Radio.vue](../../../../app/components/Camelot/Radio.vue) |
-
-[Radio.vue]: #references
+來源：1. [Radio.vue](../../../../app/components/Camelot/Radio.vue)
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

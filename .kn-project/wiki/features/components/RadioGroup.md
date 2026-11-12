@@ -39,21 +39,7 @@
 3. 點已選取的選項：`deselectable` 為真時值改為 undefined 並發出 change；否則不動作。
 4. 整組停用或該選項停用時，點擊不作用。
 
-來源：1. [RadioGroup.vue][]
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| RadioGroup.vue | [app/components/Camelot/RadioGroup.vue](../../../../app/components/Camelot/RadioGroup.vue) |
-
-[RadioGroup.vue]: #references
+來源：1. [RadioGroup.vue](../../../../app/components/Camelot/RadioGroup.vue)
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

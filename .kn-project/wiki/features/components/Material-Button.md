@@ -32,34 +32,18 @@
 | hover | 提高亮度並加深陰影 |
 | 停用 | 透明度 38%，取消 hover 的亮度與陰影變化，游標顯示禁止 |
 
-來源：1. [Material/Button.vue][]　2. [Button.vue][]
+來源：1. [Material/Button.vue](../../../../app/components/Camelot/Material/Button.vue)　2. [Button.vue](../../../../app/components/Camelot/Button.vue)
 
 ### 漣漪
 
 按下時以漣漪元件在按下處擴散水波紋。`isContainer` 為真時漣漪色取該色彩角色的 container 前景色，否則為白色。
 
-來源：1. [Material/Button.vue][]
+來源：1. [Material/Button.vue](../../../../app/components/Camelot/Material/Button.vue)
 
 ## 相關頁面
 
 - [Button](./Button.md)
 - [RippleEffect](./RippleEffect.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| Material/Button.vue | [app/components/Camelot/Material/Button.vue](../../../../app/components/Camelot/Material/Button.vue) |
-| Button.vue | [app/components/Camelot/Button.vue](../../../../app/components/Camelot/Button.vue) |
-
-[Material/Button.vue]: #references
-[Button.vue]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

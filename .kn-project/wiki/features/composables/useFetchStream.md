@@ -51,7 +51,7 @@ export interface UseFetchStreamOptions {
 | `clear` | `() => void` | 中止進行中的請求，重置 `data`、`error`，狀態回 `'idle'` |
 | `then`、`catch`、`finally` | — | 讓回傳物件可被 await |
 
-來源：1. [useFetchStream.ts][]
+來源：1. [useFetchStream.ts](../../../../app/composables/useFetchStream.ts)
 
 ## 用法
 
@@ -81,20 +81,6 @@ await useFetchStream('/api/stream')
 | await 的結果 | `immediate` 為 `true` 時 resolve 為 `undefined`；為 `false` 時直接 resolve 為回傳物件本身 |
 | await 的對象 | 永遠是建立時那一次請求；之後呼叫 `refresh` 要 await 它自己的回傳值 |
 | 重複請求 | `refresh` 會先中止前一次請求再重新發出 |
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useFetchStream.ts | [app/composables/useFetchStream.ts](../../../../app/composables/useFetchStream.ts) |
-
-[useFetchStream.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

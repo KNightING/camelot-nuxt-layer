@@ -28,21 +28,7 @@ Cupertino Button 是 Cupertino 主題（iOS 風格）的按鈕外觀實作，匯
 | 按壓 | 啟用時按下縮放到 0.97 並降低不透明度 |
 | 停用 | 降低不透明度並灰階，游標改為禁止 |
 
-來源：1. [Cupertino/Button.vue][]
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| Cupertino/Button.vue | [app/components/Camelot/Cupertino/Button.vue](../../../../app/components/Camelot/Cupertino/Button.vue) |
-
-[Cupertino/Button.vue]: #references
+來源：1. [Cupertino/Button.vue](../../../../app/components/Camelot/Cupertino/Button.vue)
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

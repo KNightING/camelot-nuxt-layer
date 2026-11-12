@@ -64,7 +64,7 @@ ErrorDialog（匯入名稱 `CamelotErrorDialog`）是綁定 [useCamelotError](..
 
 HTML 訊息以 v-html 渲染，內容必須來自可信來源。
 
-來源：1. [ErrorDialog.vue][]
+來源：1. [ErrorDialog.vue](../../../../app/components/Camelot/ErrorDialog.vue)
 
 ### 關閉流程
 
@@ -76,26 +76,12 @@ HTML 訊息以 v-html 渲染，內容必須來自可信來源。
 
 關閉只收斂在開關狀態的 setter，不另外監聽 cancel 事件：[BaseDialogV2](./BaseDialogV2.md) 關閉時會先寫回開關狀態再發出 cancel，兩邊都處理會多關一則、吃掉佇列中的下一則錯誤。
 
-來源：1. [ErrorDialog.vue][]
+來源：1. [ErrorDialog.vue](../../../../app/components/Camelot/ErrorDialog.vue)
 
 ## 相關頁面
 
 - [元件清單](../components.md)
 - [錯誤處理](../../platform/error-handling.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| ErrorDialog.vue | [app/components/Camelot/ErrorDialog.vue](../../../../app/components/Camelot/ErrorDialog.vue) |
-
-[ErrorDialog.vue]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

@@ -22,7 +22,7 @@
 
 點圖示等非輸入欄的位置時，欄位會阻止預設行為；否則瀏覽器會再對輸入欄補發一次點擊，把剛開的浮層又關掉。
 
-來源：1. [TimeV2.vue][]　2. [useCamelotPickerTheme.ts][]　3. [FieldFrame.vue][]
+來源：1. [TimeV2.vue](../../../../app/components/Camelot/TimeV2.vue)　2. [useCamelotPickerTheme.ts](../../../../app/composables/useCamelotPickerTheme.ts)　3. [FieldFrame.vue](../../../../app/components/Camelot/Internal/FieldFrame.vue)
 
 ### 呈現方式
 
@@ -34,7 +34,7 @@
 
 時、分、秒各欄的下拉清單會傳送到最近的對話框，沒有時傳到 body，層級比時間浮層高一層，在 Dialog 或 Sheet 內也能正常顯示與點選。
 
-來源：1. [TimeV2.vue][]　2. [TimeField.vue][]　3. [useCamelotTeleportTarget.ts][]
+來源：1. [TimeV2.vue](../../../../app/components/Camelot/TimeV2.vue)　2. [TimeField.vue](../../../../app/components/Camelot/Internal/TimeField.vue)　3. [useCamelotTeleportTarget.ts](../../../../app/composables/useCamelotTeleportTarget.ts)
 
 ### 值與顯示
 
@@ -44,7 +44,7 @@
 4. 欄位顯示依小時制與精細度轉換；12 小時制在時間後加上 AM 或 PM。
 5. 首次開啟未調整就按確認，會套用目前的內部值，預設為 00:00。
 
-來源：1. [TimeV2.vue][]
+來源：1. [TimeV2.vue](../../../../app/components/Camelot/TimeV2.vue)
 
 ## Props
 | Prop | 型別 | 預設 | 說明 |
@@ -73,28 +73,6 @@
 - [Internal FieldFrame](./Internal-FieldFrame.md)
 - [useCamelotTeleportTarget](../composables/useCamelotTeleportTarget.md)
 - [時間選擇器](../time-picker.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| TimeV2.vue | [app/components/Camelot/TimeV2.vue](../../../../app/components/Camelot/TimeV2.vue) |
-| useCamelotPickerTheme.ts | [app/composables/useCamelotPickerTheme.ts](../../../../app/composables/useCamelotPickerTheme.ts) |
-| FieldFrame.vue | [app/components/Camelot/Internal/FieldFrame.vue](../../../../app/components/Camelot/Internal/FieldFrame.vue) |
-| TimeField.vue | [app/components/Camelot/Internal/TimeField.vue](../../../../app/components/Camelot/Internal/TimeField.vue) |
-| useCamelotTeleportTarget.ts | [app/composables/useCamelotTeleportTarget.ts](../../../../app/composables/useCamelotTeleportTarget.ts) |
-
-[TimeV2.vue]: #references
-[useCamelotPickerTheme.ts]: #references
-[FieldFrame.vue]: #references
-[TimeField.vue]: #references
-[useCamelotTeleportTarget.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

@@ -18,7 +18,7 @@ VirtualScroll 不要求項目等高，可視範圍由 [useCamelotVirtual](../com
 
 [Table](./Table.md) 的虛擬滾動使用同一個 composable。
 
-來源：1. [VirtualScroll.vue][]　2. [useCamelotVirtual.ts][]
+來源：1. [VirtualScroll.vue](../../../../app/components/Camelot/VirtualScroll.vue)　2. [useCamelotVirtual.ts](../../../../app/composables/useCamelotVirtual.ts)
 
 ### 項目鍵與插槽
 
@@ -26,7 +26,7 @@ VirtualScroll 不要求項目等高，可視範圍由 [useCamelotVirtual](../com
 2. 可視索引先解析成索引與項目的配對，濾掉不存在的項目後才交給插槽，插槽拿到的項目一定有值。
 3. 項目清單換成新陣列時，重新讀取捲動位置並量測一次。
 
-來源：1. [VirtualScroll.vue][]
+來源：1. [VirtualScroll.vue](../../../../app/components/Camelot/VirtualScroll.vue)
 
 ## Props
 | Prop | 型別 | 預設 | 說明 |
@@ -48,22 +48,6 @@ VirtualScroll 不要求項目等高，可視範圍由 [useCamelotVirtual](../com
 | 名稱 | 說明 |
 | :--- | :--- |
 | `scrollToIndex` | 捲動至指定索引的項目。 |
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| VirtualScroll.vue | [app/components/Camelot/VirtualScroll.vue](../../../../app/components/Camelot/VirtualScroll.vue) |
-| useCamelotVirtual.ts | [app/composables/useCamelotVirtual.ts](../../../../app/composables/useCamelotVirtual.ts) |
-
-[VirtualScroll.vue]: #references
-[useCamelotVirtual.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)
