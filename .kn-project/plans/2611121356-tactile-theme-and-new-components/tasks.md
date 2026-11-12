@@ -23,14 +23,14 @@
 - [x] lint、typecheck、playground 檢視
 
 ## Phase 4 — Button loading 與新元件
-- [ ] Button 新增 `loading` prop，五個風格的 Button 子元件實作
-- [ ] Accordion、AccordionItem
-- [ ] Avatar、AvatarGroup
-- [ ] ChatBubble
-- [ ] Waveform、LevelMeter
-- [ ] 新元件型別集中到 `shared/types/camelot.ts`
-- [ ] Playground 加入 loading 與新元件展示
-- [ ] lint、typecheck、playground 檢視
+- [x] Button 新增 `loading` prop，五個風格的 Button 子元件實作
+- [x] Accordion、AccordionItem
+- [x] Avatar、AvatarGroup
+- [x] ChatBubble
+- [x] Waveform、LevelMeter
+- [x] 新元件型別集中到 `shared/types/camelot.ts`
+- [x] Playground 加入 loading 與新元件展示
+- [x] lint、typecheck、playground 檢視
 
 ## Phase 5 — 驗證
 - [ ] `pnpm lint`、`pnpm typecheck`、`pnpm test`

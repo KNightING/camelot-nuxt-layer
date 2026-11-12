@@ -371,4 +371,21 @@
   outline-offset: 2px;
 }
 
+/* 按鈕 loading 的轉圈：疊在按鈕正中央，顏色跟著按鈕文字（五個風格的 Button 共用） */
+@utility cml-button-spinner {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 1.125rem;
+  height: 1.125rem;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 9999px;
+  animation: cml-button-spin 0.7s linear infinite;
+}
+
+@keyframes cml-button-spin {
+  to { transform: rotate(360deg); }
+}
+
 @custom-variant hover (&:hover);

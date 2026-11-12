@@ -141,6 +141,10 @@ Accordion（含 AccordionItem）、Avatar、AvatarGroup、ChatBubble、Waveform�
 - **[執行中]** 補列 Steps、FileChip、FileDropzone、ImageDropzone — 它們以 scoped CSS 分主題，Phase 0 以 `'aqua'` 字面量掃描未命中；使用者核准補列並實作。
 - **[執行中]** 選單與下拉的 tactile 選中態文字用 `on-surface` 而非角色色 — 淺色角色色（如 playground 的青色）疊在灰階底上對比不足。
 - **[執行中]** Breadcrumb、CarouselIndicator、FieldLabel、Timeline、FieldFrame 不加 tactile 分支 — 這五個只有 scifi 走特例，其餘風格共用同一外觀，tactile 沿用即可。
+- **[執行中]** AccordionItem 不重用 `Expanded` — `Expanded` 只在 header 的 pointerup 切換，鍵盤無法操作；改用同樣的 grid-rows 過場並以 button 的 click 觸發。
+- **[執行中]** Button loading 的轉圈做成 `tailwind.css` 的 `cml-button-spinner` utility — 五個風格共用同一個樣式，不另開元件檔。
+- **[執行中]** loading 時按鈕文字以透明保留佔位，轉圈疊在中央 — 按鈕寬度不跳動；為此各風格 Button 的 slot 外多包一層同樣 flex 與 gap 的 span。
+- **[執行中]** Waveform、LevelMeter 的進度與分段數換算沿用 `number` 運算 — 與既有 `ProgressBar.vue` 的百分比算法一致，結果只用於畫面顯示；未引入 decimal.js。
 - **[預設主題]** 維持 `aqua` — 不改變既有消費端的外觀。
 
 ## Git Completion Policy
