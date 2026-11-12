@@ -354,6 +354,8 @@ const alignClass = (col: CamelotTableColumn<T>) => {
 
 const headerCellClass = computed(() => {
   switch (themeMode.value) {
+    case 'tactile':
+      return 'bg-surface-container-high text-on-surface'
     // 表頭底色刻意不透明：半透明 + backdrop-blur 會讓每一個 <th> 各自成為
     // backdrop root 與合成層，欄數越多成本越高；aqua 的玻璃質感由容器層的
     // aqua-glass（圓角與高光）承擔即可。
@@ -381,6 +383,8 @@ const hoverClass = computed(() => (props.hover ? 'cml-row-hover' : ''))
 
 const containerClass = computed(() => {
   switch (themeMode.value) {
+    case 'tactile':
+      return 'rounded-tactile-panel tactile-surface'
     case 'aqua':
       return 'rounded-2xl aqua-glass'
     case 'scifi':

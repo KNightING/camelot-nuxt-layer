@@ -15,11 +15,12 @@
 - [x] lint、typecheck、playground 檢視
 
 ## Phase 3 — 浮層、回饋與資料類元件
-- [ ] BaseDialogV2、BaseBottomSheetV2、SheetHandle、Drawer、Tooltip、Toast
-- [ ] Loading、Skeleton、ProgressBar、ProgressCircle、ProgressStage
-- [ ] Table、Pagination、Carousel、RichTextEditor
-- [ ] 檢視只有 scifi 分支的五個元件，必要時加 tactile 分支
-- [ ] lint、typecheck、playground 檢視
+- [x] BaseDialogV2、BaseBottomSheetV2、SheetHandle、Drawer、Tooltip、Toast
+- [x] Loading、Skeleton、ProgressBar、ProgressCircle、ProgressStage
+- [x] Table、Pagination、Carousel、RichTextEditor
+- [x] Steps、FileChip、FileDropzone、ImageDropzone（scoped CSS）
+- [x] 檢視只有 scifi 分支的五個元件，必要時加 tactile 分支
+- [x] lint、typecheck、playground 檢視
 
 ## Phase 4 — Button loading 與新元件
 - [ ] Button 新增 `loading` prop，五個風格的 Button 子元件實作

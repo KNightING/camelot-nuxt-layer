@@ -317,4 +317,28 @@ const isComplete = (index: number) => {
 .container.aqua .step-content-complete {
   color: var(--cml-color-current-color, var(--color-primary)) !important;
 }
+
+/* Tactile style overrides：實心灰階軌道，進行中的節點用墨色反相 */
+.container.tactile .step-line {
+  height: 4px;
+  border-radius: 9999px;
+  background-color: var(--color-surface-container-high);
+}
+.container.tactile .step-line-complete {
+  background-color: var(--cml-color-current-color, var(--color-primary)) !important;
+}
+.container.tactile .step-dot {
+  width: 1.75rem;
+  border-width: 0;
+  background-color: var(--color-surface-container-high);
+}
+.container.tactile .step-dot-doing {
+  background-color: var(--color-inverse-surface) !important;
+}
+.container.tactile .step-dot-doing .step-dot-text {
+  color: var(--color-inverse-on-surface) !important;
+}
+.container.tactile .step-dot-complete {
+  box-shadow: 0 6px 14px -8px color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 70%, transparent);
+}
 </style>

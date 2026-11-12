@@ -36,6 +36,14 @@
             <slot />
           </div>
 
+          <!-- Tactile Solid Surface Layout -->
+          <div
+            v-else-if="themeMode === 'tactile'"
+            class="dialog-content-box tactile-surface text-on-surface flex min-w-[280px] max-w-[560px] flex-col rounded-[1.75rem] p-6"
+          >
+            <slot />
+          </div>
+
           <!-- Aqua Frosted Glass Layout -->
           <div
             v-else-if="themeMode === 'aqua'"

@@ -43,6 +43,19 @@
               </div>
             </template>
 
+            <!-- Tactile：三顆方圓塊依序被按下再彈回 -->
+            <div
+              v-else-if="themeMode === 'tactile'"
+              class="tactile-press"
+            >
+              <span
+                v-for="i in 3"
+                :key="i"
+                class="tactile-press-key"
+                :class="`tactile-press-key-${i}`"
+              />
+            </div>
+
             <!-- Sci-fi Loading Radar -->
             <div
               v-else-if="themeMode === 'scifi'"
@@ -353,5 +366,29 @@ const { themeMode } = useCamelotTheme()
   .aqua-ripple-wave {
     opacity: 0.35;
   }
+}
+
+/* Tactile：按鍵依序下壓回彈 */
+.tactile-press {
+  display: flex;
+  gap: 10px;
+}
+.tactile-press-key {
+  width: 18px;
+  height: 18px;
+  border-radius: 30%;
+  background-color: white;
+  box-shadow: 0 6px 14px -6px rgba(0, 0, 0, 0.5);
+  animation: tactile-press 1.2s var(--ease-ios) infinite;
+}
+.tactile-press-key-2 { animation-delay: 0.15s; }
+.tactile-press-key-3 { animation-delay: 0.3s; }
+@keyframes tactile-press {
+  0%, 60%, 100% { transform: scale(1); opacity: 1; }
+  20% { transform: scale(0.55); opacity: 0.6; }
+  38% { transform: scale(1.12); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tactile-press-key { animation: none; }
 }
 </style>

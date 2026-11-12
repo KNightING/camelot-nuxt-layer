@@ -181,6 +181,8 @@ watch([pageSize, totalPages], () => {
 
 const itemShapeClass = computed(() => {
   switch (themeMode.value) {
+    case 'tactile':
+      return 'rounded-xl'
     case 'aqua':
       return 'rounded-full'
     case 'scifi':
@@ -194,6 +196,8 @@ const itemShapeClass = computed(() => {
 
 const activeClass = computed(() => {
   switch (themeMode.value) {
+    case 'tactile':
+      return 'tactile-ink font-semibold'
     case 'aqua':
       return 'aqua-fill text-on-primary font-semibold'
     case 'scifi':
@@ -205,6 +209,8 @@ const activeClass = computed(() => {
 
 const ghostClass = computed(() => {
   switch (themeMode.value) {
+    case 'tactile':
+      return 'text-on-surface hover:bg-surface-container-high disabled:opacity-40'
     case 'aqua':
       return 'aqua-track text-on-surface hover:text-[var(--cml-color-current-color)] disabled:opacity-40'
     case 'scifi':

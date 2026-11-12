@@ -89,6 +89,10 @@ Accordion（含 AccordionItem）、Avatar、AvatarGroup、ChatBubble、Waveform�
 - `app/components/Camelot/Toast.vue:120`
 - `app/components/Camelot/Tooltip.vue:101`
 
+### 以 scoped CSS 依主題分支的元件（執行中補列，使用者已核准）
+- `app/components/Camelot/Steps.vue:278` (`.container.aqua` 樣式區段) — 新增 `.container.tactile` 樣式
+- `app/components/Camelot/FileChip.vue:125`、`FileDropzone.vue:119`、`ImageDropzone.vue:199` (`[data-cml-theme="aqua"]` 樣式) — 新增 tactile 的圓角樣式
+
 ### 只有 scifi 分支、其餘風格共用預設外觀的元件（逐一檢視，tactile 下外觀不協調才加分支）
 - `app/components/Camelot/Breadcrumb.vue`、`CarouselIndicator.vue`、`FieldLabel.vue`、`Timeline.vue`、`Internal/FieldFrame.vue`
 
@@ -134,6 +138,9 @@ Accordion（含 AccordionItem）、Avatar、AvatarGroup、ChatBubble、Waveform�
 - **[拆分]** 不拆成多份計畫 — 元件分支與新元件都相依於主題核心（型別與 utility），不符合獨立條件，以 Phase 循序執行。
 - **[Q1]** 新增 Accordion、Avatar＋AvatarGroup、ChatBubble、Waveform＋LevelMeter 四組 — 使用者全選。
 - **[Q2]** Button 加入 `loading` prop，五個風格都實作 — 使用者選定；`loading` 預設 false，既有用法不受影響。
+- **[執行中]** 補列 Steps、FileChip、FileDropzone、ImageDropzone — 它們以 scoped CSS 分主題，Phase 0 以 `'aqua'` 字面量掃描未命中；使用者核准補列並實作。
+- **[執行中]** 選單與下拉的 tactile 選中態文字用 `on-surface` 而非角色色 — 淺色角色色（如 playground 的青色）疊在灰階底上對比不足。
+- **[執行中]** Breadcrumb、CarouselIndicator、FieldLabel、Timeline、FieldFrame 不加 tactile 分支 — 這五個只有 scifi 走特例，其餘風格共用同一外觀，tactile 沿用即可。
 - **[預設主題]** 維持 `aqua` — 不改變既有消費端的外觀。
 
 ## Git Completion Policy

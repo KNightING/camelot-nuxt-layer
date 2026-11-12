@@ -393,6 +393,8 @@ const onPointerEnd = (e: PointerEvent) => {
 
 const arrowClass = computed(() => {
   switch (themeMode.value) {
+    case 'tactile':
+      return 'tactile-surface text-on-surface'
     case 'aqua':
       return 'aqua-glass text-on-surface'
     case 'scifi':
