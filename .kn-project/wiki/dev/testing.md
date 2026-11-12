@@ -23,7 +23,7 @@ pnpm test
 1. vue 的 API 全部自動匯入。
 2. @vueuse/core 的 API 自動匯入，但 `toRef`、`toRefs`、`toValue` 排除，與 Nuxt 相同改用 vue 的版本。
 3. Layer 自己的 composables 依名稱自動匯入。
-4. `useState`、`useAsyncData` 指到測試替身。
+4. `useState`、`useAsyncData` 指到測試替身。替身的路徑會先轉成 POSIX 斜線再交給 unimport，因為 unimport 把路徑原樣寫進注入的 import 字串，Windows 的反斜線會被當成跳脫字元而讓測試檔載入失敗。
 
 來源：1. [vitest.config.ts][]
 
