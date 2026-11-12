@@ -27,6 +27,14 @@
       <slot>{{ label }}</slot>
     </CamelotAquaButton>
 
+    <CamelotTactileButton
+      v-else-if="themeMode === 'tactile'"
+      :disabled="disabled"
+      @click="emit('click', $event)"
+    >
+      <slot>{{ label }}</slot>
+    </CamelotTactileButton>
+
     <CamelotMaterialButton
       v-else
       :disabled="disabled"

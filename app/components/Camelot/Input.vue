@@ -222,9 +222,9 @@
     </div>
   </label>
 
-  <!-- Aqua Pill Input Layout -->
+  <!-- Aqua / Tactile Input Layout：兩者版面相同，只有內層欄位元件不同 -->
   <label
-    v-else-if="themeMode === 'aqua'"
+    v-else-if="themeMode === 'aqua' || themeMode === 'tactile'"
     class="flex w-full min-w-10 flex-col gap-1.5 text-base"
     :class="[roleColorClass, { 'cursor-not-allowed opacity-40': disabled }]"
   >
@@ -243,7 +243,37 @@
       ref="target"
       class="relative w-full flex-1"
     >
+      <CamelotTactileInput
+        v-if="themeMode === 'tactile'"
+        ref="themeInput"
+        v-model="model"
+        :placeholder="placeholder"
+        :type="effectiveType"
+        :disabled="disabled || mode === 'only-select'"
+        :class="{ 'pointer-events-none select-none': mode === 'only-select' }"
+        @focus="onFocus"
+        @blur="onBlur"
+        @input="onInput"
+      >
+        <template #before>
+          <slot name="before">
+            <span
+              v-if="mark === 'money'"
+              class="text-app-secondary-gray mr-1.5"
+            >$</span>
+          </slot>
+        </template>
+        <template #after>
+          <slot name="after" />
+          <CamelotInternalPasswordToggle
+            v-if="showPasswordToggle"
+            v-model:revealed="isPasswordRevealed"
+            :disabled="disabled"
+          />
+        </template>
+      </CamelotTactileInput>
       <CamelotAquaInput
+        v-else
         ref="themeInput"
         v-model="model"
         :placeholder="placeholder"

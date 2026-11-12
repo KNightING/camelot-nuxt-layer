@@ -24,6 +24,13 @@
       @change="emit('change', $event)"
     />
 
+    <CamelotTactileSwitch
+      v-else-if="themeMode === 'tactile'"
+      v-model="modelValue"
+      :disabled="disabled"
+      @change="emit('change', $event)"
+    />
+
     <CamelotMaterialSwitch
       v-else
       v-model="modelValue"

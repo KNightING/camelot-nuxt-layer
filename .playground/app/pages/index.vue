@@ -2794,6 +2794,10 @@ const themeOptions = [
     value: 'aqua',
     label: 'Aqua',
   },
+  {
+    value: 'tactile',
+    label: 'Tactile',
+  },
 ] as const
 const colorModeOptions = [
   {
@@ -3139,6 +3143,10 @@ const cascadeMenuItems = ref<CamelotCascadeMenuItem[]>([
           {
             label: 'Aqua',
             value: 'appearance-theme-aqua',
+          },
+          {
+            label: 'Tactile',
+            value: 'appearance-theme-tactile',
           },
         ],
       },
