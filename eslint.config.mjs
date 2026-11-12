@@ -4,7 +4,8 @@ import withNuxt from './.playground/.nuxt/eslint.config.mjs'
 
 export default withNuxt(
   {
-    ignores: ['**/electron/release/**', '**/electron/build/**', '**/android/**', '**/ios/**'],
+    // wiki-data 是 wiki 檢視器的生成檔（wiki-build.py 每次重生），不該被 lint
+    ignores: ['**/electron/release/**', '**/electron/build/**', '**/android/**', '**/ios/**', '**/.kn-project/wiki-data/**'],
   },
   // Your custom configs here
   {

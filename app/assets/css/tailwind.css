@@ -365,6 +365,17 @@
     0 4px 10px -2px color-mix(in srgb, black 25%, transparent);
 }
 
+/* Slider 拇指：亮底外環包著角色色圓點（展示頁的樣式）；搭配 active:scale 時以彈簧放大再彈回 */
+@utility tactile-slider-thumb {
+  background-color: var(--color-surface-container-lowest);
+  box-shadow:
+    0 1px 2px 0 color-mix(in srgb, black 25%, transparent),
+    0 4px 10px -2px color-mix(in srgb, black 25%, transparent),
+    inset 0 0 0 7px var(--color-surface-container-lowest),
+    inset 0 0 0 13px var(--cml-color-current-color, var(--color-primary));
+  transition: scale 0.5s var(--ease-tactile);
+}
+
 /* 鍵盤焦點環（搭配 focus-visible: 變體） */
 @utility tactile-ring {
   outline: 2px solid var(--cml-color-current-color, var(--color-primary));

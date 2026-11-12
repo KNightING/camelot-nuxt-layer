@@ -15,8 +15,11 @@
   >
     <!-- Sliding indicator (geometry is runtime-measured → stays inline :style) -->
     <div
-      class="pointer-events-none absolute left-0 z-0 transition-[transform,width,opacity] duration-300 ease-spring motion-reduce:transition-none"
+      class="pointer-events-none absolute left-0 z-0 transition-[transform,width,opacity] motion-reduce:transition-none"
       :class="{
+        // tactile 用 0.6 秒的彈簧曲線；其他風格共用較短、過衝較小的過場
+        'duration-[600ms] ease-tactile': themeMode === 'tactile',
+        'duration-300 ease-spring': themeMode !== 'tactile',
         'top-1 h-[calc(100%-8px)] rounded-xl tactile-fill': themeMode === 'tactile',
         'aqua-fill top-[5px] h-[calc(100%-10px)] rounded-full': themeMode === 'aqua',
         'top-0.5 h-[calc(100%-4px)] rounded-md bg-surface shadow-[0_1px_3px_rgba(0,0,0,0.1)]': themeMode === 'cupertino',

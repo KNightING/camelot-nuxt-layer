@@ -28,12 +28,15 @@ Camelot Nuxt Layer 全部元件的分類索引，依表單、版面資料導覽�
 | `Switch` | 開關 | [詳情](./components/Switch.md) |
 | `SelectV2` | 下拉選擇（可搜尋、虛擬滾動） | [詳情](./components/SelectV2.md) |
 | `NumberCounter` | 數字加減 | [詳情](./components/NumberCounter.md) |
+| `Stepper` | 步進器（圓形按鈕夾著帶單位的數值） | [詳情](./components/Stepper.md) |
+| `ChipGroup` | 可點選的標籤群組（單選或多選） | [詳情](./components/ChipGroup.md) |
 | `Slider` | 滑桿（單值/區間） | [詳情](./components/Slider.md) |
 | `FieldLabel` | 表單共通標籤 | [詳情](./components/FieldLabel.md) |
 | `IdxForm` | 表單容器 | [詳情](./components/IdxForm.md) |
 | `DateV2` | 單日期選擇器 | [詳情](./components/DateV2.md) |
 | `DateRangeV2` | 日期範圍選擇器 | [詳情](./components/DateRangeV2.md) |
 | `TimeV2` | 純時間選擇器 | [詳情](./components/TimeV2.md) |
+| `Calendar` | 行內日曆（單日選取、忙碌小點） | [詳情](./components/Calendar.md) |
 
 ### 版面、資料、導覽
 
@@ -107,6 +110,7 @@ Camelot Nuxt Layer 全部元件的分類索引，依表單、版面資料導覽�
 | 元件 | 說明 | API |
 | :--- | :--- | :--- |
 | `Avatar` | 頭像（圖片或姓名縮寫） | [詳情](./components/Avatar.md) |
+| `AnimatedNumber` | 大數字顯示（變動的字元滾動進入） | [詳情](./components/AnimatedNumber.md) |
 | `AvatarGroup` | 頭像重疊堆疊（超出以 +N 表示） | [詳情](./components/AvatarGroup.md) |
 | `ChatBubble` | 訊息對話泡泡 | [詳情](./components/ChatBubble.md) |
 | `Waveform` | 音訊波形（播放進度、跳轉） | [詳情](./components/Waveform.md) |

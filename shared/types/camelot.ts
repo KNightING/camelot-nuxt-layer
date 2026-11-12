@@ -81,3 +81,12 @@ export interface CamelotAvatarItem {
 
 /** ChatBubble 的方向：start 對方（靠左）/ end 自己（靠右） */
 export type CamelotChatBubbleSide = 'start' | 'end'
+
+/** Stepper 兩顆按鈕的無障礙名稱 */
+export interface CamelotStepperLabels {
+  decrease: string
+  increase: string
+}
+
+/** AnimatedNumber 的尺寸：md 24px / lg 36px / xl 60px */
+export type CamelotNumberSize = 'md' | 'lg' | 'xl'
