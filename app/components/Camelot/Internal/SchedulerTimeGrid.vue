@@ -1,7 +1,7 @@
 <template>
   <div
     ref="scroller"
-    class="relative max-h-[70vh] overflow-auto"
+    class="relative max-h-[70vh] overflow-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
   >
     <!-- 標頭：星期與日期；黏在捲動區上緣，和下方的欄對齊 -->
     <div
@@ -52,7 +52,7 @@
           v-for="(column, index) in columns"
           :key="column.day.toISOString()"
           :ref="(element) => setColumnElement(element, index)"
-          class="relative min-w-0 flex-1 touch-pan-y border-l"
+          class="relative min-w-0 flex-1 touch-pan-y border-l first:border-l-0"
           :class="[lineClass, { [todayClass]: column.isToday }]"
           :style="gridStyle"
           @pointerdown="drag.startCreate($event)"

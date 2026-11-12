@@ -21,7 +21,7 @@
         v-for="(cell, index) in cells"
         :key="cell.day.toISOString()"
         :ref="(element) => setCellElement(element, index)"
-        class="min-h-24 min-w-0 touch-pan-y border-b border-l p-1"
+        class="min-h-24 min-w-0 touch-pan-y border-b border-l p-1 nth-[7n+1]:border-l-0 nth-[n+36]:border-b-0"
         :class="[lineClass, { [todayClass]: cell.isToday, 'opacity-50': !cell.inMonth }]"
         @pointerdown="drag.startCreate($event)"
       >

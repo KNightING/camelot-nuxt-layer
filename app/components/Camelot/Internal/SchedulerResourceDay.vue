@@ -28,7 +28,7 @@
       <div
         v-for="(row, rowIndex) in rows"
         :key="row.resource.id"
-        class="flex border-b"
+        class="flex border-b last:border-b-0"
         :class="lineClass"
       >
         <div
