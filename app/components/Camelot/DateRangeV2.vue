@@ -363,6 +363,8 @@ const {
 // 面板自身落影移除以免裁切露出方形邊。
 const popupShadowClass = computed(() => {
   switch (themeMode.value) {
+    case 'tactile':
+      return 'rounded-tactile-panel'
     case 'aqua':
       return 'shadow-[0_12px_44px_-8px_rgba(0,0,0,0.30)] rounded-aqua-panel'
     case 'cupertino':

@@ -104,7 +104,9 @@
                     ? 'rounded-t-[4px] rounded-b-none bg-surface-container-highest border-y border-x-0 border-t-transparent border-b-outline pl-4 pr-10 focus:border-b-[var(--cml-color-current-color)] focus:shadow-[inset_0_-1px_0_var(--cml-color-current-color)]'
                     : themeMode === 'aqua'
                       ? 'aqua-track rounded-aqua-control pl-4 pr-10 backdrop-blur-md focus:aqua-glow'
-                      : 'border border-stroke rounded-lg pl-4 pr-10 focus:border-[var(--cml-color-current-color)]',
+                      : themeMode === 'tactile'
+                        ? 'tactile-well rounded-tactile-control border border-transparent pl-4 pr-10'
+                        : 'border border-stroke rounded-lg pl-4 pr-10 focus:border-[var(--cml-color-current-color)]',
                 openBorderClass,
                 open ? 'pointer-events-auto' : 'pointer-events-none',
                 disabled ? 'text-on-surface-variant' : 'text-on-surface',
@@ -141,7 +143,9 @@
                   ? 'rounded-t-[4px] rounded-b-none bg-surface-container-highest border-y border-x-0 border-t-transparent border-b-outline px-4'
                   : themeMode === 'aqua'
                     ? 'aqua-track rounded-aqua-control px-4 backdrop-blur-md'
-                    : 'border border-stroke rounded-lg px-4',
+                    : themeMode === 'tactile'
+                      ? 'tactile-well rounded-tactile-control border border-transparent px-4'
+                      : 'border border-stroke rounded-lg px-4',
               openBorderClass,
               disabled ? 'text-on-surface-variant' : 'text-on-surface',
             ]"
@@ -163,9 +167,10 @@
           class="options-container relative flex flex-col overflow-hidden text-on-surface"
           :class="[
             roleColorClass,
-            optionsContainerClass || (themeMode === 'aqua' ? 'aqua-glass' : 'bg-surface'),
+            optionsContainerClass || optionsSurfaceClass,
             themeMode === 'cupertino' ? 'rounded-[12px] backdrop-blur-md' : '',
-            themeMode === 'aqua' ? 'aqua-options rounded-aqua-panel p-1 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.16)]!' : '',
+            themeMode === 'aqua' ? 'padded-options rounded-aqua-panel p-1 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.16)]!' : '',
+            themeMode === 'tactile' ? 'padded-options rounded-tactile-panel p-1' : '',
             themeMode === 'scifi' ? 'scifi-options-panel bg-transparent border-none shadow-none!' : '',
             themeMode === 'material' ? 'rounded-md' : '',
           ]"
@@ -425,15 +430,30 @@ const { themeMode } = useCamelotTheme()
 // 展開時的觸發器框線：Material 只染下框線並加 1px 內陰影（視覺 2px，不推擠版面）；Cupertino 同 Cupertino Input 的 inset 主色框；Aqua 由 aqua-glow 負責
 const openBorderClass = computed(() => {
   if (!open.value || themeMode.value === 'aqua') return ''
+  if (themeMode.value === 'tactile') return 'shadow-[0_0_0_2px_var(--cml-color-current-color,var(--color-primary))]'
   if (themeMode.value === 'material') return 'border-b-[var(--cml-color-current-color)] shadow-[inset_0_-1px_0_var(--cml-color-current-color)]'
   if (themeMode.value === 'cupertino') return 'bg-surface shadow-[inset_0_0_0_1px_var(--cml-color-current-color)]'
   return 'border-[var(--cml-color-current-color)]'
+})
+
+// 選項面板預設表面；消費端傳入 optionsContainerClass 時以其為準
+const optionsSurfaceClass = computed(() => {
+  switch (themeMode.value) {
+    case 'tactile':
+      return 'tactile-surface'
+    case 'aqua':
+      return 'aqua-glass'
+    default:
+      return 'bg-surface'
+  }
 })
 
 // 陰影改畫在 popup 外層容器（位於 Expanded 的 overflow-hidden 之外，不會被方形裁切），
 // 且圓角需與選單面板一致。面板本身的落影改為移除，僅保留不會被裁切的內高光。
 const popupShadowClass = computed(() => {
   switch (themeMode.value) {
+    case 'tactile':
+      return 'rounded-tactile-panel'
     case 'aqua':
       return 'shadow-[0_12px_44px_-8px_rgba(0,0,0,0.30)] rounded-3xl'
     case 'cupertino':
@@ -569,9 +589,9 @@ watch([() => props.options, () => props.default], ([options, isDefault]) => {
 </script>
 
 <style scoped>
-/* aqua 玻璃面板四周有 4px padding，會使原生捲動條離右緣 4px。
+/* aqua / tactile 面板四周有 4px padding，會使原生捲動條離右緣 4px。
    將捲動容器右緣外推貼齊面板（margin），再以 padding-right 把內容推離捲動條，維持左右對稱 */
-.aqua-options .cml-options-scroll {
+.padded-options .cml-options-scroll {
   margin-right: -4px;
   padding-right: 4px;
 }

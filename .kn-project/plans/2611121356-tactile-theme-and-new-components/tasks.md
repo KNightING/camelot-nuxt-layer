@@ -9,10 +9,10 @@
 - [x] lint、typecheck、在 playground 實際檢視五個控制項（淺色與深色）
 
 ## Phase 2 — 表單與選擇類元件
-- [ ] Textarea、NumberCounter、Slider、SelectV2、Tag、TagGroup、Tabs
-- [ ] `useCamelotPickerTheme`、DateV2、DateRangeV2、TimeV2
-- [ ] `useCamelotMenuItemTheme`、MenuItem、CascadeMenuPanel
-- [ ] lint、typecheck、playground 檢視
+- [x] Textarea、NumberCounter、Slider、SelectV2、Tag、TagGroup、Tabs
+- [x] `useCamelotPickerTheme`、DateV2、DateRangeV2、TimeV2
+- [x] `useCamelotMenuItemTheme`、MenuItem、CascadeMenuPanel
+- [x] lint、typecheck、playground 檢視
 
 ## Phase 3 — 浮層、回饋與資料類元件
 - [ ] BaseDialogV2、BaseBottomSheetV2、SheetHandle、Drawer、Tooltip、Toast

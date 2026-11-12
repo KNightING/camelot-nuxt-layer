@@ -115,6 +115,8 @@ const sizeClass = computed(() => (props.size === 'sm' ? 'text-xs px-2 py-0.5' : 
 
 const shapeClass = computed(() => {
   switch (themeMode.value) {
+    case 'tactile':
+      return 'rounded-full'
     case 'aqua':
       return 'rounded-full'
     case 'scifi':

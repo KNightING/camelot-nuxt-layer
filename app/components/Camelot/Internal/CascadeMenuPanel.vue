@@ -313,6 +313,8 @@ useEventListener(window, 'scroll', (e: Event) => {
 /* ---------- 四風格外觀（消費 CurrentColor） ---------- */
 const surfaceClass = computed(() => {
   switch (themeMode.value) {
+    case 'tactile':
+      return 'tactile-surface rounded-tactile-panel'
     case 'aqua':
       return 'aqua-glass rounded-2xl'
     case 'scifi':
