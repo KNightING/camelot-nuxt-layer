@@ -7,7 +7,6 @@
     <div class="flex flex-wrap items-center justify-between gap-3">
       <div class="flex items-center gap-2">
         <CamelotButton
-          is-container
           :color="color"
           @click="shift(-1)"
         >
@@ -16,12 +15,10 @@
         </CamelotButton>
         <CamelotButton
           :label="mergedLabels.today"
-          is-container
           :color="color"
           @click="date = new Date()"
         />
         <CamelotButton
-          is-container
           :color="color"
           @click="shift(1)"
         >

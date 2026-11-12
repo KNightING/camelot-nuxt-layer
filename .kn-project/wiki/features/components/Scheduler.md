@@ -38,7 +38,7 @@ Scheduler 是行事曆與排班表元件，匯入名稱 `CamelotScheduler`。有
 ## Slots
 | Slot | 作用域參數 | 說明 |
 | :--- | :--- | :--- |
-| `editor` | `event`、`isNew`、`open`、`save`、`remove`、`close` | 整個換掉內建編輯面板；用 save 與 remove 把結果交回元件 |
+| `editor` | `event`、`isNew`、`open`、`save`、`remove`、`close` | 整個換掉內建編輯面板；`save(event)` 要傳完整的事件，`remove()` 刪除正在編輯的事件，`close()` 關閉面板；`open` 是目前是否該顯示，由元件控制 |
 
 ## 視圖
 | 視圖 | 版面 | 拖移 |
@@ -66,6 +66,7 @@ Scheduler 是行事曆與排班表元件，匯入名稱 `CamelotScheduler`。有
 | 重疊事件 | 週與日視圖並排成欄，欄寬平分；排班日視圖疊成多條，列高跟著增加 |
 | 跨日事件 | 在跨過的每一天都會顯示，區間裁到當天 |
 | 排班視圖 | 只顯示有 `resourceId` 且對應到 `resources` 的事件 |
+| 沒有人員 | 不給 `resources` 時排班視圖不會出現，內建編輯面板也沒有人員欄；只想要行事曆時不需要任何額外設定 |
 | 不含 | 重複事件、時區換算、全天事件、鍵盤移動事件 |
 
 來源：1. [Scheduler.vue](../../../../app/components/Camelot/Scheduler.vue)

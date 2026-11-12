@@ -34,8 +34,8 @@
         :key="row.resource.id"
       >
         <div
-          class="sticky left-0 z-10 flex items-center border-b bg-surface px-3 py-2"
-          :class="lineClass"
+          class="sticky left-0 z-10 flex items-center bg-surface px-3 py-2"
+          :class="[lineClass, { 'border-b': rowIndex < rows.length - 1 }]"
         >
           <span class="min-w-0 truncate text-sm font-semibold text-on-surface">{{ row.resource.name }}</span>
         </div>
@@ -43,8 +43,8 @@
           v-for="(cell, dayIndex) in row.cells"
           :key="cell.day.toISOString()"
           :ref="(element) => setCellElement(element, rowIndex * days.length + dayIndex)"
-          class="min-h-14 min-w-0 touch-pan-y border-b border-l p-1"
-          :class="[lineClass, { [todayClass]: cell.isToday }]"
+          class="min-h-14 min-w-0 touch-pan-y border-l p-1"
+          :class="[lineClass, { [todayClass]: cell.isToday, 'border-b': rowIndex < rows.length - 1 }]"
           @pointerdown="drag.startCreate($event)"
         >
           <div class="flex flex-col gap-0.5">

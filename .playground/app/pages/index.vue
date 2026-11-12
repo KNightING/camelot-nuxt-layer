@@ -1985,6 +1985,54 @@
           />
         </div>
 
+        <!-- Scheduler without resources + custom editor Card -->
+        <div :class="[cardClass, 'col-span-1 md:col-span-2 lg:col-span-3']">
+          <h2 :class="cardTitleClass">
+            Scheduler（沒有人員、自訂編輯面板）
+          </h2>
+          <p class="text-xs text-slate-400">
+            不給 resources 時排班視圖與人員欄都不會出現；用 editor slot 把內建面板換成「選班別」的按鈕。
+          </p>
+          <CamelotScheduler
+            v-model:events="shiftEvents"
+            v-model:view="shiftView"
+            :views="['month', 'week', 'day']"
+            :color="currentColorRole"
+            :week-starts-on="1"
+            :start-hour="7"
+            :end-hour="22"
+          >
+            <template #editor="{ event, isNew, open, save, remove, close }">
+              <CamelotBaseDialogV2
+                :open="open"
+                @update:open="closeWhenDismissed($event, close)"
+              >
+                <div class="flex w-72 flex-col gap-3">
+                  <h3 class="text-lg font-bold">
+                    {{ isNew ? '選擇班別' : '更換班別' }}
+                  </h3>
+                  <div class="flex flex-wrap gap-2">
+                    <CamelotButton
+                      v-for="shift in shiftPresets"
+                      :key="shift.title"
+                      :label="shift.title"
+                      :color="shift.color"
+                      @click="event && save({ ...event, title: shift.title, color: shift.color })"
+                    />
+                  </div>
+                  <CamelotButton
+                    v-if="!isNew"
+                    label="刪除這筆"
+                    color="error"
+                    is-container
+                    @click="remove"
+                  />
+                </div>
+              </CamelotBaseDialogV2>
+            </template>
+          </CamelotScheduler>
+        </div>
+
         <!-- Date Pickers Card -->
         <div :class="cardClass">
           <h2 :class="cardTitleClass">
@@ -3058,6 +3106,58 @@ const schedulerEvents = ref<CamelotSchedulerEvent[]>([
     color: 'info',
   },
 ])
+
+// Scheduler 沒有人員、自訂編輯面板的展示
+interface ShiftPreset {
+  title: string
+  color: CamelotColorRole
+}
+const shiftPresets: ShiftPreset[] = [
+  {
+    title: '早班',
+    color: 'success',
+  },
+  {
+    title: '午班',
+    color: 'info',
+  },
+  {
+    title: '晚班',
+    color: 'warning',
+  },
+  {
+    title: '休假',
+    color: 'secondary',
+  },
+]
+const shiftView = ref<CamelotSchedulerView>('month')
+const shiftEvents = ref<CamelotSchedulerEvent[]>([
+  {
+    id: 'shift-1',
+    title: '早班',
+    start: schedulerAt(0, 8),
+    end: schedulerAt(0, 12),
+    color: 'success',
+  },
+  {
+    id: 'shift-2',
+    title: '晚班',
+    start: schedulerAt(1, 17),
+    end: schedulerAt(1, 22),
+    color: 'warning',
+  },
+  {
+    id: 'shift-3',
+    title: '休假',
+    start: schedulerAt(3, 9),
+    end: schedulerAt(3, 18),
+    color: 'secondary',
+  },
+])
+// 自訂面板的 open 由 Scheduler 控制；對話框被點遮罩或按 Esc 關閉時，用 close 通知回去
+const closeWhenDismissed = (isOpen: boolean, close: () => void) => {
+  if (!isOpen) close()
+}
 
 // Accordion / Avatar / Waveform / Button loading 展示
 const accordionExpanded = ref<CamelotAccordionValue[]>(['early'])

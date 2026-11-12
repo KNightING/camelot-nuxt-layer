@@ -1,6 +1,6 @@
 <template>
   <div
-    class="cml-scheduler-event group relative flex min-w-0 select-none overflow-hidden px-1.5 text-xs outline-none focus-visible:tactile-ring"
+    class="cml-scheduler-event group flex min-w-0 select-none overflow-hidden px-1.5 text-xs outline-none focus-visible:tactile-ring"
     :class="[
       roleColorClass,
       eventClass,
