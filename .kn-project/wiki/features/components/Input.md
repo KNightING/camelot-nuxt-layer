@@ -2,7 +2,7 @@
 
 ## Summary
 
-Input（匯入名稱 `CamelotInput`）是泛型文字輸入框，依目前主題渲染 Material、Cupertino、Aqua 或 Sci-Fi 的輸入元件。支援原生 type 與密碼內建顯示切換、金額前置符號，也能切成可輸入加下拉選單或僅選單的模式；四主題最低高度 42px，標題預設由 FieldLabel 畫在框外。
+Input（匯入名稱 `CamelotInput`）是泛型文字輸入框，依目前主題渲染 Material、Cupertino、Aqua、Tactile 或 Sci-Fi 的輸入元件。支援原生 type 與密碼內建顯示切換、金額前置符號，也能切成可輸入加下拉選單或僅選單的模式；四主題最低高度 42px，標題預設由 FieldLabel 畫在框外。
 
 ## Props
 | Prop | 型別 | 預設 | 說明 |
@@ -61,9 +61,10 @@ Input 本身不含原生 input，而是依主題渲染對應的主題輸入元�
 | Material | [Material Input](./Material-Input.md) |
 | Cupertino | [Cupertino Input](./Cupertino-Input.md) |
 | Aqua | [Aqua Input](./Aqua-Input.md) |
+| Tactile | [Tactile Input](./Tactile-Input.md) |
 | Sci-Fi | [Sci-Fi Input](./Scifi-Input.md) |
 
-1. 四個主題元件各自持有原生 input 並對外公開 inputEl。
+1. 五個主題元件各自持有原生 input 並對外公開 inputEl。
 2. 同一時間只渲染其中一個，Input 以共用的 template ref 取得後轉成自己的 inputEl。
 3. 新增主題元件時必須一併公開 inputEl，否則該主題下 inputEl 會是 null。
 
@@ -73,7 +74,7 @@ Input 本身不含原生 input，而是依主題渲染對應的主題輸入元�
 
 | 主題與模式 | 標題位置 | 最低高度 |
 | :--- | :--- | :--- |
-| Cupertino、Aqua、Sci-Fi | 框外上方，由 FieldLabel 渲染 | 42px |
+| Cupertino、Aqua、Tactile、Sci-Fi | 框外上方，由 FieldLabel 渲染 | 42px |
 | Material，labelMode 為 outside | 框外上方，由 FieldLabel 渲染 | 42px |
 | Material，labelMode 為 floating | 框內浮動 label，聚焦或有值時上浮 | 56px |
 

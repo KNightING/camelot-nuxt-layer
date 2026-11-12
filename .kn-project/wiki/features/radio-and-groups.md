@@ -53,7 +53,7 @@
 | `label`、`required` | 群組標題與必填標示，可用 `#label` slot 替換 | 同左 |
 | `change` emit | 選中的 option；取消時為 `undefined` | 勾選後的值陣列 |
 
-1. 選項間距固定為橫向 24px、縱向 8px，四主題一致。
+1. 選項間距固定為橫向 24px、縱向 8px，五主題一致。
 2. 水平排列時選項會自動換行。
 3. 群組標題用 FieldLabel，左側內縮 4px 與選項對齊。
 

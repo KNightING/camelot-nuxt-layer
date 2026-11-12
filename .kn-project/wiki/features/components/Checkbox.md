@@ -2,7 +2,7 @@
 
 ## Summary
 
-Checkbox 是核取方塊的公開元件，匯入名稱 `CamelotCheckbox`。它依當前主題選用 Scifi、Cupertino、Aqua 或 Material 的實作，支援未定（半選）狀態與圓形外框，並可在右側附帶可點擊的標籤。
+Checkbox 是核取方塊的公開元件，匯入名稱 `CamelotCheckbox`。它依當前主題選用 Scifi、Cupertino、Aqua、Tactile 或 Material 的實作，支援未定（半選）狀態與圓形外框，並可在右側附帶可點擊的標籤。
 
 ## Props
 | Prop | 型別 | 預設 | 說明 |
@@ -33,8 +33,8 @@ Checkbox 是核取方塊的公開元件，匯入名稱 `CamelotCheckbox`。它�
 
 ### 主題切換
 
-1. 依目前主題模式選用實作：scifi、cupertino、aqua，其餘一律 material。
-2. 外框形狀只傳給 Cupertino 與 Aqua；Scifi 與 Material 不接受，外框固定。
+1. 依目前主題模式選用實作：scifi、cupertino、aqua、tactile，其餘一律 material。
+2. 外框形狀只傳給 Cupertino、Aqua 與 Tactile；Scifi 與 Material 不接受，外框固定。
 3. 外層依 color 與 isContainer 設定目前角色色，內層實作取用這組顏色。
 4. 有標籤文字或 label 插槽時才渲染標籤；點標籤也會切換並送出 change，停用時無效。
 
@@ -43,6 +43,7 @@ Checkbox 是核取方塊的公開元件，匯入名稱 `CamelotCheckbox`。它�
 | scifi | [Scifi Checkbox](./Scifi-Checkbox.md) |
 | cupertino | [Cupertino Checkbox](./Cupertino-Checkbox.md) |
 | aqua | [Aqua Checkbox](./Aqua-Checkbox.md) |
+| tactile | [Tactile Checkbox](./Tactile-Checkbox.md) |
 | 其他 | [Material Checkbox](./Material-Checkbox.md) |
 
 來源：1. [Checkbox.vue](../../../../app/components/Camelot/Checkbox.vue)
@@ -52,6 +53,7 @@ Checkbox 是核取方塊的公開元件，匯入名稱 `CamelotCheckbox`。它�
 | 主題 | 方框 | 勾號 |
 | :--- | :--- | :--- |
 | aqua | 20×20 | 6×10 |
+| tactile | 22×22 | 描線勾號 |
 | material | 18×18 | 6×10 |
 | cupertino | 22×22 | 12×8 |
 | scifi | 方塊指示器 | 不畫勾號 |

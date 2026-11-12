@@ -90,7 +90,7 @@ UI 元件依用途分成五群；共用日曆核心供各日期與時間選擇�
 | 共用日曆核心 | 內部 Calendar |
 | 版面資料導覽 | Tree、Table、Menu、OverlayScrollbar |
 
-主題提供四種風格與共用工具，核心 composable 則負責 API、路由與色彩。
+主題提供五種風格與共用工具，核心 composable 則負責 API、路由與色彩。
 
 ```json diagram id=圖3
 {
@@ -100,7 +100,7 @@ UI 元件依用途分成五群；共用日曆核心供各日期與時間選擇�
   "desc": "Tailwind 主題與 Composables 各自提供的核心能力",
   "nodes": [
     {"id": "H", "text": "Tailwind 主題", "key": true},
-    {"id": "H1", "text": "四風格主題"},
+    {"id": "H1", "text": "五風格主題"},
     {"id": "H2", "text": "Aqua 共用工具"},
     {"id": "D", "text": "Composables", "key": true},
     {"id": "D1", "text": "API 封裝"},
@@ -121,7 +121,7 @@ UI 元件依用途分成五群；共用日曆核心供各日期與時間選擇�
 
 | 節點 | 說明 |
 | :--- | :--- |
-| 四風格主題 | material、cupertino、scifi、aqua，預設 aqua |
+| 五風格主題 | material、cupertino、scifi、aqua、tactile，預設 aqua |
 | Aqua 共用工具 | 玻璃面板、填滿態、軌道等 Tailwind 工具 |
 | API 封裝 | [useBaseApi](../features/composables/useBaseApi.md) |
 | 路由管理 | [useCamelotRouter](../features/composables/useCamelotRouter.md) |

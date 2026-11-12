@@ -2,7 +2,7 @@
 
 ## Summary
 
-`useCamelotTheme()` 管理 Camelot 的主題風格、深淺色與品牌色。主題風格有 material、cupertino、scifi、aqua 四種，預設 aqua，存在 localStorage；切換風格、深淺色或色系時，全站顏色以漸變過場。狀態與副作用都是模組層單例，數百個元件同時呼叫也只有一份。
+`useCamelotTheme()` 管理 Camelot 的主題風格、深淺色與品牌色。主題風格有 material、cupertino、scifi、aqua、tactile 五種，預設 aqua，存在 localStorage；切換風格、深淺色或色系時，全站顏色以漸變過場。狀態與副作用都是模組層單例，數百個元件同時呼叫也只有一份。
 
 ## 運作方式
 
@@ -60,7 +60,7 @@ useCamelotTheme(): {
   triggerThemeTransition: () => void
 }
 
-type CamelotThemeMode = 'material' | 'cupertino' | 'scifi' | 'aqua'
+type CamelotThemeMode = 'material' | 'cupertino' | 'scifi' | 'aqua' | 'tactile'
 ```
 
 ## 回傳

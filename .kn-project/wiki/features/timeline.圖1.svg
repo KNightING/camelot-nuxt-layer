@@ -1,14 +1,12 @@
-<!-- wiki-diagram e88ff93a9aeef108b73ece352632eccb5eeed2c99a8178f5abe895c4e24074ec bc05982e952ea8235e308ad6c441451c9ce23d3abba0445ac1a31d6dc91a9f3b -->
+<!-- wiki-diagram e88ff93a9aeef108b73ece352632eccb5eeed2c99a8178f5abe895c4e24074ec 3453496a9075818f520d34e4e14d13a255795c9b1ab3f7230f000fe71902afa7 -->
 <svg class="dg flow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 574 174" width="574" height="174" role="img" aria-label="時間軸版面">
 <title>時間軸版面</title>
 <desc>每個項目是一個 grid；交錯排列用三軌讓軸線置中，單側排列用兩軌讓軸線靠邊</desc>
 <style>
 svg.dg{font-family:-apple-system,"PingFang TC","Noto Sans TC",Segoe UI,Roboto,sans-serif;
-  --ink:#1f2328;--ink2:#444c56;--ink3:#6e7781;--line:#d0d7de;--line2:#8c959f;--surf:#f6f8fa;--surf2:#eaeef2;--surf3:#dfe4ea;
-  --prim:#ddf4ff;--prim-ink:#0550ae;--tert:#8250df;--tert-bg:#fbefff;--tert-ink:#3e1f79;--err:#cf222e;--warn:#9a6700;--warn-bg:#fff8c5;--ok:#1a7f37;--key:#41546B;--mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+  --ink:#1f2328;--ink2:#444c56;--ink3:#6e7781;--line:#d0d7de;--line2:#8c959f;--surf:#f6f8fa;--surf2:#eaeef2;--surf3:#dfe4ea;--prim:#ddf4ff;--prim-ink:#0550ae;--tert:#8250df;--tert-bg:#fbefff;--tert-ink:#3e1f79;--err:#cf222e;--warn:#9a6700;--warn-bg:#fff8c5;--ok:#1a7f37;--key:#41546B;--mono:ui-monospace,SFMono-Regular,Menlo,monospace;
   color:var(--ink2);background:transparent}
-@media (prefers-color-scheme:dark){svg.dg{--ink:#e6edf3;--ink2:#c9d1d9;--ink3:#8b949e;--line:#30363d;--line2:#484f58;--surf:#161b22;--surf2:#1f2630;--surf3:#2a3340;
-  --prim:#0c2d6b;--prim-ink:#79c0ff;--tert:#a371f7;--tert-bg:#2a1a4a;--tert-ink:#d2b8ff;--err:#f85149;--warn:#d29922;--warn-bg:#3a2e00;--ok:#3fb950;--key:#6e8aa8}}
+@media (prefers-color-scheme:dark){svg.dg{--ink:#e6edf3;--ink2:#c9d1d9;--ink3:#8b949e;--line:#30363d;--line2:#484f58;--surf:#161b22;--surf2:#1f2630;--surf3:#2a3340;--prim:#0c2d6b;--prim-ink:#79c0ff;--tert:#a371f7;--tert-bg:#2a1a4a;--tert-ink:#d2b8ff;--err:#f85149;--warn:#d29922;--warn-bg:#3a2e00;--ok:#3fb950;--key:#6e8aa8}}
 .seq .life{stroke:var(--line);stroke-width:1.2;stroke-dasharray:4 4}
 .seq .act{fill:var(--surf);stroke:var(--line);stroke-width:1.2}.seq .act.ext{stroke-dasharray:4 3}.seq .act.db{fill:var(--surf2)}.seq .act.bus{fill:var(--prim);stroke:transparent}.seq .act.auth{fill:var(--warn-bg)}
 .seq .actx{font-size:12.5px;font-weight:700;fill:var(--ink)}
@@ -44,27 +42,35 @@ svg.dg{font-family:-apple-system,"PingFang TC","Noto Sans TC",Segoe UI,Roboto,sa
 .er .rel{fill:none;stroke:var(--ink2);stroke-width:1.3;color:var(--ink2)}.er .rl{font-size:11px;fill:var(--ink2)}.er .rlbg{fill:var(--surf);fill-opacity:.92}
 </style>
 <defs><marker id="flAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5 0 10z" fill="currentColor"/></marker></defs>
+<g data-step="2">
 <path class="e" d="M176 87 L210 87 L210 50 L237 50" marker-end="url(#flAr)"/>
 <rect class="elbg" x="175" y="33" width="67" height="17" rx="3"/>
 <text class="el" x="209" y="45" text-anchor="middle">alternate</text>
+</g>
+<g data-step="2">
 <path class="e" d="M176 87 L210 87 L210 124 L237 124" marker-end="url(#flAr)"/>
 <rect class="elbg" x="157" y="108" width="103" height="17" rx="3"/>
 <text class="el" x="209" y="120" text-anchor="middle">before 或 after</text>
+</g>
+<g data-step="3">
 <path class="e" d="M353 50 L381 50 L381 87 L403 87" marker-end="url(#flAr)"/>
+</g>
+<g data-step="3">
 <path class="e" d="M353 124 L381 124 L381 87 L403 87" marker-end="url(#flAr)"/>
-<g class="n rect"><rect class="shape" x="30" y="67" width="146" height="39" rx="3"/>
+</g>
+<g class="n rect" data-step="1"><rect class="shape" x="30" y="67" width="146" height="39" rx="3"/>
 <text x="103" y="91" text-anchor="middle">每個項目
 一個 grid</text>
 </g>
-<g class="n rect"><rect class="shape" x="243" y="30" width="110" height="39" rx="3"/>
+<g class="n rect" data-step="2"><rect class="shape" x="243" y="30" width="110" height="39" rx="3"/>
 <text x="298" y="53" text-anchor="middle">三軌
 軸線置中</text>
 </g>
-<g class="n rect"><rect class="shape" x="243" y="105" width="110" height="39" rx="3"/>
+<g class="n rect" data-step="2"><rect class="shape" x="243" y="105" width="110" height="39" rx="3"/>
 <text x="298" y="128" text-anchor="middle">兩軌
 軸線靠邊</text>
 </g>
-<g class="n rect key"><rect class="shape" x="409" y="67" width="135" height="39" rx="3"/>
+<g class="n rect key" data-step="3"><rect class="shape" x="409" y="67" width="135" height="39" rx="3"/>
 <text x="476" y="91" text-anchor="middle">軸軌
 圓點與連接線</text>
 </g>

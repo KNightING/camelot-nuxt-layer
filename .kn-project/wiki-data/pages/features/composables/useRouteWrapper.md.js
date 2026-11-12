@@ -1,0 +1,9 @@
+WIKI_PAGE("features/composables/useRouteWrapper.md",{
+"title":"useRouteWrapper",
+"summary":"useRouteWrapper 針對一個固定路徑包裝 Nuxt router 的 push 與 replace，回傳 to、replace 兩個導航方法與路徑本身，讓頁面導航可以集中定義、在各處重用，並可額外合併 query、hash 等路由選項。",
+"svgs":{},
+"seq":{},
+"ext":["archive/2609231616-wiki-lint-migration.md"],
+"changelog":[{"plan": "2609231616-wiki-lint-migration", "date": "2026-09-23", "version": "—", "note": "改寫為新版 wiki 格式並依原始碼校正內容", "issue": "[#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45)", "pr": "—"}],
+"md":"# useRouteWrapper\n\n## Summary\n\nuseRouteWrapper 針對一個固定路徑包裝 Nuxt router 的 push 與 replace，回傳 to、replace 兩個導航方法與路徑本身，讓頁面導航可以集中定義、在各處重用，並可額外合併 query、hash 等路由選項。\n\n## 介面\n\n### 簽章\n\n```ts\nconst useRouteWrapper: (path: string) => {\n  to: (options?: RouteLocationAsRelativeGeneric | RouteLocationAsPathGeneric) => ReturnType<Router['push']>\n  replace: (options?: RouteLocationAsRelativeGeneric | RouteLocationAsPathGeneric) => ReturnType<Router['replace']>\n  path: string\n}\n```\n\n### 參數\n\n| 參數 | 型別 | 預設 | 說明 |\n| --- | --- | --- | --- |\n| `path` | `string` | 必填 | 目標路徑 |\n\n### 回傳\n\n| 名稱 | 型別 | 說明 |\n| --- | --- | --- |\n| `to` | `(options?) => Promise` | 以 `router.push` 導向 `path`，合併傳入的路由選項 |\n| `replace` | `(options?) => Promise` | 以 `router.replace` 導向 `path`，合併傳入的路由選項 |\n| `path` | `string` | 傳入的路徑 |\n\n來源：1. [useRouteWrapper.ts](../../../../app/composables/useRouteWrapper.ts)\n\n## 用法\n\n```ts\nconst userPage = useRouteWrapper('/user')\n\nuserPage.to() // router.push({ path: '/user' })\nuserPage.to({ query: { id: '1' } }) // 合併選項\nuserPage.replace()\n```\n\n## 規則\n\n| 規則 | 說明 |\n| --- | --- |\n| 合併順序 | 以 `{ path, ...options }` 組成目標，`options` 內的 `path` 會覆蓋固定路徑 |\n| 呼叫時機 | 建立時呼叫 `useRouter`，須在 setup 或 Nuxt 環境內建立 |\n\n---\n[⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)\n"
+});

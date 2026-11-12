@@ -2,7 +2,7 @@
 
 ## Summary
 
-開關主元件：依目前主題自動選用 Material、Cupertino、Aqua 或 Sci-Fi 的開關實作，可在右側附標籤，點標籤也能切換。匯入名稱為 `CamelotSwitch`（Nuxt 自動匯入）。
+開關主元件：依目前主題自動選用 Material、Cupertino、Aqua、Tactile 或 Sci-Fi 的開關實作，可在右側附標籤，點標籤也能切換。匯入名稱為 `CamelotSwitch`（Nuxt 自動匯入）。
 
 ## 運作方式
 
@@ -13,6 +13,7 @@
 | Sci-Fi | [Scifi Switch](./Scifi-Switch.md) |
 | Cupertino | Cupertino Switch |
 | Aqua | Aqua Switch |
+| Tactile | [Tactile Switch](./Tactile-Switch.md) |
 | 其他 | Material Switch |
 
 1. 開關本身與標籤都會切換狀態，並發出變更事件，帶入切換後的值。
@@ -23,11 +24,12 @@
 
 ### 尺寸
 
-各主題的開關高度都是 22px，和勾選框並排時對齊。
+Tactile 以外的主題開關高度都是 22px，和勾選框並排時對齊；Tactile 是 28px。
 
 | 主題 | 軌道 | 把手 |
 | :--- | :--- | :--- |
 | Aqua | 40×22 | 18 |
+| Tactile | 46×28 | 22 |
 | Material | 40×22 | 未選 12、選中 16 |
 | Cupertino | 40×22 | 18 |
 | Sci-Fi | 48×22，軌道內顯示 ON、OFF 文字 | 14 |

@@ -2,7 +2,7 @@
 
 ## Summary
 
-`CamelotRadio` 是單一的單選圓鈕加可點擊標籤，依目前主題渲染 Sci-Fi、Cupertino、Aqua 或 Material 風格的圓鈕，並提供色彩角色。預設只能選取、不能點擊取消，需要可取消時開啟 `deselectable`。一組選項請改用 [RadioGroup](./RadioGroup.md)。
+`CamelotRadio` 是單一的單選圓鈕加可點擊標籤，依目前主題渲染 Sci-Fi、Cupertino、Aqua、Tactile 或 Material 風格的圓鈕，並提供色彩角色。預設只能選取、不能點擊取消，需要可取消時開啟 `deselectable`。一組選項請改用 [RadioGroup](./RadioGroup.md)。
 
 ## Props
 | Prop | 型別 | 預設 | 說明 |
@@ -37,6 +37,7 @@
 | scifi | Sci-Fi Radio |
 | cupertino | Cupertino Radio |
 | aqua | Aqua Radio |
+| tactile | [Tactile Radio](./Tactile-Radio.md) |
 | 其他（含 material） | [Material Radio](./Material-Radio.md) |
 
 來源：1. [Radio.vue](../../../../app/components/Camelot/Radio.vue)

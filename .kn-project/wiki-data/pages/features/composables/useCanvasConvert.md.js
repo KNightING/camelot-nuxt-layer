@@ -1,0 +1,9 @@
+WIKI_PAGE("features/composables/useCanvasConvert.md",{
+"title":"useCanvasConvert",
+"summary":"`useCanvasConvert(canvas)` 把一個 canvas 元素轉成 Blob 或 Data URL。回傳的兩個函式每次呼叫都取用當下的 canvas，canvas 可用 ref 或 getter 傳入。",
+"svgs":{},
+"seq":{},
+"ext":["archive/2609231616-wiki-lint-migration.md", "archive/2609231702-fix-wiki-review-code-defects.md"],
+"changelog":[{"plan": "2609231702-fix-wiki-review-code-defects", "date": "2026-09-23", "version": "—", "note": "修正程式碼缺陷後更新為修正後的行為", "issue": "[#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47)", "pr": "—"}, {"plan": "2609231616-wiki-lint-migration", "date": "2026-09-23", "version": "—", "note": "改寫為新版 wiki 格式並依原始碼校正內容", "issue": "[#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45)", "pr": "—"}],
+"md":"# useCanvasConvert\n\n## Summary\n\n`useCanvasConvert(canvas)` 把一個 canvas 元素轉成 Blob 或 Data URL。回傳的兩個函式每次呼叫都取用當下的 canvas，canvas 可用 ref 或 getter 傳入。\n\n## 運作方式\n\n1. 以 computed 解析傳入的 canvas。\n2. toBlob 以 Promise 包裝 canvas 的 toBlob，可指定格式與品質，未指定時輸出 PNG；無法產生時為 `null`。\n3. toDataURL 直接轉呼叫 canvas 的 toDataURL，可指定格式與品質。\n\n來源：1. [useCanvasConvert.ts](../../../../app/composables/useCanvasConvert.ts)\n\n## 用法\n\n```ts\nconst { toBlob, toDataURL } = useCanvasConvert(canvasEl)\nconst blob = await toBlob('image/webp', 0.8)\nconst dataUrl = toDataURL('image/jpeg', 0.9)\n```\n\n## 簽章\n\n```ts\nuseCanvasConvert(canvasRef: MaybeRefOrGetter<HTMLCanvasElement>): {\n  toBlob: (type?: string, quality?: number) => Promise<Blob | null>\n  toDataURL: (type?: string, quality?: any) => string\n}\n```\n\n## 參數\n\n| 參數 | 型別 | 預設 | 說明 |\n| --- | --- | --- | --- |\n| `canvasRef` | `MaybeRefOrGetter<HTMLCanvasElement>` | — | 目標 canvas 元素 |\n\n## 回傳\n\n| 名稱 | 型別 | 說明 |\n| --- | --- | --- |\n| `toBlob` | `(type?, quality?) => Promise<Blob \\| null>` | 轉成 Blob，未指定格式時為 PNG |\n| `toDataURL` | `(type?, quality?) => string` | 轉成 Data URL 字串 |\n\n---\n[⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)\n"
+});

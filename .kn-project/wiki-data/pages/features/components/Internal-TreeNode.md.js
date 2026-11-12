@@ -1,0 +1,9 @@
+WIKI_PAGE("features/components/Internal-TreeNode.md",{
+"title":"TreeNode",
+"summary":"TreeNode（匯入名稱 `CamelotInternalTreeNode`）是 [Tree](./Tree.md) 樹狀結構的單一節點，屬內部元件。每列顯示展開箭頭、可選的勾選框與標籤，有子節點時遞迴渲染下一層；勾選、展開等狀態都由 Tree 注入的 context 管理，節點本身不存狀態。",
+"svgs":{},
+"seq":{},
+"ext":["archive/2609231616-wiki-lint-migration.md"],
+"changelog":[{"plan": "2609231616-wiki-lint-migration", "date": "2026-09-23", "version": "—", "note": "改寫為新版 wiki 格式並依原始碼校正內容", "issue": "[#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45)", "pr": "—"}],
+"md":"# TreeNode\n\n## Summary\n\nTreeNode（匯入名稱 `CamelotInternalTreeNode`）是 [Tree](./Tree.md) 樹狀結構的單一節點，屬內部元件。每列顯示展開箭頭、可選的勾選框與標籤，有子節點時遞迴渲染下一層；勾選、展開等狀態都由 Tree 注入的 context 管理，節點本身不存狀態。\n\n## Props\n| Prop | 型別 | 預設 | 說明 |\n| :--- | :--- | :---: | :--- |\n| `node` | `CamelotTreeNode` | — | 節點資料 |\n| `level` | `number` | `0` | 層級深度，每層左側縮排 20px |\n\n## Slots\n| Slot | 作用域參數 | 說明 |\n| :--- | :--- | :--- |\n| `node` | `{ node, level, isChecked, isExpanded }` | 自訂節點內容，預設顯示標籤；會遞迴轉給子節點 |\n\n## 運作方式\n\n### 點擊行為\n\n| 模式 | 點整列 | 點箭頭 |\n| :--- | :--- | :--- |\n| 可勾選 | 切換勾選 | 切換展開 |\n| 不可勾選 | 有子節點時切換展開 | 切換展開 |\n\n兩種模式點整列時都會通知 Tree 的節點點擊處理；停用的節點半透明且不可點。\n\n來源：1. [TreeNode.vue](../../../../app/components/Camelot/Internal/TreeNode.vue)　2. [tree.ts](../../../../shared/types/tree.ts)\n\n### 勾選框與標籤\n\n1. 可勾選且未自訂 node 插槽時，標籤直接交給 [Checkbox](./Checkbox.md) 渲染，外觀與獨立的 Checkbox 一致。\n2. 有自訂 node 插槽時，勾選框不帶標籤，後面接插槽內容。\n3. 勾選框支援半選狀態，顏色跟隨 Tree 的色彩角色。\n\n來源：1. [TreeNode.vue](../../../../app/components/Camelot/Internal/TreeNode.vue)\n\n### 展開\n\n有子節點時左側顯示箭頭，展開時轉 90 度，子層以 [Expanded](./Expanded.md) 做展開動畫；沒有子節點時保留同寬的空位，讓標籤對齊。\n\nnode 插槽的型別需明確宣告：元件把自己的插槽遞迴轉給子節點，沒有宣告時 TypeScript 會循環推導而報錯。\n\n來源：1. [TreeNode.vue](../../../../app/components/Camelot/Internal/TreeNode.vue)\n\n---\n[⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)\n"
+});

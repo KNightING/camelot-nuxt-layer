@@ -33,7 +33,7 @@
 
 ### 勾選框與自訂節點
 
-勾選框直接使用 [Checkbox](./Checkbox.md)，四種主題與半選狀態都和單獨使用時相同。
+勾選框直接使用 [Checkbox](./Checkbox.md)，五種主題與半選狀態都和單獨使用時相同。
 
 沒有提供 `node` 插槽時，節點文字交給 Checkbox 的 label 渲染，外觀與獨立的 Checkbox 一致。
 

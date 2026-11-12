@@ -2,7 +2,7 @@
 
 ## Summary
 
-`useCamelotPickerTheme()` 集中 DateV2、DateRangeV2、TimeV2 與內部日曆的四主題樣式，回傳 `themeMode`、`triggerClass`、`triggerOpenClass`、`panelClass`、`selectedSurfaceClass`。觸發欄位與同主題的 Input 同一套外觀，最低高度 42px（Sci-Fi 內容區 40px，加上 HUD 外框共 42px）；展開時套上對應 Input 聚焦效果的樣式。
+`useCamelotPickerTheme()` 集中 DateV2、DateRangeV2、TimeV2 與內部日曆的五主題樣式，回傳 `themeMode`、`triggerClass`、`triggerOpenClass`、`panelClass`、`selectedSurfaceClass`。觸發欄位與同主題的 Input 同一套外觀，最低高度 42px（Sci-Fi 內容區 40px，加上 HUD 外框共 42px）；展開時套上對應 Input 聚焦效果的樣式。
 
 ## 運作方式
 
@@ -19,6 +19,7 @@
 | 主題 | 觸發欄位 | 展開或聚焦 |
 | --- | --- | --- |
 | aqua | 最低 42px，aqua-track 軌道底，Aqua 控制項圓角，背景模糊 | aqua-glow 光暈 |
+| tactile | 最低 42px，實心灰階底，Tactile 控制項圓角 | 2px 角色色外框 |
 | scifi | 內容區最低 40px，加上 FieldFrame 提供的 HUD 外框共 42px | 無額外 class |
 | cupertino | 最低 42px，10px 圓角，透明邊框，surface-container-highest 底 | 改 surface 底，加 1px 當前色內框線 |
 | material | 最低 42px，上緣 4px 圓角，底線 outline 色，surface-container-highest 底 | 底線與 1px 內陰影改當前色 |
@@ -30,11 +31,12 @@
 | 主題 | 面板 | 選中態表面 |
 | --- | --- | --- |
 | aqua | aqua-glass 玻璃，Aqua 面板圓角 | aqua-fill 填色，文字當前前景色 |
+| tactile | 實心表面，Tactile 面板圓角 | 反相表面，不跟角色色 |
 | scifi | 直角，主色 40% 邊框，主色 15% 光暈 | 當前色 85% 底，發光陰影 |
 | cupertino | surface 底，2xl 圓角 | 當前色實心底 |
 | material | surface 底，xl 圓角 | 當前色實心底，加小陰影 |
 
-選中態在 aqua 以外的主題，沒有注入當前色時退回主色與主色前景色。
+選中態在 aqua 與 tactile 以外的主題，沒有注入當前色時退回主色與主色前景色。
 
 來源：1. [useCamelotPickerTheme.ts](../../../../app/composables/useCamelotPickerTheme.ts)
 

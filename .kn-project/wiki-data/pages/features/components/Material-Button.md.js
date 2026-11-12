@@ -1,0 +1,9 @@
+WIKI_PAGE("features/components/Material-Button.md",{
+"title":"Material Button",
+"summary":"`CamelotMaterialButton` 是 Material 主題的填色膠囊按鈕，內建漣漪效果與 hover、停用狀態。一般不直接使用，而是由 `CamelotButton` 在 Material 主題（也是預設主題）下自動選用；透過它使用時字級為 1rem，按鈕最低高度 42px，字級放大時隨內容撐高。",
+"svgs":{},
+"seq":{},
+"ext":["archive/2609231616-wiki-lint-migration.md"],
+"changelog":[{"plan": "2609231616-wiki-lint-migration", "date": "2026-09-23", "version": "—", "note": "改寫為新版 wiki 格式並依原始碼校正內容", "issue": "[#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45)", "pr": "—"}],
+"md":"# Material Button\n\n## Summary\n\n`CamelotMaterialButton` 是 Material 主題的填色膠囊按鈕，內建漣漪效果與 hover、停用狀態。一般不直接使用，而是由 `CamelotButton` 在 Material 主題（也是預設主題）下自動選用；透過它使用時字級為 1rem，按鈕最低高度 42px，字級放大時隨內容撐高。\n\n## Props\n| Prop | 型別 | 預設 | 說明 |\n| :--- | :--- | :---: | :--- |\n| `disabled` | `boolean` | `false` | 是否停用按鈕 |\n| `color` | `string` | `'primary'` | 色彩角色名稱，`isContainer` 為真時用來決定漣漪色 |\n| `isContainer` | `boolean` | `false` | 是否為 container 樣式，影響漣漪顏色 |\n\n## Emits\n| 事件 | 參數 | 說明 |\n| :--- | :--- | :--- |\n| `click` | `event: MouseEvent` | 點擊按鈕時觸發 |\n\n## Slots\n| Slot | 作用域參數 | 說明 |\n| :--- | :--- | :--- |\n| `default` | — | 按鈕內容 |\n\n## 運作方式\n\n### 外觀\n\n| 項目 | 行為 |\n| :--- | :--- |\n| 尺寸 | 最低 42px，左右留白 24px，字重 medium |\n| 顏色 | 底色取目前色彩角色，文字取角色的前景色；色彩角色由外層元件提供 |\n| hover | 提高亮度並加深陰影 |\n| 停用 | 透明度 38%，取消 hover 的亮度與陰影變化，游標顯示禁止 |\n\n來源：1. [Material/Button.vue](../../../../app/components/Camelot/Material/Button.vue)　2. [Button.vue](../../../../app/components/Camelot/Button.vue)\n\n### 漣漪\n\n按下時以漣漪元件在按下處擴散水波紋。`isContainer` 為真時漣漪色取該色彩角色的 container 前景色，否則為白色。\n\n來源：1. [Material/Button.vue](../../../../app/components/Camelot/Material/Button.vue)\n\n## 相關頁面\n\n- [Button](./Button.md)\n- [RippleEffect](./RippleEffect.md)\n\n---\n[⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)\n"
+});

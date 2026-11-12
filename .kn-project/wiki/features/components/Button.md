@@ -2,14 +2,15 @@
 
 ## Summary
 
-Button 是依當前主題自動切換外觀的公開按鈕元件，匯入名稱 `CamelotButton`（Nuxt 自動匯入）。它依主題選用 Scifi、Cupertino、Aqua 或 Material 的按鈕實作，統一處理文字、角色色彩、停用與點擊事件；四種主題字級都是 1rem、最低高度 42px。
+Button 是依當前主題自動切換外觀的公開按鈕元件，匯入名稱 `CamelotButton`（Nuxt 自動匯入）。它依主題選用 Scifi、Cupertino、Aqua、Tactile 或 Material 的按鈕實作，統一處理文字、角色色彩、停用、處理中與點擊事件；五種主題字級都是 1rem、最低高度 42px。
 
 ## Props
 | Prop | 型別 | 預設 | 說明 |
 | :--- | :--- | :---: | :--- |
 | `label` | `string` | `'Button'` | 按鈕文字（無 default 插槽內容時顯示） |
 | `disabled` | `boolean` | `false` | 是否停用按鈕 |
-| `color` | `CamelotColorRole` | `'primary'` | 角色色彩，四種主題都套用 |
+| `loading` | `boolean` | `false` | 處理中：顯示轉圈並擋下點擊 |
+| `color` | `CamelotColorRole` | `'primary'` | 角色色彩，五種主題都套用 |
 | `isContainer` | `boolean` | `false` | 改用角色的容器色 |
 
 ## Emits
@@ -35,15 +36,24 @@ Button 是依當前主題自動切換外觀的公開按鈕元件，匯入名稱 
 | scifi | [Scifi Button](./Scifi-Button.md) |
 | cupertino | [Cupertino Button](./Cupertino-Button.md) |
 | aqua | [Aqua Button](./Aqua-Button.md) |
+| tactile | [Tactile Button](./Tactile-Button.md) |
 | 其他（預設 material） | [Material Button](./Material-Button.md)，另外收到 color 與 isContainer 以決定漣漪顏色 |
 
 來源：1. [Button.vue](../../../../app/components/Camelot/Button.vue)
 
 ### 尺寸
 
-四種主題最低高度都是 42px；字級變大時按鈕會跟著撐高，不會裁切文字。
+五種主題最低高度都是 42px；字級變大時按鈕會跟著撐高，不會裁切文字。
 
 來源：1. [Button.vue](../../../../app/components/Camelot/Button.vue)
+
+### 處理中
+
+1. 文字改為透明但仍佔位，按鈕寬度不變。
+2. 轉圈疊在按鈕正中央，顏色跟著按鈕文字。
+3. 滑鼠與鍵盤觸發的點擊都不會送出 click 事件。
+
+來源：1. [Button.vue](../../../../app/components/Camelot/Button.vue)　2. [tailwind.css](../../../../app/assets/css/tailwind.css)
 
 ## 相關頁面
 - [useCamelotTheme](../composables/useCamelotTheme.md)

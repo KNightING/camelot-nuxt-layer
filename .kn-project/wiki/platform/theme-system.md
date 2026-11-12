@@ -2,7 +2,7 @@
 
 ## Summary
 
-Camelot 的主題系統讓同一組元件介面切換成四種視覺風格：`material`（Material 3）、`cupertino`（Apple）、`scifi`（HUD）與 `aqua`（玻璃擬態，預設）。目前風格由 `useCamelotTheme()` 管理並存在瀏覽器，可主題化元件依風格渲染對應外觀，props 與 emits 不變。色彩沿用 Material 3 的 `--color-{role}` token，不另立色票；色系細節見色彩主題頁。
+Camelot 的主題系統讓同一組元件介面切換成五種視覺風格：`material`（Material 3）、`cupertino`（Apple）、`scifi`（HUD）、`aqua`（玻璃擬態，預設）與 `tactile`（實心表面加彈簧動態）。目前風格由 `useCamelotTheme()` 管理並存在瀏覽器，可主題化元件依風格渲染對應外觀，props 與 emits 不變。色彩沿用 Material 3 的 `--color-{role}` token，不另立色票；色系細節見色彩主題頁。
 
 ## 運作方式
 
@@ -10,7 +10,7 @@ Camelot 的主題系統讓同一組元件介面切換成四種視覺風格：`ma
 
 | 項目 | 說明 |
 | :--- | :--- |
-| 可選風格 | `material`、`cupertino`、`scifi`、`aqua` |
+| 可選風格 | `material`、`cupertino`、`scifi`、`aqua`、`tactile` |
 | 預設風格 | `aqua`，新使用者首次進入即為玻璃風格 |
 | 保存位置 | localStorage 的 `cml-theme-mode` 鍵 |
 | 全域標記 | html 元素寫入 `data-camelot-theme-mode` 屬性與 `--cml-active-ui-style` 變數 |
@@ -20,7 +20,7 @@ Camelot 的主題系統讓同一組元件介面切換成四種視覺風格：`ma
 
 ### Router 元件
 
-Button、Input、Switch、Checkbox 是 router 元件：本身不畫 UI，依目前風格渲染對應風格的子元件。
+Button、Input、Switch、Checkbox、Radio 是 router 元件：本身不畫 UI，依目前風格渲染對應風格的子元件。
 
 其餘可主題化元件，例如 Tabs、Dialog、Steps、Select、Skeleton、Toast、Loading、DatePicker，在元件內依風格分支。
 
@@ -39,6 +39,7 @@ Button、Input、Switch、Checkbox 是 router 元件：本身不畫 UI，依目�
     {"id": "C", "text": "Cupertino 版"},
     {"id": "S", "text": "Sci-Fi 版"},
     {"id": "A", "text": "Aqua 版"},
+    {"id": "K", "text": "Tactile 版"},
     {"id": "V", "text": "角色色變數", "kind": "data"}
   ],
   "edges": [
@@ -47,6 +48,7 @@ Button、Input、Switch、Checkbox 是 router 元件：本身不畫 UI，依目�
     {"from": "R", "to": "C", "label": "cupertino"},
     {"from": "R", "to": "S", "label": "scifi"},
     {"from": "R", "to": "A", "label": "aqua"},
+    {"from": "R", "to": "K", "label": "tactile"},
     {"from": "R", "to": "V", "label": "注入 CSS 變數", "kind": "async"}
   ]
 }
@@ -73,7 +75,7 @@ Button、Input、Switch、Checkbox 是 router 元件：本身不畫 UI，依目�
 
 ## 表單控制項高度與字級
 
-Input、Select、NumberCounter、DatePicker 系列與 Button 在四個主題都以 42px 為最低高度，並排時對齊。
+Input、Select、NumberCounter、DatePicker 系列與 Button 在五個主題都以 42px 為最低高度，並排時對齊。
 
 字級 1rem 設在元件根節點，外部 CSS 可以覆蓋；字級變大時，高度跟著撐高。
 
@@ -83,6 +85,7 @@ Input、Select、NumberCounter、DatePicker 系列與 Button 在四個主題都�
 | cupertino | Cupertino Input 樣式，沒有可見框線 |
 | scifi | 欄位包在 HUD 外框裡 |
 | aqua | 半透明軌道底與 12px 圓角 |
+| tactile | 實心灰階底與 14px 圓角，聚焦時轉亮底並加 2px 角色色外框 |
 
 來源：1. [Input.vue](../../../app/components/Camelot/Input.vue)　2. [NumberCounter.vue](../../../app/components/Camelot/NumberCounter.vue)　3. [FieldFrame.vue](../../../app/components/Camelot/Internal/FieldFrame.vue)　4. [useCamelotPickerTheme.ts](../../../app/composables/useCamelotPickerTheme.ts)
 
@@ -114,6 +117,35 @@ Aqua 表單控制項不用膠囊圓角，統一消費兩個圓角 token：
 Tabs、Switch、Radio、Checkbox、Slider thumb、Pagination 頁碼維持膠囊或圓形；Dialog 面板是大面積浮層，維持 `rounded-3xl`。
 
 來源：1. [tailwind.css](../../../app/assets/css/tailwind.css)
+
+## Tactile 視覺語言
+
+實心表面、灰階軌道與墨色選中態，可按的東西按下會縮小再以彈簧回彈。色彩全部取自 Material 3 的表面色階與角色色，不另立色票，深淺色與色系切換自動生效。
+
+| utility | 用途 |
+| :--- | :--- |
+| `tactile-surface` | 實心表面：最淺表面色、頂緣內高光與柔和落影，用於 Dialog、選項面板、Table、Drawer |
+| `tactile-well` | 軌道與未選態：實心灰階底、無邊框，用於輸入底、分頁底、滑桿軌道 |
+| `tactile-fill` | 填滿態：角色色平塗加同色柔影，用於按鈕、開關開啟、勾選 |
+| `tactile-ink` | 墨色選中態：反相表面，用於日曆選中日、分頁頁碼、Tooltip、自己的訊息泡泡 |
+| `tactile-thumb` | 實心白拇指，用於 switch 與 slider |
+| `tactile-ring` | 鍵盤焦點環，搭配 focus-visible 變體 |
+
+| token | 值 | 消費者 |
+| :--- | :---: | :--- |
+| `--radius-tactile-control` | 14px | Button、Input、Select 觸發器、NumberCounter、Textarea、日期與時間觸發欄位 |
+| `--radius-tactile-panel` | 22px | 選項面板、日期與時間浮層、Table、Accordion |
+| `--ease-tactile` | 彈簧曲線 | 所有 tactile 動態；瀏覽器不支援時退回一條過衝的貝茲曲線 |
+
+| 互動規則 | 說明 |
+| :--- | :--- |
+| 按壓回饋 | 按鈕、勾選框、單選鈕按下時縮小，放開以彈簧回彈 |
+| 拇指拉伸 | 開關按住時拇指橫向拉長，開啟狀態下往軌道內側長 |
+| 勾選描線 | 勾號以描線方式出現 |
+| 選中文字 | 選單與下拉的選中項用一般文字色加粗，不用角色色，避免淺色角色色疊在灰底上看不清 |
+| 減少動態 | 使用者偏好減少動態時，上述過場全部關閉 |
+
+來源：1. [tailwind.css](../../../app/assets/css/tailwind.css)　2. [Tactile/Switch.vue](../../../app/components/Camelot/Tactile/Switch.vue)　3. [Tactile/Checkbox.vue](../../../app/components/Camelot/Tactile/Checkbox.vue)
 
 ## 共用 token 與色彩規則
 
