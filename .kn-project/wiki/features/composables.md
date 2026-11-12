@@ -21,6 +21,9 @@ Camelot Nuxt Layer 全部 composable 的分類索引，依主題色彩、元件�
 | `useCamelotColorMode` | 全站共用的深淺色模式單一實例（勿直接用 `useColorMode`） | [詳情](./composables/useCamelotColorMode.md) |
 | `useCamelotRoleColorClass` | 色彩角色 → 注入 `--cml-color-current-*` 的 class | [詳情](./composables/useCamelotRoleColorClass.md) |
 | `useCamelotPickerTheme` | DatePicker 各風格 class | [詳情](./composables/useCamelotPickerTheme.md) |
+| `useCamelotSchedulerLayout` | Scheduler 的吸附、分欄與日期運算 | [詳情](./composables/useCamelotSchedulerLayout.md) |
+| `useCamelotSchedulerDrag` | Scheduler 的拖移、調整長度與拖曳選取 | [詳情](./composables/useCamelotSchedulerDrag.md) |
+| `useCamelotSchedulerTheme` | Scheduler 各風格的樣式 | [詳情](./composables/useCamelotSchedulerTheme.md) |
 | `useCamelotMenuItemTheme` | 選單/選項列各風格 active/hover | [詳情](./composables/useCamelotMenuItemTheme.md) |
 | `useMaterial3ColorScheme` | Material 3 色彩方案生成 | [詳情](./composables/useMaterial3ColorScheme.md) |
 | `useCustomColorScheme` | 自訂色彩方案管理 | [詳情](./composables/useCustomColorScheme.md) |
