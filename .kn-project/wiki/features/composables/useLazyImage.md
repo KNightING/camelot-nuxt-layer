@@ -46,7 +46,7 @@ export interface LazyImageOptions {
 | `image` | `Ref<HTMLImageElement \| null>` | 載入完成後的圖片元素 |
 | `isLandscapeImage` | `ComputedRef<boolean>` | 圖片寬大於高時為 `true`；尚未載入時為 `false` |
 
-來源：1. [useLazyImage.ts][]
+來源：1. [useLazyImage.ts](../../../../app/composables/useLazyImage.ts)
 
 ## 用法
 
@@ -62,21 +62,6 @@ load()
 3. 網址有值時清空 `image`，建立新的 Image 並設定網址。
 4. 載入成功：`isReady` 為 `true`，存入 `image`，結束載入中與等待中。
 5. 載入失敗：`isError` 為 `true`，結束載入中與等待中。
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231702-fix-wiki-review-code-defects](../../../archive/2609231702-fix-wiki-review-code-defects.md) | 修正程式碼缺陷後更新為修正後的行為 | [#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47) | — |
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useLazyImage.ts | [app/composables/useLazyImage.ts](../../../../app/composables/useLazyImage.ts) |
-
-[useLazyImage.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

@@ -20,7 +20,7 @@
 
 浮層 Teleport 離開原本的 DOM 位置後，CSS 變數的繼承會中斷，面板需要自行再套一次這組 class。
 
-來源：1. [useCamelotRoleColorClass.ts][]
+來源：1. [useCamelotRoleColorClass.ts](../../../../app/composables/useCamelotRoleColorClass.ts)
 
 ## 用法
 
@@ -61,20 +61,6 @@ useCamelotRoleColorClass(
 - [選單項主題](./useCamelotMenuItemTheme.md)：消費當前色變數的選中與 hover 樣式。
 - [浮層傳送目標](./useCamelotTeleportTarget.md)：浮層離開 DOM 後的變數繼承問題。
 - [色彩主題系統](../../platform/color-scheme.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useCamelotRoleColorClass.ts | [app/composables/useCamelotRoleColorClass.ts](../../../../app/composables/useCamelotRoleColorClass.ts) |
-
-[useCamelotRoleColorClass.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

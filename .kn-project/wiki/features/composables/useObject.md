@@ -36,7 +36,7 @@ export type PartialRecursive<T> = {
 | `isUndefined` | `(obj) => boolean` | 是否為 `undefined` |
 | `isNotUndefined` | `(obj) => boolean` | `isUndefined` 的反向 |
 
-來源：1. [useObject.ts][]
+來源：1. [useObject.ts](../../../../app/composables/useObject.ts)
 
 ## 用法
 
@@ -70,21 +70,6 @@ const copy = deepClone(oldUser)
 | 陣列、一般物件 | 逐項遞迴複製 |
 | Map、Set | 建立新的 Map、Set，逐項深拷貝鍵與值 |
 | 無原型的物件 | 拋出 `Unable to copy obj! Its type isn't supported.` |
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231702-fix-wiki-review-code-defects](../../../archive/2609231702-fix-wiki-review-code-defects.md) | 修正程式碼缺陷後更新為修正後的行為 | [#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47) | — |
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useObject.ts | [app/composables/useObject.ts](../../../../app/composables/useObject.ts) |
-
-[useObject.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

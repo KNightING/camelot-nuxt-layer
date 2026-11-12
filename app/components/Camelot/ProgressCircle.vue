@@ -120,6 +120,8 @@ const progressStroke = computed(() =>
 
 const trackStrokeClass = computed(() => {
   switch (themeMode.value) {
+    case 'tactile':
+      return 'stroke-surface-container-high'
     case 'aqua':
       return 'stroke-[color-mix(in_srgb,var(--cml-color-current-color)_14%,transparent)]'
     case 'scifi':

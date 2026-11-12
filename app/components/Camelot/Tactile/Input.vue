@@ -1,0 +1,49 @@
+<template>
+  <div
+    class="flex min-h-10.5 w-full items-center rounded-tactile-control px-4 tactile-well transition-[background-color,box-shadow] duration-200 focus-within:bg-surface-container-lowest focus-within:shadow-[0_0_0_2px_var(--cml-color-current-color,var(--color-primary))]"
+  >
+    <slot name="before" />
+
+    <input
+      ref="input"
+      v-model="modelValue"
+      class="w-full min-w-0 flex-1 border-none bg-transparent py-2 text-on-surface outline-none placeholder:text-on-surface-variant"
+      :placeholder="placeholder"
+      :type="type"
+      :disabled="disabled"
+      @focus="emit('focus', $event)"
+      @blur="emit('blur', $event)"
+    >
+
+    <slot name="after" />
+  </div>
+</template>
+
+<script setup lang="ts">
+withDefaults(
+  defineProps<{
+    placeholder?: string
+    disabled?: boolean
+    type?: CamelotInputType
+  }>(),
+  {
+    placeholder: '',
+    disabled: false,
+    type: 'text',
+  },
+)
+
+const emit = defineEmits<{
+  focus: [event: FocusEvent]
+  blur: [event: FocusEvent]
+}>()
+
+const modelValue = defineModel<string | number>()
+
+const inputEl = useTemplateRef<HTMLInputElement>('input')
+
+// 供 CamelotInput 轉接出去，讓消費端能取得原生 input 做 focus()/select() 等操作
+defineExpose({
+  inputEl,
+})
+</script>

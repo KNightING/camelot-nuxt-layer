@@ -46,7 +46,7 @@ Camelot 的 API 層（API Client）以 `useBaseApi` 為核心：一次設定 `ba
 
 共用設定包含 `baseURL`、標頭、`contentType`、攔截器與 refresh token 策略。
 
-來源：1. [useBaseApi.ts][]
+來源：1. [useBaseApi.ts](../../../app/composables/useBaseApi.ts)
 
 ### 建立應用層 API 類別
 
@@ -91,7 +91,7 @@ export const useOrderApi = () => new OrderApi()
 
 playground 有一份可執行的同型範例。
 
-來源：1. [useBaseApi.ts][]　2. [useTestApi.ts][]
+來源：1. [useBaseApi.ts](../../../app/composables/useBaseApi.ts)　2. [useTestApi.ts](../../../.playground/app/composables/useTestApi.ts)
 
 ### 四種取用方式
 
@@ -104,7 +104,7 @@ playground 有一份可執行的同型範例。
 
 每種方式都可傳覆寫設定 `coverOptions`，只影響該次呼叫。
 
-來源：1. [useBaseApi.ts][]
+來源：1. [useBaseApi.ts](../../../app/composables/useBaseApi.ts)
 
 ### 設定的合併規則
 
@@ -117,7 +117,7 @@ playground 有一份可執行的同型範例。
 
 攔截器需要疊加時，在單次陣列中一併列出要保留的攔截器。
 
-來源：1. [useBaseApi.ts][]
+來源：1. [useBaseApi.ts](../../../app/composables/useBaseApi.ts)
 
 ## 認證與 refresh token
 
@@ -130,7 +130,7 @@ playground 有一份可執行的同型範例。
 | `useBasicToken` | 產生 Base64 字串 |
 | `secureHeaderRequest` | 安全標頭，預設已由 `addSecureHeaderRequest` 自動掛上 |
 
-來源：1. [useBaseApi.ts][]
+來源：1. [useBaseApi.ts](../../../app/composables/useBaseApi.ts)
 
 ### 自動刷新
 
@@ -145,7 +145,7 @@ playground 有一份可執行的同型範例。
 
 因此刷新函式應是穩定的參考，不要每次呼叫都重新建立。
 
-來源：1. [useBaseApi.ts][]
+來源：1. [useBaseApi.ts](../../../app/composables/useBaseApi.ts)
 
 ### 忽略回應錯誤時的攔截器
 
@@ -160,7 +160,7 @@ playground 有一份可執行的同型範例。
 
 自動 refresh token 在兩種模式下都可運作。
 
-來源：1. [useBaseApi.ts][]
+來源：1. [useBaseApi.ts](../../../app/composables/useBaseApi.ts)
 
 ## 其他機制
 
@@ -171,7 +171,7 @@ playground 有一份可執行的同型範例。
 | `transDateKeys` | 指定回應中哪些 key 要還原為 Date；內部改寫 transform，對陣列逐項或單一物件套用 |
 | `addSecureHeaderRequest` | 預設 `true`，自動加上 nosniff 與 same-origin Referrer-Policy 兩個安全標頭 |
 
-來源：1. [useBaseApi.ts][]
+來源：1. [useBaseApi.ts](../../../app/composables/useBaseApi.ts)
 
 ## 與其他系統的分工
 
@@ -186,23 +186,6 @@ playground 有一份可執行的同型範例。
 - [useBaseApi](../features/composables/useBaseApi.md)：完整 API 參考
 - [錯誤處理系統](./error-handling.md)：全域錯誤佇列與本頁的分工
 - [Composable 清單](../features/composables.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-10-07 | 4.6.0.0 | [2610071040-upgrade-nuxt-4-6-0](../../archive/2610071040-upgrade-nuxt-4-6-0.md) | 升級 nuxt 至 4.6.0，Url 型別收窄為字串、Ref 與 getter | [#53](https://github.com/KNightING/camelot-nuxt-layer/issues/53) | [PR #54](https://github.com/KNightING/camelot-nuxt-layer/pull/54) |
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useBaseApi.ts | [app/composables/useBaseApi.ts](../../../app/composables/useBaseApi.ts) |
-| useTestApi.ts | [.playground/app/composables/useTestApi.ts](../../../.playground/app/composables/useTestApi.ts) |
-
-[useBaseApi.ts]: #references
-[useTestApi.ts]: #references
 
 ---
 [⚙️ Env](../environment.md) | [🏠 Wiki](../index.md)

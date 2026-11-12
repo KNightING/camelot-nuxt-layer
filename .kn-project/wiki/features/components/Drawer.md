@@ -43,7 +43,7 @@ zIndex 調高到超過 popup 層級時，Drawer 內的 Select、Popup 浮層會�
 
 兩種型態在使用者偏好減少動態時都停用過場動畫。
 
-來源：1. [Drawer.vue][]
+來源：1. [Drawer.vue](../../../../app/components/Camelot/Drawer.vue)
 
 ### 關閉與捲動鎖
 
@@ -52,7 +52,7 @@ zIndex 調高到超過 popup 層級時，Drawer 內的 Select、Popup 浮層會�
 3. 全域樣式固定保留捲軸空間，鎖捲動時版面寬度不會跳動。
 4. closeByMask 開啟時，點遮罩或按 Esc 都會關閉並觸發 close；Esc 只對 floating 有效。
 
-來源：1. [Drawer.vue][]　2. [tailwind.css][]
+來源：1. [Drawer.vue](../../../../app/components/Camelot/Drawer.vue)　2. [tailwind.css](../../../../app/assets/css/tailwind.css)
 
 ### 面板外觀
 
@@ -65,23 +65,7 @@ zIndex 調高到超過 popup 層級時，Drawer 內的 Select、Popup 浮層會�
 | Cupertino | 實色底與大範圍陰影 |
 | Material | 低階容器底色與大範圍陰影 |
 
-來源：1. [Drawer.vue][]
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| Drawer.vue | [app/components/Camelot/Drawer.vue](../../../../app/components/Camelot/Drawer.vue) |
-| tailwind.css | [app/assets/css/tailwind.css](../../../../app/assets/css/tailwind.css) |
-
-[Drawer.vue]: #references
-[tailwind.css]: #references
+來源：1. [Drawer.vue](../../../../app/components/Camelot/Drawer.vue)
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

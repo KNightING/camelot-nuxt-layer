@@ -30,7 +30,7 @@ const useScrollOnBottom: (options?: {
 | --- | --- | --- |
 | `isOnBottom` | `Ref<boolean>` | 捲動位置加可視高度大於等於總高度減容差時為 `true` |
 
-來源：1. [useScrollOnBottom.ts][]
+來源：1. [useScrollOnBottom.ts](../../../../app/composables/useScrollOnBottom.ts)
 
 ## 用法
 
@@ -60,20 +60,6 @@ const { isOnBottom } = useScrollOnBottom({ offset: 40 })
 ## 相關頁面
 
 - [useInfinitePage](./useInfinitePage.md)：以到底偵測實作無限捲動。
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useScrollOnBottom.ts | [app/composables/useScrollOnBottom.ts](../../../../app/composables/useScrollOnBottom.ts) |
-
-[useScrollOnBottom.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

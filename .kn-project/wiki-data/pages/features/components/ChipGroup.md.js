@@ -1,0 +1,9 @@
+WIKI_PAGE("features/components/ChipGroup.md",{
+"title":"ChipGroup",
+"summary":"ChipGroup 是可點選的標籤群組，匯入名稱 `CamelotChipGroup`：點一下切換選取，可單選或多選。選項重用單選與勾選群組的選項型別；與不能選取的 [Tag](./Tag.md) 和可編輯的 TagGroup 是不同用途。",
+"svgs":{},
+"seq":{},
+"ext":["archive/2611121510-tactile-showcase-parity.md"],
+"changelog":[{"plan": "2611121510-tactile-showcase-parity", "date": "2026-11-12", "version": "4.6.4.2", "note": "tactile 與展示頁對齊，新增步進器、大數字、可選取標籤與行內日曆", "issue": "[#80](https://github.com/KNightING/camelot-nuxt-layer/issues/80)", "pr": "[PR #81](https://github.com/KNightING/camelot-nuxt-layer/pull/81)"}],
+"md":"# ChipGroup\n\n## Summary\n\nChipGroup 是可點選的標籤群組，匯入名稱 `CamelotChipGroup`：點一下切換選取，可單選或多選。選項重用單選與勾選群組的選項型別；與不能選取的 [Tag](./Tag.md) 和可編輯的 TagGroup 是不同用途。\n\n## Props\n| Prop | 型別 | 預設 | 說明 |\n| :--- | :--- | :--- | :--- |\n| `options` | `CamelotGroupOption[]` | `[]` | 選項；每項有 label、value，選填 disabled |\n| `multiple` | `boolean` | `false` | 允許同時選取多個；false 時選另一個會取代原本的 |\n| `color` | `CamelotColorRole` | `'primary'` | 選取態的色彩角色 |\n| `disabled` | `boolean` | `false` | 整組停用；逐選項停用用 option.disabled |\n| `label` | `string` | `''` | 群組標題 |\n| `required` | `boolean` | `false` | 標題旁顯示必填標記 |\n\n## Emits\n| 事件 | 參數 | 說明 |\n| :--- | :--- | :--- |\n| `change` | `selectedValues: (string \\| number)[]` | 選取的項目改變時觸發 |\n\n## v-model\n| Model | 型別 | 說明 |\n| :--- | :--- | :--- |\n| `modelValue` | `(string \\| number)[]`（預設 `[]`） | 目前選取項目的 value；單選模式最多一個 |\n\n## Slots\n| Slot | 作用域參數 | 說明 |\n| :--- | :--- | :--- |\n| `label` | `label` | 自訂群組標題 |\n| `chip` | `option`、`selected` | 自訂單顆標籤的內容 |\n\n## 規則\n| 規則 | 說明 |\n| :--- | :--- |\n| 單選 | 點已選取的項目不會取消；選另一個才會換 |\n| 多選 | 再點一次已選取的項目會取消 |\n| 無障礙 | 單選是 radiogroup，多選是一組帶按下狀態的按鈕 |\n| 選取態 | Tactile 與 Aqua 為角色色填滿，Sci-Fi 為角色色框線加發光，其他風格為角色色淡底 |\n\n來源：1. [ChipGroup.vue](../../../../app/components/Camelot/ChipGroup.vue)\n\n---\n[⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)\n"
+});

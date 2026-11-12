@@ -1,0 +1,9 @@
+WIKI_PAGE("features/components/ColorSchemeProvider.md",{
+"title":"ColorSchemeProvider",
+"summary":"ColorSchemeProvider 把自訂的明亮與暗色配色方案套用到整份文件根節點，匯入名稱 `CamelotColorSchemeProvider`。它是泛型元件，屬於全域套用：傳入的配色會合併進全站共用的配色方案，依目前色彩模式寫成 CSS 變數；需要只影響局部區塊時改用 [CustomColorSchemeProvider](./CustomColorSchemeProvider.md)。",
+"svgs":{},
+"seq":{},
+"ext":["archive/2609231616-wiki-lint-migration.md"],
+"changelog":[{"plan": "2609231616-wiki-lint-migration", "date": "2026-09-23", "version": "—", "note": "改寫為新版 wiki 格式並依原始碼校正內容", "issue": "[#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45)", "pr": "—"}],
+"md":"# ColorSchemeProvider\n\n## Summary\n\nColorSchemeProvider 把自訂的明亮與暗色配色方案套用到整份文件根節點，匯入名稱 `CamelotColorSchemeProvider`。它是泛型元件，屬於全域套用：傳入的配色會合併進全站共用的配色方案，依目前色彩模式寫成 CSS 變數；需要只影響局部區塊時改用 [CustomColorSchemeProvider](./CustomColorSchemeProvider.md)。\n\n## Props\n| Prop | 型別 | 預設 | 說明 |\n| :--- | :--- | :---: | :--- |\n| `lightColorScheme` | `CustomColorScheme<T>` | — | 明亮模式使用的自訂配色方案 |\n| `darkColorScheme` | `CustomColorScheme<T>` | — | 暗色模式使用的自訂配色方案 |\n\n## Slots\n| Slot | 作用域參數 | 說明 |\n| :--- | :--- | :--- |\n| `default` | — | 原樣渲染的內容，本元件不額外包外層元素 |\n\n## Exposed\n| 名稱 | 說明 |\n| :--- | :--- |\n| `usedColorScheme` | 目前色彩模式下實際使用中的配色方案 |\n\n## 運作方式\n\n1. 建立時以 [useCustomColorScheme](../composables/useCustomColorScheme.md) 綁定文件根節點，把 props 合併進全站共用的明亮與暗色方案。\n2. 掛載後與每次更新時，再把 props 合併一次，讓 props 變動生效。\n3. 全站共用一個監聽器，色彩模式或方案變動時把使用中的方案寫到根節點的 CSS 變數。\n\n| 規則 | 說明 |\n|---|---|\n| 合併方式 | 只覆蓋有傳入的鍵，不會刪除先前設定過的顏色；明亮與暗色建議都設定 |\n| 卸載後 | 已合併的配色留在全站方案中，不會還原 |\n\n來源：1. [ColorSchemeProvider.vue](../../../../app/components/Camelot/ColorSchemeProvider.vue)　2. [useCustomColorScheme.ts](../../../../app/composables/useCustomColorScheme.ts)\n\n## 相關頁面\n- [色彩方案](../../platform/color-scheme.md)\n\n---\n[⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)\n"
+});

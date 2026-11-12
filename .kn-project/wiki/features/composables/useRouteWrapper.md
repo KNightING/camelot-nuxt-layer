@@ -30,7 +30,7 @@ const useRouteWrapper: (path: string) => {
 | `replace` | `(options?) => Promise` | 以 `router.replace` 導向 `path`，合併傳入的路由選項 |
 | `path` | `string` | 傳入的路徑 |
 
-來源：1. [useRouteWrapper.ts][]
+來源：1. [useRouteWrapper.ts](../../../../app/composables/useRouteWrapper.ts)
 
 ## 用法
 
@@ -48,20 +48,6 @@ userPage.replace()
 | --- | --- |
 | 合併順序 | 以 `{ path, ...options }` 組成目標，`options` 內的 `path` 會覆蓋固定路徑 |
 | 呼叫時機 | 建立時呼叫 `useRouter`，須在 setup 或 Nuxt 環境內建立 |
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useRouteWrapper.ts | [app/composables/useRouteWrapper.ts](../../../../app/composables/useRouteWrapper.ts) |
-
-[useRouteWrapper.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

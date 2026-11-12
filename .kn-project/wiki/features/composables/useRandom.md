@@ -25,27 +25,13 @@ const useRandom: (min?: number, max?: number) => number
 | --- | --- | --- |
 | 回傳值 | `number` | `Math.floor(Math.random() * (max - min + 1)) + min` |
 
-來源：1. [useRandom.ts][]
+來源：1. [useRandom.ts](../../../../app/composables/useRandom.ts)
 
 ## 用法
 
 ```ts
 useRandom(1, 6) // 1 到 6 之間的隨機整數
 ```
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useRandom.ts | [app/composables/useRandom.ts](../../../../app/composables/useRandom.ts) |
-
-[useRandom.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

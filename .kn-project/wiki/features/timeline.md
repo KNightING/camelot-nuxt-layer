@@ -42,7 +42,7 @@
 | 水平對齊 | 圓點置中於軸列；內容貼齊軸線，before 靠下、after 靠上 |
 | 水平項目寬 | 平均分配，最小 140px |
 
-來源：1. [Timeline.vue][]
+來源：1. [Timeline.vue](../../../app/components/Camelot/Timeline.vue)
 
 ### 連接線與圖片
 
@@ -53,7 +53,7 @@
 5. 自訂 `#content` slot 時不渲染內建圖片。
 6. scifi 主題的圓點帶光暈。
 
-來源：1. [Timeline.vue][]
+來源：1. [Timeline.vue](../../../app/components/Camelot/Timeline.vue)
 
 ### 捲動淡入
 
@@ -61,7 +61,7 @@
 2. 位移方向：水平排列由下往上，垂直 before 由左往右，其餘由右往左。
 3. `animate` 關閉或在伺服器端時，所有項目直接顯示。
 
-來源：1. [Timeline.vue][]
+來源：1. [Timeline.vue](../../../app/components/Camelot/Timeline.vue)
 
 ## Props
 
@@ -75,27 +75,13 @@
 
 Slots 有 title、content、node 三個，scope 都是 `item` 與 `index`。
 
-來源：1. [Timeline.vue][]
+來源：1. [Timeline.vue](../../../app/components/Camelot/Timeline.vue)
 
 ## 相關頁面
 
 - [Timeline](./components/Timeline.md)
 - [元件清單](./components.md)
 - [主題系統](../platform/theme-system.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| Timeline.vue | [app/components/Camelot/Timeline.vue](../../../app/components/Camelot/Timeline.vue) |
-
-[Timeline.vue]: #references
 
 ---
 [⚙️ Env](../environment.md) | [🏠 Wiki](../index.md)

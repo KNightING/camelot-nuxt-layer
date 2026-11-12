@@ -1,0 +1,9 @@
+WIKI_PAGE("features/components/DropImage.md",{
+"title":"DropImage",
+"summary":"DropImage（匯入名稱 `CamelotDropImage`）是單張圖片的選取區：點擊開啟檔案選擇或把圖片拖進來，選到的圖片直接預覽在方形或 16:9 的框內，並以 v-model 回傳該檔案。尚未選圖時可顯示既有圖片與提示文字。多張、主題化的圖片上傳請改用 [ImageDropzone](./ImageDropzone.md)。",
+"svgs":{},
+"seq":{},
+"ext":["archive/2609231616-wiki-lint-migration.md"],
+"changelog":[{"plan": "2609231616-wiki-lint-migration", "date": "2026-09-23", "version": "—", "note": "改寫為新版 wiki 格式並依原始碼校正內容", "issue": "[#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45)", "pr": "—"}],
+"md":"# DropImage\n\n## Summary\n\nDropImage（匯入名稱 `CamelotDropImage`）是單張圖片的選取區：點擊開啟檔案選擇或把圖片拖進來，選到的圖片直接預覽在方形或 16:9 的框內，並以 v-model 回傳該檔案。尚未選圖時可顯示既有圖片與提示文字。多張、主題化的圖片上傳請改用 [ImageDropzone](./ImageDropzone.md)。\n\n## Props\n| Prop | 型別 | 預設 | 說明 |\n| :--- | :--- | :---: | :--- |\n| `label` | `string` | — | 上方標籤文字 |\n| `modelValue` | `File \\| string` | — | 目前選取的圖片 |\n| `originImage` | `string` | — | 既有圖片網址，未選新圖時顯示 |\n| `id` | `string` | — | 檔案輸入框的 id；未提供時自動產生 |\n| `placeholderText` | `string` | — | 沒有任何圖片時顯示的提示文字 |\n| `isAspectVideo` | `boolean` | — | 使用 16:9 比例，否則為正方形 |\n\n## Emits\n| 事件 | 參數 | 說明 |\n| :--- | :--- | :--- |\n| `update:modelValue` | `value?: File \\| string` | 選取或拖放圖片後觸發 |\n\n## 運作方式\n\n### 選取與預覽\n\n1. 點擊預覽框開啟檔案選擇，或把檔案拖到框上；拖曳經過時框內顯示藍底虛線提示。\n2. 只取第一個檔案，且只接受圖片類型，其他類型直接忽略。\n3. 選到的檔案讀成 DataURL 畫進預覽，並觸發 update:modelValue。\n\n預覽只在元件內選檔或拖放時更新，外部改寫 modelValue 不會重畫預覽。\n\n來源：1. [DropImage.vue](../../../../app/components/Camelot/DropImage.vue)\n\n### 既有圖片\n\nmodelValue 為 undefined 且有 originImage 時顯示既有圖片：載入中先顯示 [Skeleton](./Skeleton.md)，載入完成後顯示圖片。\n\n未提供 id 時，以時間戳加兩組隨機數產生，讓同頁多個 DropImage 的 label 各自對應自己的輸入框。\n\n來源：1. [DropImage.vue](../../../../app/components/Camelot/DropImage.vue)\n\n---\n[⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)\n"
+});

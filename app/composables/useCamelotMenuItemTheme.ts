@@ -1,5 +1,5 @@
 /**
- * 選單／選項列的「四風格選中（active）與 hover」效果共用核心。
+ * 選單／選項列的「各風格選中（active）與 hover」效果共用核心。
  *
  * 由 `CascadeMenu`（飛出面板列）與 `SelectV2`（下拉選項）共用，確保兩者的選中效果完全一致。
  * 全數消費 router 注入的 `--cml-color-current-color` / `--cml-color-current-on-color`（CurrentColor 系統）。
@@ -12,6 +12,8 @@ export const useCamelotMenuItemTheme = () => {
   // 選中（active / selected）態
   const activeClass = computed(() => {
     switch (themeMode.value) {
+      case 'tactile':
+        return 'bg-surface-container-high font-semibold text-on-surface'
       case 'aqua':
         return 'aqua-fill text-[var(--cml-color-current-on-color)]'
       case 'scifi':
@@ -26,6 +28,8 @@ export const useCamelotMenuItemTheme = () => {
   // 未選態的 hover
   const hoverClass = computed(() => {
     switch (themeMode.value) {
+      case 'tactile':
+        return 'text-on-surface hover:bg-surface-container-high'
       case 'scifi':
         return 'text-on-surface hover:bg-[color-mix(in_srgb,var(--cml-color-current-color)_10%,transparent)] hover:text-[var(--cml-color-current-color)]'
       case 'cupertino':

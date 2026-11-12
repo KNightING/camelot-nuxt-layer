@@ -1,14 +1,12 @@
-<!-- wiki-diagram 1de99281cc1fa6a34fe89bc0de70b1f488b45a568c10b6274c89a1504a8a66ef 1e7d0d13a73751bca933bfb5517d73b35621886c19c8ed5f1945df2c6873c532 -->
+<!-- wiki-diagram 1de99281cc1fa6a34fe89bc0de70b1f488b45a568c10b6274c89a1504a8a66ef c17860d04393d4f2285608f450c4631b202d360cf9c8e3355d7a0ce958dcafaa -->
 <svg class="dg flow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 252 417" width="252" height="417" role="img" aria-label="Table 捲軸附著">
 <title>Table 捲軸附著</title>
 <desc>Table 隱藏捲動容器的原生捲軸，疊上水平與垂直兩個 overlay 捲軸，兩者共用方向感知核心去量測與拖曳容器</desc>
 <style>
 svg.dg{font-family:-apple-system,"PingFang TC","Noto Sans TC",Segoe UI,Roboto,sans-serif;
-  --ink:#1f2328;--ink2:#444c56;--ink3:#6e7781;--line:#d0d7de;--line2:#8c959f;--surf:#f6f8fa;--surf2:#eaeef2;--surf3:#dfe4ea;
-  --prim:#ddf4ff;--prim-ink:#0550ae;--tert:#8250df;--tert-bg:#fbefff;--tert-ink:#3e1f79;--err:#cf222e;--warn:#9a6700;--warn-bg:#fff8c5;--ok:#1a7f37;--key:#41546B;--mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+  --ink:#1f2328;--ink2:#444c56;--ink3:#6e7781;--line:#d0d7de;--line2:#8c959f;--surf:#f6f8fa;--surf2:#eaeef2;--surf3:#dfe4ea;--prim:#ddf4ff;--prim-ink:#0550ae;--tert:#8250df;--tert-bg:#fbefff;--tert-ink:#3e1f79;--err:#cf222e;--warn:#9a6700;--warn-bg:#fff8c5;--ok:#1a7f37;--key:#41546B;--mono:ui-monospace,SFMono-Regular,Menlo,monospace;
   color:var(--ink2);background:transparent}
-@media (prefers-color-scheme:dark){svg.dg{--ink:#e6edf3;--ink2:#c9d1d9;--ink3:#8b949e;--line:#30363d;--line2:#484f58;--surf:#161b22;--surf2:#1f2630;--surf3:#2a3340;
-  --prim:#0c2d6b;--prim-ink:#79c0ff;--tert:#a371f7;--tert-bg:#2a1a4a;--tert-ink:#d2b8ff;--err:#f85149;--warn:#d29922;--warn-bg:#3a2e00;--ok:#3fb950;--key:#6e8aa8}}
+@media (prefers-color-scheme:dark){svg.dg{--ink:#e6edf3;--ink2:#c9d1d9;--ink3:#8b949e;--line:#30363d;--line2:#484f58;--surf:#161b22;--surf2:#1f2630;--surf3:#2a3340;--prim:#0c2d6b;--prim-ink:#79c0ff;--tert:#a371f7;--tert-bg:#2a1a4a;--tert-ink:#d2b8ff;--err:#f85149;--warn:#d29922;--warn-bg:#3a2e00;--ok:#3fb950;--key:#6e8aa8}}
 .seq .life{stroke:var(--line);stroke-width:1.2;stroke-dasharray:4 4}
 .seq .act{fill:var(--surf);stroke:var(--line);stroke-width:1.2}.seq .act.ext{stroke-dasharray:4 3}.seq .act.db{fill:var(--surf2)}.seq .act.bus{fill:var(--prim);stroke:transparent}.seq .act.auth{fill:var(--warn-bg)}
 .seq .actx{font-size:12.5px;font-weight:700;fill:var(--ink)}
@@ -44,33 +42,45 @@ svg.dg{font-family:-apple-system,"PingFang TC","Noto Sans TC",Segoe UI,Roboto,sa
 .er .rel{fill:none;stroke:var(--ink2);stroke-width:1.3;color:var(--ink2)}.er .rl{font-size:11px;fill:var(--ink2)}.er .rlbg{fill:var(--surf);fill-opacity:.92}
 </style>
 <defs><marker id="flAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5 0 10z" fill="currentColor"/></marker></defs>
+<g data-step="4">
 <path class="e" d="M126 69 L126 342" marker-end="url(#flAr)"/>
 <rect class="elbg" x="134" y="200" width="65" height="17" rx="3"/>
 <text class="el" x="166" y="212" text-anchor="middle">隱藏原生軸</text>
+</g>
+<g data-step="2">
 <path class="e" d="M126 69 L126 102 L69 102 L69 130" marker-end="url(#flAr)"/>
 <rect class="elbg" x="42" y="85" width="54" height="17" rx="3"/>
 <text class="el" x="69" y="97" text-anchor="middle">傳入容器</text>
+</g>
+<g data-step="2">
 <path class="e" d="M126 69 L126 102 L183 102 L183 130" marker-end="url(#flAr)"/>
 <rect class="elbg" x="156" y="85" width="54" height="17" rx="3"/>
 <text class="el" x="183" y="97" text-anchor="middle">傳入容器</text>
+</g>
+<g data-step="3">
 <path class="e" d="M69 175 L69 208 L126 208 L126 236" marker-end="url(#flAr)"/>
+</g>
+<g data-step="3">
 <path class="e" d="M183 175 L183 208 L126 208 L126 236" marker-end="url(#flAr)"/>
+</g>
+<g data-step="4">
 <path class="e" d="M126 281 L126 342" marker-end="url(#flAr)"/>
 <rect class="elbg" x="134" y="306" width="65" height="17" rx="3"/>
 <text class="el" x="166" y="318" text-anchor="middle">量測與定位</text>
-<g class="n stadium"><rect class="shape" x="89" y="30" width="74" height="39" rx="19"/>
+</g>
+<g class="n stadium" data-step="1"><rect class="shape" x="89" y="30" width="74" height="39" rx="19"/>
 <text x="126" y="53" text-anchor="middle">Table</text>
 </g>
-<g class="n rect key"><rect class="shape" x="87" y="348" width="78" height="39" rx="3"/>
+<g class="n rect key" data-step="4"><rect class="shape" x="87" y="348" width="78" height="39" rx="3"/>
 <text x="126" y="371" text-anchor="middle">捲動容器</text>
 </g>
-<g class="n rect"><rect class="shape" x="30" y="136" width="78" height="39" rx="3"/>
+<g class="n rect" data-step="2"><rect class="shape" x="30" y="136" width="78" height="39" rx="3"/>
 <text x="69" y="159" text-anchor="middle">水平捲軸</text>
 </g>
-<g class="n rect"><rect class="shape" x="144" y="136" width="78" height="39" rx="3"/>
+<g class="n rect" data-step="2"><rect class="shape" x="144" y="136" width="78" height="39" rx="3"/>
 <text x="183" y="159" text-anchor="middle">垂直捲軸</text>
 </g>
-<g class="n rect"><rect class="shape" x="74" y="242" width="103" height="39" rx="3"/>
+<g class="n rect" data-step="3"><rect class="shape" x="74" y="242" width="103" height="39" rx="3"/>
 <text x="126" y="265" text-anchor="middle">方向感知核心</text>
 </g>
 </svg>

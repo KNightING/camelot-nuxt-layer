@@ -41,7 +41,7 @@ BaseDialogV2 是以原生 dialog 元素為基底的模態對話框，匯入名�
 
 `closeByMask` 設為 false 會連帶停用 Esc 關閉，用於強制決策的對話框；此時使用端必須自行提供關閉途徑。
 
-來源：1. [BaseDialogV2.vue][]　2. [tailwind.css][]
+來源：1. [BaseDialogV2.vue](../../../../app/components/Camelot/BaseDialogV2.vue)　2. [tailwind.css](../../../../app/assets/css/tailwind.css)
 
 ### 遮罩點擊判斷
 
@@ -54,7 +54,7 @@ BaseDialogV2 是以原生 dialog 元素為基底的模態對話框，匯入名�
 | 點在巢狀對話框內 | 交由內層自行處理遮罩與關閉 |
 | 內容框屬於巢狀對話框 | 只認屬於本對話框的內容框；否則自訂外層的 Sheet 會誤用內層的內容框而整個被關掉 |
 
-來源：1. [BaseDialogV2.vue][]
+來源：1. [BaseDialogV2.vue](../../../../app/components/Camelot/BaseDialogV2.vue)
 
 ### 網址同步
 
@@ -63,32 +63,16 @@ BaseDialogV2 是以原生 dialog 元素為基底的模態對話框，匯入名�
 3. 關閉時若能返回上一頁就 back，否則 replace 移除這兩個查詢參數。
 4. 監聽路由變化反向同步開關：查詢字串符合就開啟，否則關閉。
 
-來源：1. [BaseDialogV2.vue][]
+來源：1. [BaseDialogV2.vue](../../../../app/components/Camelot/BaseDialogV2.vue)
 
 ### 裁切方式
 
 對話框用 clip 而非 hidden 裁切溢出。GPU transform 讓對話框成為內部固定定位元素的定位基準，例如 BottomSheet 的面板；hidden 仍是可捲動容器，showModal 自動聚焦時會把內容往上捲，Sheet 就浮離視窗底部。clip 不建立捲動容器，捲動位置恆為 0。
 
-來源：1. [BaseDialogV2.vue][]
+來源：1. [BaseDialogV2.vue](../../../../app/components/Camelot/BaseDialogV2.vue)
 
 ## 相關頁面
 - [Drawer](./Drawer.md)：另一個鎖定頁面捲動的元件
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| BaseDialogV2.vue | [app/components/Camelot/BaseDialogV2.vue](../../../../app/components/Camelot/BaseDialogV2.vue) |
-| tailwind.css | [app/assets/css/tailwind.css](../../../../app/assets/css/tailwind.css) |
-
-[BaseDialogV2.vue]: #references
-[tailwind.css]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

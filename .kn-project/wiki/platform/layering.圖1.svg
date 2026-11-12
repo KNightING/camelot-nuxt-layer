@@ -1,14 +1,12 @@
-<!-- wiki-diagram 963acc73386d6a8c4fd07e17103713fbda2353acf43b16607c9cecb300375460 14abf0b879e8a44c8845b4353a151f602b8fe071d72063fb01596ddd14a1a4e1 -->
+<!-- wiki-diagram 963acc73386d6a8c4fd07e17103713fbda2353acf43b16607c9cecb300375460 393acf73d371905138fa796b76c6b2c8b8ebe1f2c788acf908bae66d2c108867 -->
 <svg class="dg flow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 332 205" width="332" height="205" role="img" aria-label="dialog 內的疊層">
 <title>dialog 內的疊層</title>
 <desc>Sheet 面板與 teleport 進來的 popup 浮層同在 dialog 的 top layer 內，popup 刻度較高所以在上</desc>
 <style>
 svg.dg{font-family:-apple-system,"PingFang TC","Noto Sans TC",Segoe UI,Roboto,sans-serif;
-  --ink:#1f2328;--ink2:#444c56;--ink3:#6e7781;--line:#d0d7de;--line2:#8c959f;--surf:#f6f8fa;--surf2:#eaeef2;--surf3:#dfe4ea;
-  --prim:#ddf4ff;--prim-ink:#0550ae;--tert:#8250df;--tert-bg:#fbefff;--tert-ink:#3e1f79;--err:#cf222e;--warn:#9a6700;--warn-bg:#fff8c5;--ok:#1a7f37;--key:#41546B;--mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+  --ink:#1f2328;--ink2:#444c56;--ink3:#6e7781;--line:#d0d7de;--line2:#8c959f;--surf:#f6f8fa;--surf2:#eaeef2;--surf3:#dfe4ea;--prim:#ddf4ff;--prim-ink:#0550ae;--tert:#8250df;--tert-bg:#fbefff;--tert-ink:#3e1f79;--err:#cf222e;--warn:#9a6700;--warn-bg:#fff8c5;--ok:#1a7f37;--key:#41546B;--mono:ui-monospace,SFMono-Regular,Menlo,monospace;
   color:var(--ink2);background:transparent}
-@media (prefers-color-scheme:dark){svg.dg{--ink:#e6edf3;--ink2:#c9d1d9;--ink3:#8b949e;--line:#30363d;--line2:#484f58;--surf:#161b22;--surf2:#1f2630;--surf3:#2a3340;
-  --prim:#0c2d6b;--prim-ink:#79c0ff;--tert:#a371f7;--tert-bg:#2a1a4a;--tert-ink:#d2b8ff;--err:#f85149;--warn:#d29922;--warn-bg:#3a2e00;--ok:#3fb950;--key:#6e8aa8}}
+@media (prefers-color-scheme:dark){svg.dg{--ink:#e6edf3;--ink2:#c9d1d9;--ink3:#8b949e;--line:#30363d;--line2:#484f58;--surf:#161b22;--surf2:#1f2630;--surf3:#2a3340;--prim:#0c2d6b;--prim-ink:#79c0ff;--tert:#a371f7;--tert-bg:#2a1a4a;--tert-ink:#d2b8ff;--err:#f85149;--warn:#d29922;--warn-bg:#3a2e00;--ok:#3fb950;--key:#6e8aa8}}
 .seq .life{stroke:var(--line);stroke-width:1.2;stroke-dasharray:4 4}
 .seq .act{fill:var(--surf);stroke:var(--line);stroke-width:1.2}.seq .act.ext{stroke-dasharray:4 3}.seq .act.db{fill:var(--surf2)}.seq .act.bus{fill:var(--prim);stroke:transparent}.seq .act.auth{fill:var(--warn-bg)}
 .seq .actx{font-size:12.5px;font-weight:700;fill:var(--ink)}
@@ -44,17 +42,21 @@ svg.dg{font-family:-apple-system,"PingFang TC","Noto Sans TC",Segoe UI,Roboto,sa
 .er .rel{fill:none;stroke:var(--ink2);stroke-width:1.3;color:var(--ink2)}.er .rl{font-size:11px;fill:var(--ink2)}.er .rlbg{fill:var(--surf);fill-opacity:.92}
 </style>
 <defs><marker id="flAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5 0 10z" fill="currentColor"/></marker></defs>
+<g data-step="2">
 <path class="e" d="M166 69 L166 102 L89 102 L89 130" marker-end="url(#flAr)"/>
+</g>
+<g data-step="2">
 <path class="e" d="M166 69 L166 102 L243 102 L243 130" marker-end="url(#flAr)"/>
 <rect class="elbg" x="198" y="85" width="89" height="17" rx="3"/>
 <text class="el" x="243" y="97" text-anchor="middle">teleport 進來</text>
-<g class="n round"><rect class="shape" x="114" y="30" width="103" height="39" rx="10"/>
+</g>
+<g class="n round" data-step="1"><rect class="shape" x="114" y="30" width="103" height="39" rx="10"/>
 <text x="166" y="53" text-anchor="middle">原生 dialog</text>
 </g>
-<g class="n rect"><rect class="shape" x="30" y="136" width="118" height="39" rx="3"/>
+<g class="n rect" data-step="2"><rect class="shape" x="30" y="136" width="118" height="39" rx="3"/>
 <text x="89" y="159" text-anchor="middle">Sheet 面板 60</text>
 </g>
-<g class="n rect key"><rect class="shape" x="184" y="136" width="118" height="39" rx="3"/>
+<g class="n rect key" data-step="2"><rect class="shape" x="184" y="136" width="118" height="39" rx="3"/>
 <text x="243" y="159" text-anchor="middle">Popup 浮層 70</text>
 </g>
 </svg>

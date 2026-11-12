@@ -25,7 +25,7 @@
 3. 不確定狀態固定畫出 30% 的弧並整圈旋轉。
 4. 中央標籤字級為尺寸的 26%；百分比四捨五入到整數，分數直接顯示原始值。
 
-來源：1. [ProgressCircle.vue][]
+來源：1. [ProgressCircle.vue](../../../../app/components/Camelot/ProgressCircle.vue)
 
 ### 各主題外觀
 
@@ -37,21 +37,7 @@
 
 使用者偏好減少動態時，關閉過渡與旋轉動畫。
 
-來源：1. [ProgressCircle.vue][]
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| ProgressCircle.vue | [app/components/Camelot/ProgressCircle.vue](../../../../app/components/Camelot/ProgressCircle.vue) |
-
-[ProgressCircle.vue]: #references
+來源：1. [ProgressCircle.vue](../../../../app/components/Camelot/ProgressCircle.vue)
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

@@ -15,7 +15,7 @@
 | 筆電 | 大於等於 lg 且小於 xl | 1024px 到未滿 1280px |
 | 桌機 | 大於等於 xl | 1280px 以上 |
 
-來源：1. [useDeviceBreakpoints.ts][]
+來源：1. [useDeviceBreakpoints.ts](../../../../app/composables/useDeviceBreakpoints.ts)
 
 ## 用法
 
@@ -52,20 +52,6 @@ useDeviceBreakpoints(): {
 - [DateV2](../components/DateV2.md)
 - [DateRangeV2](../components/DateRangeV2.md)
 - [TimeV2](../components/TimeV2.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useDeviceBreakpoints.ts | [app/composables/useDeviceBreakpoints.ts](../../../../app/composables/useDeviceBreakpoints.ts) |
-
-[useDeviceBreakpoints.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

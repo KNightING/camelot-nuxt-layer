@@ -19,7 +19,7 @@
 3. 停用時立即關閉，並清掉等待中的計時。
 4. 只在截斷時顯示的模式下，每次開啟前檢查觸發器或其直接子元素是否水平溢出超過 1px。
 
-來源：1. [Tooltip.vue][]
+來源：1. [Tooltip.vue](../../../../app/components/Camelot/Tooltip.vue)
 
 ### 定位
 
@@ -29,7 +29,7 @@
 4. 瀏覽器支援 CSS Anchor Positioning 時，位置、上下翻轉與水平夾進視窗都由瀏覽器依觸發元素原生同步計算，不再逐幀量測；觸發元素被捲出可視範圍時一併隱藏。此路徑以 layout viewport 為準，不修正行動裝置鍵盤造成的 visual viewport 位移。
 5. 不支援時退回 JS 路徑：開啟期間每個畫面幀重算位置，觸發元素因捲動或動畫位移時也能跟上，並以 visual viewport 為準。
 
-來源：1. [Tooltip.vue][]
+來源：1. [Tooltip.vue](../../../../app/components/Camelot/Tooltip.vue)
 
 ### 疊層與無障礙
 
@@ -38,13 +38,13 @@
 3. 浮層角色為 tooltip，開啟時觸發器以 aria-describedby 指向它。
 4. 預設層級用[疊層刻度](../../platform/layering.md)的 popup 層。
 
-來源：1. [Tooltip.vue][]　2. [useCamelotTeleportTarget.ts][]
+來源：1. [Tooltip.vue](../../../../app/components/Camelot/Tooltip.vue)　2. [useCamelotTeleportTarget.ts](../../../../app/composables/useCamelotTeleportTarget.ts)
 
 ### 用例
 
 [Internal Calendar](./Internal-Calendar.md) 的日期標籤以區塊排版加「只在截斷時顯示」，文字被截斷時才提示完整內容。
 
-來源：1. [Calendar.vue][]
+來源：1. [Calendar.vue](../../../../app/components/Camelot/Internal/Calendar.vue)
 
 ## Props
 | Prop | 型別 | 預設 | 說明 |
@@ -68,24 +68,6 @@
 ## 相關頁面
 
 - [useCamelotTeleportTarget](../composables/useCamelotTeleportTarget.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| Tooltip.vue | [app/components/Camelot/Tooltip.vue](../../../../app/components/Camelot/Tooltip.vue) |
-| useCamelotTeleportTarget.ts | [app/composables/useCamelotTeleportTarget.ts](../../../../app/composables/useCamelotTeleportTarget.ts) |
-| Calendar.vue | [app/components/Camelot/Internal/Calendar.vue](../../../../app/components/Camelot/Internal/Calendar.vue) |
-
-[Tooltip.vue]: #references
-[useCamelotTeleportTarget.ts]: #references
-[Calendar.vue]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

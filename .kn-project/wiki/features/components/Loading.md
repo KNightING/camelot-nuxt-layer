@@ -19,7 +19,7 @@ Loading（匯入名稱 `CamelotLoading`）是全螢幕的載入遮罩：半透�
 2. 遮罩掛到 body、只在瀏覽器端渲染，固定蓋滿視窗，層級 1100，背景輕微模糊。
 3. 遮罩開啟期間攔截所有指標事件。
 
-來源：1. [Loading.vue][]
+來源：1. [Loading.vue](../../../../app/components/Camelot/Loading.vue)
 
 ### 各主題指示器
 
@@ -30,7 +30,7 @@ Loading（匯入名稱 `CamelotLoading`）是全螢幕的載入遮罩：半透�
 | Cupertino | iOS 風格 8 葉片旋轉器 |
 | Material | SVG 圓形旋轉器 |
 
-來源：1. [Loading.vue][]
+來源：1. [Loading.vue](../../../../app/components/Camelot/Loading.vue)
 
 ### 提示文字
 
@@ -41,7 +41,7 @@ Loading（匯入名稱 `CamelotLoading`）是全螢幕的載入遮罩：半透�
 3. 文字固定為半透明白加陰影，不跟主題文字色：遮罩永遠是深色，淺色模式的主題文字色會看不見。
 4. Sci-Fi 主題改用等寬字，顏色跟隨角色色，與該主題其他資訊一致。
 
-來源：1. [Loading.vue][]
+來源：1. [Loading.vue](../../../../app/components/Camelot/Loading.vue)
 
 ### Aqua 指示器
 
@@ -61,7 +61,7 @@ Loading（匯入名稱 `CamelotLoading`）是全螢幕的載入遮罩：半透�
 
 bounce 在起跳與落地各壓扁一次、空中略微拉長；少了這兩下，看起來會像等速上下平移而不是彈跳。
 
-來源：1. [Loading.vue][]
+來源：1. [Loading.vue](../../../../app/components/Camelot/Loading.vue)
 
 ### Aqua 共通規則
 
@@ -69,21 +69,7 @@ bounce 在起跳與落地各壓扁一次、空中略微拉長；少了這兩下�
 2. 動畫只動 transform 與 opacity。
 3. 使用者偏好減少動態時停住動畫，保留靜態球體表示進行中。
 
-來源：1. [Loading.vue][]
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| Loading.vue | [app/components/Camelot/Loading.vue](../../../../app/components/Camelot/Loading.vue) |
-
-[Loading.vue]: #references
+來源：1. [Loading.vue](../../../../app/components/Camelot/Loading.vue)
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

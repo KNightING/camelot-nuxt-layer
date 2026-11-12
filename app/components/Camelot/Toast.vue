@@ -117,6 +117,8 @@ const ROLE_COLOR_MAP: Record<CamelotColorRole, string> = {
 
 const boxClass = computed(() => {
   switch (themeMode.value) {
+    case 'tactile':
+      return 'tactile-surface rounded-2xl border-l-4 border-[var(--cml-color-current-color)]'
     case 'aqua':
       return 'aqua-glass bg-[color-mix(in_srgb,var(--color-surface)_55%,transparent)]! rounded-2xl shadow-[0_8px_30px_-8px_rgba(0,0,0,0.3)] border-l-4 border-[var(--cml-color-current-color)]'
     case 'scifi':

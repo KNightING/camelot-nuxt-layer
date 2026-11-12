@@ -10,7 +10,7 @@ Camelot Nuxt Layer 全部元件的分類索引，依表單、版面資料導覽�
 2. 子目錄會併入名稱：內部元件以 CamelotInternal 開頭，主題變體以 CamelotAqua、CamelotMaterial 等開頭。
 3. 公開元件依目前主題選用對應的主題變體，使用端只需要寫公開元件。
 
-來源：1. [components/Camelot][]
+來源：1. [components/Camelot](../../../app/components/Camelot)
 
 ## 元件清單
 
@@ -18,7 +18,7 @@ Camelot Nuxt Layer 全部元件的分類索引，依表單、版面資料導覽�
 
 | 元件 | 說明 | API |
 | :--- | :--- | :--- |
-| `Button` | 按鈕（四風格、color 角色、is-container） | [詳情](./components/Button.md) |
+| `Button` | 按鈕（五風格、color 角色、is-container、loading） | [詳情](./components/Button.md) |
 | `Input` | 輸入框 | [詳情](./components/Input.md) |
 | `Textarea` | 多行輸入（autosize、字數） | [詳情](./components/Textarea.md) |
 | `Checkbox` | 勾選框（indeterminate） | [詳情](./components/Checkbox.md) |
@@ -28,12 +28,15 @@ Camelot Nuxt Layer 全部元件的分類索引，依表單、版面資料導覽�
 | `Switch` | 開關 | [詳情](./components/Switch.md) |
 | `SelectV2` | 下拉選擇（可搜尋、虛擬滾動） | [詳情](./components/SelectV2.md) |
 | `NumberCounter` | 數字加減 | [詳情](./components/NumberCounter.md) |
+| `Stepper` | 步進器（圓形按鈕夾著帶單位的數值） | [詳情](./components/Stepper.md) |
+| `ChipGroup` | 可點選的標籤群組（單選或多選） | [詳情](./components/ChipGroup.md) |
 | `Slider` | 滑桿（單值/區間） | [詳情](./components/Slider.md) |
 | `FieldLabel` | 表單共通標籤 | [詳情](./components/FieldLabel.md) |
 | `IdxForm` | 表單容器 | [詳情](./components/IdxForm.md) |
 | `DateV2` | 單日期選擇器 | [詳情](./components/DateV2.md) |
 | `DateRangeV2` | 日期範圍選擇器 | [詳情](./components/DateRangeV2.md) |
 | `TimeV2` | 純時間選擇器 | [詳情](./components/TimeV2.md) |
+| `Calendar` | 行內日曆（單日選取、忙碌小點） | [詳情](./components/Calendar.md) |
 
 ### 版面、資料、導覽
 
@@ -50,8 +53,11 @@ Camelot Nuxt Layer 全部元件的分類索引，依表單、版面資料導覽�
 | `Tabs` | 頁籤（滑動指示器） | [詳情](./components/Tabs.md) |
 | `RippleTabs` | 漣漪頁籤 | [詳情](./components/RippleTabs.md) |
 | `Timeline` | 時間軸 | [詳情](./components/Timeline.md) |
+| `Scheduler` | 行事曆與排班表（月週日、拖移、排班視圖） | [詳情](./components/Scheduler.md) |
 | `VirtualScroll` | 虛擬滾動 | [詳情](./components/VirtualScroll.md) |
 | `Expanded` | 展開/收合區塊 | [詳情](./components/Expanded.md) |
+| `Accordion` | 可收合項目群組（單開或多開） | [詳情](./components/Accordion.md) |
+| `AccordionItem` | Accordion 的單一項目 | [詳情](./components/AccordionItem.md) |
 | `Drawer` | 側邊抽屜 | [詳情](./components/Drawer.md) |
 
 ### 覆蓋層、捲軸
@@ -100,6 +106,17 @@ Camelot Nuxt Layer 全部元件的分類索引，依表單、版面資料導覽�
 | `Tag` | 標籤 | [詳情](./components/Tag.md) |
 | `TagGroup` | 標籤群組 | [詳情](./components/TagGroup.md) |
 
+### 人物、對話、音訊
+
+| 元件 | 說明 | API |
+| :--- | :--- | :--- |
+| `Avatar` | 頭像（圖片或姓名縮寫） | [詳情](./components/Avatar.md) |
+| `AnimatedNumber` | 大數字顯示（變動的字元滾動進入） | [詳情](./components/AnimatedNumber.md) |
+| `AvatarGroup` | 頭像重疊堆疊（超出以 +N 表示） | [詳情](./components/AvatarGroup.md) |
+| `ChatBubble` | 訊息對話泡泡 | [詳情](./components/ChatBubble.md) |
+| `Waveform` | 音訊波形（播放進度、跳轉） | [詳情](./components/Waveform.md) |
+| `LevelMeter` | 分段音量表 | [詳情](./components/LevelMeter.md) |
+
 ### 效果、工具
 
 | 元件 | 說明 | API |
@@ -127,6 +144,12 @@ Camelot Nuxt Layer 全部元件的分類索引，依表單、版面資料導覽�
 | Internal/MenuItem | Menu 遞迴項目 | [詳情](./components/Internal-MenuItem.md) |
 | Internal/PasswordToggle | Input 密碼顯示切換鈕 | [詳情](./components/Internal-PasswordToggle.md) |
 | Internal/SheetHandle | BottomSheet 拖曳把手 | [詳情](./components/Internal-SheetHandle.md) |
+| Internal/SchedulerMonthView | Scheduler 月視圖 | [詳情](./components/Internal-SchedulerMonthView.md) |
+| Internal/SchedulerTimeGrid | Scheduler 週與日共用的時間軸 | [詳情](./components/Internal-SchedulerTimeGrid.md) |
+| Internal/SchedulerResourceWeek | Scheduler 排班週視圖 | [詳情](./components/Internal-SchedulerResourceWeek.md) |
+| Internal/SchedulerResourceDay | Scheduler 排班日視圖 | [詳情](./components/Internal-SchedulerResourceDay.md) |
+| Internal/SchedulerEventChip | Scheduler 的事件外觀 | [詳情](./components/Internal-SchedulerEventChip.md) |
+| Internal/SchedulerEditor | Scheduler 內建編輯面板 | [詳情](./components/Internal-SchedulerEditor.md) |
 | Internal/TimeField | 時/分/秒欄位 | [詳情](./components/Internal-TimeField.md) |
 | Internal/TimeRow | 時間列 | [詳情](./components/Internal-TimeRow.md) |
 | Internal/TreeNode | Tree 遞迴節點 | [詳情](./components/Internal-TreeNode.md) |
@@ -137,6 +160,7 @@ Camelot Nuxt Layer 全部元件的分類索引，依表單、版面資料導覽�
 | 主題 | 元件 |
 | :--- | :--- |
 | **Aqua** | [Button](./components/Aqua-Button.md)・[Input](./components/Aqua-Input.md)・[Switch](./components/Aqua-Switch.md)・[Checkbox](./components/Aqua-Checkbox.md)・[Radio](./components/Aqua-Radio.md) |
+| **Tactile** | [Button](./components/Tactile-Button.md)・[Input](./components/Tactile-Input.md)・[Switch](./components/Tactile-Switch.md)・[Checkbox](./components/Tactile-Checkbox.md)・[Radio](./components/Tactile-Radio.md) |
 | **Material** | [Button](./components/Material-Button.md)・[Input](./components/Material-Input.md)・[Switch](./components/Material-Switch.md)・[Checkbox](./components/Material-Checkbox.md)・[Radio](./components/Material-Radio.md) |
 | **Cupertino** | [Button](./components/Cupertino-Button.md)・[Input](./components/Cupertino-Input.md)・[Switch](./components/Cupertino-Switch.md)・[Checkbox](./components/Cupertino-Checkbox.md)・[Radio](./components/Cupertino-Radio.md) |
 | **Scifi** | [Button](./components/Scifi-Button.md)・[Input](./components/Scifi-Input.md)・[Switch](./components/Scifi-Switch.md)・[Checkbox](./components/Scifi-Checkbox.md)・[Radio](./components/Scifi-Radio.md)・[Frame](./components/Scifi-Frame.md)・[Reticle](./components/Scifi-Reticle.md) |
@@ -145,21 +169,6 @@ Camelot Nuxt Layer 全部元件的分類索引，依表單、版面資料導覽�
 
 - [Composable 清單](./composables.md)
 - [主題系統](../platform/theme-system.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231801-playground-reveal-slide-demos](../../archive/2609231801-playground-reveal-slide-demos.md) | 移除 SlideTransitionGroup（由 Carousel 取代） | [#49](https://github.com/KNightING/camelot-nuxt-layer/issues/49) | — |
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| components/Camelot | [app/components/Camelot](../../../app/components/Camelot) |
-
-[components/Camelot]: #references
 
 ---
 [⚙️ Env](../environment.md) | [🏠 Wiki](../index.md)

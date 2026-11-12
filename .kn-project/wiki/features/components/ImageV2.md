@@ -45,7 +45,7 @@ ImageV2（匯入名稱 `CamelotImageV2`）是延遲載入的圖片元件：進�
 
 載入狀態由 [useLazyImage](../composables/useLazyImage.md) 管理；整段只在瀏覽器端渲染。
 
-來源：1. [ImageV2.vue][]
+來源：1. [ImageV2.vue](../../../../app/components/Camelot/ImageV2.vue)
 
 ### 懸停大圖
 
@@ -54,22 +54,7 @@ ImageV2（匯入名稱 `CamelotImageV2`）是延遲載入的圖片元件：進�
 3. 橫幅圖限制最寬、直幅圖限制最高，大圖本身也用 ImageV2 立即載入。
 4. 只在大圖顯示期間監聽視窗捲動與縮放以更新位置，隱藏後不留監聽。
 
-來源：1. [ImageV2.vue][]
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231702-fix-wiki-review-code-defects](../../../archive/2609231702-fix-wiki-review-code-defects.md) | 修正程式碼缺陷後更新為修正後的行為 | [#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47) | — |
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| ImageV2.vue | [app/components/Camelot/ImageV2.vue](../../../../app/components/Camelot/ImageV2.vue) |
-
-[ImageV2.vue]: #references
+來源：1. [ImageV2.vue](../../../../app/components/Camelot/ImageV2.vue)
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

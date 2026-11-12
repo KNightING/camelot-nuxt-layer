@@ -31,34 +31,18 @@
 | 按下 | 外框填滿色彩角色，文字改用角色前景色 |
 | 停用 | 關閉掃描線與所有互動效果，透明度 60%，不接受點擊，也無法以 Tab 聚焦 |
 
-來源：1. [Scifi/Button.vue][]　2. [Scifi/Frame.vue][]
+來源：1. [Scifi/Button.vue](../../../../app/components/Camelot/Scifi/Button.vue)　2. [Scifi/Frame.vue](../../../../app/components/Camelot/Scifi/Frame.vue)
 
 ### 外觀
 
 按鈕內容區最低 40px、最窄 120px，左右留白 24px；文字取色彩角色混入兩成白色，粗體、全大寫、字距加寬。
 
-來源：1. [Scifi/Button.vue][]
+來源：1. [Scifi/Button.vue](../../../../app/components/Camelot/Scifi/Button.vue)
 
 ## 相關頁面
 
 - [Button](./Button.md)
 - [Scifi Frame](./Scifi-Frame.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| Scifi/Button.vue | [app/components/Camelot/Scifi/Button.vue](../../../../app/components/Camelot/Scifi/Button.vue) |
-| Scifi/Frame.vue | [app/components/Camelot/Scifi/Frame.vue](../../../../app/components/Camelot/Scifi/Frame.vue) |
-
-[Scifi/Button.vue]: #references
-[Scifi/Frame.vue]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

@@ -14,7 +14,7 @@ pnpm test
 
 指令執行 Vitest 的單次模式，跑完所有測試即結束，不進入監看模式。
 
-來源：1. [package.json][]
+來源：1. [package.json](../../../package.json)
 
 ### 自動匯入
 
@@ -23,9 +23,9 @@ pnpm test
 1. vue 的 API 全部自動匯入。
 2. @vueuse/core 的 API 自動匯入，但 `toRef`、`toRefs`、`toValue` 排除，與 Nuxt 相同改用 vue 的版本。
 3. Layer 自己的 composables 依名稱自動匯入。
-4. `useState`、`useAsyncData` 指到測試替身。
+4. `useState`、`useAsyncData` 指到測試替身。替身的路徑會先轉成 POSIX 斜線再交給 unimport，因為 unimport 把路徑原樣寫進注入的 import 字串，Windows 的反斜線會被當成跳脫字元而讓測試檔載入失敗。
 
-來源：1. [vitest.config.ts][]
+來源：1. [vitest.config.ts](../../../vitest.config.ts)
 
 ### Nuxt 替身
 
@@ -37,7 +37,7 @@ pnpm test
 
 替身只模擬測試需要的部分，沒有 Nuxt 的 pending、refresh 與快取行為。
 
-來源：1. [nuxt-stubs.ts][]
+來源：1. [nuxt-stubs.ts](../../../tests/nuxt-stubs.ts)
 
 ### 測試檔位置
 
@@ -45,7 +45,7 @@ pnpm test
 2. 測試檔以 Vitest 的 `describe`、`it`、`expect` 撰寫，需要時自行從 vitest 匯入。
 3. 測試環境是 happy-dom，可使用 document、window 等瀏覽器 API。
 
-來源：1. [vitest.config.ts][]　2. [useDrawerCollapsed.test.ts][]
+來源：1. [vitest.config.ts](../../../vitest.config.ts)　2. [useDrawerCollapsed.test.ts](../../../tests/composables/useDrawerCollapsed.test.ts)
 
 ### 模擬伺服器端
 
@@ -58,7 +58,7 @@ happy-dom 預設提供 window；要驗證 composable 在伺服器端呼叫不會
 
 刪除 window 在型別上不被允許，測試以型別忽略註解標明這是刻意的。
 
-來源：1. [useInfinitePage.test.ts][]
+來源：1. [useInfinitePage.test.ts](../../../tests/composables/useInfinitePage.test.ts)
 
 ### 型別檢查
 
@@ -68,29 +68,7 @@ pnpm typecheck
 
 Nuxt 產生的 tsconfig 涵蓋整個 Layer 目錄，測試檔也在檢查範圍內，因此測試裡的自動匯入也要能通過型別檢查。
 
-來源：1. [package.json][]
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231702-fix-wiki-review-code-defects](../../archive/2609231702-fix-wiki-review-code-defects.md) | 修正程式碼缺陷後更新為修正後的行為 | [#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| package.json | [package.json](../../../package.json) |
-| vitest.config.ts | [vitest.config.ts](../../../vitest.config.ts) |
-| nuxt-stubs.ts | [tests/nuxt-stubs.ts](../../../tests/nuxt-stubs.ts) |
-| useDrawerCollapsed.test.ts | [tests/composables/useDrawerCollapsed.test.ts](../../../tests/composables/useDrawerCollapsed.test.ts) |
-| useInfinitePage.test.ts | [tests/composables/useInfinitePage.test.ts](../../../tests/composables/useInfinitePage.test.ts) |
-
-[package.json]: #references
-[vitest.config.ts]: #references
-[nuxt-stubs.ts]: #references
-[useDrawerCollapsed.test.ts]: #references
-[useInfinitePage.test.ts]: #references
+來源：1. [package.json](../../../package.json)
 
 ---
 [⚙️ Env](../environment.md) | [🏠 Wiki](../index.md)

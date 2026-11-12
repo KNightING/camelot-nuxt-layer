@@ -46,7 +46,7 @@ camelot-nuxt-layer/
 
 | Module | Path | Description |
 | :--- | :--- | :--- |
-| UI Components | `app/components/Camelot/` | 核心 UI 元件，涵蓋表單（Input, Select, Date）、對話框/側欄（Dialog, BottomSheet, Drawer, Popup）、版面/資料/導覽（Tree, Table, Menu）、動畫（Reveal, Ripple, Skeleton）、日期選擇（DateV2, DateRangeV2）；支援 Material、Cupertino、Sci-Fi、**Aqua（Frosted Glass，預設）** 四種主題。詳見 [主題系統 wiki](./wiki/platform/theme-system.md) |
+| UI Components | `app/components/Camelot/` | 核心 UI 元件，涵蓋表單（Input, Select, Date）、對話框/側欄（Dialog, BottomSheet, Drawer, Popup）、版面/資料/導覽（Tree, Table, Menu）、動畫（Reveal, Ripple, Skeleton）、日期選擇（DateV2, DateRangeV2）；支援 Material、Cupertino、Sci-Fi、Tactile、**Aqua（Frosted Glass，預設）** 五種主題。詳見 [主題系統 wiki](./wiki/platform/theme-system.md) |
 | Internal Components | `app/components/Camelot/Internal/` | DateV2/DateRangeV2 共用日曆核心（Calendar）、Tree 遞迴節點（TreeNode）、Menu 遞迴項目（MenuItem） |
 | Composables | `app/composables/` | 40+ 個共用 Composables，涵蓋 API 封裝、路由管理、色彩主題、表單驗證、串流請求等 |
 | Theme Manager | `app/composables/useCamelotTheme` | 全域風格選擇的狀態管理（預設主題 = aqua） |
@@ -61,7 +61,7 @@ camelot-nuxt-layer/
 | :--- | :--- |
 | 📋 Wiki 首頁 | [wiki/index.md](./wiki/index.md) |
 | 🏗️ 專案架構 | [wiki/platform/architecture.md](./wiki/platform/architecture.md) |
-| 🎨 主題系統（四風格 + Aqua） | [wiki/platform/theme-system.md](./wiki/platform/theme-system.md) |
+| 🎨 主題系統（五風格） | [wiki/platform/theme-system.md](./wiki/platform/theme-system.md) |
 | 🗓️ 日期選擇器系統 | [wiki/features/calendar.md](./wiki/features/calendar.md) |
 | 🎨 色彩主題系統 | [wiki/platform/color-scheme.md](./wiki/platform/color-scheme.md) |
 | 🚨 錯誤處理系統（佇列 + 轉換器） | [wiki/platform/error-handling.md](./wiki/platform/error-handling.md) |
@@ -81,6 +81,7 @@ camelot-nuxt-layer/
 ## 版本紀錄
 只記併回主幹，發佈狀態以 GitHub Release 為準。
 
+- 4.6.4.2 — 併回主幹 2026-11-12（新增 tactile 主題與 CamelotScheduler 行事曆／排班表，補步進器、大數字、可選取標籤、行內日曆，修正 Windows 測試路徑）
 - 4.6.4.0 — 併回主幹 2026-11-04（nuxt 4.6.3 升級到 4.6.4，安全性釋出；@nuxt/cli 升至 4.0.3）
 - 4.6.3.1 — 併回主幹 2026-10-30（Patch/Minor 套件升級並 dedupe prosemirror，浮層改用 CSS Anchor Positioning 消除跟隨延遲）
 - 4.6.3.0 — 併回主幹 2026-10-30（nuxt 4.6.2 升級到 4.6.3，含 5 項 GHSA 安全性修正）

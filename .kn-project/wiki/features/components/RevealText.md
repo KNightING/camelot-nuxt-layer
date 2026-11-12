@@ -26,31 +26,17 @@
 4. `hover` 模式只在滑鼠停留期間播放，移出後回到原色。
 5. 使用者偏好減少動態時不播放動畫，直接顯示全填色。
 
-來源：1. [RevealText.vue][]
+來源：1. [RevealText.vue](../../../../app/components/Camelot/RevealText.vue)
 
 ### 預設樣式
 
 元件內建字級 64px、文字色近黑，不跟隨主題或外層字級；要改變時需從外層覆寫元件的樣式。
 
-來源：1. [RevealText.vue][]
+來源：1. [RevealText.vue](../../../../app/components/Camelot/RevealText.vue)
 
 ## 相關頁面
 
 - [RevealImage](./RevealImage.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| RevealText.vue | [app/components/Camelot/RevealText.vue](../../../../app/components/Camelot/RevealText.vue) |
-
-[RevealText.vue]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

@@ -33,7 +33,7 @@
 
 選取狀態改變時 emit `change`，帶新的布林值。
 
-來源：1. [Radio.vue][]　2. [Material/Radio.vue][]　3. [Cupertino/Radio.vue][]　4. [Aqua/Radio.vue][]　5. [Scifi/Radio.vue][]
+來源：1. [Radio.vue](../../../app/components/Camelot/Radio.vue)　2. [Material/Radio.vue](../../../app/components/Camelot/Material/Radio.vue)　3. [Cupertino/Radio.vue](../../../app/components/Camelot/Cupertino/Radio.vue)　4. [Aqua/Radio.vue](../../../app/components/Camelot/Aqua/Radio.vue)　5. [Scifi/Radio.vue](../../../app/components/Camelot/Scifi/Radio.vue)
 
 ### RadioGroup 與 CheckboxGroup
 
@@ -53,11 +53,11 @@
 | `label`、`required` | 群組標題與必填標示，可用 `#label` slot 替換 | 同左 |
 | `change` emit | 選中的 option；取消時為 `undefined` | 勾選後的值陣列 |
 
-1. 選項間距固定為橫向 24px、縱向 8px，四主題一致。
+1. 選項間距固定為橫向 24px、縱向 8px，五主題一致。
 2. 水平排列時選項會自動換行。
 3. 群組標題用 FieldLabel，左側內縮 4px 與選項對齊。
 
-來源：1. [RadioGroup.vue][]　2. [CheckboxGroup.vue][]　3. [camelot.ts][]
+來源：1. [RadioGroup.vue](../../../app/components/Camelot/RadioGroup.vue)　2. [CheckboxGroup.vue](../../../app/components/Camelot/CheckboxGroup.vue)　3. [camelot.ts](../../../shared/types/camelot.ts)
 
 ## 相關頁面
 
@@ -65,34 +65,6 @@
 - [RadioGroup](./components/RadioGroup.md)
 - [CheckboxGroup](./components/CheckboxGroup.md)
 - [FieldLabel](./components/FieldLabel.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| Radio.vue | [app/components/Camelot/Radio.vue](../../../app/components/Camelot/Radio.vue) |
-| Material/Radio.vue | [app/components/Camelot/Material/Radio.vue](../../../app/components/Camelot/Material/Radio.vue) |
-| Cupertino/Radio.vue | [app/components/Camelot/Cupertino/Radio.vue](../../../app/components/Camelot/Cupertino/Radio.vue) |
-| Aqua/Radio.vue | [app/components/Camelot/Aqua/Radio.vue](../../../app/components/Camelot/Aqua/Radio.vue) |
-| Scifi/Radio.vue | [app/components/Camelot/Scifi/Radio.vue](../../../app/components/Camelot/Scifi/Radio.vue) |
-| RadioGroup.vue | [app/components/Camelot/RadioGroup.vue](../../../app/components/Camelot/RadioGroup.vue) |
-| CheckboxGroup.vue | [app/components/Camelot/CheckboxGroup.vue](../../../app/components/Camelot/CheckboxGroup.vue) |
-| camelot.ts | [shared/types/camelot.ts](../../../shared/types/camelot.ts) |
-
-[Radio.vue]: #references
-[Material/Radio.vue]: #references
-[Cupertino/Radio.vue]: #references
-[Aqua/Radio.vue]: #references
-[Scifi/Radio.vue]: #references
-[RadioGroup.vue]: #references
-[CheckboxGroup.vue]: #references
-[camelot.ts]: #references
 
 ---
 [⚙️ Env](../environment.md) | [🏠 Wiki](../index.md)

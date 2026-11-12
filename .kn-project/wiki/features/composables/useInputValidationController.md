@@ -41,7 +41,7 @@ export type ValidatorFn = () => boolean
 | `hasInvalid` | `(options?) => boolean` | 執行所有驗證函式，有任何失敗時為 `true`；可用選項控制要不要捲動 |
 | `isValidate` | `ComputedRef<boolean>` | 所有 computed 來源皆為 truthy 時為 `true` |
 
-來源：1. [useInputValidationController.ts][]
+來源：1. [useInputValidationController.ts](../../../../app/composables/useInputValidationController.ts)
 
 ## 用法
 
@@ -73,21 +73,6 @@ function onSubmit() {
 | 關閉捲動 | 呼叫 `hasInvalid({ scrollToFirstElement: false })`；`validate()` 一律會捲動 |
 | computed 為字串 | 非空字串視為通過，空字串視為失敗 |
 | 移除未註冊項目 | 移除從未加入的項目時不做任何事，不影響其他項目 |
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231702-fix-wiki-review-code-defects](../../../archive/2609231702-fix-wiki-review-code-defects.md) | 修正程式碼缺陷後更新為修正後的行為 | [#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47) | — |
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useInputValidationController.ts | [app/composables/useInputValidationController.ts](../../../../app/composables/useInputValidationController.ts) |
-
-[useInputValidationController.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

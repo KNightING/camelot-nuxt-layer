@@ -1,0 +1,9 @@
+WIKI_PAGE("features/composables/useCookieProxy.md",{
+"title":"useCookieProxy",
+"summary":"`useCookieProxy(key, opts)` 以類別包裝 Nuxt 的 `useCookie`，提供讀寫 value、以物件展開部分更新的 patch，以及刪除的 del。選項同 useCookie，但不接受唯讀模式。",
+"svgs":{},
+"seq":{},
+"ext":["archive/2609231616-wiki-lint-migration.md"],
+"changelog":[{"plan": "2609231616-wiki-lint-migration", "date": "2026-09-23", "version": "—", "note": "改寫為新版 wiki 格式並依原始碼校正內容", "issue": "[#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45)", "pr": "—"}],
+"md":"# useCookieProxy\n\n## Summary\n\n`useCookieProxy(key, opts)` 以類別包裝 Nuxt 的 `useCookie`，提供讀寫 value、以物件展開部分更新的 patch，以及刪除的 del。選項同 useCookie，但不接受唯讀模式。\n\n## 運作方式\n\n1. 建構時以鍵名與選項呼叫 useCookie，保存回傳的 cookie ref。\n2. 讀寫 value 直接對應 cookie ref 的值。\n3. patch 把目前值與新值展開合併後寫回，只覆寫傳入的欄位，適用物件型別的 cookie。\n4. del 把值設為 `undefined`，由 useCookie 刪除該 cookie。\n\n來源：1. [useCookieProxy.ts](../../../../app/composables/useCookieProxy.ts)\n\n## 用法\n\n```ts\nconst session = useCookieProxy<{ token: string; name: string }>('session')\nsession.value = { token: 'abc', name: 'Amy' }\nsession.patch({ name: 'Bob' })\nsession.del()\n```\n\n## 簽章\n\n```ts\nuseCookieProxy<T>(key: string, opts?: ReadOnlyCookeOptions<T>): CookieProxy<T>\n\ntype ReadOnlyCookeOptions<T> = CookieOptions<T> & { readonly?: false | undefined }\n```\n\n`CookieProxy` 類別與選項型別都沒有匯出，只能透過本函式取得實例。\n\n## 參數\n\n| 參數 | 型別 | 預設 | 說明 |\n| --- | --- | --- | --- |\n| `key` | `string` | — | cookie 名稱 |\n| `opts` | `ReadOnlyCookeOptions<T>` | `undefined` | 傳給 useCookie 的選項，readonly 只能是 `false` 或不設定 |\n\n## 回傳\n\n| 成員 | 型別 | 說明 |\n| --- | --- | --- |\n| `cookie` | `CookieRef<T \\| undefined>` | 底層 useCookie 的 ref |\n| `value` | `T \\| undefined` | 取得或設定 cookie 值 |\n| `patch` | `(newValue: T) => void` | 展開合併後寫回 |\n| `del` | `() => void` | 刪除 cookie |\n\n---\n[⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)\n"
+});

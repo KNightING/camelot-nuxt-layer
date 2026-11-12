@@ -98,6 +98,8 @@ const {
 
 const themeClass = computed(() => {
   switch (themeMode.value) {
+    case 'tactile':
+      return 'tactile-ink rounded-tactile-control shadow-lg'
     case 'aqua':
       return 'aqua-glass rounded-aqua-control text-on-surface'
     case 'cupertino':

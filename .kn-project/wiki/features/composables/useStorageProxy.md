@@ -35,7 +35,7 @@ const useStorageProxy: <T>(
 | `patch` | `(newValue: T) => void` | 以展開方式淺層合併到目前值 |
 | `del` | `() => void` | 把值設為 `null`，由 VueUse 移除該鍵 |
 
-來源：1. [useStorageProxy.ts][]
+來源：1. [useStorageProxy.ts](../../../../app/composables/useStorageProxy.ts)
 
 ## 用法
 
@@ -59,20 +59,6 @@ profile.del() // 刪除
 ## 相關頁面
 
 - [useLocalStorageProxy](./useLocalStorageProxy.md)、[sessionStorage 代理](./useSessionStorageProxy.md)：同步儲存的代理。
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useStorageProxy.ts | [app/composables/useStorageProxy.ts](../../../../app/composables/useStorageProxy.ts) |
-
-[useStorageProxy.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

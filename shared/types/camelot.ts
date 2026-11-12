@@ -57,3 +57,36 @@ export interface CamelotDialogQuery {
   key: string
   value: string
 }
+
+/** Accordion 項目的識別值，也是 v-model 陣列的元素 */
+export type CamelotAccordionValue = string | number
+
+/** Accordion 的項目；content 為純文字內容，需要自訂版面時改用 #content slot */
+export interface CamelotAccordionItem {
+  value: CamelotAccordionValue
+  title: string
+  content?: string
+  disabled?: boolean
+}
+
+/** Avatar 尺寸：sm 32px / md 42px / lg 56px */
+export type CamelotAvatarSize = 'sm' | 'md' | 'lg'
+
+/** AvatarGroup 的頭像資料；沒有 src 時顯示 name 的縮寫 */
+export interface CamelotAvatarItem {
+  name: string
+  src?: string
+  color?: CamelotColorRole
+}
+
+/** ChatBubble 的方向：start 對方（靠左）/ end 自己（靠右） */
+export type CamelotChatBubbleSide = 'start' | 'end'
+
+/** Stepper 兩顆按鈕的無障礙名稱 */
+export interface CamelotStepperLabels {
+  decrease: string
+  increase: string
+}
+
+/** AnimatedNumber 的尺寸：md 24px / lg 36px / xl 60px */
+export type CamelotNumberSize = 'md' | 'lg' | 'xl'

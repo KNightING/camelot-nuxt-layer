@@ -1,0 +1,9 @@
+WIKI_PAGE("features/composables/useFileToDataURL.md",{
+"title":"useFileToDataURL",
+"summary":"useFileToDataURL 以 FileReader 把 File 讀成 Data URL 字串，並用 Nuxt 的 useAsyncData 包裝，回傳可 await 的非同步資料物件。快取 key 取自 useFileKey，同一個檔案重複呼叫會共用結果。常用於上傳前的圖片預覽。",
+"svgs":{},
+"seq":{},
+"ext":["archive/2609231616-wiki-lint-migration.md", "archive/2609231702-fix-wiki-review-code-defects.md"],
+"changelog":[{"plan": "2609231702-fix-wiki-review-code-defects", "date": "2026-09-23", "version": "—", "note": "修正程式碼缺陷後更新為修正後的行為", "issue": "[#47](https://github.com/KNightING/camelot-nuxt-layer/issues/47)", "pr": "—"}, {"plan": "2609231616-wiki-lint-migration", "date": "2026-09-23", "version": "—", "note": "改寫為新版 wiki 格式並依原始碼校正內容", "issue": "[#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45)", "pr": "—"}],
+"md":"# useFileToDataURL\n\n## Summary\n\nuseFileToDataURL 以 FileReader 把 File 讀成 Data URL 字串，並用 Nuxt 的 useAsyncData 包裝，回傳可 await 的非同步資料物件。快取 key 取自 useFileKey，同一個檔案重複呼叫會共用結果。常用於上傳前的圖片預覽。\n\n## 介面\n\n### 簽章\n\n```ts\nconst useFileToDataURL: (file: File) => AsyncData<string, …>\n```\n\n### 參數\n\n| 參數 | 型別 | 預設 | 說明 |\n| --- | --- | --- | --- |\n| `file` | `File` | 必填 | 要讀取的檔案 |\n\n### 回傳\n\n| 名稱 | 型別 | 說明 |\n| --- | --- | --- |\n| 回傳值 | useAsyncData 的回傳型別 | `data` 為 Data URL 字串，另有 `pending`、`error`、`refresh` 等 |\n\n來源：1. [useFileToDataURL.ts](../../../../app/composables/useFileToDataURL.ts)　2. [useFileKey.ts](../../../../app/composables/useFileKey.ts)\n\n## 用法\n\n```ts\nconst { data, pending } = await useFileToDataURL(file)\n// data.value 為檔案的 Data URL\n```\n\n## 規則\n\n| 規則 | 說明 |\n| --- | --- |\n| 快取 key | `useFileKey(file)` |\n| 讀取方式 | `FileReader.readAsDataURL`，只能在瀏覽器端執行 |\n| 讀取失敗 | 讀檔失敗或中止時結束載入，`error` 帶出錯誤 |\n\n## 相關頁面\n\n- [useFileKey](./useFileKey.md)：檔案識別字串。\n\n---\n[⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)\n"
+});

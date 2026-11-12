@@ -27,6 +27,14 @@
       @change="emit('change', $event)"
     />
 
+    <CamelotTactileRadio
+      v-else-if="themeMode === 'tactile'"
+      v-model="modelValue"
+      :disabled="disabled"
+      :deselectable="deselectable"
+      @change="emit('change', $event)"
+    />
+
     <CamelotMaterialRadio
       v-else
       v-model="modelValue"

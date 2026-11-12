@@ -35,24 +35,10 @@ Aqua Input 是 Aqua 主題（毛玻璃風格）的輸入框外觀實作，匯入
 | 外觀 | 玻璃軌道底色、12px 控制項圓角 |
 | 聚焦 | 聚焦期間外框加上光暈，失焦後移除 |
 
-來源：1. [Aqua/Input.vue][]
+來源：1. [Aqua/Input.vue](../../../../app/components/Camelot/Aqua/Input.vue)
 
 ## 相關頁面
 - [主題系統](../../platform/theme-system.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| Aqua/Input.vue | [app/components/Camelot/Aqua/Input.vue](../../../../app/components/Camelot/Aqua/Input.vue) |
-
-[Aqua/Input.vue]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

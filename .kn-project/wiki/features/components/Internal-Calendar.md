@@ -67,7 +67,7 @@ getDayAttributes 回傳的型別，由本元件匯出：
 3. 點標頭月份按鈕切到月份選擇，選完回到日曆。
 4. 再點一次同一個標頭按鈕會直接回到日曆。
 
-來源：1. [Calendar.vue][]
+來源：1. [Calendar.vue](../../../../app/components/Camelot/Internal/Calendar.vue)
 
 ### 日格
 
@@ -86,7 +86,7 @@ getDayAttributes 回傳的型別，由本元件匯出：
 
 日期下方的 label 固定單行，截斷時懸停或長壓以 [Tooltip](./Tooltip.md) 顯示完整內容。
 
-來源：1. [Calendar.vue][]
+來源：1. [Calendar.vue](../../../../app/components/Camelot/Internal/Calendar.vue)
 
 ### 選取
 
@@ -98,7 +98,7 @@ getDayAttributes 回傳的型別，由本元件匯出：
 
 時間列調整會即時寫回單選值，或寫回區間的起迄端點。
 
-來源：1. [Calendar.vue][]
+來源：1. [Calendar.vue](../../../../app/components/Camelot/Internal/Calendar.vue)
 
 ### 語系
 
@@ -110,7 +110,7 @@ getDayAttributes 回傳的型別，由本元件匯出：
 
 中文語系一律走內建格式，避免 Intl 的中文週名帶「週」「周」前綴。
 
-來源：1. [Calendar.vue][]
+來源：1. [Calendar.vue](../../../../app/components/Camelot/Internal/Calendar.vue)
 
 ## 相關頁面
 
@@ -118,20 +118,6 @@ getDayAttributes 回傳的型別，由本元件匯出：
 - [DateRangeV2](./DateRangeV2.md)
 - [TimeRow](./Internal-TimeRow.md)
 - [月曆與日期選擇](../calendar.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| Calendar.vue | [app/components/Camelot/Internal/Calendar.vue](../../../../app/components/Camelot/Internal/Calendar.vue) |
-
-[Calendar.vue]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

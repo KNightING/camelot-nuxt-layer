@@ -77,7 +77,7 @@ ConfirmDialog 是帶標準按鈕列的確認對話框，匯入名稱 `CamelotCon
 ### 按鈕列
 
 1. 依 label 是否有值決定每顆按鈕是否渲染；正向按鈕有預設文字，所以預設顯示。
-2. 按鈕順序固定為反向、中立、正向並靠右，四種主題一致；外觀差異由 Button 承擔。
+2. 按鈕順序固定為反向、中立、正向並靠右，五種主題一致；外觀差異由 Button 承擔。
 3. 反向與中立按鈕以容器色呈現，正向按鈕用一般色。
 4. 點擊按鈕先送出對應事件；`autoClose` 為 true 時接著關閉。
 
@@ -85,21 +85,7 @@ ConfirmDialog 是帶標準按鈕列的確認對話框，匯入名稱 `CamelotCon
 
 內容只放內容即可：外框與內距已由 BaseDialogV2 負責。
 
-來源：1. [ConfirmDialog.vue][]
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| ConfirmDialog.vue | [app/components/Camelot/ConfirmDialog.vue](../../../../app/components/Camelot/ConfirmDialog.vue) |
-
-[ConfirmDialog.vue]: #references
+來源：1. [ConfirmDialog.vue](../../../../app/components/Camelot/ConfirmDialog.vue)
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

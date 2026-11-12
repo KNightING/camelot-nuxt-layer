@@ -47,6 +47,18 @@
             <slot />
           </div>
 
+          <!-- Tactile Solid Surface Layout -->
+          <div
+            v-else-if="themeMode === 'tactile'"
+            class="sheet-container tactile-surface text-on-surface max-h-[85vh] w-full overflow-auto rounded-t-[1.75rem] p-4"
+          >
+            <CamelotInternalSheetHandle
+              class="mb-2"
+              @pointerdown="onHandlePointerDown"
+            />
+            <slot />
+          </div>
+
           <!-- Aqua Frosted Glass Layout -->
           <div
             v-else-if="themeMode === 'aqua'"

@@ -17,7 +17,7 @@
 2. 交錯排列用三條軌道，軸線置中；單側排列用兩條軌道，軸線靠邊。
 3. 垂直方向以欄分軌、水平方向以列分軌，讓軸點與軸線永遠對齊。
 
-來源：1. [Timeline.vue][]
+來源：1. [Timeline.vue](../../../../app/components/Camelot/Timeline.vue)
 
 ### 軸點與淡入
 
@@ -25,7 +25,7 @@
 2. 開啟淡入時，項目進入視窗 20% 後才淡入並滑入定位，每項只觸發一次。
 3. 未開啟淡入或在伺服器端渲染時，所有項目直接顯示。
 
-來源：1. [Timeline.vue][]
+來源：1. [Timeline.vue](../../../../app/components/Camelot/Timeline.vue)
 
 ## Props
 | Prop | 型別 | 預設 | 說明 |
@@ -54,20 +54,6 @@
 ## 相關頁面
 
 - [時間軸](../timeline.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| Timeline.vue | [app/components/Camelot/Timeline.vue](../../../../app/components/Camelot/Timeline.vue) |
-
-[Timeline.vue]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

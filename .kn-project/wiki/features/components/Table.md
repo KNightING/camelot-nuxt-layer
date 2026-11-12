@@ -20,7 +20,7 @@
 1. 儲存格值優先取 accessor 的結果，否則取列資料中與 key 同名的欄位。
 2. 列鍵依序取：列鍵函式的結果、列資料中指定欄位的值，都沒有時用列索引。
 
-來源：1. [Table.vue][]　2. [table.ts][]
+來源：1. [Table.vue](../../../../app/components/Camelot/Table.vue)　2. [table.ts](../../../../shared/types/table.ts)
 
 ### 虛擬滾動
 
@@ -32,7 +32,7 @@
 
 關閉虛擬滾動時一次渲染全部資料列。虛擬滾動要搭配固定高度或高度上限，容器有高度上限才有效益。
 
-來源：1. [Table.vue][]　2. [useCamelotVirtual.ts][]
+來源：1. [Table.vue](../../../../app/components/Camelot/Table.vue)　2. [useCamelotVirtual.ts](../../../../app/composables/useCamelotVirtual.ts)
 
 ### 固定表頭、固定欄與置頂列
 
@@ -42,7 +42,7 @@
 
 外層容器負責圓角並裁切內容，捲動發生在內層容器，捲軸因此不會溢出圓角。
 
-來源：1. [Table.vue][]
+來源：1. [Table.vue](../../../../app/components/Camelot/Table.vue)
 
 ### 捲軸與表頭底色
 
@@ -51,7 +51,7 @@
 3. 表頭底色刻意不透明，Aqua 主題也一樣。每個表頭格若各自半透明加模糊，都會成為獨立合成層，欄越多越吃效能。
 4. Aqua 的玻璃質感改由表格容器承擔。
 
-來源：1. [Table.vue][]　2. [OverlayScrollbar.vue][]
+來源：1. [Table.vue](../../../../app/components/Camelot/Table.vue)　2. [OverlayScrollbar.vue](../../../../app/components/Camelot/OverlayScrollbar.vue)
 
 ## Props
 | Prop | 型別 | 預設 | 說明 |
@@ -82,26 +82,6 @@
 
 - [OverlayScrollbar](./OverlayScrollbar.md)
 - [VirtualScroll](./VirtualScroll.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| Table.vue | [app/components/Camelot/Table.vue](../../../../app/components/Camelot/Table.vue) |
-| table.ts | [shared/types/table.ts](../../../../shared/types/table.ts) |
-| useCamelotVirtual.ts | [app/composables/useCamelotVirtual.ts](../../../../app/composables/useCamelotVirtual.ts) |
-| OverlayScrollbar.vue | [app/components/Camelot/OverlayScrollbar.vue](../../../../app/components/Camelot/OverlayScrollbar.vue) |
-
-[Table.vue]: #references
-[table.ts]: #references
-[useCamelotVirtual.ts]: #references
-[OverlayScrollbar.vue]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

@@ -674,6 +674,8 @@ function tooltip(b: Btn) {
 // 四主題：外框 / 工具列 / 彈窗 / 分隔線 / 按鈕態
 const boxClass = computed(() => {
   switch (themeMode.value) {
+    case 'tactile':
+      return 'rounded-tactile-panel tactile-surface text-on-surface'
     case 'aqua':
       return 'rounded-2xl border border-border bg-[color-mix(in_srgb,var(--color-surface)_82%,transparent)] backdrop-blur-md text-on-surface shadow-[0_8px_30px_-12px_rgba(0,0,0,0.25)]'
     case 'scifi':
@@ -687,6 +689,8 @@ const boxClass = computed(() => {
 
 const toolbarClass = computed(() => {
   switch (themeMode.value) {
+    case 'tactile':
+      return 'bg-[color-mix(in_srgb,var(--cml-color-current-color,var(--color-primary))_8%,var(--color-surface-container))]'
     case 'aqua':
       return 'bg-[color-mix(in_srgb,var(--color-surface-container)_55%,transparent)] backdrop-blur-md'
     case 'scifi':
@@ -700,6 +704,8 @@ const toolbarClass = computed(() => {
 
 const popClass = computed(() => {
   switch (themeMode.value) {
+    case 'tactile':
+      return 'tactile-surface rounded-tactile-control'
     case 'aqua':
       return 'aqua-glass'
     case 'scifi':
@@ -714,6 +720,8 @@ const dividerClass = computed(() => 'mx-1 h-6 w-px bg-border')
 // 工具列按鈕的閒置/啟用態依主題各有識別度（形狀由 scoped CSS 依 data-cml-theme 控制）
 const idleBtnClass = computed(() => {
   switch (themeMode.value) {
+    case 'tactile':
+      return 'text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface'
     case 'aqua':
       return 'text-on-surface-variant hover:bg-[color-mix(in_srgb,var(--cml-color-current-color)_12%,transparent)] hover:text-[var(--cml-color-current-color)]'
     case 'scifi':
@@ -726,6 +734,8 @@ const idleBtnClass = computed(() => {
 })
 const activeBtnClass = computed(() => {
   switch (themeMode.value) {
+    case 'tactile':
+      return 'tactile-fill text-[var(--cml-color-current-on-color)]'
     case 'aqua':
       // 玻璃填滿態：135deg 漸層 + 柔光（aqua-fill），與其他 aqua 選中態一致。
       // 關掉頂部內高光：.cml-rte-btn 帶一圈 1px 透明外框（為 scifi 的 active 邊框佔位），
@@ -755,6 +765,7 @@ const activeBtnClass = computed(() => {
 }
 /* 按鈕形狀依主題識別 */
 .cml-rte[data-cml-theme="aqua"] .cml-rte-btn { border-radius: 9999px; }
+.cml-rte[data-cml-theme="tactile"] .cml-rte-btn { border-radius: 0.625rem; }
 .cml-rte[data-cml-theme="scifi"] .cml-rte-btn { border-radius: 0; }
 .cml-rte[data-cml-theme="cupertino"] .cml-rte-btn { border-radius: 0.625rem; }
 .cml-rte-pop {

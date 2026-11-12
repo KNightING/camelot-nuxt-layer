@@ -74,6 +74,8 @@ const radiusClass = computed(() =>
 
 const trackClass = computed(() => {
   switch (themeMode.value) {
+    case 'tactile':
+      return 'tactile-well'
     case 'aqua':
       return 'aqua-track backdrop-blur-md'
     case 'scifi':

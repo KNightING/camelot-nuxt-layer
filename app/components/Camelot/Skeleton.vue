@@ -1,9 +1,13 @@
 <template>
   <template v-if="isLoading">
-    <!-- Aqua Frosted Glass Layout -->
+    <!-- Aqua / Tactile Layout：兩者共用掃光，只有底色與圓角不同 -->
     <div
-      v-if="themeMode === 'aqua'"
-      class="skeleton aqua-skeleton relative h-full w-full overflow-hidden"
+      v-if="themeMode === 'aqua' || themeMode === 'tactile'"
+      class="skeleton relative h-full w-full overflow-hidden"
+      :class="{
+        'aqua-skeleton': themeMode === 'aqua',
+        'tactile-skeleton': themeMode === 'tactile',
+      }"
       v-bind="$attrs"
     >
       <div class="aqua-shimmer" />
@@ -120,6 +124,11 @@ const { themeMode } = useCamelotTheme()
 .skeleton.aqua-skeleton {
   background-color: color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 8%, transparent);
   border-radius: 12px;
+  animation: none;
+}
+.skeleton.tactile-skeleton {
+  background-color: var(--color-surface-container-high);
+  border-radius: 14px;
   animation: none;
 }
 .aqua-shimmer {

@@ -12,7 +12,7 @@
 2. 設定最大列數時，高度上限以行高乘列數再加上內距推算。
 3. 自動增高時一律不可手動縮放；未開啟時依縮放設定決定可拖曳的方向。
 
-來源：1. [Textarea.vue][]
+來源：1. [Textarea.vue](../../../../app/components/Camelot/Textarea.vue)
 
 ### 外觀與狀態
 
@@ -27,7 +27,7 @@
 2. 停用時整個元件半透明、游標顯示禁止。
 3. 同時設定字數上限與顯示字數時，右下角顯示「目前字數 / 上限」。
 
-來源：1. [Textarea.vue][]
+來源：1. [Textarea.vue](../../../../app/components/Camelot/Textarea.vue)
 
 ## Props
 | Prop | 型別 | 預設 | 說明 |
@@ -57,20 +57,6 @@
 ## 相關頁面
 
 - [FieldLabel](./FieldLabel.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| Textarea.vue | [app/components/Camelot/Textarea.vue](../../../../app/components/Camelot/Textarea.vue) |
-
-[Textarea.vue]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

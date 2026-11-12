@@ -1,0 +1,9 @@
+WIKI_PAGE("features/components/CheckboxGroup.md",{
+"title":"CheckboxGroup",
+"summary":"CheckboxGroup 以選項清單渲染一組核取方塊，匯入名稱 `CamelotCheckboxGroup`。所有已勾選選項的值以陣列雙向綁定，可整組或逐選項停用，並可加上群組標題與必填標記。",
+"svgs":{},
+"seq":{},
+"ext":["archive/2609231616-wiki-lint-migration.md"],
+"changelog":[{"plan": "2609231616-wiki-lint-migration", "date": "2026-09-23", "version": "—", "note": "改寫為新版 wiki 格式並依原始碼校正內容", "issue": "[#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45)", "pr": "—"}],
+"md":"# CheckboxGroup\n\n## Summary\n\nCheckboxGroup 以選項清單渲染一組核取方塊，匯入名稱 `CamelotCheckboxGroup`。所有已勾選選項的值以陣列雙向綁定，可整組或逐選項停用，並可加上群組標題與必填標記。\n\n## Props\n| Prop | 型別 | 預設 | 說明 |\n| :--- | :--- | :---: | :--- |\n| `options` | `CamelotGroupOption[]` | —（必填） | 選項清單 |\n| `direction` | `'horizontal' \\| 'vertical'` | `'horizontal'` | 排列方向 |\n| `color` | `CamelotColorRole` | `'primary'` | 色彩角色 |\n| `disabled` | `boolean` | `false` | 整組停用；逐選項停用請用選項的 `disabled` |\n| `label` | `string` | `''` | 群組標題文字 |\n| `required` | `boolean` | `false` | 是否顯示必填標記 |\n\n## Emits\n| 事件 | 參數 | 說明 |\n| :--- | :--- | :--- |\n| `change` | `values: (string \\| number)[]` | 勾選狀態變動時，回傳更新後的已選值陣列 |\n\n## v-model\n| Model | 型別 | 說明 |\n| :--- | :--- | :--- |\n| `modelValue` | `(string \\| number)[]`（預設 `[]`） | 目前所有已勾選選項的值陣列 |\n\n## Slots\n| Slot | 作用域參數 | 說明 |\n| :--- | :--- | :--- |\n| `label` | `{ label: string }` | 自訂群組標題，預設渲染 FieldLabel |\n\n## 運作方式\n\n1. 每個選項渲染為一個 [Checkbox](./Checkbox.md)，值在陣列中即為勾選。\n2. 點擊選項時，已勾選就從陣列移除，否則加到陣列尾端。\n3. 以新陣列更新綁定值，並送出 change。\n4. 整組或該選項停用時，點擊不作用。\n\n| 規則 | 說明 |\n|---|---|\n| 水平排列 | 自動換行，項目間距 24px |\n| 垂直排列 | 由上而下，項目間距 8px |\n\n來源：1. [CheckboxGroup.vue](../../../../app/components/Camelot/CheckboxGroup.vue)\n\n## 相關頁面\n- [FieldLabel](./FieldLabel.md)\n\n---\n[⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)\n"
+});

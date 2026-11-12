@@ -30,13 +30,13 @@
 2. 點葉節點：設為選中並發出 `select`。
 3. 停用項目半透明、不回應點擊。
 
-來源：1. [Menu.vue][]　2. [MenuItem.vue][]
+來源：1. [Menu.vue](../../../../app/components/Camelot/Menu.vue)　2. [MenuItem.vue](../../../../app/components/Camelot/Internal/MenuItem.vue)
 
 ### 預設展開
 
 `defaultExpandAll` 為真，且掛載時 `expanded` 仍是空陣列，才會展開所有父節點；外部已給展開清單時以外部為準。
 
-來源：1. [Menu.vue][]
+來源：1. [Menu.vue](../../../../app/components/Camelot/Menu.vue)
 
 ### 層級視覺
 
@@ -44,7 +44,7 @@
 2. 頂層項目字重較粗，深層項目文字較淡。
 3. 選中項的父層與祖先文字改用色彩角色，但不加選中底色。
 
-來源：1. [MenuItem.vue][]
+來源：1. [MenuItem.vue](../../../../app/components/Camelot/Internal/MenuItem.vue)
 
 ### 各主題選中樣式
 
@@ -55,23 +55,7 @@
 | cupertino | 10% 角色色底、粗體角色色文字 |
 | material | 10% 角色色底、角色色文字 |
 
-來源：1. [MenuItem.vue][]
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| Menu.vue | [app/components/Camelot/Menu.vue](../../../../app/components/Camelot/Menu.vue) |
-| MenuItem.vue | [app/components/Camelot/Internal/MenuItem.vue](../../../../app/components/Camelot/Internal/MenuItem.vue) |
-
-[Menu.vue]: #references
-[MenuItem.vue]: #references
+來源：1. [MenuItem.vue](../../../../app/components/Camelot/Internal/MenuItem.vue)
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

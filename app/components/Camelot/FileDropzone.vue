@@ -117,6 +117,7 @@ const areaStateClass = computed(() => [
 /* 形狀依主題識別（同 ImageDropzone 模式） */
 .cml-dropzone-area { border-radius: 0.5rem; }
 .cml-dropzone[data-cml-theme="aqua"] .cml-dropzone-area { border-radius: 1rem; }
+.cml-dropzone[data-cml-theme="tactile"] .cml-dropzone-area { border-radius: 1.375rem; }
 .cml-dropzone[data-cml-theme="scifi"] .cml-dropzone-area { border-radius: 0; }
 .cml-dropzone[data-cml-theme="cupertino"] .cml-dropzone-area { border-radius: 0.75rem; }
 </style>

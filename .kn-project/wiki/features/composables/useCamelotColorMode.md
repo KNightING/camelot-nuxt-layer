@@ -17,7 +17,7 @@ VueUse 的 `useColorMode` 每建立一個實例，就會註冊一份 watcher，�
 > [!IMPORTANT]
 > 在本 Layer 內**不要**直接呼叫 `useColorMode()`，一律改用本 composable。
 
-來源：1. [useCamelotColorMode.ts][]
+來源：1. [useCamelotColorMode.ts](../../../../app/composables/useCamelotColorMode.ts)
 
 ### 使用者
 
@@ -27,7 +27,7 @@ VueUse 的 `useColorMode` 每建立一個實例，就會註冊一份 watcher，�
 | [useCustomColorScheme](./useCustomColorScheme.md) | 判斷目前是否深色，決定採用哪組色彩方案 |
 | [useMaterial3ColorScheme](./useMaterial3ColorScheme.md) | 同上 |
 
-來源：1. [useCamelotTheme.ts][]　2. [useCustomColorScheme.ts][]　3. [useMaterial3ColorScheme.ts][]
+來源：1. [useCamelotTheme.ts](../../../../app/composables/useCamelotTheme.ts)　2. [useCustomColorScheme.ts](../../../../app/composables/useCustomColorScheme.ts)　3. [useMaterial3ColorScheme.ts](../../../../app/composables/useMaterial3ColorScheme.ts)
 
 ## 用法
 
@@ -57,26 +57,6 @@ VueUse `useColorMode()` 的回傳值，全站共用同一個實例：
 
 - [色彩主題系統](../../platform/color-scheme.md)
 - [Composables 清單](../composables.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useCamelotColorMode.ts | [app/composables/useCamelotColorMode.ts](../../../../app/composables/useCamelotColorMode.ts) |
-| useCamelotTheme.ts | [app/composables/useCamelotTheme.ts](../../../../app/composables/useCamelotTheme.ts) |
-| useCustomColorScheme.ts | [app/composables/useCustomColorScheme.ts](../../../../app/composables/useCustomColorScheme.ts) |
-| useMaterial3ColorScheme.ts | [app/composables/useMaterial3ColorScheme.ts](../../../../app/composables/useMaterial3ColorScheme.ts) |
-
-[useCamelotColorMode.ts]: #references
-[useCamelotTheme.ts]: #references
-[useCustomColorScheme.ts]: #references
-[useMaterial3ColorScheme.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

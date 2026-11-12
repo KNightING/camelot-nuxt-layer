@@ -31,26 +31,10 @@ ColorSchemeProvider 把自訂的明亮與暗色配色方案套用到整份文件
 | 合併方式 | 只覆蓋有傳入的鍵，不會刪除先前設定過的顏色；明亮與暗色建議都設定 |
 | 卸載後 | 已合併的配色留在全站方案中，不會還原 |
 
-來源：1. [ColorSchemeProvider.vue][]　2. [useCustomColorScheme.ts][]
+來源：1. [ColorSchemeProvider.vue](../../../../app/components/Camelot/ColorSchemeProvider.vue)　2. [useCustomColorScheme.ts](../../../../app/composables/useCustomColorScheme.ts)
 
 ## 相關頁面
 - [色彩方案](../../platform/color-scheme.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| ColorSchemeProvider.vue | [app/components/Camelot/ColorSchemeProvider.vue](../../../../app/components/Camelot/ColorSchemeProvider.vue) |
-| useCustomColorScheme.ts | [app/composables/useCustomColorScheme.ts](../../../../app/composables/useCustomColorScheme.ts) |
-
-[ColorSchemeProvider.vue]: #references
-[useCustomColorScheme.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

@@ -45,7 +45,7 @@ FileDropzone（匯入名稱 `CamelotFileDropzone`）是通用檔案的拖放區�
 | 懸停 | 邊框轉為角色色、底色加深 |
 | 停用 | 半透明並阻擋所有互動 |
 
-來源：1. [FileDropzone.vue][]　2. [useCamelotFileDrop.ts][]
+來源：1. [FileDropzone.vue](../../../../app/components/Camelot/FileDropzone.vue)　2. [useCamelotFileDrop.ts](../../../../app/composables/useCamelotFileDrop.ts)
 
 ### 主題圓角
 
@@ -56,27 +56,11 @@ FileDropzone（匯入名稱 `CamelotFileDropzone`）是通用檔案的拖放區�
 | Cupertino | 0.75rem |
 | Material | 0.5rem |
 
-來源：1. [FileDropzone.vue][]
+來源：1. [FileDropzone.vue](../../../../app/components/Camelot/FileDropzone.vue)
 
 ## 相關頁面
 
 - [檔案拖放](../file-drop.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| FileDropzone.vue | [app/components/Camelot/FileDropzone.vue](../../../../app/components/Camelot/FileDropzone.vue) |
-| useCamelotFileDrop.ts | [app/composables/useCamelotFileDrop.ts](../../../../app/composables/useCamelotFileDrop.ts) |
-
-[FileDropzone.vue]: #references
-[useCamelotFileDrop.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

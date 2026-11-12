@@ -2,7 +2,7 @@
 
 ## Summary
 
-步驟指示器：依目前步驟索引顯示流程進度，已完成的步驟打勾、進行中的步驟以主色標示，可選擇開放點擊切換步驟。Cupertino、Sci-Fi、Aqua 主題有專屬樣式。匯入名稱為 `CamelotSteps`（Nuxt 自動匯入）。
+步驟指示器：Tactile 主題下進行中的節點放大並加角色色外環，完成的節點以彈簧彈出。依目前步驟索引顯示流程進度，已完成的步驟打勾、進行中的步驟以主色標示，可選擇開放點擊切換步驟。Cupertino、Sci-Fi、Aqua 主題有專屬樣式。匯入名稱為 `CamelotSteps`（Nuxt 自動匯入）。
 
 ## 運作方式
 
@@ -14,7 +14,7 @@
 | 進行中 | 索引等於目前步驟 | 顯示序號，主色標示 |
 | 未開始 | 索引大於目前步驟 | 顯示序號 |
 
-來源：1. [Steps.vue][]
+來源：1. [Steps.vue](../../../../app/components/Camelot/Steps.vue)
 
 ### 點擊切換
 
@@ -23,7 +23,7 @@
 3. 禁止往前時，點目前步驟之前的步驟不作用。
 4. 其餘情況把目前步驟改成被點的索引。
 
-來源：1. [Steps.vue][]
+來源：1. [Steps.vue](../../../../app/components/Camelot/Steps.vue)
 
 ## Props
 | Prop | 型別 | 預設 | 說明 |
@@ -44,20 +44,6 @@
 | :--- | :--- | :--- |
 | `dot` | `{ value, index, isComplete, isDoing }` | 自訂步驟圓點。 |
 | `content` | `{ value, index, isComplete, isDoing }` | 自訂步驟文字內容。 |
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| Steps.vue | [app/components/Camelot/Steps.vue](../../../../app/components/Camelot/Steps.vue) |
-
-[Steps.vue]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

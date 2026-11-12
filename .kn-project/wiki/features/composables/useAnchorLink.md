@@ -11,7 +11,7 @@
 3. 建立時先把開啟目標設為新分頁，選項有指定目標時再覆寫。
 4. `open()` 對元素呼叫 click，由瀏覽器處理導覽。
 
-來源：1. [useAnchorLink.ts][]
+來源：1. [useAnchorLink.ts](../../../../app/composables/useAnchorLink.ts)
 
 ## 用法
 
@@ -20,7 +20,7 @@ const { open } = useAnchorLink('https://example.com', { target: '_self' })
 open()
 ```
 
-來源：1. [useAnchorLink.ts][]
+來源：1. [useAnchorLink.ts](../../../../app/composables/useAnchorLink.ts)
 
 ## 簽章
 
@@ -48,20 +48,6 @@ type AnchorLinkOptions = {
 | 名稱 | 型別 | 說明 |
 | --- | --- | --- |
 | `open` | `() => void` | 點擊目前的錨點元素，開啟網址 |
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useAnchorLink.ts | [app/composables/useAnchorLink.ts](../../../../app/composables/useAnchorLink.ts) |
-
-[useAnchorLink.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

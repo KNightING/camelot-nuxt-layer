@@ -97,6 +97,8 @@ const resizeClass = computed(() => {
 
 const themeClass = computed(() => {
   switch (themeMode.value) {
+    case 'tactile':
+      return 'tactile-well rounded-tactile-control px-4 py-3 focus:bg-surface-container-lowest focus:shadow-[0_0_0_2px_var(--cml-color-current-color,var(--color-primary))]'
     case 'aqua':
       return 'aqua-track rounded-aqua-control px-4 py-3 backdrop-blur-md focus:aqua-glow'
     case 'scifi':

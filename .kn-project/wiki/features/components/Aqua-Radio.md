@@ -31,21 +31,7 @@ Aqua Radio 是 Aqua 主題（毛玻璃風格）的單選圓鈕外觀實作，匯
 
 中央圓點以滿版圓縮放呈現，避免非整數像素比螢幕下的半像素偏移。
 
-來源：1. [Aqua/Radio.vue][]
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| Aqua/Radio.vue | [app/components/Camelot/Aqua/Radio.vue](../../../../app/components/Camelot/Aqua/Radio.vue) |
-
-[Aqua/Radio.vue]: #references
+來源：1. [Aqua/Radio.vue](../../../../app/components/Camelot/Aqua/Radio.vue)
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

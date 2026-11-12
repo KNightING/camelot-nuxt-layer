@@ -31,7 +31,7 @@ TimeField（匯入名稱 `CamelotInternalTimeField`）是單一時間數字欄�
 
 清單列出 min 到 max 的每個整數。點清單項目時阻止預設行為，焦點不會離開輸入框。
 
-來源：1. [TimeField.vue][]
+來源：1. [TimeField.vue](../../../../app/components/Camelot/Internal/TimeField.vue)
 
 ### 下拉清單定位
 
@@ -40,21 +40,7 @@ TimeField（匯入名稱 `CamelotInternalTimeField`）是單一時間數字欄�
 3. 開啟時量測欄位位置，上方有 168px 以上空間就向上展開，否則向下，水平置中對齊欄位。
 4. 清單送出去後脫離色彩角色的作用範圍，開啟時把欄位當下的角色色帶進清單樣式。
 
-來源：1. [TimeField.vue][]
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| TimeField.vue | [app/components/Camelot/Internal/TimeField.vue](../../../../app/components/Camelot/Internal/TimeField.vue) |
-
-[TimeField.vue]: #references
+來源：1. [TimeField.vue](../../../../app/components/Camelot/Internal/TimeField.vue)
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

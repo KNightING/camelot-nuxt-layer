@@ -25,7 +25,7 @@
 3. 分數標籤直接顯示原始值，例如「3 / 8」，不做夾限。
 4. 進度變化時填色寬度以彈性曲線過渡；不確定狀態以 40% 寬的色塊由左往右反覆掃過，一趟 1.4 秒。
 
-來源：1. [ProgressBar.vue][]
+來源：1. [ProgressBar.vue](../../../../app/components/Camelot/ProgressBar.vue)
 
 ### 各主題外觀
 
@@ -37,21 +37,7 @@
 
 使用者偏好減少動態時，關閉過渡與掃描動畫。
 
-來源：1. [ProgressBar.vue][]
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| ProgressBar.vue | [app/components/Camelot/ProgressBar.vue](../../../../app/components/Camelot/ProgressBar.vue) |
-
-[ProgressBar.vue]: #references
+來源：1. [ProgressBar.vue](../../../../app/components/Camelot/ProgressBar.vue)
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

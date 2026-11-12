@@ -29,7 +29,7 @@ DropImage（匯入名稱 `CamelotDropImage`）是單張圖片的選取區：點�
 
 預覽只在元件內選檔或拖放時更新，外部改寫 modelValue 不會重畫預覽。
 
-來源：1. [DropImage.vue][]
+來源：1. [DropImage.vue](../../../../app/components/Camelot/DropImage.vue)
 
 ### 既有圖片
 
@@ -37,21 +37,7 @@ modelValue 為 undefined 且有 originImage 時顯示既有圖片：載入中先
 
 未提供 id 時，以時間戳加兩組隨機數產生，讓同頁多個 DropImage 的 label 各自對應自己的輸入框。
 
-來源：1. [DropImage.vue][]
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| DropImage.vue | [app/components/Camelot/DropImage.vue](../../../../app/components/Camelot/DropImage.vue) |
-
-[DropImage.vue]: #references
+來源：1. [DropImage.vue](../../../../app/components/Camelot/DropImage.vue)
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

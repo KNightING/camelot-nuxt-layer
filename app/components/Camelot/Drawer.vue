@@ -97,6 +97,8 @@ const { themeMode } = useCamelotTheme()
 
 const panelClass = computed(() => {
   switch (themeMode.value) {
+    case 'tactile':
+      return 'tactile-surface'
     case 'aqua':
       // 無邊框玻璃：半透明 + 模糊 + 柔影（不用 aqua-glass，避免其髮絲邊框）
       return 'bg-surface/75 shadow-2xl backdrop-blur-xl backdrop-saturate-150'

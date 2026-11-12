@@ -14,7 +14,7 @@
 | `bcp47` | 由 cldr 反推，沒有 cldr 時用正規化後的輸入；移除文字子標籤、保留地區 | zh-Hant-TW 得 zh-TW |
 | `l10n` | 依序取 cldr、bcp47、原始輸入中第一個有值者 | en-US 得 en-US |
 
-來源：1. [useLocale.ts][]
+來源：1. [useLocale.ts](../../../app/composables/useLocale.ts)
 
 ### 解析流程
 
@@ -60,7 +60,7 @@
 4. bcp47 由 cldr 或正規化輸入移除文字子標籤而得。
 5. l10n 依序退回 cldr、bcp47、原始輸入。
 
-來源：1. [useLocale.ts][]
+來源：1. [useLocale.ts](../../../app/composables/useLocale.ts)
 
 ### CLDR 對照表
 
@@ -78,7 +78,7 @@
 | pa-PK | pa-Arab-PK |
 | sd-IN | sd-Deva-IN |
 
-來源：1. [useLocale.ts][]
+來源：1. [useLocale.ts](../../../app/composables/useLocale.ts)
 
 ## 行為範例
 
@@ -96,20 +96,6 @@
 - [i18n 語系系統](./i18n-locales.md)：專案語系註冊與 fallback 鏈
 - [FieldLabel](../features/components/FieldLabel.md)
 - [useLocale 參考頁](../features/composables/useLocale.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useLocale.ts | [app/composables/useLocale.ts](../../../app/composables/useLocale.ts) |
-
-[useLocale.ts]: #references
 
 ---
 [⚙️ Env](../environment.md) | [🏠 Wiki](../index.md)

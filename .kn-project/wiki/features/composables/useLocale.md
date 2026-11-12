@@ -32,7 +32,7 @@ const useLocale: (
 | `cldr` | `ComputedRef<string \| undefined>` | CLDR 格式，如 `zh-Hant-TW`；不在對照表內且未自帶 script 時為 `undefined` |
 | `l10n` | `ComputedRef<string \| undefined>` | 優先 `cldr`，其次 `bcp47`，最後原始字串 |
 
-來源：1. [useLocale.ts][]
+來源：1. [useLocale.ts](../../../../app/composables/useLocale.ts)
 
 ## 用法
 
@@ -56,20 +56,6 @@ const { bcp47, cldr, l10n } = useLocale(() => 'zh-CN')
 | region 子標籤 | 2 個英文字母或 3 個數字，如 `TW`、`001` |
 | 對照表涵蓋 | 中文、塞爾維亞文、烏茲別克文、亞塞拜然文、哈薩克文、蒙古文、庫德文、旁遮普文、信德文、塔吉克文、韃靼文 |
 | 空輸入 | 三個結果都是 `undefined` |
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useLocale.ts | [app/composables/useLocale.ts](../../../../app/composables/useLocale.ts) |
-
-[useLocale.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

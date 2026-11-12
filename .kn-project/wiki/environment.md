@@ -16,7 +16,7 @@ Camelot Nuxt Layer 的設定全部走 Nuxt runtimeConfig：Layer 的 Nuxt 設定
 | `googlePay.addScript` | 在 head 注入 Google Pay JS SDK 的 script | 預設 `false`：Google Pay 無法使用 | `true` |
 | `googleFont.disabled` | 停用 Noto Sans TC 的 Google 字型 preconnect 與樣式表 | 預設 `false`：會載入 Google 字型 | `true` |
 
-來源：1. [nuxt.config.ts][]　2. [tappay.ts][]　3. [googleFont.ts][]
+來源：1. [nuxt.config.ts](../../nuxt.config.ts)　2. [tappay.ts](../../modules/tappay.ts)　3. [googleFont.ts](../../modules/googleFont.ts)
 
 ### 安全性插件
 
@@ -25,7 +25,7 @@ Camelot Nuxt Layer 的設定全部走 Nuxt runtimeConfig：Layer 的 Nuxt 設定
 | `NUXT_SECURITY_PLUGIN_ENABLED` | 啟用伺服器端安全性插件，設定 CSP 與安全 HTTP 標頭 | 預設 `true`；設為 `false` 時不送任何 CSP 或安全標頭，建議只在開發或 playground 關閉 | `false` |
 | `NUXT_SECURITY_PLUGIN_USE_NONCE` | 每個請求產生隨機 nonce，注入 script、style、link 標籤 | 預設 `true`；關閉時 script-src 不帶 nonce 與 strict-dynamic，只剩 self 與 unsafe-inline | `true` |
 
-來源：1. [nuxt.config.ts][]　2. [securityPlugin.ts][]
+來源：1. [nuxt.config.ts](../../nuxt.config.ts)　2. [securityPlugin.ts](../../server/plugins/securityPlugin.ts)
 
 ### CSP 追加來源
 
@@ -47,7 +47,7 @@ Camelot Nuxt Layer 的設定全部走 Nuxt runtimeConfig：Layer 的 Nuxt 設定
 | `style` | style-src | self、fonts.googleapis.com、unsafe-inline |
 | `worker` | worker-src | self、unsafe-inline、wasm-unsafe-eval、blob |
 
-來源：1. [securityPlugin.ts][]
+來源：1. [securityPlugin.ts](../../server/plugins/securityPlugin.ts)
 
 ### 公開設定
 
@@ -59,7 +59,7 @@ Camelot Nuxt Layer 的設定全部走 Nuxt runtimeConfig：Layer 的 Nuxt 設定
 
 設定鍵名是 `replaceEndSplash`，所以環境變數是 SPLASH 而不是 SLASH。
 
-來源：1. [nuxt.config.ts][]　2. [index.get.ts][]　3. [$00.replacePath.ts][]
+來源：1. [nuxt.config.ts](../../nuxt.config.ts)　2. [index.get.ts](../../server/api/version/index.get.ts)　3. [$00.replacePath.ts](../../app/middleware/$00.replacePath.ts)
 
 ## 來源與載入順序
 
@@ -67,35 +67,11 @@ Camelot Nuxt Layer 的設定全部走 Nuxt runtimeConfig：Layer 的 Nuxt 設定
 2. 消費端的 Nuxt 設定覆寫 Layer 預設值。
 3. 執行期的 `NUXT_` 環境變數覆寫前兩者；建置期由模組讀取的支付與字型設定不受影響。
 
-來源：1. [nuxt.config.ts][]
+來源：1. [nuxt.config.ts](../../nuxt.config.ts)
 
 ## 環境差異
 
 無：本 repo 不分 flavor，各環境的值由消費端決定。
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| nuxt.config.ts | [nuxt.config.ts](../../nuxt.config.ts) |
-| tappay.ts | [modules/tappay.ts](../../modules/tappay.ts) |
-| googleFont.ts | [modules/googleFont.ts](../../modules/googleFont.ts) |
-| securityPlugin.ts | [server/plugins/securityPlugin.ts](../../server/plugins/securityPlugin.ts) |
-| index.get.ts | [server/api/version/index.get.ts](../../server/api/version/index.get.ts) |
-| $00.replacePath.ts | [app/middleware/$00.replacePath.ts](../../app/middleware/$00.replacePath.ts) |
-
-[nuxt.config.ts]: #references
-[tappay.ts]: #references
-[googleFont.ts]: #references
-[securityPlugin.ts]: #references
-[index.get.ts]: #references
-[$00.replacePath.ts]: #references
 
 ---
 [🏠 Wiki](index.md)

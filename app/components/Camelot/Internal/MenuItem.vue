@@ -62,6 +62,8 @@ const isExpanded = computed(() => menu.isExpanded(props.item))
 
 const activeClass = computed(() => {
   switch (themeMode.value) {
+    case 'tactile':
+      return 'bg-surface-container-high font-semibold text-on-surface'
     case 'aqua':
       return 'aqua-fill text-[var(--cml-color-current-on-color)]'
     case 'scifi':

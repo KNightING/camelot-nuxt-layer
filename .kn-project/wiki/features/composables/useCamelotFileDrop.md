@@ -16,7 +16,7 @@
 
 移除單一檔案走同樣的寫回與回呼，但不檢查停用狀態。
 
-來源：1. [useCamelotFileDrop.ts][]
+來源：1. [useCamelotFileDrop.ts](../../../../app/composables/useCamelotFileDrop.ts)
 
 ### accept 比對
 
@@ -29,7 +29,7 @@
 
 多個條件以逗號分隔，任一符合即接受。
 
-來源：1. [useCamelotFileDrop.ts][]
+來源：1. [useCamelotFileDrop.ts](../../../../app/composables/useCamelotFileDrop.ts)
 
 ### 項目與縮圖
 
@@ -38,7 +38,7 @@
 3. 只有圖片類型且開啟縮圖時才建立物件網址，其餘為空字串。
 4. 每項的 key 由檔名、大小、最後修改時間與索引組成。
 
-來源：1. [useCamelotFileDrop.ts][]
+來源：1. [useCamelotFileDrop.ts](../../../../app/composables/useCamelotFileDrop.ts)
 
 ### 拖放與選擇器
 
@@ -46,7 +46,7 @@
 2. onDrop 重設懸停狀態，停用時忽略，否則寫入拖入的檔案。
 3. pick 動態建立隱藏的檔案輸入元素並點擊；停用、已達上限或非瀏覽器環境時不作用。
 
-來源：1. [useCamelotFileDrop.ts][]
+來源：1. [useCamelotFileDrop.ts](../../../../app/composables/useCamelotFileDrop.ts)
 
 ## 用法
 
@@ -133,27 +133,13 @@ useCamelotFileDrop(options: CamelotFileDropOptions): {
 
 標籤為大寫副檔名；沒有副檔名時用 MIME，再沒有就顯示「檔案」。
 
-來源：1. [useCamelotFileDrop.ts][]
+來源：1. [useCamelotFileDrop.ts](../../../../app/composables/useCamelotFileDrop.ts)
 
 ## 相關頁面
 
 - [檔案拖放](../file-drop.md)
 - [FileDropzone](../components/FileDropzone.md)
 - [ImageDropzone](../components/ImageDropzone.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useCamelotFileDrop.ts | [app/composables/useCamelotFileDrop.ts](../../../../app/composables/useCamelotFileDrop.ts) |
-
-[useCamelotFileDrop.ts]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

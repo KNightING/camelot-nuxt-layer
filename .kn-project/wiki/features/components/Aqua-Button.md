@@ -28,25 +28,11 @@ Aqua Button 是 Aqua 主題（毛玻璃風格）的按鈕外觀實作，匯入�
 | 互動 | hover 略微提亮，按下時縮小回彈 |
 | 停用 | 降低不透明度並灰階，游標改為禁止 |
 
-來源：1. [Aqua/Button.vue][]
+來源：1. [Aqua/Button.vue](../../../../app/components/Camelot/Aqua/Button.vue)
 
 ## 相關頁面
 - [Button](./Button.md)
 - [主題系統](../../platform/theme-system.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| Aqua/Button.vue | [app/components/Camelot/Aqua/Button.vue](../../../../app/components/Camelot/Aqua/Button.vue) |
-
-[Aqua/Button.vue]: #references
 
 ---
 [⚙️ Env](../../environment.md) | [🏠 Wiki](../../index.md)

@@ -138,7 +138,7 @@ export default defineNuxtConfig({
 
 ## 🎨 主題系統
 
-所有 Camelot 元件支援四種視覺風格，**預設為 `aqua`（Frosted Glass）**：
+所有 Camelot 元件支援五種視覺風格，**預設為 `aqua`（Frosted Glass）**：
 
 | 風格 | 說明 |
 | :--- | :--- |
@@ -146,6 +146,7 @@ export default defineNuxtConfig({
 | `material` | Material Design |
 | `cupertino` | iOS 風格 |
 | `scifi` | 科幻風格 |
+| `tactile` | 實心表面與灰階軌道，按壓回彈的彈簧動態 |
 
 風格為全站單一狀態，透過 `useCamelotTheme()` 切換並持久化於 `localStorage`（鍵 `cml-theme-mode`）。色彩主題（明暗、色系）另由 `useCustomColorScheme` / `useCamelotColorMode` 管理。
 

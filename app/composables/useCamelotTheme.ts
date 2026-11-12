@@ -1,4 +1,4 @@
-export type CamelotThemeMode = 'material' | 'cupertino' | 'scifi' | 'aqua'
+export type CamelotThemeMode = 'material' | 'cupertino' | 'scifi' | 'aqua' | 'tactile'
 
 // 切換主題 / 深淺色 / 色系時，在 <html> 暫時加上 cml-theme-transitioning，
 // 讓全站顏色（bg/text/border/fill/stroke）以漸變過場。模組層單例計時器，

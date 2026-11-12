@@ -47,7 +47,7 @@ Camelot 的色彩系統（Color Scheme）把 Material Design 3 色票與 Camelot
 
 `useMaterial3ColorScheme` 是獨立的並行路徑，值為 r、g、b 三元組，不經過 `useCustomColorScheme`。
 
-來源：1. [useCustomColorScheme.ts][]　2. [useColorSchemeCssVars.ts][]　3. [useMaterial3ColorScheme.ts][]
+來源：1. [useCustomColorScheme.ts](../../../app/composables/useCustomColorScheme.ts)　2. [useColorSchemeCssVars.ts](../../../app/composables/useColorSchemeCssVars.ts)　3. [useMaterial3ColorScheme.ts](../../../app/composables/useMaterial3ColorScheme.ts)
 
 ### 訂閱模型
 
@@ -64,7 +64,7 @@ Camelot 的色彩系統（Color Scheme）把 Material Design 3 色票與 Camelot
 
 CSS 變數寫入是單向動作，由 [useColorSchemeCssVars](../features/composables/useColorSchemeCssVars.md) 直接 setProperty，不為每個變數建立響應式 ref。
 
-來源：1. [useCamelotColorMode.ts][]　2. [useCamelotTheme.ts][]　3. [useCustomColorScheme.ts][]　4. [useColorSchemeCssVars.ts][]
+來源：1. [useCamelotColorMode.ts](../../../app/composables/useCamelotColorMode.ts)　2. [useCamelotTheme.ts](../../../app/composables/useCamelotTheme.ts)　3. [useCustomColorScheme.ts](../../../app/composables/useCustomColorScheme.ts)　4. [useColorSchemeCssVars.ts](../../../app/composables/useColorSchemeCssVars.ts)
 
 ### CSS 變數命名
 
@@ -78,7 +78,7 @@ Tailwind v4 把主題色放在 `:root`，直接修改會被覆蓋，所以採雙
 | Material3 的 primary | `--cml-c-m3-primary` | `--color-primary` |
 | Camelot 的 rippleColor | `--cml-c-ripple-color` | `--color-ripple-color` |
 
-來源：1. [useColorSchemeCssVars.ts][]
+來源：1. [useColorSchemeCssVars.ts](../../../app/composables/useColorSchemeCssVars.ts)
 
 ## useCustomColorScheme
 
@@ -93,7 +93,7 @@ Tailwind v4 把主題色放在 `:root`，直接修改會被覆蓋，所以採雙
 | `config.darkColorScheme` | `CustomColorScheme<T>` | 暗色模式色彩方案 |
 | `config.editable` | `boolean` | 設為 `false` 時不更新 CSS 變數；只對非全域目標生效，因為全域目標是共用的 html |
 
-來源：1. [useCustomColorScheme.ts][]
+來源：1. [useCustomColorScheme.ts](../../../app/composables/useCustomColorScheme.ts)
 
 ### 回傳值
 
@@ -104,7 +104,7 @@ Tailwind v4 把主題色放在 `:root`，直接修改會被覆蓋，所以採雙
 | `darkColorScheme` | 暗色方案 Ref；全域目標共用同一個 |
 | `usedColorScheme` | 依深淺色自動切換的目前方案 Computed |
 
-來源：1. [useCustomColorScheme.ts][]
+來源：1. [useCustomColorScheme.ts](../../../app/composables/useCustomColorScheme.ts)
 
 ## 型別定義
 
@@ -126,7 +126,7 @@ type CamelotColorScheme = {
 }
 ```
 
-來源：1. [useCustomColorScheme.ts][]
+來源：1. [useCustomColorScheme.ts](../../../app/composables/useCustomColorScheme.ts)
 
 ## 元件
 
@@ -145,13 +145,13 @@ type CamelotColorScheme = {
 </template>
 ```
 
-來源：1. [ColorSchemeProvider.vue][]
+來源：1. [ColorSchemeProvider.vue](../../../app/components/Camelot/ColorSchemeProvider.vue)
 
 ### CamelotCustomColorSchemeProvider
 
 區域色彩方案覆蓋元件：在特定 DOM 範圍內套用不同的色彩方案，不影響全域主題。
 
-來源：1. [CustomColorSchemeProvider.vue][]
+來源：1. [CustomColorSchemeProvider.vue](../../../app/components/Camelot/CustomColorSchemeProvider.vue)
 
 ## Material3 色彩角色對照
 
@@ -167,39 +167,11 @@ type CamelotColorScheme = {
 | `text-outline` | `--color-outline` | 邊框與次要文字色 |
 | `text-error` | `--color-error` | 錯誤與假日色 |
 
-來源：1. [tailwind.css][]
+來源：1. [tailwind.css](../../../app/assets/css/tailwind.css)
 
 ## 相關頁面
 
 - [主題系統](./theme-system.md)
-
-## Changelog
-
-| 日期 | 版本 | 計畫 | 變動 | Issue | PR |
-|---|---|---|---|---|---|
-| 2026-09-23 | — | [2609231616-wiki-lint-migration](../../archive/2609231616-wiki-lint-migration.md) | 改寫為新版 wiki 格式並依原始碼校正內容 | [#45](https://github.com/KNightING/camelot-nuxt-layer/issues/45) | — |
-
-## References
-
-| 來源 | 位置 |
-|---|---|
-| useCustomColorScheme.ts | [app/composables/useCustomColorScheme.ts](../../../app/composables/useCustomColorScheme.ts) |
-| useColorSchemeCssVars.ts | [app/composables/useColorSchemeCssVars.ts](../../../app/composables/useColorSchemeCssVars.ts) |
-| useMaterial3ColorScheme.ts | [app/composables/useMaterial3ColorScheme.ts](../../../app/composables/useMaterial3ColorScheme.ts) |
-| useCamelotColorMode.ts | [app/composables/useCamelotColorMode.ts](../../../app/composables/useCamelotColorMode.ts) |
-| useCamelotTheme.ts | [app/composables/useCamelotTheme.ts](../../../app/composables/useCamelotTheme.ts) |
-| ColorSchemeProvider.vue | [app/components/Camelot/ColorSchemeProvider.vue](../../../app/components/Camelot/ColorSchemeProvider.vue) |
-| CustomColorSchemeProvider.vue | [app/components/Camelot/CustomColorSchemeProvider.vue](../../../app/components/Camelot/CustomColorSchemeProvider.vue) |
-| tailwind.css | [app/assets/css/tailwind.css](../../../app/assets/css/tailwind.css) |
-
-[useCustomColorScheme.ts]: #references
-[useColorSchemeCssVars.ts]: #references
-[useMaterial3ColorScheme.ts]: #references
-[useCamelotColorMode.ts]: #references
-[useCamelotTheme.ts]: #references
-[ColorSchemeProvider.vue]: #references
-[CustomColorSchemeProvider.vue]: #references
-[tailwind.css]: #references
 
 ---
 [⚙️ Env](../environment.md) | [🏠 Wiki](../index.md)
