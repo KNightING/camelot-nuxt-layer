@@ -318,11 +318,15 @@ const isComplete = (index: number) => {
   color: var(--cml-color-current-color, var(--color-primary)) !important;
 }
 
-/* Tactile style overrides：實心灰階軌道，進行中的節點用墨色反相 */
+/* Tactile style overrides：灰階軌道，進行中的節點亮底加角色色外環 */
 .container.tactile .step-line {
   height: 4px;
   border-radius: 9999px;
   background-color: color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 10%, var(--color-surface-container-high));
+}
+.container.tactile .step-line,
+.container.tactile .step-line-complete {
+  transition: background-color 0.4s var(--ease-ios);
 }
 .container.tactile .step-line-complete {
   background-color: var(--cml-color-current-color, var(--color-primary)) !important;
@@ -330,14 +334,34 @@ const isComplete = (index: number) => {
 .container.tactile .step-dot {
   width: 1.75rem;
   border-width: 0;
+  /* 彈簧只套在 transform：進入進行中時放大再回彈，顏色維持原本的平滑過場 */
+  transition:
+    transform 0.6s var(--ease-tactile),
+    background-color 0.3s var(--ease-ios),
+    box-shadow 0.3s var(--ease-ios);
   background-color: color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 10%, var(--color-surface-container-high));
 }
 /* 進行中：亮底加角色色外環，數字沿用角色色；已完成才是實心填滿 */
 .container.tactile .step-dot-doing {
   background-color: var(--color-surface-container-lowest) !important;
+  transform: scale(1.12);
   box-shadow: 0 0 0 2px var(--cml-color-current-color, var(--color-primary));
 }
+/* 完成：從 70% 彈到 100%，節點剛變成完成態時播放一次 */
 .container.tactile .step-dot-complete {
+  animation: tactile-step-pop 0.6s var(--ease-tactile);
   box-shadow: 0 6px 14px -8px color-mix(in srgb, var(--cml-color-current-color, var(--color-primary)) 70%, transparent);
+}
+@keyframes tactile-step-pop {
+  from { transform: scale(0.7); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .container.tactile .step-dot,
+  .container.tactile .step-dot-complete,
+  .container.tactile .step-line,
+  .container.tactile .step-line-complete {
+    transition: none;
+    animation: none;
+  }
 }
 </style>

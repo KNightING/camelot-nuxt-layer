@@ -6,7 +6,7 @@
     <div
       ref="trackRef"
       class="relative w-full cursor-pointer"
-      :style="{ height: `${height}px` }"
+      :style="{ height: `${trackHeight}px` }"
       @pointerdown="onTrackPointerDown"
     >
       <!-- track -->
@@ -25,6 +25,7 @@
         v-for="m in normalizedMarks"
         :key="`mk-${m.value}`"
         class="absolute top-1/2 z-[1] h-1.5 w-1.5 rounded-full bg-on-surface/40"
+        :class="{ hidden: themeMode === 'tactile' }"
         :style="markDotStyle(m.value)"
       />
       <!-- thumbs -->
@@ -58,6 +59,7 @@
         v-for="m in normalizedMarks"
         :key="`lb-${m.value}`"
         class="absolute whitespace-nowrap tabular-nums"
+        :class="{ 'font-mono text-[10px]': themeMode === 'tactile' }"
         :style="markLabelStyle(m.value)"
       >{{ m.label ?? m.value }}</span>
     </div>
@@ -73,7 +75,7 @@ const props = withDefaults(
     step?: number
     /** 雙滑桿區間模式（modelValue 為 [起, 迄]） */
     range?: boolean
-    /** 軌道高度（px） */
+    /** 軌道高度（px）；未指定時 tactile 為 10，其餘風格為 6 */
     height?: number
     /** 間隔刻度 / 文字：true 自動於 step 產生；或自訂 { value, label? }[] */
     marks?: boolean | { value: number, label?: string }[]
@@ -86,7 +88,6 @@ const props = withDefaults(
     max: 100,
     step: 1,
     range: false,
-    height: 6,
     marks: false,
     showTooltip: false,
     color: 'primary',
@@ -100,7 +101,13 @@ const { themeMode } = useCamelotTheme()
 const roleColorClass = useCamelotRoleColorClass(() => props.color)
 
 const trackRef = useTemplateRef<HTMLElement>('trackRef')
-const thumbSize = computed(() => Math.max(props.height + 8, 16))
+
+const DEFAULT_TRACK_HEIGHT = 6
+const TACTILE_TRACK_HEIGHT = 10
+const TACTILE_THUMB_SIZE = 26
+
+const trackHeight = computed(() => props.height ?? (themeMode.value === 'tactile' ? TACTILE_TRACK_HEIGHT : DEFAULT_TRACK_HEIGHT))
+const thumbSize = computed(() => (themeMode.value === 'tactile' ? TACTILE_THUMB_SIZE : Math.max(trackHeight.value + 8, 16)))
 
 const values = computed<number[]>(() => {
   if (props.range) {
@@ -284,7 +291,7 @@ const fillClass = computed(() => {
 const thumbClass = computed(() => {
   switch (themeMode.value) {
     case 'tactile':
-      return 'tactile-thumb rounded-full'
+      return 'tactile-slider-thumb rounded-full outline-none focus-visible:tactile-ring active:scale-[1.22] motion-reduce:transition-none'
     case 'aqua':
       return 'aqua-thumb rounded-full border border-white/60'
     case 'scifi':
