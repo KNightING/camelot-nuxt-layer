@@ -81,6 +81,7 @@ camelot-nuxt-layer/
 ## 版本紀錄
 只記併回主幹，發佈狀態以 GitHub Release 為準。
 
+- 4.7.0.0 — 併回主幹 2026-11-24（nuxt 4.6.4 升級到 4.7.0，含安全性修正；一併升級 19 個 Patch/Minor 套件；@nuxt/cli 升至 4.1.0）
 - 4.6.4.2 — 併回主幹 2026-11-12（新增 tactile 主題與 CamelotScheduler 行事曆／排班表，補步進器、大數字、可選取標籤、行內日曆，修正 Windows 測試路徑）
 - 4.6.4.0 — 併回主幹 2026-11-04（nuxt 4.6.3 升級到 4.6.4，安全性釋出；@nuxt/cli 升至 4.0.3）
 - 4.6.3.1 — 併回主幹 2026-10-30（Patch/Minor 套件升級並 dedupe prosemirror，浮層改用 CSS Anchor Positioning 消除跟隨延遲）
